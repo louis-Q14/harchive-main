@@ -1,0 +1,226 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║                  ✅ VOUS ÊTES PRÊT POUR POSTMAN TESTING ✅               ║
+║                                                                            ║
+║               Suivez ces 5 étapes simples pour commencer                ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+
+CHECKLIST À SUIVRE
+════════════════════════════════════════════════════════════════════════════
+
+AVANT DE COMMENCER:
+  ☐ Node.js installé sur votre machine
+  ☐ Postman installé (ou prêt à télécharger)
+  ☐ Ces fichiers existent:
+    ☐ backend/src/server.js
+    ☐ backend/HARCHIVE_Backend_Tests.postman_collection.json
+    ☐ backend/HARCHIVE_Backend_Environment.postman_environment.json
+
+
+ÉTAPE 1: LANCER LE BACKEND (30 secondes)
+════════════════════════════════════════════════════════════════════════════
+
+Double-cliquez ce fichier:
+┌─ START_BACKEND.bat
+│  (dans c:\Users\LOUIS-QUATORZE\Documents\harchive-main\)
+└─
+
+☐ Vous verrez une fenêtre noire
+☐ La fenêtre affichera: "Server running on http://localhost:3001"
+☐ LAISSEZ CETTE FENÊTRE OUVERTE
+☐ Backend est maintenant actif! ✅
+
+
+ÉTAPE 2: TÉLÉCHARGER POSTMAN (si nécessaire)
+════════════════════════════════════════════════════════════════════════════
+
+Si Postman n'est pas installé:
+  1. Visitez: https://www.postman.com/download/
+  2. Téléchargez pour Windows
+  3. Installez
+  4. Ouvrez Postman
+
+☐ Postman est maintenant ouvert
+
+
+ÉTAPE 3: IMPORTER LA COLLECTION (1 minute)
+════════════════════════════════════════════════════════════════════════════
+
+Dans Postman:
+  1. Cliquez "File" (en haut à gauche)
+  2. Cliquez "Import"
+  3. Une boîte de dialogue s'ouvre
+  4. Cliquez "Upload Files"
+  5. Naviguez à:
+     c:\Users\LOUIS-QUATORZE\Documents\harchive-main\backend\
+  6. Sélectionnez: HARCHIVE_Backend_Tests.postman_collection.json
+  7. Cliquez "Import"
+
+☐ Vous verrez "HARCHIVE Backend Tests" dans le panneau gauche
+☐ Collection importée! ✅
+
+
+ÉTAPE 4: IMPORTER L'ENVIRONNEMENT (1 minute)
+════════════════════════════════════════════════════════════════════════════
+
+Dans Postman:
+  1. Cliquez "File" à nouveau
+  2. Cliquez "Import" à nouveau
+  3. Cliquez "Upload Files"
+  4. Naviguez à: c:\Users\LOUIS-QUATORZE\Documents\harchive-main\backend\
+  5. Sélectionnez: HARCHIVE_Backend_Environment.postman_environment.json
+  6. Cliquez "Import"
+
+☐ Environnement importé! ✅
+
+
+ÉTAPE 5: SÉLECTIONNER L'ENVIRONNEMENT (10 secondes)
+════════════════════════════════════════════════════════════════════════════
+
+En haut à droite de Postman:
+  1. Vous verrez un dropdown (dit "No Environment" ou vide)
+  2. Cliquez sur ce dropdown
+  3. Sélectionnez: "HARCHIVE Backend Environment"
+
+☐ Environnement sélectionné! ✅
+
+
+MAINTENANT LES TESTS! 🚀
+════════════════════════════════════════════════════════════════════════════
+
+OPTION A - Tests un par un (RECOMMANDÉ pour commencer):
+  1. À gauche, trouvez "HARCHIVE Backend Tests"
+  2. Cliquez sur "1. Health Check"
+  3. Vous verrez le détail du test à droite
+  4. Cliquez le gros bouton bleu "Send"
+  5. En bas à droite, vous verrez:
+     Status: 200 OK
+     Body: {"status": "ok"}
+  
+  ☐ Test 1 réussi! ✅
+  
+  6. Continuez avec test 2, 3, 4, etc.
+  7. Chaque test devrait afficher "200 OK" ou "201 Created"
+
+OPTION B - Tous les tests automatiquement (si vous êtes impatient):
+  1. À gauche, trouvez "HARCHIVE Backend Tests"
+  2. Cliquez sur les trois points "..." à côté
+  3. Cliquez "Run collection"
+  4. Une nouvelle fenêtre s'ouvre (Collection Runner)
+  5. Cliquez le gros bouton "Run HARCHIVE Backend Tests"
+  6. Regardez tous les tests s'exécuter
+  7. À la fin, vous verrez: "11 passed, 0 failed"
+
+  ☐ Tous les tests réussis! ✅
+
+
+RÉSULTATS ATTENDUS
+════════════════════════════════════════════════════════════════════════════
+
+Chaque test devrait montrer:
+  ✅ Status vert: 200 OK ou 201 Created
+  ✅ Response Body: JSON formaté
+  ✅ Test Result: PASS
+
+Si VOUS VOYEZ TOUT CELA = SUCCESS! 🎉
+
+Si VOUS VOYEZ des erreurs:
+  → Consultez section DÉPANNAGE ci-dessous
+
+
+🔧 GUIDE DE DÉPANNAGE RAPIDE
+════════════════════════════════════════════════════════════════════════════
+
+PROBLÈME: "Cannot connect to http://localhost:3001"
+SOLUTION:
+  1. Vérifiez que START_BACKEND.bat est encore ouvert
+  2. Vous devriez voir "Server running..." dans la fenêtre
+  3. Si la fenêtre est fermée, relancez-la
+  4. Attendez 2-3 secondes après le lancement
+  5. Essayez à nouveau
+
+─────────────────────────────────────────────────────────────────────────
+PROBLÈME: "401 Unauthorized" sur les tests 5-11
+SOLUTION:
+  1. Assurez-vous que les tests s'exécutent dans l'ordre
+  2. Commencez toujours par test 1
+  3. Ne passer pas les tests 3 et 4 (qui créent le token)
+  4. Une fois le token créé, il est utilisé automatiquement
+
+─────────────────────────────────────────────────────────────────────────
+PROBLÈME: "Email already exists" à test 3
+SOLUTION:
+  1. Fermez START_BACKEND.bat (fermeture fenêtre)
+  2. Supprimez ce fichier:
+     c:\Users\LOUIS-QUATORZE\Documents\harchive-main\backend\data\harchive.db
+  3. Rouvrez START_BACKEND.bat
+  4. Attendez "Server running..."
+  5. Essayez les tests à nouveau
+  6. Une nouvelle base de données sera créée
+
+─────────────────────────────────────────────────────────────────────────
+PROBLÈME: Postman ne peut pas importer les fichiers
+SOLUTION:
+  1. Vérifiez les chemins sont corrects
+  2. Vérifiez les fichiers existent:
+     - HARCHIVE_Backend_Tests.postman_collection.json
+     - HARCHIVE_Backend_Environment.postman_environment.json
+  3. Les fichiers doivent être dans: backend/
+  4. Essayez de créer une nouvelle collection manuellement:
+     - Consultez POSTMAN_GUIDE.md pour instructions
+
+─────────────────────────────────────────────────────────────────────────
+PROBLÈME: Node.js ne démarre pas (erreur dans START_BACKEND.bat)
+SOLUTION:
+  1. Vérifiez Node.js est installé:
+     - Ouvrez Terminal/PowerShell
+     - Tapez: node --version
+     - Vous devriez voir: v18.x.x ou supérieur
+  2. Si Node.js n'est pas installé:
+     - Téléchargez: https://nodejs.org/
+     - Installez (version LTS)
+  3. Redémarrez votre machine
+  4. Essayez START_BACKEND.bat à nouveau
+
+─────────────────────────────────────────────────────────────────────────
+SI RIEN NE FONCTIONNE:
+  1. Consultez: backend/POSTMAN_GUIDE.md
+  2. Consultez: backend/TESTING_GUIDE.md
+  3. Consultez: backend/README.md
+  4. Vérifiez tous les chemins de fichiers
+  5. Réinstallez npm packages:
+     - cd backend
+     - npm install
+
+
+📚 FICHIERS D'AIDE DISPONIBLES
+════════════════════════════════════════════════════════════════════════════
+
+Si vous avez besoin d'aide, consultez ces fichiers:
+
+  📄 backend/QUICK_START_POSTMAN.md      (3 étapes rapides)
+  📄 backend/POSTMAN_GUIDE.md            (Guide complet Postman)
+  📄 backend/TESTING_GUIDE.md            (Référence API)
+  📄 backend/TEST_README.md              (Quick reference)
+  📄 backend/SETUP_SUMMARY.txt           (Vue d'ensemble)
+  📄 backend/POSTMAN_READY.txt           (Vérification finale)
+  📄 backend/README.md                   (Documentation backend)
+
+
+🎉 C'EST TOUT!
+════════════════════════════════════════════════════════════════════════════
+
+Vous avez maintenant:
+  ✅ Backend Node.js en fonctionnement
+  ✅ Tests Postman préparés
+  ✅ 11 tests prêts à s'exécuter
+  ✅ Documentation complète
+  ✅ Guide de dépannage
+
+Bonne chance avec les tests! 🚀
+
+Questions? Consult POSTMAN_GUIDE.md
+
+════════════════════════════════════════════════════════════════════════════

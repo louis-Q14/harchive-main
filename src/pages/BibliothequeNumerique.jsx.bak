@@ -1,0 +1,619 @@
+import React, { useState, useEffect, useRef } from "react";
+import { authService, dataService, uploadService } from "@/api";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { DraggableDialog, DraggableDialogBody, DraggableDialogFooter } from "@/components/ui/DraggableDialog";
+
+const CG = { fontFamily: '"Century Gothic", "AppleGothic", "Gill Sans", "Trebuchet MS", sans-serif' };
+import {
+  BookOpen, Plus, Search, Download, Eye, Edit, Trash2, Loader2,
+  Upload, X, Filter, Star, MessageSquare, Info, ExternalLink
+} from "lucide-react";
+
+export default function BibliothequeNumerique() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("Toutes");
+  const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [showDetailsDialog, setShowDetailsDialog] = useState(false);
+  const [showCommentsDialog, setShowCommentsDialog] = useState(false);
+  const [selectedBook, setSelectedBook] = useState(null);
+  const [uploadingCover, setUploadingCover] = useState(false);
+  const [uploadingPdf, setUploadingPdf] = useState(false);
+  const [showBulkImportDialog, setShowBulkImportDialog] = useState(false);
+  const [bulkImportFile, setBulkImportFile] = useState(null);
+  const [commentText, setCommentText] = useState("");
+  const [commentRating, setCommentRating] = useState(0);
+  const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, book: null });
+  const contextMenuRef = useRef(null);
+
+  const [formData, setFormData] = useState({
+    titre: "", auteur: "", description: "", categorie: "Roman", isbn: "",
+    annee_publication: new Date().getFullYear(), editeur: "", langue: "Français",
+    nombre_pages: "", couverture_url: "", fichier_pdf_url: "", disponible: true, tags: []
+  });
+
+  const queryClient = useQueryClient();
+
+  useEffect(() => { loadUser(); }, []);
+
+  // Close context menu on click outside
+  useEffect(() => {
+    const handleClick = () => setContextMenu(p => ({ ...p, visible: false }));
+    if (contextMenu.visible) {
+      document.addEventListener('click', handleClick);
+      document.addEventListener('contextmenu', handleClick);
+      return () => { document.removeEventListener('click', handleClick); document.removeEventListener('contextmenu', handleClick); };
+    }
+  }, [contextMenu.visible]);
+
+  const loadUser = async () => {
+    try { const currentUser = await authService.getCurrentUser(); setUser(currentUser); }
+    catch (error) { console.error("Erreur:", error); }
+    finally { setLoading(false); }
+  };
+
+  // ── Queries ──
+  const { data: books = [], isLoading: loadingBooks } = useQuery({
+    queryKey: ['books'],
+    queryFn: () => dataService.query('Livre', { orderBy: '-created_date', limit: 500 }),
+    enabled: !!user
+  });
+
+  const { data: comments = [], refetch: refetchComments } = useQuery({
+    queryKey: ['book-comments', selectedBook?.id],
+    queryFn: () => dataService.query('CommentaireLivre', {
+      filters: [{ livre_id: selectedBook.id }], orderBy: '-created_date', limit: 100
+    }),
+    enabled: !!selectedBook?.id && showCommentsDialog
+  });
+
+  // ── Mutations ──
+  const createBookMutation = useMutation({
+    mutationFn: (bookData) => {
+      const clean = { ...bookData, created_by: user?.id };
+      if (clean.nombre_pages === '' || clean.nombre_pages === null) delete clean.nombre_pages;
+      else clean.nombre_pages = Number(clean.nombre_pages) || null;
+      if (clean.annee_publication) clean.annee_publication = Number(clean.annee_publication);
+      return dataService.create('Livre', clean);
+    },
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['books'] }); setShowAddDialog(false); resetForm(); },
+    onError: (err) => { console.error('Erreur création livre:', err); alert('Erreur lors de la création du livre'); }
+  });
+
+  const updateBookMutation = useMutation({
+    mutationFn: ({ id, data }) => dataService.update('Livre', id, data),
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['books'] }); setShowEditDialog(false); setSelectedBook(null); resetForm(); }
+  });
+
+  const deleteBookMutation = useMutation({
+    mutationFn: (id) => dataService.delete('Livre', id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['books'] })
+  });
+
+  const bulkImportMutation = useMutation({
+    mutationFn: async (bks) => Promise.all(bks.map(b => dataService.create('Livre', b))),
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['books'] }); setShowBulkImportDialog(false); setBulkImportFile(null); alert("Livres importés avec succès !"); }
+  });
+
+  const addCommentMutation = useMutation({
+    mutationFn: (data) => dataService.create('CommentaireLivre', data),
+    onSuccess: () => { refetchComments(); setCommentText(""); setCommentRating(0); }
+  });
+
+  const deleteCommentMutation = useMutation({
+    mutationFn: (id) => dataService.delete('CommentaireLivre', id),
+    onSuccess: () => refetchComments()
+  });
+
+  const incrementViewsMutation = useMutation({
+    mutationFn: ({ id, currentViews }) => dataService.update('Livre', id, { nombre_consultations: currentViews + 1 })
+  });
+
+  const incrementDownloadsMutation = useMutation({
+    mutationFn: ({ id, currentDownloads }) => dataService.update('Livre', id, { nombre_telechargements: currentDownloads + 1 })
+  });
+
+  const resetForm = () => setFormData({
+    titre: "", auteur: "", description: "", categorie: "Roman", isbn: "",
+    annee_publication: new Date().getFullYear(), editeur: "", langue: "Français",
+    nombre_pages: "", couverture_url: "", fichier_pdf_url: "", disponible: true, tags: []
+  });
+
+  const handleFileUpload = async (file, type) => {
+    type === 'cover' ? setUploadingCover(true) : setUploadingPdf(true);
+    try {
+      const result = await uploadService.uploadFile(file, 'livres');
+      if (type === 'pdf') {
+        // Set PDF url, and auto-set cover from thumbnail if no cover yet
+        setFormData(prev => ({
+          ...prev,
+          fichier_pdf_url: result.url,
+          ...(result.thumbnailUrl && !prev.couverture_url ? { couverture_url: result.thumbnailUrl } : {})
+        }));
+      } else {
+        setFormData(prev => ({ ...prev, couverture_url: result.url }));
+      }
+    } catch (error) { console.error("Erreur upload:", error); alert("Erreur lors de l'upload du fichier"); }
+    finally { type === 'cover' ? setUploadingCover(false) : setUploadingPdf(false); }
+  };
+
+  const handleSubmit = () => {
+    if (showEditDialog && selectedBook) updateBookMutation.mutate({ id: selectedBook.id, data: formData });
+    else createBookMutation.mutate(formData);
+  };
+
+  const handleEdit = (book) => {
+    setSelectedBook(book);
+    setFormData({
+      titre: book.titre, auteur: book.auteur, description: book.description || "", categorie: book.categorie,
+      isbn: book.isbn || "", annee_publication: book.annee_publication || new Date().getFullYear(),
+      editeur: book.editeur || "", langue: book.langue || "Français", nombre_pages: book.nombre_pages || "",
+      couverture_url: book.couverture_url || "", fichier_pdf_url: book.fichier_pdf_url || "",
+      disponible: book.disponible !== false, tags: book.tags || []
+    });
+    setShowEditDialog(true);
+  };
+
+  const handleRead = (book) => {
+    incrementViewsMutation.mutate({ id: book.id, currentViews: book.nombre_consultations || 0 });
+    if (book.fichier_pdf_url) window.open(book.fichier_pdf_url, '_blank');
+    else alert("Aucun fichier PDF disponible pour ce livre");
+  };
+
+  const handleDownload = (book) => {
+    incrementDownloadsMutation.mutate({ id: book.id, currentDownloads: book.nombre_telechargements || 0 });
+    if (book.fichier_pdf_url) { const a = document.createElement('a'); a.href = book.fichier_pdf_url; a.download = book.titre + '.pdf'; a.click(); }
+  };
+
+  const handleContextMenu = (e, book) => {
+    e.preventDefault(); e.stopPropagation();
+    const x = Math.min(e.clientX, window.innerWidth - 220);
+    const y = Math.min(e.clientY, window.innerHeight - 320);
+    setContextMenu({ visible: true, x, y, book });
+  };
+
+  const handleAddComment = () => {
+    if (!commentText.trim()) return;
+    addCommentMutation.mutate({
+      livre_id: selectedBook.id, user_id: user.id,
+      user_nom: `${user.prenom || ''} ${user.nom || ''}`.trim() || user.email,
+      user_photo_url: user.photo_url || '', contenu: commentText.trim(), note: commentRating
+    });
+  };
+
+  const handleBulkImport = async () => {
+    if (!bulkImportFile) { alert("Veuillez sélectionner un fichier CSV"); return; }
+    try {
+      const text = await bulkImportFile.text();
+      const lines = text.split('\n').filter(l => l.trim());
+      if (lines.length < 2) { alert("Le fichier CSV est vide ou invalide"); return; }
+      const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+      const bks = lines.slice(1).map(line => {
+        const values = line.split(',').map(v => v.trim());
+        const book = {}; headers.forEach((h, i) => { book[h] = values[i] || ''; });
+        return { titre: book.titre || '', auteur: book.auteur || '', description: book.description || '',
+          categorie: book.categorie || 'Autre', isbn: book.isbn || '',
+          annee_publication: parseInt(book.annee_publication) || new Date().getFullYear(),
+          editeur: book.editeur || '', langue: book.langue || 'Français',
+          nombre_pages: parseInt(book.nombre_pages) || 0, disponible: true };
+      }).filter(b => b.titre && b.auteur);
+      if (bks.length === 0) { alert("Aucun livre valide trouvé"); return; }
+      bulkImportMutation.mutate(bks);
+    } catch (error) { console.error("Erreur import:", error); alert("Erreur lors de l'import"); }
+  };
+
+  const categories = ["Toutes", ...new Set(books.map(b => b.categorie).filter(Boolean))];
+  const filteredBooks = books.filter(book => {
+    const q = searchQuery.toLowerCase();
+    const matchesSearch = !q || book.titre?.toLowerCase().includes(q) || book.auteur?.toLowerCase().includes(q) || book.description?.toLowerCase().includes(q);
+    const matchesCategory = selectedCategory === "Toutes" || book.categorie === selectedCategory;
+    return matchesSearch && matchesCategory && book.disponible !== false;
+  });
+  const isAdmin = user?.role_archive === 'admin_systeme' || user?.role_archive === 'super_admin';
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center" style={{ background: '#1a1a2e' }}><Loader2 className="w-12 h-12 text-gray-400 animate-spin" /></div>;
+
+  return (
+    <div className="min-h-screen p-4 md:p-6" style={{ background: '#1a1a2e', ...CG }}>
+      <div className="max-w-[1400px] mx-auto">
+
+        {/* ── Header + Search ── */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-5">
+            <div>
+              <h1 className="text-2xl font-bold text-white flex items-center gap-3" style={CG}>
+                <BookOpen className="w-7 h-7 text-cyan-400" /> Bibliothèque Numérique
+              </h1>
+              <p className="text-gray-400 text-sm mt-1" style={CG}>Explorez notre collection de livres numériques</p>
+            </div>
+            {isAdmin && (
+              <div className="flex gap-2">
+                <Button onClick={() => setShowAddDialog(true)} className="bg-cyan-600 hover:bg-cyan-700 text-white" style={CG}>
+                  <Plus className="w-4 h-4 mr-2" /> Ajouter un livre
+                </Button>
+                <Button onClick={() => setShowBulkImportDialog(true)} variant="outline" style={{ borderColor: '#444', color: '#ccc', ...CG }}>
+                  <Upload className="w-4 h-4 mr-2" /> Importer
+                </Button>
+              </div>
+            )}
+          </div>
+          <div className="flex gap-3 mb-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+              <Input placeholder="Rechercher par titre, auteur, ISBN..." value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)} className="pl-10 h-10"
+                style={{ backgroundColor: '#252540', color: '#fff', borderColor: '#3a3a5c', ...CG }} />
+            </div>
+            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <SelectTrigger className="w-44 h-10" style={{ backgroundColor: '#252540', color: '#fff', borderColor: '#3a3a5c', ...CG }}>
+                <Filter className="w-3.5 h-3.5 mr-1.5 text-gray-400" /><SelectValue />
+              </SelectTrigger>
+              <SelectContent>{categories.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+            </Select>
+          </div>
+          <div className="flex gap-4 text-sm text-gray-400 mb-2" style={CG}>
+            <span><strong className="text-cyan-400">{books.length}</strong> livres disponibles</span>
+            <span><strong className="text-green-400">{books.reduce((s, b) => s + (b.nombre_consultations || 0), 0)}</strong> consultations</span>
+          </div>
+        </div>
+
+        {/* ── Book Grid ── */}
+        {loadingBooks ? (
+          <div className="flex justify-center py-20"><Loader2 className="w-8 h-8 text-gray-400 animate-spin" /></div>
+        ) : filteredBooks.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-20">
+            <BookOpen className="w-16 h-16 text-gray-600 mb-4" />
+            <p className="text-gray-400 text-lg" style={CG}>Aucun livre trouvé</p>
+            <p className="text-gray-500 text-sm" style={CG}>{isAdmin ? "Ajoutez votre premier livre à la bibliothèque" : "Revenez plus tard"}</p>
+          </div>
+        ) : (
+          <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))' }}>
+            {filteredBooks.map(book => (
+              <div key={book.id} className="group relative cursor-pointer flex flex-col"
+                onContextMenu={(e) => handleContextMenu(e, book)}
+                onClick={() => { setSelectedBook(book); setShowDetailsDialog(true); }}>
+                {/* Cover image */}
+                <div className="relative overflow-hidden rounded-md shadow-lg" style={{ aspectRatio: '2/3' }}>
+                  {book.couverture_url ? (
+                    <img src={book.couverture_url} alt={book.titre}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy"
+                      onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
+                    />
+                  ) : null}
+                  <div className={`w-full h-full flex-col items-center justify-center absolute inset-0 ${book.couverture_url ? 'hidden' : 'flex'}`}
+                    style={{ background: 'linear-gradient(135deg, #2a2a4a 0%, #1a1a3a 100%)' }}>
+                    <BookOpen className="w-10 h-10 text-gray-500 mb-2" />
+                    <p className="text-[11px] text-gray-400 text-center px-3 leading-tight font-medium" style={CG}>{book.titre}</p>
+                  </div>
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-end gap-1.5 p-2 pb-3">
+                    <div className="flex gap-1.5">
+                      <button onClick={(e) => { e.stopPropagation(); handleRead(book); }}
+                        className="px-3 py-1.5 rounded-md text-[11px] font-semibold text-white backdrop-blur-sm"
+                        style={{ background: 'rgba(0,180,200,0.5)', ...CG }} title="Lire">▶ Lire</button>
+                      <button onClick={(e) => { e.stopPropagation(); handleDownload(book); }}
+                        className="px-2 py-1.5 rounded-md text-white backdrop-blur-sm"
+                        style={{ background: 'rgba(255,255,255,0.2)', ...CG }} title="Télécharger">
+                        <Download className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {/* Title + Author below cover */}
+                <div className="mt-1.5 px-0.5">
+                  <p className="text-white text-xs font-semibold leading-tight truncate" style={CG} title={book.titre}>{book.titre}</p>
+                  <p className="text-gray-400 text-[10px] truncate mt-0.5" style={CG}>{book.auteur}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── Context Menu ── */}
+        {contextMenu.visible && (
+          <div ref={contextMenuRef} className="fixed rounded-lg shadow-2xl border py-1 z-[999]"
+            style={{ left: contextMenu.x, top: contextMenu.y, minWidth: 200,
+              background: 'rgba(30,30,50,0.97)', backdropFilter: 'blur(20px)',
+              borderColor: 'rgba(255,255,255,0.12)', ...CG }}>
+            <div className="px-3 py-2 border-b" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
+              <p className="text-white text-xs font-semibold truncate" style={CG}>{contextMenu.book?.titre}</p>
+              <p className="text-gray-400 text-[10px]" style={CG}>{contextMenu.book?.auteur}</p>
+            </div>
+            {[
+              { icon: <ExternalLink className="w-3.5 h-3.5" />, label: 'Lire en ligne', color: '#00d4d4', action: () => handleRead(contextMenu.book) },
+              { icon: <Info className="w-3.5 h-3.5" />, label: 'Détails', color: '#a78bfa', action: () => { setSelectedBook(contextMenu.book); setShowDetailsDialog(true); } },
+              { icon: <MessageSquare className="w-3.5 h-3.5" />, label: 'Commentaires', color: '#f59e0b', action: () => { setSelectedBook(contextMenu.book); setShowCommentsDialog(true); } },
+              { icon: <Download className="w-3.5 h-3.5" />, label: 'Télécharger PDF', color: '#60a5fa', action: () => handleDownload(contextMenu.book) },
+              { icon: <Eye className="w-3.5 h-3.5" />, label: `${contextMenu.book?.nombre_consultations || 0} consultations`, color: '#9ca3af', action: null },
+              ...(isAdmin ? [
+                { icon: <Edit className="w-3.5 h-3.5" />, label: 'Modifier', color: '#4ade80', action: () => handleEdit(contextMenu.book) },
+                { icon: <Trash2 className="w-3.5 h-3.5" />, label: 'Supprimer', color: '#ef4444', action: () => { if (confirm("Supprimer ce livre ?")) deleteBookMutation.mutate(contextMenu.book.id); } },
+              ] : [])
+            ].map((item, i) => (
+              <button key={i} className="w-full flex items-center gap-2.5 px-3 py-2 text-left text-xs hover:bg-white/10 transition-colors disabled:opacity-50"
+                style={{ color: item.color, ...CG }} onClick={item.action || undefined} disabled={!item.action}>
+                {item.icon} {item.label}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* ── Details Dialog ── */}
+        <DraggableDialog open={showDetailsDialog}
+          onOpenChange={(o) => { if (!o) { setShowDetailsDialog(false); setSelectedBook(null); } }}
+          title={<div style={CG}><div className="text-sm font-semibold text-white">Détails du livre</div></div>}
+          maxWidth="max-w-2xl" resizable={false}>
+          {selectedBook && (
+            <DraggableDialogBody>
+              <div className="flex gap-5" style={CG}>
+                <div className="flex-shrink-0">
+                  {selectedBook.couverture_url ? (
+                    <img src={selectedBook.couverture_url} alt={selectedBook.titre}
+                      className="rounded-lg shadow-lg object-cover" style={{ width: 180, height: 260 }} />
+                  ) : (
+                    <div className="rounded-lg flex items-center justify-center" style={{ width: 180, height: 260, background: '#252540' }}>
+                      <BookOpen className="w-12 h-12 text-gray-500" />
+                    </div>
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-lg font-bold text-white mb-1" style={CG}>{selectedBook.titre}</h2>
+                  <p className="text-cyan-400 text-sm mb-3" style={CG}>{selectedBook.auteur}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <Button size="sm" onClick={() => handleRead(selectedBook)} className="bg-cyan-600 hover:bg-cyan-700 text-white text-xs" style={CG}>
+                      <ExternalLink className="w-3.5 h-3.5 mr-1.5" /> Lire en ligne
+                    </Button>
+                    <Button size="sm" variant="outline" onClick={() => { setShowDetailsDialog(false); setShowCommentsDialog(true); }}
+                      style={{ borderColor: '#555', color: '#ccc', ...CG }} className="text-xs">
+                      <MessageSquare className="w-3.5 h-3.5 mr-1.5" /> Commentaires
+                    </Button>
+                    {selectedBook.fichier_pdf_url && (
+                      <Button size="sm" variant="outline" onClick={() => handleDownload(selectedBook)}
+                        style={{ borderColor: '#555', color: '#ccc', ...CG }} className="text-xs">
+                        <Download className="w-3.5 h-3.5 mr-1.5" /> PDF
+                      </Button>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-xs" style={CG}>
+                    {[
+                      ['Catégorie', selectedBook.categorie], ['Année', selectedBook.annee_publication],
+                      ['Langue', selectedBook.langue], ['Pages', selectedBook.nombre_pages],
+                      ['Éditeur', selectedBook.editeur], ['ISBN', selectedBook.isbn],
+                      ['Consultations', selectedBook.nombre_consultations || 0],
+                      ['Téléchargements', selectedBook.nombre_telechargements || 0],
+                    ].filter(([, v]) => v).map(([label, value]) => (
+                      <div key={label} className="flex justify-between py-1 border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+                        <span className="text-gray-400">{label}:</span>
+                        <span className="text-white font-medium">{value}</span>
+                      </div>
+                    ))}
+                  </div>
+                  {selectedBook.description && (
+                    <div className="mt-4">
+                      <p className="text-gray-400 text-[11px] uppercase tracking-wider mb-1" style={CG}>Description</p>
+                      <p className="text-gray-300 text-xs leading-relaxed" style={CG}>{selectedBook.description}</p>
+                    </div>
+                  )}
+                  {selectedBook.tags?.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-3">
+                      {(Array.isArray(selectedBook.tags) ? selectedBook.tags : []).map((tag, i) => (
+                        <Badge key={i} variant="secondary" className="text-[10px]">{tag}</Badge>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </DraggableDialogBody>
+          )}
+        </DraggableDialog>
+
+        {/* ── Comments Dialog ── */}
+        <DraggableDialog open={showCommentsDialog}
+          onOpenChange={(o) => { if (!o) { setShowCommentsDialog(false); setSelectedBook(null); setCommentText(""); setCommentRating(0); } }}
+          title={<div style={CG}>
+            <div className="text-sm font-semibold text-white">Commentaires & Avis</div>
+            <div className="text-[11px] text-gray-400 mt-0.5">{selectedBook?.titre}</div>
+          </div>}
+          maxWidth="max-w-lg" resizable={false}>
+          <DraggableDialogBody>
+            <div style={CG}>
+              {/* Add comment form */}
+              <div className="mb-4 p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-gray-400 text-xs" style={CG}>Votre note :</span>
+                  <div className="flex gap-0.5">
+                    {[1, 2, 3, 4, 5].map(s => (
+                      <button key={s} onClick={() => setCommentRating(s)} className="p-0.5">
+                        <Star className="w-4 h-4" style={{ color: s <= commentRating ? '#f59e0b' : '#555', fill: s <= commentRating ? '#f59e0b' : 'none' }} />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <Textarea value={commentText} onChange={(e) => setCommentText(e.target.value)}
+                    placeholder="Partagez votre avis sur ce livre..." rows={2} className="flex-1 resize-none text-xs"
+                    style={{ backgroundColor: '#1e1e3a', color: '#fff', borderColor: '#3a3a5c', ...CG }} />
+                  <Button size="sm" onClick={handleAddComment} disabled={!commentText.trim() || addCommentMutation.isPending}
+                    className="bg-cyan-600 hover:bg-cyan-700 text-white self-end" style={CG}>
+                    {addCommentMutation.isPending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : "Envoyer"}
+                  </Button>
+                </div>
+              </div>
+              {/* Comments list */}
+              <div className="space-y-3 max-h-[50vh] overflow-y-auto pr-1">
+                {comments.length === 0 ? (
+                  <p className="text-center text-gray-500 text-xs py-6" style={CG}>Aucun commentaire pour l'instant. Soyez le premier !</p>
+                ) : comments.map(c => (
+                  <div key={c.id} className="p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                    <div className="flex items-start justify-between mb-1.5">
+                      <div className="flex items-center gap-2">
+                        {c.user_photo_url ? (
+                          <img src={c.user_photo_url} alt="" className="w-6 h-6 rounded-full object-cover" />
+                        ) : (
+                          <div className="w-6 h-6 rounded-full bg-cyan-900 flex items-center justify-center text-[10px] text-cyan-300 font-bold">
+                            {(c.user_nom || '?')[0]?.toUpperCase()}
+                          </div>
+                        )}
+                        <div>
+                          <p className="text-white text-xs font-medium" style={CG}>{c.user_nom || 'Anonyme'}</p>
+                          <p className="text-gray-500 text-[10px]">{new Date(c.created_date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {c.note > 0 && (
+                          <div className="flex gap-0.5">
+                            {[1, 2, 3, 4, 5].map(s => (
+                              <Star key={s} className="w-3 h-3" style={{ color: s <= c.note ? '#f59e0b' : '#444', fill: s <= c.note ? '#f59e0b' : 'none' }} />
+                            ))}
+                          </div>
+                        )}
+                        {(c.user_id === user?.id || isAdmin) && (
+                          <button onClick={() => deleteCommentMutation.mutate(c.id)} className="ml-2 text-gray-500 hover:text-red-400 transition-colors">
+                            <Trash2 className="w-3 h-3" />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                    <p className="text-gray-300 text-xs leading-relaxed" style={CG}>{c.contenu}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </DraggableDialogBody>
+        </DraggableDialog>
+
+        {/* ── Import Dialog ── */}
+        <DraggableDialog open={showBulkImportDialog} onOpenChange={setShowBulkImportDialog}
+          title={<div style={{ ...CG, fontWeight: 700, fontSize: '1rem', color: '#fff' }}>Importer plusieurs livres</div>}
+          maxWidth="md" resizable={false}>
+          <DraggableDialogBody>
+            <div className="space-y-4">
+              <Label className="text-white text-xs font-medium" style={CG}>Fichier CSV</Label>
+              <Input type="file" accept=".csv" onChange={(e) => setBulkImportFile(e.target.files?.[0] || null)}
+                style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+              <p className="text-xs text-gray-500" style={CG}>Colonnes : titre, auteur, description, categorie, isbn, annee_publication, editeur, langue, nombre_pages</p>
+            </div>
+          </DraggableDialogBody>
+          <DraggableDialogFooter>
+            <Button variant="outline" onClick={() => { setShowBulkImportDialog(false); setBulkImportFile(null); }}
+              style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG }}>Annuler</Button>
+            <Button onClick={handleBulkImport} disabled={!bulkImportFile || bulkImportMutation.isPending}
+              className="bg-cyan-600 hover:bg-cyan-700 text-white" style={CG}>
+              {bulkImportMutation.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />} Importer
+            </Button>
+          </DraggableDialogFooter>
+        </DraggableDialog>
+
+        {/* ── Add/Edit Dialog ── */}
+        <DraggableDialog open={showAddDialog || showEditDialog}
+          onOpenChange={(open) => { if (!open) { setShowAddDialog(false); setShowEditDialog(false); setSelectedBook(null); resetForm(); } }}
+          title={<div style={CG}>
+            <div className="text-sm font-semibold text-white">{showEditDialog ? "Modifier le livre" : "Ajouter un livre"}</div>
+            <div className="text-[11px] mt-0.5" style={{ color: '#b0b0b0' }}>Remplissez les informations du livre</div>
+          </div>}
+          maxWidth="max-w-2xl" resizable={false}>
+          <DraggableDialogBody>
+            <div className="grid gap-3" style={CG}>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="col-span-2 space-y-1">
+                  <Label className="text-white text-xs font-medium" style={CG}>Titre *</Label>
+                  <Input value={formData.titre} onChange={(e) => setFormData({ ...formData, titre: e.target.value })}
+                    placeholder="Titre du livre" style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-white text-xs font-medium" style={CG}>Auteur *</Label>
+                  <Input value={formData.auteur} onChange={(e) => setFormData({ ...formData, auteur: e.target.value })}
+                    placeholder="Nom de l'auteur" style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-white text-xs font-medium" style={CG}>Catégorie *</Label>
+                  <Select value={formData.categorie} onValueChange={(val) => setFormData({ ...formData, categorie: val })}>
+                    <SelectTrigger style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }}><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      {["Roman", "Science", "Histoire", "Mathématiques", "Informatique", "Philosophie", "Littérature", "Droit", "Économie", "Ingénierie", "Architecture", "Génie Civil", "Électricité", "Plomberie", "Autre"].map(cat => (
+                        <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="col-span-2 space-y-1">
+                  <Label className="text-white text-xs font-medium" style={CG}>Description</Label>
+                  <Textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    placeholder="Description du livre" rows={3} className="resize-none"
+                    style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-white text-xs font-medium" style={CG}>ISBN</Label>
+                  <Input value={formData.isbn} onChange={(e) => setFormData({ ...formData, isbn: e.target.value })}
+                    placeholder="ISBN" style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-white text-xs font-medium" style={CG}>Éditeur</Label>
+                  <Input value={formData.editeur} onChange={(e) => setFormData({ ...formData, editeur: e.target.value })}
+                    placeholder="Maison d'édition" style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-white text-xs font-medium" style={CG}>Année</Label>
+                  <Input type="number" value={formData.annee_publication}
+                    onChange={(e) => setFormData({ ...formData, annee_publication: parseInt(e.target.value) })}
+                    style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-white text-xs font-medium" style={CG}>Pages</Label>
+                  <Input type="number" value={formData.nombre_pages}
+                    onChange={(e) => setFormData({ ...formData, nombre_pages: parseInt(e.target.value) })}
+                    placeholder="Pages" style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                </div>
+                <div className="col-span-2 space-y-1">
+                  <Label className="text-white text-xs font-medium" style={CG}>Langue</Label>
+                  <Select value={formData.langue} onValueChange={(val) => setFormData({ ...formData, langue: val })}>
+                    <SelectTrigger style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }}><SelectValue /></SelectTrigger>
+                    <SelectContent>{["Français", "Anglais", "Espagnol", "Autre"].map(l => <SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent>
+                  </Select>
+                </div>
+                <div className="col-span-2 space-y-1">
+                  <Label className="text-white text-xs font-medium" style={CG}>Image de couverture</Label>
+                  <div className="flex gap-2 items-center">
+                    <Input type="file" accept="image/*" onChange={(e) => e.target.files[0] && handleFileUpload(e.target.files[0], 'cover')}
+                      disabled={uploadingCover} style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    {uploadingCover && <Loader2 className="w-4 h-4 animate-spin text-cyan-400" />}
+                  </div>
+                  {formData.couverture_url && <img src={formData.couverture_url} alt="Aperçu" className="mt-2 h-28 object-cover rounded" />}
+                </div>
+                <div className="col-span-2 space-y-1">
+                  <Label className="text-white text-xs font-medium" style={CG}>Fichier PDF *</Label>
+                  <div className="flex gap-2 items-center">
+                    <Input type="file" accept=".pdf" onChange={(e) => e.target.files[0] && handleFileUpload(e.target.files[0], 'pdf')}
+                      disabled={uploadingPdf} style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    {uploadingPdf && <Loader2 className="w-4 h-4 animate-spin text-cyan-400" />}
+                  </div>
+                  {formData.fichier_pdf_url && <p className="text-xs text-green-400 mt-1">✓ Fichier PDF téléchargé</p>}
+                </div>
+              </div>
+            </div>
+          </DraggableDialogBody>
+          <DraggableDialogFooter>
+            <Button variant="outline" onClick={() => { setShowAddDialog(false); setShowEditDialog(false); setSelectedBook(null); resetForm(); }}
+              style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG }}>Annuler</Button>
+            <Button onClick={handleSubmit}
+              disabled={!formData.titre || !formData.auteur || !formData.categorie || createBookMutation.isPending || updateBookMutation.isPending}
+              className="bg-cyan-600 hover:bg-cyan-700 text-white" style={CG}>
+              {(createBookMutation.isPending || updateBookMutation.isPending) && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+              {showEditDialog ? "Modifier" : "Ajouter"}
+            </Button>
+          </DraggableDialogFooter>
+        </DraggableDialog>
+
+      </div>
+    </div>
+  );
+}

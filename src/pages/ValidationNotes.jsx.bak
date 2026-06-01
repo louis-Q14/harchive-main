@@ -1,0 +1,422 @@
+import React, { useEffect, useMemo, useState } from "react";
+import { authService, dataService, functionService } from "@/api";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Loader2, Check, X, Eye, Send, FileSpreadsheet, Filter, Trash2 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
+export default function ValidationNotes() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [showPurgeDialog, setShowPurgeDialog] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const u = await authService.getCurrentUser();
+        if (u.role_archive === 'admin_etablissement' && !u.etablissement_id) {
+          const etabs = await dataService.query('Etablissement');
+          const match = etabs.find(e => e.admin_id === u.id || e.admin_email?.toLowerCase() === u.email?.toLowerCase());
+          if (match) u.etablissement_id = match.id;
+        }
+        setUser(u);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
+  const queryClient = useQueryClient();
+
+  const { data: notesSoumises = [], isLoading: loadingSoumises } = useQuery({
+    queryKey: ["notes-soumises", user?.etablissement_id],
+    queryFn: async () => dataService.query('NoteEtudiant', { filters: [{ etablissement_id: user.etablissement_id, statut: "soumis" }] }),
+    enabled: !!user?.etablissement_id,
+  });
+
+  const { data: notesValidees = [], isLoading: loadingValidees } = useQuery({
+    queryKey: ["notes-validees", user?.etablissement_id],
+    queryFn: async () => dataService.query('NoteEtudiant', { filters: [{ etablissement_id: user.etablissement_id, statut: "validée" }] }),
+    enabled: !!user?.etablissement_id,
+  });
+
+  // Archives de l'établissement
+  const { data: archives = [], isLoading: loadingArchives } = useQuery({
+    queryKey: ["archives-etab", user?.etablissement_id],
+    queryFn: async () => dataService.query('NoteArchive', { filters: [{ etablissement_id: user.etablissement_id }] }),
+    enabled: !!user?.etablissement_id,
+  });
+
+  const updateNote = useMutation({
+    mutationFn: ({ id, data }) => dataService.update('NoteEtudiant', id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["notes-soumises"] });
+      queryClient.invalidateQueries({ queryKey: ["notes-validees"] });
+      queryClient.invalidateQueries({ queryKey: ["archives-etab"] });
+    }
+  });
+
+  const purgeArchives = useMutation({
+    mutationFn: async () => {
+      const allArchives = await dataService.query('NoteArchive', { filters: [{ etablissement_id: user.etablissement_id }],
+  limit: 1000, offset: 0 });
+      await Promise.all(allArchives.map(a => dataService.delete('NoteArchive', a.id)));
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["archives-etab"] });
+      setShowPurgeDialog(false);
+    }
+  });
+
+  // Publication robuste: complète matricule/id étudiant si manquants puis publie
+  const ensurePublish = async (n) => {
+    const patch = { statut: 'publié', visible_etudiant: true, visible_parent: true };
+
+    // 1) Récupérer/compléter le matricule
+    let matricule = n.etudiant_matricule || null;
+    const etuId = String(n.etudiant_id || '');
+
+    if (!matricule) {
+      if (etuId.startsWith('dem-')) {
+        // Cas issu d'une DemandeInscription
+        const demId = etuId.slice(4);
+        const demRows = await dataService.query('DemandeInscription', { filters: [{ id: demId }],
+  limit: 1000, offset: 0 });
+        matricule = demRows?.[0]?.matricule || null;
+      } else if (etuId) {
+        // Cas lié é  une vraie fiche Etudiant
+        const rows = await dataService.query('Etudiant', { filters: [{ id: etuId }],
+  limit: 1000, offset: 0 });
+        matricule = rows?.[0]?.matricule || null;
+      }
+    }
+    if (matricule) patch.etudiant_matricule = matricule;
+
+    // 2) Si l'id étudiant est un "dem-" mais qu'on a le matricule, tenter de lier é  la vraie fiche Etudiant
+    if (etuId.startsWith('dem-') && matricule) {
+      const etuRows = await dataService.query('Etudiant', { filters: [{ matricule }],
+  limit: 1000, offset: 0 });
+      if (etuRows?.[0]?.id) {
+        patch.etudiant_id = etuRows[0].id;
+        // Optionnel : normaliser le nom
+        if (!n.etudiant_nom && (etuRows[0].prenom || etuRows[0].nom)) {
+          patch.etudiant_nom = `${etuRows[0].prenom || ''} ${etuRows[0].nom || ''}`.trim();
+        }
+      }
+    }
+
+    await updateNote.mutateAsync({ id: n.id, data: patch });
+  };
+
+  const groupBy = (items, keyFn) => {
+    const map = new Map();
+    items.forEach((it) => {
+      const key = keyFn(it);
+      if (!map.has(key)) map.set(key, []);
+      map.get(key).push(it);
+    });
+    return Array.from(map.entries()).map(([key, arr]) => ({ key, items: arr }));
+  };
+
+  const filteredSoumises = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return (notesSoumises || []).filter(n =>
+      !q || (n.etudiant_nom || '').toLowerCase().includes(q) || (n.classe_nom || '').toLowerCase().includes(q) || (n.matiere_nom || '').toLowerCase().includes(q)
+    );
+  }, [notesSoumises, search]);
+
+  const sections = groupBy(filteredSoumises, (n) => `${n.classe_nom || ''} • ${n.matiere_nom || ''} • ${n.periode || ''}`);
+
+  const archivesFiltered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return (archives || []).filter(a =>
+      !q ||
+      (a.etudiant_nom || '').toLowerCase().includes(q) ||
+      (a.classe_nom || '').toLowerCase().includes(q) ||
+      (a.matiere_nom || '').toLowerCase().includes(q) ||
+      (a.titre_evaluation || '').toLowerCase().includes(q)
+    );
+  }, [archives, search]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+        <Loader2 className="w-12 h-12 text-white animate-spin" />
+      </div>
+    );
+  }
+
+  if (user?.role_archive !== 'admin_etablissement') {
+    return (
+      <div className="p-6">
+        <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <CardHeader>
+            <CardTitle className="text-white">Accès restreint</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-gray-300">Cette page est réservée aux administrateurs d'établissement.</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="w-full px-4 space-y-6">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-white">Validation des Notes</h1>
+          <div className="relative">
+            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Input placeholder="Rechercher (étudiant, classe, matière)" value={search} onChange={(e) => setSearch(e.target.value)} className="pl-10 w-72" />
+          </div>
+        </div>
+
+        {sections.length === 0 ? (
+          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <CardHeader>
+              <CardTitle className="text-white">Aucune note soumise</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-center py-12">
+                <FileSpreadsheet className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+                <p className="text-gray-400">Les professeurs n'ont pas encore envoyé de notes pour validation.</p>
+              </div>
+            </CardContent>
+          </Card>
+        ) : (
+          sections.map((sec, idx) => {
+            const moy = (sec.items.reduce((s, n) => s + (typeof n.pourcentage === 'number' ? n.pourcentage : ((n.note || 0)/(n.note_sur || 20))*100), 0) / sec.items.length).toFixed(1);
+            return (
+              <Card key={idx} style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-white flex items-center gap-3">
+                      <span>{sec.key}</span>
+                      <Badge className="bg-[#2d2d2d]">{sec.items.length} notes</Badge>
+                      <Badge className="bg-green-700">Moyenne {moy}%</Badge>
+                    </CardTitle>
+                    <div className="flex gap-2">
+                      <Button
+                        className="bg-blue-600 hover:bg-blue-700"
+                        onClick={async () => {
+                          await Promise.all(sec.items.map(n => updateNote.mutateAsync({ id: n.id, data: { statut: 'validé' } })));
+                        }}
+                      >
+                        <Check className="w-4 h-4 mr-2" /> Tout approuver
+                      </Button>
+                      <Button
+                        className="bg-green-600 hover:bg-green-700"
+                        onClick={async () => {
+                          await Promise.all(sec.items.map(n => ensurePublish(n)));
+                        }}
+                      >
+                        <Send className="w-4 h-4 mr-2" /> Tout publier
+                      </Button>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead className="bg-[#2d2d2d]">
+                       <tr>
+                         <th className="px-4 py-3 text-left text-white">Étudiant</th>
+                         <th className="px-4 py-3 text-left text-white">Évaluation</th>
+                         <th className="px-4 py-3 text-left text-white">Date</th>
+                         <th className="px-4 py-3 text-center text-white">Note</th>
+                         <th className="px-4 py-3 text-center text-white">Actions</th>
+                       </tr>
+                      </thead>
+                      <tbody>
+                        {sec.items.map((n) => (
+                         <tr key={n.id} className="border-t border-[#2d2d2d] hover:bg-[#474747]">
+                           <td className="px-4 py-3 text-white">{n.etudiant_nom}</td>
+                           <td className="px-4 py-3 text-gray-300">{n.titre_evaluation}</td>
+                           <td className="px-4 py-3 text-gray-300">{n.date_evaluation || '-'}</td>
+                           <td className="px-4 py-3 text-center text-white font-bold">{n.note}/{n.note_sur}</td>
+                           <td className="px-4 py-3 text-center">
+                             <div className="flex gap-2 justify-center">
+                               <Button size="sm" variant="outline" onClick={() => updateNote.mutate({ id: n.id, data: { statut: 'validé' } })}>
+                                 <Check className="w-4 h-4" />
+                               </Button>
+                               <Button size="sm" variant="outline" onClick={() => updateNote.mutate({ id: n.id, data: { statut: 'rejeté' } })}>
+                                 <X className="w-4 h-4" />
+                               </Button>
+                               <Button size="sm" className="bg-green-600 hover:bg-green-700" onClick={() => ensurePublish(n)}>
+                                 <Send className="w-4 h-4" />
+                               </Button>
+                             </div>
+                           </td>
+                         </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })
+        )}
+
+        {/* Notes validées (é  publier) */}
+        <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <CardHeader>
+            <CardTitle className="text-white">Notes validées (en attente de publication)</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {(notesValidees || []).length === 0 ? (
+              <p className="text-gray-400">Aucune note validée pour l'instant.</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-[#2d2d2d]">
+                   <tr>
+                     <th className="px-4 py-3 text-left text-white">Étudiant</th>
+                     <th className="px-4 py-3 text-left text-white">Classe</th>
+                     <th className="px-4 py-3 text-left text-white">Matière</th>
+                     <th className="px-4 py-3 text-left text-white">Période</th>
+                     <th className="px-4 py-3 text-center text-white">Note</th>
+                     <th className="px-4 py-3 text-center text-white">Publier</th>
+                   </tr>
+                  </thead>
+                  <tbody>
+                    {notesValidees.map(n => (
+                     <tr key={n.id} className="border-t border-[#2d2d2d] hover:bg-[#474747]">
+                       <td className="px-4 py-3 text-white">{n.etudiant_nom}</td>
+                       <td className="px-4 py-3 text-gray-300">{n.classe_nom}</td>
+                       <td className="px-4 py-3 text-gray-300">{n.matiere_nom}</td>
+                       <td className="px-4 py-3 text-gray-300">{n.periode}</td>
+                       <td className="px-4 py-3 text-center text-white font-bold">{n.note}/{n.note_sur}</td>
+                       <td className="px-4 py-3 text-center">
+                         <Button size="sm" className="bg-green-600 hover:bg-green-700" onClick={() => ensurePublish(n)}>
+                           <Send className="w-4 h-4" />
+                         </Button>
+                       </td>
+                     </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Archives */}
+        <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-white">Archives ({archivesFiltered?.length || 0})</CardTitle>
+              {(archives?.length || 0) > 0 && (
+                <Button
+                  variant="outline"
+                  className="text-red-400 border-red-600 hover:bg-red-600 hover:text-white"
+                  onClick={() => setShowPurgeDialog(true)}
+                >
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  Purger les archives
+                </Button>
+              )}
+            </div>
+          </CardHeader>
+          <CardContent>
+            {loadingArchives ? (
+              <div className="flex justify-center py-12">
+                <Loader2 className="w-8 h-8 text-white animate-spin" />
+              </div>
+            ) : (archivesFiltered || []).length === 0 ? (
+              <div className="text-center py-12">
+                <FileSpreadsheet className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+                <p className="text-gray-400">Aucune archive disponible.</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-[#2d2d2d]">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-white">Archivé le</th>
+                      <th className="px-4 py-3 text-left text-white">Étudiant</th>
+                      <th className="px-4 py-3 text-left text-white">Classe</th>
+                      <th className="px-4 py-3 text-left text-white">Matière</th>
+                      <th className="px-4 py-3 text-left text-white">Évaluation</th>
+                      <th className="px-4 py-3 text-left text-white">Période</th>
+                      <th className="px-4 py-3 text-center text-white">Note</th>
+                      <th className="px-4 py-3 text-center text-white">Statut</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {archivesFiltered
+                      .slice()
+                      .sort((a,b)=> new Date(b.archived_at)-new Date(a.archived_at))
+                      .map(a => (
+                        <tr key={a.id} className="border-t border-[#2d2d2d] hover:bg-[#474747]">
+                          <td className="px-4 py-3 text-gray-300">{a.archived_at ? new Date(a.archived_at).toLocaleString() : '-'}</td>
+                          <td className="px-4 py-3 text-white">{a.etudiant_nom}</td>
+                          <td className="px-4 py-3 text-gray-300">{a.classe_nom || '-'}</td>
+                          <td className="px-4 py-3 text-gray-300">{a.matiere_nom || '-'}</td>
+                          <td className="px-4 py-3 text-gray-300">{a.titre_evaluation || '-'}</td>
+                          <td className="px-4 py-3 text-gray-300">{a.periode || '-'}</td>
+                          <td className="px-4 py-3 text-center text-white font-bold">{a.note}/{a.note_sur}</td>
+                          <td className="px-4 py-3 text-center">
+                            <Badge className={a.statut === 'publié' ? 'bg-green-600' : a.statut === 'validé' ? 'bg-blue-600' : a.statut === 'soumis' ? 'bg-yellow-700' : 'bg-gray-600'}>
+                              {a.statut || '–'}
+                            </Badge>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Dialog de confirmation pour la purge */}
+        <AlertDialog open={showPurgeDialog} onOpenChange={setShowPurgeDialog}>
+          <AlertDialogContent style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-white">Purger toutes les archives ?</AlertDialogTitle>
+              <AlertDialogDescription className="text-gray-400">
+                Cette action est irréversible. Toutes les notes archivées ({archives?.length || 0}) seront définitivement supprimées de la base de données.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="text-white border-gray-600">Annuler</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => purgeArchives.mutate()}
+                disabled={purgeArchives.isPending}
+                className="bg-red-600 hover:bg-red-700 text-white"
+              >
+                {purgeArchives.isPending ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Suppression...
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    Purger définitivement
+                  </>
+                )}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^node -e \"const mysql = require\\('\\./backend/node_modules/mysql2/promise'\\); async function main\\(\\) \\{ const pool = mysql\\.createPool\\(\\{ host:'localhost',port:3306,user:'harchive',password:'Harchive2026!db',database:'harchive' \\}\\); const \\[users\\] = await pool\\.execute\\(\"\"SELECT id, email, nom, prenom, role_archive FROM users WHERE role_archive = 'etudiant' LIMIT 3\"\"\\); users\\.forEach\\(u => console\\.log\\(u\\.id, u\\.email, u\\.nom\\)\\); await pool\\.end\\(\\); \\} main\\(\\);\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

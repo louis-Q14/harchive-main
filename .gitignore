@@ -1,0 +1,12 @@
+﻿node_modules/
+dist/
+backend/node_modules/
+*.log
+.env
+.env.*
+_*.txt
+_*.cjs
+_*.mjs
+_*.sql
+_*.json
+_boot_all*

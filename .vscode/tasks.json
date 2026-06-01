@@ -1,0 +1,53 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Restart Backend",
+			"type": "shell",
+			"command": "Get-Process -Name node -ErrorAction SilentlyContinue | Where-Object { $_.Id -ne $PID } | Stop-Process -Force -ErrorAction SilentlyContinue; Start-Sleep -Seconds 2; cd backend; node src/server.js",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Start Vite Frontend",
+			"type": "shell",
+			"command": "npx vite --port 5173",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Restart Vite Dev Server",
+			"type": "shell",
+			"command": "Get-Process -Name node -ErrorAction SilentlyContinue | Where-Object { $_.CommandLine -match 'vite' } | Stop-Process -Force -ErrorAction SilentlyContinue; Start-Sleep -Seconds 1; npx vite --port 5173",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Restart Vite (env reload)",
+			"type": "shell",
+			"command": "Get-Process -Name node -ErrorAction SilentlyContinue | Where-Object { $_.CommandLine -match 'vite' } | Stop-Process -Force -ErrorAction SilentlyContinue; Start-Sleep -Seconds 2; npx vite --port 5173 --host",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Restart Backend (presence fix)",
+			"type": "shell",
+			"command": "Get-Process -Name node -ErrorAction SilentlyContinue | Where-Object { $_.CommandLine -match 'server' } | Stop-Process -Force -ErrorAction SilentlyContinue; Start-Sleep -Seconds 2; cd c:\\Users\\LOUIS-QUATORZE\\Documents\\harchive-main\\backend; node src/server.js",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Restart Backend on 3099",
+			"type": "shell",
+			"command": "Get-NetTCPConnection -LocalPort 3099 -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess -Unique | ForEach-Object { taskkill /F /PID $_ }; Start-Sleep -Seconds 2; Get-NetTCPConnection -LocalPort 3100 -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess -Unique | ForEach-Object { taskkill /F /PID $_ }; Start-Sleep -Seconds 2; cd c:\\Users\\LOUIS-QUATORZE\\Documents\\harchive-main\\backend; node src/server.js",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Restart Backend (edit inscriptions)",
+			"type": "shell",
+			"command": "cd backend; node src/server.js",
+			"isBackground": true
+		}
+	]
+}

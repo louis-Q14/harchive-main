@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head><title>PDF Fetch Test</title></head>
+<body>
+<h1>PDF Fetch Test</h1>
+<pre id="output">Testing...</pre>
+<script>
+const url = '/api/uploads/professeur/UNIVERSITE_PROTESTANTE_AU_CONGO/8d9fb4e5-3fc2-4f3f-99a2-44175d82a858/documents/letter_1774805231211_3116.pdf';
+const out = document.getElementById('output');
+
+(async () => {
+  try {
+    out.textContent = 'Fetching: ' + url + '\n';
+    const res = await fetch(url, { cache: 'no-store' });
+    out.textContent += 'Status: ' + res.status + '\n';
+    out.textContent += 'Content-Type: ' + res.headers.get('content-type') + '\n';
+    out.textContent += 'Content-Length: ' + res.headers.get('content-length') + '\n';
+    out.textContent += 'Content-Disposition: ' + res.headers.get('content-disposition') + '\n';
+    
+    const ab = await res.arrayBuffer();
+    out.textContent += 'ArrayBuffer byteLength: ' + ab.byteLength + '\n';
+    
+    const u8 = new Uint8Array(ab);
+    out.textContent += 'Uint8Array length: ' + u8.length + '\n';
+    out.textContent += 'First 20 bytes: ' + Array.from(u8.slice(0, 20)).join(', ') + '\n';
+    out.textContent += 'As text: ' + new TextDecoder().decode(u8.slice(0, 20)) + '\n';
+    
+    if (ab.byteLength > 0) {
+      out.textContent += '\n✅ SUCCESS - PDF data received!';
+    } else {
+      out.textContent += '\n❌ FAILED - Empty response body!';
+    }
+  } catch (e) {
+    out.textContent += '\n❌ ERROR: ' + e.message;
+  }
+})();
+</script>
+</body>
+</html>

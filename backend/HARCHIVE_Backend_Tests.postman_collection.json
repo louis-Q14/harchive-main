@@ -1,0 +1,391 @@
+{
+  "info": {
+    "_postman_id": "harchive-backend-tests",
+    "name": "HARCHIVE Backend Tests",
+    "description": "Complete test suite for HARCHIVE backend - Mock implementation",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "health"
+          ]
+        },
+        "description": "Check if backend is running"
+      },
+      "response": []
+    },
+    {
+      "name": "2. Get App Settings",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/apps/public/prod/public-settings/by-id/harchive-app",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "apps",
+            "public",
+            "prod",
+            "public-settings",
+            "by-id",
+            "harchive-app"
+          ]
+        },
+        "description": "Get app public settings (no auth required)"
+      },
+      "response": []
+    },
+    {
+      "name": "3. Signup - Student",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  pm.environment.set('access_token', pm.response.json().token);",
+              "  pm.environment.set('user_id', pm.response.json().data.id);",
+              "  console.log('✅ Token saved to environment');",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"student_test_{{$timestamp}}\",\n  \"email\": \"student{{$timestamp}}@test.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"Jean\",\n  \"lastName\": \"Dupont\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/signup",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "signup"
+          ]
+        },
+        "description": "Create new student account"
+      },
+      "response": []
+    },
+    {
+      "name": "4. Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 200) {",
+              "  pm.environment.set('access_token', pm.response.json().token);",
+              "  pm.environment.set('user_id', pm.response.json().data.id);",
+              "  console.log('✅ Token saved to environment');",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"testpass123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        },
+        "description": "Login with username/password"
+      },
+      "response": []
+    },
+    {
+      "name": "5. Get Current User",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/auth/me",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "me"
+          ]
+        },
+        "description": "Get authenticated user profile"
+      },
+      "response": []
+    },
+    {
+      "name": "6. Update User Profile",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Jean Updated\",\n  \"lastName\": \"Dupont Updated\",\n  \"email\": \"jean.updated@test.com\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/me",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "me"
+          ]
+        },
+        "description": "Update user profile"
+      },
+      "response": []
+    },
+    {
+      "name": "7. Create Establishment",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  pm.environment.set('establishment_id', pm.response.json().data.id);",
+              "  console.log('✅ Establishment ID saved');",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Lycée Test\",\n  \"code\": \"LT-{{$timestamp}}\",\n  \"address\": \"123 Rue de l'École\",\n  \"city\": \"Kinshasa\",\n  \"country\": \"RDC\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/entities/Etablissement",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "entities",
+            "Etablissement"
+          ]
+        },
+        "description": "Create new establishment"
+      },
+      "response": []
+    },
+    {
+      "name": "8. Get Establishment",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/entities/Etablissement/{{establishment_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "entities",
+            "Etablissement",
+            "{{establishment_id}}"
+          ]
+        },
+        "description": "Get single establishment by ID"
+      },
+      "response": []
+    },
+    {
+      "name": "9. Query Establishments",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"filters\": []\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/entities/Etablissement/query",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "entities",
+            "Etablissement",
+            "query"
+          ]
+        },
+        "description": "Query all establishments"
+      },
+      "response": []
+    },
+    {
+      "name": "10. Update Establishment",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Lycée Test Updated\",\n  \"city\": \"Kinshasa Updated\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/entities/Etablissement/{{establishment_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "entities",
+            "Etablissement",
+            "{{establishment_id}}"
+          ]
+        },
+        "description": "Update establishment"
+      },
+      "response": []
+    },
+    {
+      "name": "11. Delete Establishment",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/entities/Etablissement/{{establishment_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "entities",
+            "Etablissement",
+            "{{establishment_id}}"
+          ]
+        },
+        "description": "Delete establishment"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "establishment_id",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

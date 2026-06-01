@@ -1,0 +1,687 @@
+/* Century Gothic - system font with fallbacks */
+
+/* Note: @tailwind directives are in index.css - no need to duplicate here */
+
+* {
+  font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+}
+
+/* Theme sombre - variables en format HSL valide pour shadcn/tailwind */
+:root {
+  --background: 0 0% 30%;        /* #4d4d4d */
+  --foreground: 0 0% 100%;       /* #ffffff */
+  --card: 0 0% 24%;              /* #3d3d3d */
+  --card-foreground: 0 0% 100%;
+  --popover: 0 0% 24%;
+  --popover-foreground: 0 0% 100%;
+  --primary: 0 0% 24%;           /* #3d3d3d */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 18%;         /* #2d2d2d */
+  --secondary-foreground: 0 0% 100%;
+  --muted: 0 0% 30%;
+  --muted-foreground: 0 0% 69%;  /* #b0b0b0 */
+  --accent: 0 0% 18%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 18%;
+  --input: 0 0% 18%;
+  --ring: 0 0% 35%;
+  --sidebar-background: 0 0% 10%;
+  --sidebar-foreground: 0 0% 88%;
+  --sidebar-primary: 0 0% 100%;
+  --sidebar-primary-foreground: 0 0% 10%;
+  --sidebar-accent: 0 0% 18%;
+  --sidebar-accent-foreground: 0 0% 88%;
+  --sidebar-border: 0 0% 18%;
+  --sidebar-ring: 0 0% 35%;
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+}
+
+/* Remplacer TOUS les backgrounds gris */
+.bg-gray-50,
+.bg-gray-100,
+.bg-gray-200,
+[class*="bg-gray-50"],
+[class*="bg-gray-100"],
+[class*="bg-gray-200"] {
+  background-color: #3a3a3a !important;
+}
+
+.bg-white,
+[class*="bg-white"] {
+  background-color: #3d3d3d !important;
+  color: #ffffff !important;
+}
+
+/* Textes */
+.text-gray-900,
+.text-gray-800,
+.text-gray-700,
+[class*="text-gray-9"],
+[class*="text-gray-8"],
+[class*="text-gray-7"] {
+  color: #ffffff !important;
+}
+
+.text-gray-600,
+.text-gray-500,
+[class*="text-gray-6"],
+[class*="text-gray-5"] {
+  color: #e0e0e0 !important;
+}
+
+.text-gray-400,
+.text-gray-300,
+[class*="text-gray-4"],
+[class*="text-gray-3"] {
+  color: #b0b0b0 !important;
+}
+
+/* Bordures */
+.border-gray-200,
+.border-gray-300,
+.border-gray-400,
+[class*="border-gray-2"],
+[class*="border-gray-3"],
+[class*="border-gray-4"] {
+  border-color: #2d2d2d !important;
+}
+
+/* Hover states */
+.hover\:bg-gray-50:hover,
+.hover\:bg-gray-100:hover,
+.hover\:bg-gray-200:hover,
+[class*="hover:bg-gray"]:hover {
+  background-color: #2d2d2d !important;
+}
+
+.hover\:bg-white:hover {
+  background-color: #474747 !important;
+}
+
+/* Cards et conteneurs flottants - Glassmorphism */
+[role="dialog"],
+[role="menu"],
+[role="listbox"] {
+  background: rgba(25, 25, 35, 0.45) !important;
+  background-color: rgba(25, 25, 35, 0.45) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(255,255,255,0.04) !important;
+  color: #ffffff !important;
+}
+
+/* EXCEPTION: Remove glassmorphism from combobox dropdown - spécificité élevée pour overrider [data-radix-popover-content] */
+html body [data-combobox-popover],
+html body [data-combobox-popover][role="dialog"],
+html body [data-combobox-popover][role="menu"],
+html body [data-combobox-popover][role="listbox"] {
+  background: #3a3a3a !important;
+  background-color: #3a3a3a !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid #5a5a5a !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.55) !important;
+  color: inherit !important;
+  overflow: hidden !important;
+}
+
+/* Input de recherche dans le conteneur flottant */
+html body [data-combobox-popover] input {
+  background-color: #484848 !important;
+  background: #484848 !important;
+  border-color: #5a5a5a !important;
+  border-radius: 8px !important;
+  color: #f3f4f6 !important;
+}
+
+html body [data-combobox-popover] input::placeholder {
+  color: #9ca3af !important;
+}
+
+/* Hover / sélection des items du conteneur flottant */
+html body [data-combobox-popover] [data-highlighted],
+html body [data-combobox-popover] [role="option"][data-highlighted],
+html body [data-combobox-popover] [role="option"]:hover {
+  background-color: #4d4d4d !important;
+}
+
+/* Style identique au WeekPicker pour les Select dropdowns — ciblage via data-harchive-select */
+[data-harchive-select] {
+  background: #2d2d2d !important;
+  background-color: #2d2d2d !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 0.5px solid #4d4d4d !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+  color: #ffffff !important;
+  overflow: hidden !important;
+}
+
+[data-harchive-select] [data-radix-select-viewport] {
+  background: #2d2d2d !important;
+  background-color: #2d2d2d !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+[data-harchive-select] [role="option"] {
+  border-radius: 2px !important;
+  color: #ffffff !important;
+}
+
+[data-harchive-select] [role="option"]:hover,
+[data-harchive-select] [role="option"][data-highlighted] {
+  background-color: #3a3a3a !important;
+  color: #ffffff !important;
+  border-radius: 2px !important;
+}
+
+/* Inputs, textareas, selects */
+input,
+textarea,
+select,
+[role="combobox"],
+[role="textbox"] {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
+  border-color: #4d4d4d !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #b0b0b0 !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #5a5a5a !important;
+  outline: none !important;
+  ring-color: #5a5a5a !important;
+}
+
+/* ===== BOUTONS - Fix visibilité texte ===== */
+
+/* Boutons avec fond blanc → fond sombre + texte blanc */
+button[class*="bg-white"],
+button[class*="bg-gray"] {
+  background-color: #3d3d3d !important;
+  color: #ffffff !important;
+  border-color: #2d2d2d !important;
+}
+
+/* Shadcn variant="secondary" → fond sombre + texte blanc */
+button[class*="bg-secondary"],
+button[class*="bg-muted"] {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
+}
+
+/* Shadcn variant="outline" → fond sombre + texte blanc */
+button[class*="border-input"],
+button[class*="bg-background"] {
+  background-color: #3d3d3d !important;
+  color: #ffffff !important;
+  border-color: #5a5a5a !important;
+}
+
+/* Safety global: tout bouton sans couleur de fond explicite → texte blanc */
+button {
+  color: #ffffff;
+}
+
+/* Tables */
+table {
+  background-color: #3d3d3d !important;
+  color: #ffffff !important;
+}
+
+thead {
+  background-color: #2d2d2d !important;
+}
+
+tbody tr {
+  border-color: #2d2d2d !important;
+}
+
+tbody tr:hover {
+  background-color: #474747 !important;
+}
+
+th, td {
+  color: #ffffff !important;
+  border-color: #2d2d2d !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2d2d2d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4d4d4d;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5a5a5a;
+}
+
+/* Page de connexion - Thème sombre */
+/* Cibler le body et l'iframe de la page de connexion */
+body:has(iframe[src*="auth"]),
+body:has([class*="auth"]),
+iframe[src*="auth"],
+iframe[src*="login"] {
+  background-color: #2d2d2d !important;
+}
+
+/* Style pour toutes les pages d'authentification */
+body {
+  background-color: #2d2d2d !important;
+}
+
+/* Forcer le fond sombre sur toute carte centrale */
+body > div:first-child,
+#root > div:first-child,
+.auth-page,
+[class*="Auth"],
+[class*="Login"] {
+  background-color: #2d2d2d !important;
+}
+
+/* Cartes et conteneurs blancs -> sombres (HORS dialogues) */
+body div[class*="card"]:not([role="dialog"] *),
+body div[class*="Card"]:not([role="dialog"] *),
+body > div > div[style*="background"] {
+  background-color: #3d3d3d !important;
+  border-color: #4d4d4d !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Les <form> sont transparents - ils héritent du fond de leur conteneur parent */
+body form,
+body [role="form"] {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Tous les titres et textes */
+body h1,
+body h2,
+body h3,
+body h4,
+body label,
+body p:not([class*="text-blue"]) {
+  color: #ffffff !important;
+}
+
+body small,
+body span:not([class*="text-blue"]) {
+  color: #b0b0b0 !important;
+}
+
+/* Tous les inputs */
+body input[type="email"],
+body input[type="password"],
+body input[type="text"] {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
+  border-color: #4d4d4d !important;
+}
+
+body input::placeholder {
+  color: #808080 !important;
+}
+
+body input:focus {
+  border-color: #6a6a6a !important;
+  background-color: #363636 !important;
+}
+
+/* Boutons principaux */
+body button[type="submit"],
+body button:has-text("Sign in"),
+body button:has-text("Connexion") {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
+  border: 1px solid #4d4d4d !important;
+}
+
+body button[type="submit"]:hover {
+  background-color: #3d3d3d !important;
+  border-color: #5a5a5a !important;
+}
+
+/* Boutons génériques sombres - seulement ceux sans classes de couleur spécifiques */
+body button:not([class*="bg-blue"]):not([class*="bg-green"]):not([class*="bg-red"]):not([class*="bg-yellow"]):not([class*="bg-purple"]):not([class*="bg-orange"]):not([class*="bg-teal"]):not([class*="bg-indigo"]):not([class*="bg-white"]):not([class*="text-"]) {
+  background-color: #3d3d3d;
+  color: #ffffff;
+  border-color: #4d4d4d;
+}
+
+/* Liens */
+body a {
+  color: #60a5fa !important;
+}
+
+body a:hover {
+  color: #93c5fd !important;
+}
+
+/* Séparateurs */
+body hr,
+body [class*="divider"] {
+  border-color: #4d4d4d !important;
+}
+
+/* Shadcn UI overrides */
+.bg-background {
+  background-color: var(--background) !important;
+}
+
+.bg-card {
+  background-color: var(--card) !important;
+}
+
+.bg-secondary {
+  background-color: var(--secondary) !important;
+}
+
+.bg-muted {
+  background-color: var(--muted) !important;
+}
+
+.text-foreground {
+  color: var(--foreground) !important;
+}
+
+.text-muted-foreground {
+  color: var(--muted-foreground) !important;
+}
+
+/* Dropdowns et Popovers - Glassmorphism */
+[role="dialog"] > div,
+[data-radix-dialog-content],
+[data-radix-dropdown-menu-content],
+[data-radix-select-content],
+[data-radix-popover-content],
+[data-radix-sheet-content],
+[data-radix-alert-dialog-content],
+[data-radix-hover-card-content],
+[data-radix-tooltip-content],
+[data-radix-context-menu-content],
+[data-radix-menubar-content] {
+  background: rgba(25, 25, 35, 0.45) !important;
+  background-color: rgba(25, 25, 35, 0.45) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(255,255,255,0.04) !important;
+  color: #ffffff !important;
+}
+
+/* Le wrapper Radix est toujours transparent - seul son contenu est stylisé */
+[data-radix-popper-content-wrapper] {
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Exception : bulle avatar transparente */
+[data-radix-popper-content-wrapper] > div.avatar-popover-transparent,
+[data-radix-popper-content-wrapper] .avatar-popover-transparent {
+  background-color: transparent !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Select items */
+[role="option"],
+[data-radix-collection-item] {
+  background-color: transparent !important;
+  color: #ffffff !important;
+}
+
+[role="option"]:hover,
+[data-radix-collection-item]:hover,
+[data-highlighted] {
+  background-color: #2d2d2d !important;
+}
+
+/* Badges */
+.bg-blue-50,
+.bg-blue-100,
+.bg-green-50,
+.bg-green-100,
+.bg-red-50,
+.bg-red-100,
+.bg-yellow-50,
+.bg-yellow-100 {
+  background-color: #3d3d3d !important;
+}
+
+.text-blue-600,
+.text-blue-700,
+.text-blue-800 {
+  color: #60a5fa !important;
+}
+
+.text-green-600,
+.text-green-700,
+.text-green-800 {
+  color: #4ade80 !important;
+}
+
+.text-red-600,
+.text-red-700,
+.text-red-800 {
+  color: #f87171 !important;
+}
+
+.text-yellow-600,
+.text-yellow-700,
+.text-yellow-800 {
+  color: #facc15 !important;
+}
+
+/* ===== GLASSMORPHISM: Inputs/Textareas/Selects INSIDE dialogs ===== */
+/* Spécificité élevée pour overrider TOUTES les règles globales !important */
+html body [role="dialog"] input,
+html body [role="dialog"] input[type="text"],
+html body [role="dialog"] input[type="email"],
+html body [role="dialog"] input[type="password"],
+html body [role="dialog"] input[type="month"],
+html body [role="dialog"] input[type="date"],
+html body [role="dialog"] input[type="number"],
+html body [role="dialog"] input[type="search"],
+html body [role="dialog"] input[type="tel"],
+html body [role="dialog"] input[type="url"],
+html body [role="dialog"] textarea,
+html body [role="dialog"] select,
+html body [role="dialog"] [role="combobox"],
+html body [role="dialog"] [role="textbox"],
+html body [data-radix-dialog-content] input,
+html body [data-radix-dialog-content] textarea,
+html body [data-radix-dialog-content] select,
+html body .draggable-dialog-portal input,
+html body .draggable-dialog-portal textarea,
+html body .draggable-dialog-portal select {
+  background: rgba(255, 255, 255, 0.07) !important;
+  background-color: rgba(255, 255, 255, 0.07) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  border-radius: 10px !important;
+  color: #ffffff !important;
+}
+
+html body [role="dialog"] input:focus,
+html body [role="dialog"] textarea:focus,
+html body [role="dialog"] select:focus,
+html body [data-radix-dialog-content] input:focus,
+html body [data-radix-dialog-content] textarea:focus,
+html body [data-radix-dialog-content] select:focus,
+html body .draggable-dialog-portal input:focus,
+html body .draggable-dialog-portal textarea:focus,
+html body .draggable-dialog-portal select:focus {
+  background: rgba(255, 255, 255, 0.10) !important;
+  background-color: rgba(255, 255, 255, 0.10) !important;
+  border-color: rgba(255, 255, 255, 0.30) !important;
+  outline: none !important;
+}
+
+html body [role="dialog"] input::placeholder,
+html body [role="dialog"] textarea::placeholder,
+html body [data-radix-dialog-content] input::placeholder,
+html body [data-radix-dialog-content] textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Labels dans les dialogues */
+html body [role="dialog"] label,
+html body [data-radix-dialog-content] label {
+  color: #c0c0c0 !important;
+}
+
+/* Checkbox dans les dialogues - transparent background */
+html body [role="dialog"] input[type="checkbox"],
+html body [data-radix-dialog-content] input[type="checkbox"] {
+  accent-color: rgba(255, 255, 255, 0.4) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border-radius: 3px !important;
+}
+
+/* Boutons dans les dialogues */
+html body [role="dialog"] button,
+html body [data-radix-dialog-content] button {
+  font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important;
+}
+
+/* Spans dans les dialogues - texte blanc */
+html body [role="dialog"] span,
+html body [data-radix-dialog-content] span {
+  color: #e0e0e0 !important;
+}
+
+/* ===== EXCEPTION COMBOBOX POPOVER ===== */
+html body [data-combobox-popover] {
+  background: #6b6b6b !important;
+  background-color: #6b6b6b !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid #7d7d7d !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4) !important;
+}
+
+html body [data-combobox-popover] div,
+html body [data-combobox-popover] ul,
+html body [data-combobox-popover] li {
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* CommandInput styling */
+html body [data-combobox-popover] input[type="search"],
+html body [data-combobox-popover] input[type="text"] {
+  background: #5a5a5a !important;
+  border: 1px solid #6b6b6b !important;
+  border-radius: 6px 6px 0 0 !important;
+  color: #e5e7eb !important;
+  padding: 10px 12px !important;
+  margin: 8px !important;
+  font-size: 14px !important;
+}
+
+html body [data-combobox-popover] input[type="search"]::placeholder,
+html body [data-combobox-popover] input[type="text"]::placeholder {
+  color: #888 !important;
+}
+
+/* CommandItem hover effect */
+html body [data-combobox-popover] [role="option"]:hover {
+  background: #5a5a5a !important;
+  background-color: #5a5a5a !important;
+}
+
+html body [data-combobox-popover] [role="option"][aria-selected="true"] {
+  background: #484848 !important;
+  background-color: #484848 !important;
+}
+
+/* Remove glassmorphism backdrop from combobox */
+html body [data-combobox-popover][role="listbox"],
+html body [data-combobox-popover][role="menu"],
+[data-radix-popover-content][data-combobox-popover] {
+  background: #6b6b6b !important;
+  background-color: #6b6b6b !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid #7d7d7d !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4) !important;
+}
+
+/* Suppress all backdrop elements behind combobox */
+[data-radix-popover-content-wrapper][style*="data-combobox"] {
+  background: transparent !important;
+}
+
+/* Remove glassmorphism from Command/Combobox containers */
+[data-combobox-popover] [role="listbox"],
+[data-combobox-popover] [role="menu"],
+[data-combobox-popover] [role="dialog"] {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Force remove glass effect on parent container */
+[data-radix-popover-content][data-combobox-popover] {
+  background: #6b6b6b !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4) !important;
+  border: 1px solid #7d7d7d !important;
+}
+
+/* Remove any overlay/backdrop divs */
+html body [data-combobox-popover]::before {
+  display: none !important;
+}
+
+html body [data-combobox-popover]::after {
+  display: none !important;
+}
