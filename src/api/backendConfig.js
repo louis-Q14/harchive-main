@@ -5,7 +5,7 @@
  * Set USE_LOCAL_BACKEND=true to use local Node.js backend
  */
 
-const USE_LOCAL_BACKEND = true;
+const USE_LOCAL_BACKEND = import.meta.env.VITE_USE_LOCAL_BACKEND === 'true';
 
 export const backendConfig = {
   // Use local backend instead of Base44
