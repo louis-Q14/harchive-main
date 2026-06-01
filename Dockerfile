@@ -1,4 +1,5 @@
 # Stage 1: Build Vite frontend
+# Build args default to empty so Vite uses relative URLs (Caddy proxy handles /api/*)
 FROM node:18-alpine AS builder
 
 WORKDIR /app
