@@ -1,6 +1,14 @@
 :80 {
-    root * /app/dist
-    try_files {path} /index.html
-    file_server
-    encode gzip
+    # Proxy API requests to backend service
+    handle /api/* {
+        reverse_proxy harchive_harchive-api:3000
+    }
+
+    # Serve frontend SPA for all other routes
+    handle {
+        root * /app/dist
+        try_files {path} /index.html
+        file_server
+        encode gzip
+    }
 }
