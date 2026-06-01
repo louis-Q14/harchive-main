@@ -26,7 +26,12 @@ export const authService = {
           baseURL: backendConfig.localBackendUrl,
         }).get('/api/auth/me');
         // Unwrap { status, data } envelope — return user object directly
-        return response?.data || response;
+        const user = response?.data || response;
+        // Validate it's a real user object (not HTML fallback from Caddy SPA)
+        if (!user || typeof user !== 'object' || !user.id) {
+          throw { status: 401, message: 'Not authenticated' };
+        }
+        return user;
       } else {
         // Use Base44 SDK
         const user = await base44.auth.me();
