@@ -3,7 +3,7 @@ import logger from '../utils/logger.js';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const FROM_EMAIL = 'HARCHIVE <no-reply@archive.cd>';
+const FROM_EMAIL = 'HARCHIVE <onboarding@resend.dev>';
 
 /**
  * Send a 6-digit verification code to the given email

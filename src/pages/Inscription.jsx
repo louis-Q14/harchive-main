@@ -377,14 +377,6 @@ export default function Inscription() {
                   <Input required type="email" value={formData.email} onChange={(e) => { handleChange("email", e.target.value); setEmailVerified(false); }} style={inputStyle} placeholder="votre.email@exemple.com" />
                 </div>
 
-                <div style={{ marginBottom: 16 }}>
-                  <EmailVerification
-                    email={formData.email}
-                    onVerified={() => setEmailVerified(true)}
-                    disabled={!formData.email}
-                  />
-                </div>
-
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 16 }}>
                   <div>
                     <div style={labelStyle}>Mot de passe <span style={{ color: "#dc2626" }}>*</span></div>
@@ -403,6 +395,14 @@ export default function Inscription() {
                       <div style={{ color: "#f87171", fontSize: 12, marginTop: 4 }}>Les mots de passe ne correspondent pas</div>
                     )}
                   </div>
+                </div>
+
+                <div style={{ marginBottom: 16 }}>
+                  <EmailVerification
+                    email={formData.email}
+                    onVerified={() => setEmailVerified(true)}
+                    disabled={!formData.email}
+                  />
                 </div>
               </div>
 

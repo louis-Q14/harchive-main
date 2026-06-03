@@ -212,14 +212,6 @@ export default function InscriptionParent() {
               </div>
             </div>
 
-            <div style={{ marginBottom: 16 }}>
-              <EmailVerification
-                email={formData.email}
-                onVerified={() => setEmailVerified(true)}
-                disabled={!formData.email}
-              />
-            </div>
-
             {/* Adresse */}
             <div style={{ marginBottom: 16 }}>
               <div style={labelStyle}>Adresse</div>
@@ -245,6 +237,14 @@ export default function InscriptionParent() {
                   <div style={{ color: "#f87171", fontSize: 12, marginTop: 4 }}>Les mots de passe ne correspondent pas</div>
                 )}
               </div>
+            </div>
+
+            <div style={{ marginBottom: 16 }}>
+              <EmailVerification
+                email={formData.email}
+                onVerified={() => setEmailVerified(true)}
+                disabled={!formData.email}
+              />
             </div>
           </div>
 

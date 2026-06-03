@@ -323,16 +323,8 @@ export default function InscriptionEtablissement() {
               </div>
             </div>
 
-            <div style={{ marginBottom: 16 }}>
-              <EmailVerification
-                email={formData.email_responsable}
-                onVerified={() => setEmailVerified(true)}
-                disabled={!formData.email_responsable}
-              />
-            </div>
-
             {/* Mot de passe */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 16 }}>
               <div>
                 <div style={labelStyle}>Mot de passe <span style={{ color: "#dc2626" }}>*</span></div>
                 <div style={{ position: "relative" }}>
@@ -363,6 +355,14 @@ export default function InscriptionEtablissement() {
                   />
                 </div>
               </div>
+            </div>
+
+            <div style={{ marginBottom: 16 }}>
+              <EmailVerification
+                email={formData.email_responsable}
+                onVerified={() => setEmailVerified(true)}
+                disabled={!formData.email_responsable}
+              />
             </div>
           </div>
 
