@@ -406,12 +406,13 @@ function ReelsPlayer({ shorts = [], currentIndex = 0, goNext = () => {}, goPrev 
           {/* Creator Avatar (Bottom) */}
           <div className="flex flex-col items-center gap-0.5 mt-1">
             <div className="rounded-full overflow-hidden flex-shrink-0" style={{ width: 40, height: 40 }}>
-              {/* @ts-ignore */}
-              <UserAvatarPopover
-                name={short.creator_nom}
-                photoUrl={short.creator_photo_url}
-                size="md"
-              />
+              {short.creator_photo_url ? (
+                <img src={short.creator_photo_url} alt={short.creator_nom} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-white/20 flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">{short.creator_nom?.[0]?.toUpperCase() || '?'}</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

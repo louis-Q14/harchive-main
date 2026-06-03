@@ -22,7 +22,8 @@ import {
   Building2,
   Zap,
   Info,
-  Settings
+  Settings,
+  Video
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -48,6 +49,7 @@ const roleNavigation = {
     { title: "Journal", url: "Journal", icon: "/assets/icons/eb36099c9_news-paper.png", isCustomIcon: true },
     { title: "Profil", url: "Profil", icon: "/assets/icons/d92f9c844_user-avatar.png", isCustomIcon: true },
     { title: "Galerie Photos", url: "GaleriePhotos", icon: "/assets/icons/6db68e5c5_photos.png", isCustomIcon: true },
+    { title: "Galerie Vidéo", url: "GalerieVideo", icon: Video },
     { title: "Amis", url: "Amis", icon: "/assets/icons/0f08956b7_people.png", isCustomIcon: true },
     { title: "Groupes", url: "Groupes", icon: "/assets/icons/273813ec5_group1.png", isCustomIcon: true },
     { title: "Messagerie", url: "Messagerie", icon: "/assets/icons/e5073e7f6_chat.png", isCustomIcon: true },
@@ -64,6 +66,7 @@ const roleNavigation = {
     { title: "Journal", url: "Journal", icon: "/assets/icons/eb36099c9_news-paper.png", isCustomIcon: true },
     { title: "Profil", url: "Profil", icon: "/assets/icons/d92f9c844_user-avatar.png", isCustomIcon: true },
     { title: "Galerie Photos", url: "GaleriePhotos", icon: "/assets/icons/6db68e5c5_photos.png", isCustomIcon: true },
+    { title: "Galerie Vidéo", url: "GalerieVideo", icon: Video },
     { title: "Amis", url: "Amis", icon: "/assets/icons/0f08956b7_people.png", isCustomIcon: true },
     { title: "Groupes", url: "Groupes", icon: "/assets/icons/273813ec5_group1.png", isCustomIcon: true },
     { title: "Messagerie", url: "Messagerie", icon: "/assets/icons/e5073e7f6_chat.png", isCustomIcon: true },
@@ -80,6 +83,7 @@ const roleNavigation = {
     { title: "Journal", url: "Journal", icon: "/assets/icons/eb36099c9_news-paper.png", isCustomIcon: true },
     { title: "Profil", url: "Profil", icon: "/assets/icons/d92f9c844_user-avatar.png", isCustomIcon: true },
     { title: "Galerie Photos", url: "GaleriePhotos", icon: "/assets/icons/6db68e5c5_photos.png", isCustomIcon: true },
+    { title: "Galerie Vidéo", url: "GalerieVideo", icon: Video },
     { title: "Amis", url: "Amis", icon: "/assets/icons/0f08956b7_people.png", isCustomIcon: true },
     { title: "Groupes", url: "Groupes", icon: "/assets/icons/273813ec5_group1.png", isCustomIcon: true },
     { title: "Messagerie", url: "Messagerie", icon: "/assets/icons/e5073e7f6_chat.png", isCustomIcon: true },
@@ -101,6 +105,7 @@ const roleNavigation = {
     { title: "Journal", url: "Journal", icon: "/assets/icons/eb36099c9_news-paper.png", isCustomIcon: true },
     { title: "Profil", url: "Profil", icon: "/assets/icons/d92f9c844_user-avatar.png", isCustomIcon: true },
     { title: "Galerie Photos", url: "GaleriePhotos", icon: "/assets/icons/6db68e5c5_photos.png", isCustomIcon: true },
+    { title: "Galerie Vidéo", url: "GalerieVideo", icon: Video },
     { title: "Amis", url: "Amis", icon: "/assets/icons/0f08956b7_people.png", isCustomIcon: true },
     { title: "Groupes", url: "Groupes", icon: "/assets/icons/273813ec5_group1.png", isCustomIcon: true },
     { title: "Messagerie", url: "Messagerie", icon: "/assets/icons/e5073e7f6_chat.png", isCustomIcon: true },
@@ -116,6 +121,7 @@ const roleNavigation = {
     { title: "Journal", url: "Journal", icon: "/assets/icons/eb36099c9_news-paper.png", isCustomIcon: true },
     { title: "Profil", url: "Profil", icon: "/assets/icons/d92f9c844_user-avatar.png", isCustomIcon: true },
     { title: "Galerie Photos", url: "GaleriePhotos", icon: "/assets/icons/6db68e5c5_photos.png", isCustomIcon: true },
+    { title: "Galerie Vidéo", url: "GalerieVideo", icon: Video },
     { title: "Amis", url: "Amis", icon: "/assets/icons/0f08956b7_people.png", isCustomIcon: true },
     { title: "Groupes", url: "Groupes", icon: "/assets/icons/273813ec5_group1.png", isCustomIcon: true },
     { title: "Messagerie", url: "Messagerie", icon: "/assets/icons/e5073e7f6_chat.png", isCustomIcon: true },
@@ -131,6 +137,7 @@ const roleNavigation = {
     { title: "Journal", url: "Journal", icon: "/assets/icons/eb36099c9_news-paper.png", isCustomIcon: true },
     { title: "Profil", url: "Profil", icon: "/assets/icons/d92f9c844_user-avatar.png", isCustomIcon: true },
     { title: "Galerie Photos", url: "GaleriePhotos", icon: "/assets/icons/6db68e5c5_photos.png", isCustomIcon: true },
+    { title: "Galerie Vidéo", url: "GalerieVideo", icon: Video },
     { title: "Amis", url: "Amis", icon: "/assets/icons/0f08956b7_people.png", isCustomIcon: true },
     { title: "Groupes", url: "Groupes", icon: "/assets/icons/273813ec5_group1.png", isCustomIcon: true },
     { title: "Messagerie", url: "Messagerie", icon: "/assets/icons/e5073e7f6_chat.png", isCustomIcon: true },
@@ -141,6 +148,7 @@ const roleNavigation = {
     { title: "Journal", url: "Journal", icon: "/assets/icons/eb36099c9_news-paper.png", isCustomIcon: true },
     { title: "Profil", url: "Profil", icon: "/assets/icons/d92f9c844_user-avatar.png", isCustomIcon: true },
     { title: "Galerie Photos", url: "GaleriePhotos", icon: "/assets/icons/6db68e5c5_photos.png", isCustomIcon: true },
+    { title: "Galerie Vidéo", url: "GalerieVideo", icon: Video },
     { title: "Amis", url: "Amis", icon: "/assets/icons/0f08956b7_people.png", isCustomIcon: true },
     { title: "Groupes", url: "Groupes", icon: "/assets/icons/273813ec5_group1.png", isCustomIcon: true },
     { title: "Messagerie", url: "Messagerie", icon: "/assets/icons/e5073e7f6_chat.png", isCustomIcon: true },

@@ -68,6 +68,7 @@ import EtablissementsMinisteriel from './pages/EtablissementsMinisteriel';
 import EtudiantsEtablissement from './pages/EtudiantsEtablissement';
 import EvaluationModule from './pages/EvaluationModule';
 import GaleriePhotos from './pages/GaleriePhotos';
+import GalerieVideo from './pages/GalerieVideo';
 import GestionClasse from './pages/GestionClasse';
 import GestionInscriptions from './pages/GestionInscriptions';
 import GestionStructureAcademique from './pages/GestionStructureAcademique';
@@ -126,6 +127,7 @@ export const PAGES = {
     "EtudiantsEtablissement": EtudiantsEtablissement,
     "EvaluationModule": EvaluationModule,
     "GaleriePhotos": GaleriePhotos,
+    "GalerieVideo": GalerieVideo,
     "GestionClasse": GestionClasse,
     "GestionInscriptions": GestionInscriptions,
     "GestionStructureAcademique": GestionStructureAcademique,
