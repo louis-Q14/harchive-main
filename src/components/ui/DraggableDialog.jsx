@@ -114,30 +114,7 @@ export function DraggableDialog({ open, onOpenChange, title, children, maxWidth 
           {children}
         </div>
 
-        {/* Resize handle (bottom) */}
-        {resizable && (
-          <div
-            onMouseDown={onResizeMouseDown}
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: 40,
-              height: 6,
-              cursor: "ns-resize",
-              zIndex: 10,
-              padding: "4px 0",
-            }}
-          >
-            <div style={{
-              width: 40,
-              height: 4,
-              borderRadius: 2,
-              background: "rgba(255,255,255,0.25)",
-            }} />
-          </div>
-        )}
+
       </div>
     </>,
     document.body
