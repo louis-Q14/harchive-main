@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { DraggableDialog } from "@/components/ui/DraggableDialog";
 import {
   Heart, MessageCircle, Share2, Play, Volume2, VolumeX,
-  Plus, Loader2, X, Music, Send
+  Plus, Loader2, X, Music, Send, ChevronLeft, ChevronRight
 } from "lucide-react";
 import UserAvatarPopover from "@/components/ui/UserAvatarPopover";
 import ShortCreator from "./ShortCreator";
@@ -111,7 +111,6 @@ function ReelsPlayer({ shorts = [], currentIndex = 0, goNext = () => {}, goPrev 
   const videoRef = useRef(null);
   const containerRef = useRef(null);
   const touchStartY = useRef(0);
-  const lastWheel = useRef(0);
   const viewRecorded = useRef(false);
   const progressRef = useRef(null);
   const progressInterval = useRef(null);
@@ -219,15 +218,6 @@ function ReelsPlayer({ shorts = [], currentIndex = 0, goNext = () => {}, goPrev 
     else if (dy < -60) goPrev();
   };
 
-  // Scroll wheel (debounced)
-  const onWheel = (e) => { // @ts-ignore
-    const now = Date.now();
-    if (now - lastWheel.current < 600) return;
-    lastWheel.current = now;
-    if (e.deltaY > 0) goNext();
-    else if (e.deltaY < 0) goPrev();
-  };
-
   if (!short) return null;
 
   // @ts-ignore
@@ -236,7 +226,21 @@ function ReelsPlayer({ shorts = [], currentIndex = 0, goNext = () => {}, goPrev 
 
   return (
     <div className="flex items-center justify-center gap-2.5">
-      {/* ===== VIDEO PLAYER ===== */}
+      {/* ===== LEFT ARROW ===== */}
+      <button
+        onClick={goPrev}
+        disabled={currentIndex === 0}
+        className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition"
+        style={{
+          background: currentIndex === 0 ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.15)',
+          cursor: currentIndex === 0 ? 'default' : 'pointer',
+          opacity: currentIndex === 0 ? 0.3 : 1,
+        }}
+      >
+        <ChevronLeft className="w-5 h-5 text-white" />
+      </button>
+
+      {/* ===== VIDEO PLAYER ===== */}}
       <div
         ref={containerRef}
         className="relative rounded-lg overflow-hidden select-none bg-black flex-shrink-0"
@@ -248,7 +252,6 @@ function ReelsPlayer({ shorts = [], currentIndex = 0, goNext = () => {}, goPrev 
         }}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        onWheel={onWheel}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -311,6 +314,20 @@ function ReelsPlayer({ shorts = [], currentIndex = 0, goNext = () => {}, goPrev 
           </div>
         )}
       </div>
+
+      {/* ===== RIGHT ARROW ===== */}
+      <button
+        onClick={goNext}
+        disabled={currentIndex === shorts.length - 1}
+        className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition"
+        style={{
+          background: currentIndex === shorts.length - 1 ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.15)',
+          cursor: currentIndex === shorts.length - 1 ? 'default' : 'pointer',
+          opacity: currentIndex === shorts.length - 1 ? 0.3 : 1,
+        }}
+      >
+        <ChevronRight className="w-5 h-5 text-white" />
+      </button>
 
       {/* ===== RIGHT SIDEBAR: Action Buttons (OUTSIDE VIDEO) ===== */}
       <div className="flex flex-col items-center flex-shrink-0 px-0 py-4" style={{ height: 'calc(100vh - 160px)' }}>
