@@ -559,33 +559,33 @@ export default function Home() {
                     <span className="text-gray-500 text-xs" style={CG}>Province</span>
                     <p className="text-white text-sm" style={CG}>{detailEtab?.province || detailExtra?.inscription?.province || detailEtab?.territoire || '—'}</p>
                   </div>
-                  {(detailExtra?.inscription?.adresse || detailExtra?.registered?.address) && (
+                  {(detailExtra?.inscription?.adresse || detailExtra?.registered?.address || detailEtab?.adresse) && (
                     <div className="col-span-2">
                       <span className="text-gray-500 text-xs" style={CG}>Adresse complète</span>
-                      <p className="text-white text-sm" style={CG}>{detailExtra?.inscription?.adresse || detailExtra?.registered?.address}</p>
+                      <p className="text-white text-sm" style={CG}>{detailExtra?.inscription?.adresse || detailEtab?.adresse || detailExtra?.registered?.address}</p>
                     </div>
                   )}
                 </div>
               </div>
 
               {/* Contact */}
-              {(detailExtra?.inscription?.telephone || detailExtra?.inscription?.email_etablissement || detailExtra?.registered?.website) && (
+              {(detailExtra?.inscription?.telephone || detailExtra?.inscription?.email_etablissement || detailExtra?.registered?.website || detailEtab?.telephone || detailEtab?.email_etablissement) && (
                 <div className="rounded-xl p-4" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
                   <h3 className="text-white font-semibold text-sm mb-3 flex items-center gap-2" style={CG}>
                     <Phone className="w-4 h-4 text-purple-400" />
                     Contact
                   </h3>
                   <div className="grid grid-cols-2 gap-3">
-                    {(detailExtra?.inscription?.telephone || detailExtra?.registered?.phone) && (
+                    {(detailExtra?.inscription?.telephone || detailExtra?.registered?.phone || detailEtab?.telephone) && (
                       <div className="flex items-center gap-2">
                         <Phone className="w-3.5 h-3.5 text-gray-500" />
-                        <span className="text-white text-sm" style={CG}>{detailExtra?.inscription?.telephone || detailExtra?.registered?.phone}</span>
+                        <span className="text-white text-sm" style={CG}>{detailExtra?.inscription?.telephone || detailEtab?.telephone || detailExtra?.registered?.phone}</span>
                       </div>
                     )}
-                    {(detailExtra?.inscription?.email_etablissement || detailExtra?.registered?.email) && (
+                    {(detailExtra?.inscription?.email_etablissement || detailExtra?.registered?.email || detailEtab?.email_etablissement) && (
                       <div className="flex items-center gap-2">
                         <Mail className="w-3.5 h-3.5 text-gray-500" />
-                        <span className="text-white text-sm" style={CG}>{detailExtra?.inscription?.email_etablissement || detailExtra?.registered?.email}</span>
+                        <span className="text-white text-sm" style={CG}>{detailExtra?.inscription?.email_etablissement || detailEtab?.email_etablissement || detailExtra?.registered?.email}</span>
                       </div>
                     )}
                     {detailExtra?.registered?.website && (

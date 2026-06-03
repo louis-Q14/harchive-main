@@ -569,8 +569,8 @@ export const approveInscription = async (req, res) => {
       // Update territoire and province in etablissements_agrees from inscription data
       if (agreedEtab && (request.ville || request.province)) {
         await dbUtils.run(
-          `UPDATE etablissements_agrees SET territoire = COALESCE(NULLIF(?, ''), territoire), province = COALESCE(NULLIF(?, ''), province) WHERE id = ?`,
-          [request.ville || '', request.province || '', agreedEtab.id]
+          `UPDATE etablissements_agrees SET territoire = COALESCE(NULLIF(?, ''), territoire), province = COALESCE(NULLIF(?, ''), province), adresse = COALESCE(NULLIF(?, ''), adresse), telephone = COALESCE(NULLIF(?, ''), telephone), email_etablissement = COALESCE(NULLIF(?, ''), email_etablissement) WHERE id = ?`,
+          [request.ville || '', request.province || '', request.adresse || '', request.telephone || '', request.email_etablissement || '', agreedEtab.id]
         );
       }
 
