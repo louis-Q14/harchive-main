@@ -485,6 +485,7 @@ const initializeSchema = async () => {
     }
 
     // Seed etablissements agrees data
+    await addColumnIfNotExists('etablissements_agrees', 'categorie', "VARCHAR(100) DEFAULT ''");
     await seedEtablissementsAgrees(
       (sql, params) => dbRun(sql, params),
       (sql, params) => dbGet(sql, params)
@@ -673,6 +674,7 @@ const initializeSchema = async () => {
       etat VARCHAR(100),
       type VARCHAR(100),
       ordre INT DEFAULT 0,
+      categorie VARCHAR(100) DEFAULT '',
       createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
       updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
@@ -841,6 +843,7 @@ const initializeSchema = async () => {
   await ensureAllTables();
 
   // Seed etablissements agrees data
+  await addColumnIfNotExists('etablissements_agrees', 'categorie', "VARCHAR(100) DEFAULT ''");
   await seedEtablissementsAgrees(
     (sql, params) => dbRun(sql, params),
     (sql, params) => dbGet(sql, params)
