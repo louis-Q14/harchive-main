@@ -1,5 +1,5 @@
+import { Resend } from 'resend';
 import { randomBytes } from 'crypto';
-
 import logger from '../utils/logger.js';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
