@@ -489,7 +489,7 @@ const initializeSchema = async () => {
     await addColumnIfNotExists('inscription_etablissements', 'province', "VARCHAR(255) DEFAULT ''");
 
     // Add contact/address columns to etablissements_agrees if missing
-    await addColumnIfNotExists('etablissements_agrees', 'adresse', "TEXT DEFAULT ''");
+    await addColumnIfNotExists('etablissements_agrees', 'adresse', "VARCHAR(500) DEFAULT ''");
     await addColumnIfNotExists('etablissements_agrees', 'telephone', "VARCHAR(50) DEFAULT ''");
     await addColumnIfNotExists('etablissements_agrees', 'email_etablissement', "VARCHAR(255) DEFAULT ''");
 
@@ -520,7 +520,7 @@ const initializeSchema = async () => {
     }
 
     // Add contact/address columns to etablissements_agrees if missing
-    await addColumnIfNotExists('etablissements_agrees', 'adresse', "TEXT DEFAULT ''");
+    await addColumnIfNotExists('etablissements_agrees', 'adresse', "VARCHAR(500) DEFAULT ''");
     await addColumnIfNotExists('etablissements_agrees', 'telephone', "VARCHAR(50) DEFAULT ''");
     await addColumnIfNotExists('etablissements_agrees', 'email_etablissement', "VARCHAR(255) DEFAULT ''");
 
@@ -708,7 +708,7 @@ const initializeSchema = async () => {
       type VARCHAR(100),
       ordre INT DEFAULT 0,
       categorie VARCHAR(100) DEFAULT '',
-      adresse TEXT DEFAULT '',
+      adresse VARCHAR(500) DEFAULT '',
       telephone VARCHAR(50) DEFAULT '',
       email_etablissement VARCHAR(255) DEFAULT '',
       createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
