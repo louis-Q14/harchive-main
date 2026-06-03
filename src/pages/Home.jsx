@@ -184,7 +184,7 @@ export default function Home() {
         <div className="w-full px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <img src="/assets/icons/6153a57fe_logoHARCHIVEF2.png" alt="Harchive Logo" className="h-20 w-auto object-contain" />
+              <img src="/assets/icons/logo HARCHIVE FA.png" alt="Harchive Logo" className="h-20 w-auto object-contain" />
             </div>
             <div className="flex items-center gap-3">
               {user ? (
@@ -226,7 +226,7 @@ export default function Home() {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="w-full text-center">
           <div className="mb-8">
-            <img src="/assets/icons/6153a57fe_logoHARCHIVEF2.png" alt="Harchive Logo" className="h-48 w-auto object-contain mx-auto mb-6" />
+            <img src="/assets/icons/logo HARCHIVE FA.png" alt="Harchive Logo" className="h-48 w-auto object-contain mx-auto mb-6" />
             <h1 className="text-5xl font-bold text-white mb-4">
               Bienvenue sur Harchive
             </h1>
