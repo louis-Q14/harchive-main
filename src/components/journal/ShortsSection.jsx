@@ -261,7 +261,7 @@ function ReelsPlayer({ shorts = [], currentIndex = 0, goNext = () => {}, goPrev 
           disabled={currentIndex === 0}
           className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-full flex items-center justify-center transition"
           style={{
-            background: 'rgba(0,0,0,0.45)',
+            background: 'transparent',
             opacity: currentIndex === 0 ? 0.25 : 1,
             cursor: currentIndex === 0 ? 'default' : 'pointer',
           }}
@@ -275,7 +275,7 @@ function ReelsPlayer({ shorts = [], currentIndex = 0, goNext = () => {}, goPrev 
           disabled={currentIndex === shorts.length - 1}
           className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-full flex items-center justify-center transition"
           style={{
-            background: 'rgba(0,0,0,0.45)',
+            background: 'transparent',
             opacity: currentIndex === shorts.length - 1 ? 0.25 : 1,
             cursor: currentIndex === shorts.length - 1 ? 'default' : 'pointer',
           }}
