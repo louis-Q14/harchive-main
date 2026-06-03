@@ -7,7 +7,9 @@ import {
   createAdminSysteme,
   blockUser, deleteUser, adminUpdateUser,
   refreshAccessToken,
-  sendEmailVerification, verifyEmailCode
+  sendEmailVerification, verifyEmailCode,
+  sendSettingsCode, changePassword, changeEmail,
+  getNotifPrefs, updateNotifPrefs, updatePrivacy
 } from '../controllers/authController.js';
 import { verifyToken, requireRole, clearTokenCookie } from '../middleware/auth.js';
 
@@ -33,6 +35,16 @@ router.post('/refresh', refreshAccessToken);
  */
 router.get('/me', verifyToken, getCurrentUser);
 router.put('/me', verifyToken, updateProfile);
+
+/**
+ * Account settings routes (authentication required)
+ */
+router.post('/settings/send-code', verifyToken, sendSettingsCode);
+router.post('/settings/change-password', verifyToken, changePassword);
+router.post('/settings/change-email', verifyToken, changeEmail);
+router.get('/settings/notification-prefs', verifyToken, getNotifPrefs);
+router.put('/settings/notification-prefs', verifyToken, updateNotifPrefs);
+router.put('/settings/privacy', verifyToken, updatePrivacy);
 
 /**
  * Admin routes (for managing inscriptions) — requires admin role

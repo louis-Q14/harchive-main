@@ -386,6 +386,7 @@ const initializeSchema = async () => {
       ['nom_mere', "VARCHAR(255) DEFAULT ''"],
       ['province_affectation', "VARCHAR(255) DEFAULT ''"],
       ['blocked', "INT DEFAULT 0"],
+      ['notification_prefs', "LONGTEXT DEFAULT NULL"],
     ];
 
     for (const [col, def] of colsToAdd) {

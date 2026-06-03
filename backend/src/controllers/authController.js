@@ -1370,4 +1370,231 @@ export const verifyEmailCode = async (req, res) => {
   }
 };
 
+/**
+ * Send a verification code for account settings actions (password change, email change).
+ * POST /api/auth/settings/send-code
+ * Body: { purpose: 'password_change' | 'email_change', newEmail? }
+ */
+export const sendSettingsCode = async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) return res.status(401).json({ status: 401, message: 'Non authentifié' });
+
+    const { purpose, newEmail } = req.body;
+    if (!purpose) return res.status(400).json({ status: 400, message: 'purpose requis' });
+
+    const user = await dbUtils.get('SELECT email FROM users WHERE id = ?', [userId]);
+    if (!user) return res.status(404).json({ status: 404, message: 'Utilisateur introuvable' });
+
+    const targetEmail = (purpose === 'email_change' && newEmail) ? newEmail : user.email;
+
+    // Validate new email not already taken
+    if (purpose === 'email_change' && newEmail) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)) {
+        return res.status(400).json({ status: 400, message: 'Adresse email invalide' });
+      }
+      const existing = await dbUtils.get('SELECT id FROM users WHERE email = ? AND id != ?', [newEmail, userId]);
+      if (existing) return res.status(409).json({ status: 409, message: 'Cet email est déjà utilisé par un autre compte' });
+    }
+
+    // Rate limit: 5 codes per email per hour
+    const recent = await dbUtils.all(
+      `SELECT id FROM email_verifications WHERE email = ? AND createdAt > DATE_SUB(NOW(), INTERVAL 1 HOUR)`,
+      [targetEmail]
+    );
+    if (recent.length >= 5) {
+      return res.status(429).json({ status: 429, message: 'Trop de demandes. Réessayez dans une heure.' });
+    }
+
+    const code = generateCode();
+    const id = uuidv4();
+    await dbUtils.run(
+      `INSERT INTO email_verifications (id, email, code, expires_at) VALUES (?, ?, ?, DATE_ADD(NOW(), INTERVAL 10 MINUTE))`,
+      [id, targetEmail, code]
+    );
+
+    const sent = await sendVerificationCode(targetEmail, code, purpose);
+    if (!sent) return res.status(500).json({ status: 500, message: "Erreur lors de l'envoi de l'email" });
+
+    res.json({ status: 200, message: 'Code envoyé', data: { verificationId: id, email: targetEmail } });
+  } catch (error) {
+    logger.error('sendSettingsCode error:', error);
+    res.status(500).json({ status: 500, message: 'Erreur serveur' });
+  }
+};
+
+/**
+ * Change password (requires current password + email verification code).
+ * POST /api/auth/settings/change-password
+ * Body: { currentPassword, newPassword, code }
+ */
+export const changePassword = async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) return res.status(401).json({ status: 401, message: 'Non authentifié' });
+
+    const { currentPassword, newPassword, code } = req.body;
+    if (!currentPassword || !newPassword || !code) {
+      return res.status(400).json({ status: 400, message: 'Mot de passe actuel, nouveau mot de passe et code requis' });
+    }
+
+    const user = await dbUtils.get('SELECT id, email, password_hash FROM users WHERE id = ?', [userId]);
+    if (!user) return res.status(404).json({ status: 404, message: 'Utilisateur introuvable' });
+
+    // Validate current password
+    const valid = await bcrypt.compare(currentPassword, user.password_hash);
+    if (!valid) return res.status(400).json({ status: 400, message: 'Mot de passe actuel incorrect' });
+
+    // Validate new password strength
+    const pwdError = validatePassword(newPassword);
+    if (pwdError) return res.status(400).json({ status: 400, message: pwdError });
+
+    // Validate email code
+    const record = await dbUtils.get(
+      `SELECT * FROM email_verifications WHERE email = ? AND verified = 0 AND expires_at > NOW() ORDER BY createdAt DESC LIMIT 1`,
+      [user.email]
+    );
+    if (!record) return res.status(400).json({ status: 400, message: 'Code expiré ou invalide' });
+    if (record.attempts >= 5) return res.status(429).json({ status: 429, message: 'Trop de tentatives. Demandez un nouveau code.' });
+
+    await dbUtils.run(`UPDATE email_verifications SET attempts = attempts + 1 WHERE id = ?`, [record.id]);
+    if (record.code !== code) return res.status(400).json({ status: 400, message: 'Code incorrect' });
+    await dbUtils.run(`UPDATE email_verifications SET verified = 1 WHERE id = ?`, [record.id]);
+
+    // Update password
+    const newHash = await bcrypt.hash(newPassword, SALT_ROUNDS);
+    await dbUtils.run('UPDATE users SET password_hash = ?, updatedAt = NOW() WHERE id = ?', [newHash, userId]);
+
+    logger.info(`✅ Password changed for user ${userId}`);
+    res.json({ status: 200, message: 'Mot de passe mis à jour avec succès' });
+  } catch (error) {
+    logger.error('changePassword error:', error);
+    res.status(500).json({ status: 500, message: 'Erreur serveur' });
+  }
+};
+
+/**
+ * Change email (requires email verification code sent to the NEW email).
+ * POST /api/auth/settings/change-email
+ * Body: { newEmail, code }
+ */
+export const changeEmail = async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) return res.status(401).json({ status: 401, message: 'Non authentifié' });
+
+    const { newEmail, code } = req.body;
+    if (!newEmail || !code) return res.status(400).json({ status: 400, message: 'Nouvel email et code requis' });
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)) {
+      return res.status(400).json({ status: 400, message: 'Adresse email invalide' });
+    }
+
+    const existing = await dbUtils.get('SELECT id FROM users WHERE email = ? AND id != ?', [newEmail, userId]);
+    if (existing) return res.status(409).json({ status: 409, message: 'Cet email est déjà utilisé par un autre compte' });
+
+    // Validate code sent to newEmail
+    const record = await dbUtils.get(
+      `SELECT * FROM email_verifications WHERE email = ? AND verified = 0 AND expires_at > NOW() ORDER BY createdAt DESC LIMIT 1`,
+      [newEmail]
+    );
+    if (!record) return res.status(400).json({ status: 400, message: 'Code expiré ou invalide' });
+    if (record.attempts >= 5) return res.status(429).json({ status: 429, message: 'Trop de tentatives. Demandez un nouveau code.' });
+
+    await dbUtils.run(`UPDATE email_verifications SET attempts = attempts + 1 WHERE id = ?`, [record.id]);
+    if (record.code !== code) return res.status(400).json({ status: 400, message: 'Code incorrect' });
+    await dbUtils.run(`UPDATE email_verifications SET verified = 1 WHERE id = ?`, [record.id]);
+
+    // Update email in users table and username if it was the email
+    const user = await dbUtils.get('SELECT email, username FROM users WHERE id = ?', [userId]);
+    await dbUtils.run('UPDATE users SET email = ?, updatedAt = NOW() WHERE id = ?', [newEmail, userId]);
+    // If username == old email, update it too
+    if (user.username === user.email) {
+      await dbUtils.run('UPDATE users SET username = ? WHERE id = ?', [newEmail, userId]);
+    }
+
+    logger.info(`✅ Email changed for user ${userId}: ${user.email} → ${newEmail}`);
+    res.json({ status: 200, message: 'Email mis à jour avec succès', data: { email: newEmail } });
+  } catch (error) {
+    logger.error('changeEmail error:', error);
+    res.status(500).json({ status: 500, message: 'Erreur serveur' });
+  }
+};
+
+/**
+ * Get notification preferences.
+ * GET /api/auth/settings/notification-prefs
+ */
+export const getNotifPrefs = async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) return res.status(401).json({ status: 401, message: 'Non authentifié' });
+
+    const user = await dbUtils.get('SELECT notification_prefs FROM users WHERE id = ?', [userId]);
+    const defaultPrefs = {
+      email_messages: true,
+      email_inscriptions: true,
+      email_notes: true,
+      email_presence: false,
+      push_messages: true,
+      push_inscriptions: true,
+      push_notes: true,
+      push_presence: true,
+    };
+    let prefs = defaultPrefs;
+    if (user?.notification_prefs) {
+      try { prefs = { ...defaultPrefs, ...JSON.parse(user.notification_prefs) }; } catch (_) {}
+    }
+    res.json({ status: 200, data: prefs });
+  } catch (error) {
+    logger.error('getNotifPrefs error:', error);
+    res.status(500).json({ status: 500, message: 'Erreur serveur' });
+  }
+};
+
+/**
+ * Update notification preferences.
+ * PUT /api/auth/settings/notification-prefs
+ */
+export const updateNotifPrefs = async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) return res.status(401).json({ status: 401, message: 'Non authentifié' });
+
+    const prefs = req.body;
+    await dbUtils.run('UPDATE users SET notification_prefs = ?, updatedAt = NOW() WHERE id = ?', [JSON.stringify(prefs), userId]);
+    res.json({ status: 200, message: 'Préférences mises à jour' });
+  } catch (error) {
+    logger.error('updateNotifPrefs error:', error);
+    res.status(500).json({ status: 500, message: 'Erreur serveur' });
+  }
+};
+
+/**
+ * Update privacy settings.
+ * PUT /api/auth/settings/privacy
+ */
+export const updatePrivacy = async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) return res.status(401).json({ status: 401, message: 'Non authentifié' });
+
+    const { journal_public, journal_ouvert } = req.body;
+    const updates = {};
+    if (typeof journal_public === 'number') updates.journal_public = journal_public;
+    if (typeof journal_ouvert === 'number') updates.journal_ouvert = journal_ouvert;
+
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ status: 400, message: 'Aucun paramètre fourni' });
+    }
+
+    const setClauses = Object.keys(updates).map(k => `${k} = ?`).join(', ');
+    await dbUtils.run(`UPDATE users SET ${setClauses}, updatedAt = NOW() WHERE id = ?`, [...Object.values(updates), userId]);
+    res.json({ status: 200, message: 'Paramètres de confidentialité mis à jour' });
+  } catch (error) {
+    logger.error('updatePrivacy error:', error);
+    res.status(500).json({ status: 500, message: 'Erreur serveur' });
+  }
+};
+
 export default { signup, login, getCurrentUser, updateProfile };
