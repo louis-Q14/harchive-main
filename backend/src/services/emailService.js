@@ -1,4 +1,5 @@
-import { Resend } from 'resend';
+import { randomBytes } from 'crypto';
+
 import logger from '../utils/logger.js';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -71,7 +72,6 @@ export async function sendVerificationCode(email, code, purpose = 'default') {
  * Generate a cryptographically random 6-digit code
  */
 export function generateCode() {
-  const array = new Uint32Array(1);
-  globalThis.crypto.getRandomValues(array);
-  return String(array[0] % 1000000).padStart(6, '0');
+  const num = randomBytes(4).readUInt32BE(0) % 1000000;
+  return String(num).padStart(6, '0');
 }
