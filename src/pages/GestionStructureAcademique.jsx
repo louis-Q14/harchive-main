@@ -117,11 +117,22 @@ export default function GestionStructureAcademique() {
     enabled: !!user?.etablissement_id,
   });
 
-  const { data: salles = [] } = useQuery({
+  const { data: sallesRaw = [] } = useQuery({
     queryKey: ["promotions", user?.etablissement_id],
     queryFn: async () => await dataService.query('Promotion', { filters: [{ etablissement_id: user.etablissement_id }] }),
     enabled: !!user?.etablissement_id,
   });
+
+  // Promotions triées par ordre croissant (1ère, 2ème, 3ème...)
+  const salles = useMemo(() =>
+    [...sallesRaw].sort((a, b) => {
+      const numA = parseInt(a.nom) || 0;
+      const numB = parseInt(b.nom) || 0;
+      if (numA !== numB) return numA - numB;
+      return (a.nom || '').localeCompare(b.nom || '', 'fr');
+    }),
+    [sallesRaw]
+  );
 
   // Mutations Facultés
   const createFaculteMutation = useMutation({
