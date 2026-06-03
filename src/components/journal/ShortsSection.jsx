@@ -226,21 +226,7 @@ function ReelsPlayer({ shorts = [], currentIndex = 0, goNext = () => {}, goPrev 
 
   return (
     <div className="flex items-center justify-center gap-2.5">
-      {/* ===== LEFT ARROW ===== */}
-      <button
-        onClick={goPrev}
-        disabled={currentIndex === 0}
-        className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition"
-        style={{
-          background: currentIndex === 0 ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.15)',
-          cursor: currentIndex === 0 ? 'default' : 'pointer',
-          opacity: currentIndex === 0 ? 0.3 : 1,
-        }}
-      >
-        <ChevronLeft className="w-5 h-5 text-white" />
-      </button>
-
-      {/* ===== VIDEO PLAYER ===== */}}
+      {/* ===== VIDEO PLAYER ===== */}
       <div
         ref={containerRef}
         className="relative rounded-lg overflow-hidden select-none bg-black flex-shrink-0"
@@ -268,6 +254,34 @@ function ReelsPlayer({ shorts = [], currentIndex = 0, goNext = () => {}, goPrev 
 
         {/* Top gradient */}
         <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-black/60 to-transparent pointer-events-none z-10" />
+
+        {/* ===== LEFT ARROW (overlay) ===== */}
+        <button
+          onClick={(e) => { e.stopPropagation(); goPrev(); }}
+          disabled={currentIndex === 0}
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-full flex items-center justify-center transition"
+          style={{
+            background: 'rgba(0,0,0,0.45)',
+            opacity: currentIndex === 0 ? 0.25 : 1,
+            cursor: currentIndex === 0 ? 'default' : 'pointer',
+          }}
+        >
+          <ChevronLeft className="w-5 h-5 text-white" />
+        </button>
+
+        {/* ===== RIGHT ARROW (overlay) ===== */}
+        <button
+          onClick={(e) => { e.stopPropagation(); goNext(); }}
+          disabled={currentIndex === shorts.length - 1}
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-full flex items-center justify-center transition"
+          style={{
+            background: 'rgba(0,0,0,0.45)',
+            opacity: currentIndex === shorts.length - 1 ? 0.25 : 1,
+            cursor: currentIndex === shorts.length - 1 ? 'default' : 'pointer',
+          }}
+        >
+          <ChevronRight className="w-5 h-5 text-white" />
+        </button>
 
         {/* ===== TOP LEFT: Play / Mute Controls ===== */}
         <div className="absolute top-3 left-3 z-20 flex items-center gap-2 transition-opacity duration-300" style={{ opacity: showControls ? 1 : 0, pointerEvents: showControls ? 'auto' : 'none' }}>
@@ -314,20 +328,6 @@ function ReelsPlayer({ shorts = [], currentIndex = 0, goNext = () => {}, goPrev 
           </div>
         )}
       </div>
-
-      {/* ===== RIGHT ARROW ===== */}
-      <button
-        onClick={goNext}
-        disabled={currentIndex === shorts.length - 1}
-        className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition"
-        style={{
-          background: currentIndex === shorts.length - 1 ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.15)',
-          cursor: currentIndex === shorts.length - 1 ? 'default' : 'pointer',
-          opacity: currentIndex === shorts.length - 1 ? 0.3 : 1,
-        }}
-      >
-        <ChevronRight className="w-5 h-5 text-white" />
-      </button>
 
       {/* ===== RIGHT SIDEBAR: Action Buttons (OUTSIDE VIDEO) ===== */}
       <div className="flex flex-col items-center flex-shrink-0 px-0 py-4" style={{ height: 'calc(100vh - 160px)' }}>
