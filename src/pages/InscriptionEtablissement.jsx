@@ -101,6 +101,7 @@ export default function InscriptionEtablissement() {
     province: "",
     telephone: "",
     email_etablissement: "",
+    site_web: "",
     nom_responsable: "",
     prenom_responsable: "",
     email_responsable: "",
@@ -293,9 +294,15 @@ export default function InscriptionEtablissement() {
             </div>
 
             {/* Email officiel (full width) */}
-            <div>
+            <div style={{ marginBottom: 16 }}>
               <div style={labelStyle}>Email Officiel de l&rsquo;Établissement <span style={{ color: "#dc2626" }}>*</span></div>
               <Input required type="email" value={formData.email_etablissement} onChange={(e) => handleChange("email_etablissement", e.target.value)} style={inputStyle} placeholder="contact@etablissement.cd" />
+            </div>
+
+            {/* Site web */}
+            <div>
+              <div style={labelStyle}>Site Web</div>
+              <Input value={formData.site_web} onChange={(e) => handleChange("site_web", e.target.value)} style={inputStyle} placeholder="https://www.etablissement.cd" />
             </div>
           </div>
 

@@ -569,7 +569,7 @@ export default function Home() {
               </div>
 
               {/* Contact */}
-              {(detailExtra?.inscription?.telephone || detailExtra?.inscription?.email_etablissement || detailExtra?.registered?.website || detailEtab?.telephone || detailEtab?.email_etablissement) && (
+              {(detailExtra?.inscription?.telephone || detailExtra?.inscription?.email_etablissement || detailExtra?.inscription?.site_web || detailEtab?.telephone || detailEtab?.email_etablissement || detailEtab?.site_web || detailExtra?.registered?.website) && (
                 <div className="rounded-xl p-4" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
                   <h3 className="text-white font-semibold text-sm mb-3 flex items-center gap-2" style={CG}>
                     <Phone className="w-4 h-4 text-purple-400" />
@@ -588,10 +588,10 @@ export default function Home() {
                         <span className="text-white text-sm" style={CG}>{detailExtra?.inscription?.email_etablissement || detailEtab?.email_etablissement || detailExtra?.registered?.email}</span>
                       </div>
                     )}
-                    {detailExtra?.registered?.website && (
+                    {(detailExtra?.inscription?.site_web || detailEtab?.site_web || detailExtra?.registered?.website) && (
                       <div className="flex items-center gap-2 col-span-2">
                         <Globe className="w-3.5 h-3.5 text-gray-500" />
-                        <span className="text-blue-300 text-sm" style={CG}>{detailExtra?.registered?.website}</span>
+                        <a href={detailExtra?.inscription?.site_web || detailEtab?.site_web || detailExtra?.registered?.website} target="_blank" rel="noreferrer" className="text-blue-300 text-sm hover:underline" style={CG}>{detailExtra?.inscription?.site_web || detailEtab?.site_web || detailExtra?.registered?.website}</a>
                       </div>
                     )}
                   </div>

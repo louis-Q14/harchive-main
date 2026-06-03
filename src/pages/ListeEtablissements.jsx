@@ -29,7 +29,14 @@ export default function ListeEtablissements() {
     province: "",
     etat: "",
     type: "Université",
-    ordre: 0
+    ordre: 0,
+    adresse: "",
+    telephone: "",
+    email_etablissement: "",
+    site_web: "",
+    nom_responsable: "",
+    prenom_responsable: "",
+    telephone_responsable: ""
   });
   const [detailDialogOpen, setDetailDialogOpen] = useState(false);
   const [detailEtab, setDetailEtab] = useState(null);
@@ -96,7 +103,14 @@ export default function ListeEtablissements() {
       province: "",
       etat: "",
       type: "Université",
-      ordre: 0
+      ordre: 0,
+      adresse: "",
+      telephone: "",
+      email_etablissement: "",
+      site_web: "",
+      nom_responsable: "",
+      prenom_responsable: "",
+      telephone_responsable: ""
     });
     setSelectedEtablissement(null);
   };
@@ -111,7 +125,14 @@ export default function ListeEtablissements() {
       province: etab.province || "",
       etat: etab.etat || "",
       type: etab.type || "Université",
-      ordre: etab.ordre || 0
+      ordre: etab.ordre || 0,
+      adresse: etab.adresse || "",
+      telephone: etab.telephone || "",
+      email_etablissement: etab.email_etablissement || "",
+      site_web: etab.site_web || "",
+      nom_responsable: etab.nom_responsable || "",
+      prenom_responsable: etab.prenom_responsable || "",
+      telephone_responsable: etab.telephone_responsable || ""
     });
     setEditDialogOpen(true);
   };
@@ -542,6 +563,79 @@ export default function ListeEtablissements() {
                 />
               </div>
 
+              <div className="space-y-2">
+                <Label className="text-white text-xs font-medium" style={CG}>Adresse</Label>
+                <Input
+                  value={formData.adresse}
+                  onChange={(e) => setFormData({...formData, adresse: e.target.value})}
+                  style={{backgroundColor:'#2d2d2d',color:'#ffffff',borderColor:'#4d4d4d',...CG}}
+                  placeholder="Adresse complète"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-white text-xs font-medium" style={CG}>Téléphone</Label>
+                  <Input
+                    value={formData.telephone}
+                    onChange={(e) => setFormData({...formData, telephone: e.target.value})}
+                    style={{backgroundColor:'#2d2d2d',color:'#ffffff',borderColor:'#4d4d4d',...CG}}
+                    placeholder="+243 XXX XXX XXX"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-white text-xs font-medium" style={CG}>Email officiel</Label>
+                  <Input
+                    type="email"
+                    value={formData.email_etablissement}
+                    onChange={(e) => setFormData({...formData, email_etablissement: e.target.value})}
+                    style={{backgroundColor:'#2d2d2d',color:'#ffffff',borderColor:'#4d4d4d',...CG}}
+                    placeholder="contact@etablissement.cd"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-white text-xs font-medium" style={CG}>Site Web</Label>
+                <Input
+                  value={formData.site_web}
+                  onChange={(e) => setFormData({...formData, site_web: e.target.value})}
+                  style={{backgroundColor:'#2d2d2d',color:'#ffffff',borderColor:'#4d4d4d',...CG}}
+                  placeholder="https://www.etablissement.cd"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-white text-xs font-medium" style={CG}>Nom responsable</Label>
+                  <Input
+                    value={formData.nom_responsable}
+                    onChange={(e) => setFormData({...formData, nom_responsable: e.target.value})}
+                    style={{backgroundColor:'#2d2d2d',color:'#ffffff',borderColor:'#4d4d4d',...CG}}
+                    placeholder="Nom du responsable"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-white text-xs font-medium" style={CG}>Prénom responsable</Label>
+                  <Input
+                    value={formData.prenom_responsable}
+                    onChange={(e) => setFormData({...formData, prenom_responsable: e.target.value})}
+                    style={{backgroundColor:'#2d2d2d',color:'#ffffff',borderColor:'#4d4d4d',...CG}}
+                    placeholder="Prénom du responsable"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-white text-xs font-medium" style={CG}>Téléphone responsable</Label>
+                <Input
+                  value={formData.telephone_responsable}
+                  onChange={(e) => setFormData({...formData, telephone_responsable: e.target.value})}
+                  style={{backgroundColor:'#2d2d2d',color:'#ffffff',borderColor:'#4d4d4d',...CG}}
+                  placeholder="+243 XXX XXX XXX"
+                />
+              </div>
+
             </div>
           </DraggableDialogBody>
           <DraggableDialogFooter>
@@ -674,29 +768,29 @@ export default function ListeEtablissements() {
                 </div>
 
                 {/* Contact (depuis formulaire d'inscription) */}
-                {(inscriptionData?.telephone || inscriptionData?.email_etablissement || registeredEtab?.website) && (
+                {(inscriptionData?.telephone || inscriptionData?.email_etablissement || inscriptionData?.site_web || detailEtab?.telephone || detailEtab?.email_etablissement || detailEtab?.site_web || registeredEtab?.website) && (
                   <div className="rounded-xl p-4" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
                     <h3 className="text-white font-semibold text-sm mb-3 flex items-center gap-2" style={CG}>
                       <Phone className="w-4 h-4 text-purple-400" />
                       Contact
                     </h3>
                     <div className="grid grid-cols-2 gap-3">
-                      {(inscriptionData?.telephone || registeredEtab?.phone) && (
+                      {(inscriptionData?.telephone || detailEtab?.telephone || registeredEtab?.phone) && (
                         <div className="flex items-center gap-2">
                           <Phone className="w-3.5 h-3.5 text-gray-500" />
-                          <span className="text-white text-sm" style={CG}>{inscriptionData?.telephone || registeredEtab?.phone}</span>
+                          <span className="text-white text-sm" style={CG}>{inscriptionData?.telephone || detailEtab?.telephone || registeredEtab?.phone}</span>
                         </div>
                       )}
-                      {(inscriptionData?.email_etablissement || registeredEtab?.email) && (
+                      {(inscriptionData?.email_etablissement || detailEtab?.email_etablissement || registeredEtab?.email) && (
                         <div className="flex items-center gap-2">
                           <Mail className="w-3.5 h-3.5 text-gray-500" />
-                          <span className="text-white text-sm" style={CG}>{inscriptionData?.email_etablissement || registeredEtab?.email}</span>
+                          <span className="text-white text-sm" style={CG}>{inscriptionData?.email_etablissement || detailEtab?.email_etablissement || registeredEtab?.email}</span>
                         </div>
                       )}
-                      {registeredEtab?.website && (
+                      {(inscriptionData?.site_web || detailEtab?.site_web || registeredEtab?.website) && (
                         <div className="flex items-center gap-2 col-span-2">
                           <Globe className="w-3.5 h-3.5 text-gray-500" />
-                          <span className="text-blue-300 text-sm" style={CG}>{registeredEtab.website}</span>
+                          <a href={inscriptionData?.site_web || detailEtab?.site_web || registeredEtab?.website} target="_blank" rel="noreferrer" className="text-blue-300 text-sm hover:underline" style={CG}>{inscriptionData?.site_web || detailEtab?.site_web || registeredEtab?.website}</a>
                         </div>
                       )}
                     </div>

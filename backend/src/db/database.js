@@ -205,7 +205,7 @@ const createInscriptionTables = async () => {
       id VARCHAR(36) PRIMARY KEY,
       nom_etablissement VARCHAR(255), code_etablissement VARCHAR(100),
       type VARCHAR(50) DEFAULT 'universite',
-      adresse TEXT, ville VARCHAR(255), province VARCHAR(255), telephone VARCHAR(50), email_etablissement VARCHAR(255),
+      adresse TEXT, ville VARCHAR(255), province VARCHAR(255), telephone VARCHAR(50), email_etablissement VARCHAR(255), site_web VARCHAR(255),
       nom_responsable VARCHAR(255), prenom_responsable VARCHAR(255),
       email_responsable VARCHAR(255) NOT NULL, password_hash VARCHAR(255) NOT NULL,
       telephone_responsable VARCHAR(50),
@@ -492,6 +492,8 @@ const initializeSchema = async () => {
     await addColumnIfNotExists('etablissements_agrees', 'adresse', "VARCHAR(500) DEFAULT ''");
     await addColumnIfNotExists('etablissements_agrees', 'telephone', "VARCHAR(50) DEFAULT ''");
     await addColumnIfNotExists('etablissements_agrees', 'email_etablissement', "VARCHAR(255) DEFAULT ''");
+    await addColumnIfNotExists('etablissements_agrees', 'site_web', "VARCHAR(255) DEFAULT ''");
+    await addColumnIfNotExists('inscription_etablissements', 'site_web', "VARCHAR(255) DEFAULT ''");
 
     // Seed etablissements agrees data
     await addColumnIfNotExists('etablissements_agrees', 'categorie', "VARCHAR(100) DEFAULT ''");
@@ -523,6 +525,8 @@ const initializeSchema = async () => {
     await addColumnIfNotExists('etablissements_agrees', 'adresse', "VARCHAR(500) DEFAULT ''");
     await addColumnIfNotExists('etablissements_agrees', 'telephone', "VARCHAR(50) DEFAULT ''");
     await addColumnIfNotExists('etablissements_agrees', 'email_etablissement', "VARCHAR(255) DEFAULT ''");
+    await addColumnIfNotExists('etablissements_agrees', 'site_web', "VARCHAR(255) DEFAULT ''");
+    await addColumnIfNotExists('inscription_etablissements', 'site_web', "VARCHAR(255) DEFAULT ''");
 
     // Backfill adresse/telephone/email from approved inscriptions into etablissements_agrees
     try {
@@ -535,6 +539,7 @@ const initializeSchema = async () => {
           ea.adresse = CASE WHEN (ea.adresse IS NULL OR ea.adresse = '') AND ie.adresse IS NOT NULL AND ie.adresse != '' THEN ie.adresse ELSE ea.adresse END,
           ea.telephone = CASE WHEN (ea.telephone IS NULL OR ea.telephone = '') AND ie.telephone IS NOT NULL AND ie.telephone != '' THEN ie.telephone ELSE ea.telephone END,
           ea.email_etablissement = CASE WHEN (ea.email_etablissement IS NULL OR ea.email_etablissement = '') AND ie.email_etablissement IS NOT NULL AND ie.email_etablissement != '' THEN ie.email_etablissement ELSE ea.email_etablissement END,
+          ea.site_web = CASE WHEN (ea.site_web IS NULL OR ea.site_web = '') AND ie.site_web IS NOT NULL AND ie.site_web != '' THEN ie.site_web ELSE ea.site_web END,
           ea.territoire = CASE WHEN (ea.territoire IS NULL OR ea.territoire = '') AND ie.ville IS NOT NULL AND ie.ville != '' THEN ie.ville ELSE ea.territoire END,
           ea.province = CASE WHEN (ea.province IS NULL OR ea.province = '') AND ie.province IS NOT NULL AND ie.province != '' THEN ie.province ELSE ea.province END
       `);
@@ -711,6 +716,7 @@ const initializeSchema = async () => {
       adresse VARCHAR(500) DEFAULT '',
       telephone VARCHAR(50) DEFAULT '',
       email_etablissement VARCHAR(255) DEFAULT '',
+      site_web VARCHAR(255) DEFAULT '',
       createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
       updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci

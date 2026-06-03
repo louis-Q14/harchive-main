@@ -278,14 +278,14 @@ export const registerEtablissement = async (req, res) => {
     await dbUtils.run(
       `INSERT INTO inscription_etablissements (
         id, nom_etablissement, code_etablissement, type, adresse, ville, province, telephone,
-        email_etablissement, nom_responsable, prenom_responsable, email_responsable,
+        email_etablissement, site_web, nom_responsable, prenom_responsable, email_responsable,
         password_hash, telephone_responsable, statut
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'en_attente')`,
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'en_attente')`,
       [
         id, formData.nom_etablissement || '', formData.code_etablissement || '',
         formData.type || 'universite', formData.adresse || '', formData.ville || '',
         formData.province || '', formData.telephone || '', formData.email_etablissement || '',
-        formData.nom_responsable || '', formData.prenom_responsable || '',
+        formData.site_web || '', formData.nom_responsable || '', formData.prenom_responsable || '',
         email, passwordHash, formData.telephone_responsable || '',
       ]
     );
@@ -569,8 +569,8 @@ export const approveInscription = async (req, res) => {
       // Update territoire and province in etablissements_agrees from inscription data
       if (agreedEtab && (request.ville || request.province)) {
         await dbUtils.run(
-          `UPDATE etablissements_agrees SET territoire = COALESCE(NULLIF(?, ''), territoire), province = COALESCE(NULLIF(?, ''), province), adresse = COALESCE(NULLIF(?, ''), adresse), telephone = COALESCE(NULLIF(?, ''), telephone), email_etablissement = COALESCE(NULLIF(?, ''), email_etablissement) WHERE id = ?`,
-          [request.ville || '', request.province || '', request.adresse || '', request.telephone || '', request.email_etablissement || '', agreedEtab.id]
+          `UPDATE etablissements_agrees SET territoire = COALESCE(NULLIF(?, ''), territoire), province = COALESCE(NULLIF(?, ''), province), adresse = COALESCE(NULLIF(?, ''), adresse), telephone = COALESCE(NULLIF(?, ''), telephone), email_etablissement = COALESCE(NULLIF(?, ''), email_etablissement), site_web = COALESCE(NULLIF(?, ''), site_web) WHERE id = ?`,
+          [request.ville || '', request.province || '', request.adresse || '', request.telephone || '', request.email_etablissement || '', request.site_web || '', agreedEtab.id]
         );
       }
 
