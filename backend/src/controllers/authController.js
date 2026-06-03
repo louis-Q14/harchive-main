@@ -1597,4 +1597,25 @@ export const updatePrivacy = async (req, res) => {
   }
 };
 
+/**
+ * GET /api/auth/ws-ticket
+ * Issues a short-lived JWT (30s) usable as ?token= in WebSocket URLs.
+ * Needed because cross-origin WebSocket connections don't send SameSite=Lax cookies.
+ */
+export const getWsTicket = async (req, res) => {
+  try {
+    const ticket = generateToken(req.user.id, {
+      prenom: req.user.prenom,
+      nom: req.user.nom,
+      email: req.user.email,
+      photo_url: req.user.photo_url,
+      role_archive: req.user.role_archive,
+    });
+    res.json({ ticket });
+  } catch (error) {
+    logger.error('getWsTicket error:', error);
+    res.status(500).json({ status: 500, message: 'Erreur serveur' });
+  }
+};
+
 export default { signup, login, getCurrentUser, updateProfile };

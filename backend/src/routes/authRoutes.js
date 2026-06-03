@@ -9,7 +9,8 @@ import {
   refreshAccessToken,
   sendEmailVerification, verifyEmailCode,
   sendSettingsCode, changePassword, changeEmail,
-  getNotifPrefs, updateNotifPrefs, updatePrivacy
+  getNotifPrefs, updateNotifPrefs, updatePrivacy,
+  getWsTicket
 } from '../controllers/authController.js';
 import { verifyToken, requireRole, clearTokenCookie } from '../middleware/auth.js';
 
@@ -45,6 +46,7 @@ router.post('/settings/change-email', verifyToken, changeEmail);
 router.get('/settings/notification-prefs', verifyToken, getNotifPrefs);
 router.put('/settings/notification-prefs', verifyToken, updateNotifPrefs);
 router.put('/settings/privacy', verifyToken, updatePrivacy);
+router.get('/ws-ticket', verifyToken, getWsTicket);
 
 /**
  * Admin routes (for managing inscriptions) — requires admin role

@@ -42,13 +42,16 @@ export const liveService = {
   getChatHistory: (streamId, limit = 100) =>
     fetchJSON(`${getBaseUrl()}/live/streams/${streamId}/chat?limit=${limit}`),
 
-  getWebSocketUrl: (streamId, role) => {
+  getWebSocketUrl: (streamId, role, token) => {
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const wsBase = backendConfig.localBackendUrl
       ? backendConfig.localBackendUrl.replace(/^https?:/, protocol)
       : `${protocol}//${window.location.host}`;
-    return `${wsBase}/ws/live?streamId=${streamId}&role=${role}`;
+    const url = `${wsBase}/ws/live?streamId=${streamId}&role=${role}`;
+    return token ? `${url}&token=${encodeURIComponent(token)}` : url;
   },
+
+  getWsTicket: () => fetchJSON(`${getBaseUrl()}/auth/ws-ticket`),
 };
 
 // ── Short Videos ──

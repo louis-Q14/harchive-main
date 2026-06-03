@@ -82,58 +82,69 @@ export default function LiveViewer({ streamId, onClose }) { // @ts-ignore
 
     setupMediaSource();
 
-    // Connect WebSocket
-    const wsUrl = liveService.getWebSocketUrl(streamId, 'viewer');
-    const ws = new WebSocket(wsUrl);
-    ws.binaryType = 'arraybuffer';
-    wsRef.current = ws;
-
-    ws.onopen = () => setConnected(true);
-
-    ws.onmessage = (event) => {
-      if (event.data instanceof ArrayBuffer) {
-        // Binary = video chunk
-        // @ts-ignore
-        const sb = sourceBufferRef.current;
-        if (sb && !sb.updating) {
-          try { sb.appendBuffer(event.data); } catch { chunksQueue.current.push(event.data); }
-        } else {
-          chunksQueue.current.push(event.data);
-          // Keep queue bounded
-          if (chunksQueue.current.length > 20) chunksQueue.current.shift();
-        }
-      } else {
-        // @ts-ignore
-        const msg = JSON.parse(event.data);
-        switch (msg.type) {
-          case 'viewer_count':
-            setViewerCount(msg.count);
-            break;
-          case 'stream_joined':
-            setViewerCount(msg.viewerCount);
-            break;
-          case 'stream_ended':
-            setStreamEnded(true);
-            break;
-          case 'error':
-            setError(msg.message);
-            break;
-          case 'chat':
-          case 'reaction':
-          case 'system':
-            // @ts-ignore
-            setChatMessages(prev => [...prev.slice(-200), msg]);
-            break;
-        }
+    // Connect WebSocket — fetch a short-lived ticket so the cross-origin WS can authenticate
+    const connectWs = async () => {
+      let wsUrl;
+      try {
+        const { ticket } = await liveService.getWsTicket();
+        wsUrl = liveService.getWebSocketUrl(streamId, 'viewer', ticket);
+      } catch {
+        wsUrl = liveService.getWebSocketUrl(streamId, 'viewer');
       }
+      const ws = new WebSocket(wsUrl);
+      ws.binaryType = 'arraybuffer';
+      wsRef.current = ws;
+
+      ws.onopen = () => setConnected(true);
+
+      ws.onmessage = (event) => {
+        if (event.data instanceof ArrayBuffer) {
+          // Binary = video chunk
+          // @ts-ignore
+          const sb = sourceBufferRef.current;
+          if (sb && !sb.updating) {
+            try { sb.appendBuffer(event.data); } catch { chunksQueue.current.push(event.data); }
+          } else {
+            chunksQueue.current.push(event.data);
+            // Keep queue bounded
+            if (chunksQueue.current.length > 20) chunksQueue.current.shift();
+          }
+        } else {
+          // @ts-ignore
+          const msg = JSON.parse(event.data);
+          switch (msg.type) {
+            case 'viewer_count':
+              setViewerCount(msg.count);
+              break;
+            case 'stream_joined':
+              setViewerCount(msg.viewerCount);
+              break;
+            case 'stream_ended':
+              setStreamEnded(true);
+              break;
+            case 'error':
+              setError(msg.message);
+              break;
+            case 'chat':
+            case 'reaction':
+            case 'system':
+              // @ts-ignore
+              setChatMessages(prev => [...prev.slice(-200), msg]);
+              break;
+          }
+        }
+      };
+
+      ws.onerror = () => setError("Connexion perdue"); // @ts-ignore
+      ws.onclose = () => setConnected(false); // @ts-ignore
     };
 
-    ws.onerror = () => setError("Connexion perdue"); // @ts-ignore
-    ws.onclose = () => setConnected(false); // @ts-ignore
+    connectWs();
 
     return () => {
+      const ws = wsRef.current;
       // @ts-ignore
-      if (ws.readyState === WebSocket.OPEN) ws.close();
+      if (ws && ws.readyState === WebSocket.OPEN) ws.close();
       // @ts-ignore
       if (mediaSourceRef.current && mediaSourceRef.current.readyState === 'open') {
         // @ts-ignore

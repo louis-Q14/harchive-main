@@ -67,8 +67,14 @@ export default function LiveBroadcaster({ streamId, onEnd }) {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatMessages]);
 
-  const connectWebSocket = (mediaStream) => {
-    const wsUrl = liveService.getWebSocketUrl(streamId, 'streamer');
+  const connectWebSocket = async (mediaStream) => {
+    let wsUrl;
+    try {
+      const { ticket } = await liveService.getWsTicket();
+      wsUrl = liveService.getWebSocketUrl(streamId, 'streamer', ticket);
+    } catch {
+      wsUrl = liveService.getWebSocketUrl(streamId, 'streamer');
+    }
     let ws;
     try {
       ws = new WebSocket(wsUrl);
