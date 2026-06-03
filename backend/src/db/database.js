@@ -205,7 +205,7 @@ const createInscriptionTables = async () => {
       id VARCHAR(36) PRIMARY KEY,
       nom_etablissement VARCHAR(255), code_etablissement VARCHAR(100),
       type VARCHAR(50) DEFAULT 'universite',
-      adresse TEXT, ville VARCHAR(255), telephone VARCHAR(50), email_etablissement VARCHAR(255),
+      adresse TEXT, ville VARCHAR(255), province VARCHAR(255), telephone VARCHAR(50), email_etablissement VARCHAR(255),
       nom_responsable VARCHAR(255), prenom_responsable VARCHAR(255),
       email_responsable VARCHAR(255) NOT NULL, password_hash VARCHAR(255) NOT NULL,
       telephone_responsable VARCHAR(50),
@@ -484,6 +484,9 @@ const initializeSchema = async () => {
       const def = (col === 'capacite' || col === 'nombre_etudiants') ? 'INT DEFAULT 0' : 'VARCHAR(255)';
       await addColumnIfNotExists('promotions', col, def);
     }
+
+    // Add province column to inscription_etablissements if missing
+    await addColumnIfNotExists('inscription_etablissements', 'province', "VARCHAR(255) DEFAULT ''");
 
     // Seed etablissements agrees data
     await addColumnIfNotExists('etablissements_agrees', 'categorie', "VARCHAR(100) DEFAULT ''");

@@ -277,14 +277,14 @@ export const registerEtablissement = async (req, res) => {
 
     await dbUtils.run(
       `INSERT INTO inscription_etablissements (
-        id, nom_etablissement, code_etablissement, type, adresse, ville, telephone,
+        id, nom_etablissement, code_etablissement, type, adresse, ville, province, telephone,
         email_etablissement, nom_responsable, prenom_responsable, email_responsable,
         password_hash, telephone_responsable, statut
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'en_attente')`,
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'en_attente')`,
       [
         id, formData.nom_etablissement || '', formData.code_etablissement || '',
         formData.type || 'universite', formData.adresse || '', formData.ville || '',
-        formData.telephone || '', formData.email_etablissement || '',
+        formData.province || '', formData.telephone || '', formData.email_etablissement || '',
         formData.nom_responsable || '', formData.prenom_responsable || '',
         email, passwordHash, formData.telephone_responsable || '',
       ]
@@ -565,6 +565,14 @@ export const approveInscription = async (req, res) => {
         'SELECT id FROM etablissements_agrees WHERE denomination = ? COLLATE NOCASE',
         [request.nom_etablissement]
       );
+
+      // Update territoire and province in etablissements_agrees from inscription data
+      if (agreedEtab && (request.ville || request.province)) {
+        await dbUtils.run(
+          `UPDATE etablissements_agrees SET territoire = COALESCE(NULLIF(?, ''), territoire), province = COALESCE(NULLIF(?, ''), province) WHERE id = ?`,
+          [request.ville || '', request.province || '', agreedEtab.id]
+        );
+      }
 
       // Also create a record in establishments CRUD table for management
       const etabId = agreedEtab ? agreedEtab.id : uuidv4();

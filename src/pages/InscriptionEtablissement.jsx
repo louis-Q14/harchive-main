@@ -98,6 +98,7 @@ export default function InscriptionEtablissement() {
     type: "universite",
     adresse: "",
     ville: "",
+    province: "",
     telephone: "",
     email_etablissement: "",
     nom_responsable: "",
@@ -133,8 +134,7 @@ export default function InscriptionEtablissement() {
       nom_etablissement: etab.denomination,
       code_etablissement: etab.sigle || "",
       type: etab.type === "ISP" || etab.type === "IS" ? "institut_superieur" : "universite",
-      ville: etab.territoire || prev.ville,
-    }));
+      ville: etab.territoire || prev.ville,      province: etab.province || prev.province,    }));
     setOpenEtab(false);
   };
 
@@ -272,7 +272,7 @@ export default function InscriptionEtablissement() {
               <Input value={formData.adresse} onChange={(e) => handleChange("adresse", e.target.value)} style={inputStyle} placeholder="Adresse complète" />
             </div>
 
-            {/* Ville + Téléphone (side by side) */}
+            {/* Ville + Province (side by side) */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 16 }}>
               <div>
                 <div style={labelStyle}>Ville <span style={{ color: "#dc2626" }}>*</span></div>
@@ -280,9 +280,16 @@ export default function InscriptionEtablissement() {
                 <div style={helperText}>Rempli automatiquement si vous sélectionnez depuis la liste</div>
               </div>
               <div>
-                <div style={labelStyle}>Téléphone</div>
-                <Input value={formData.telephone} onChange={(e) => handleChange("telephone", e.target.value)} style={inputStyle} placeholder="+243 XXX XXX XXX" />
+                <div style={labelStyle}>Province</div>
+                <Input value={formData.province} onChange={(e) => handleChange("province", e.target.value)} style={inputStyle} placeholder="Ex: Kinshasa, Lualaba..." />
+                <div style={helperText}>Rempli automatiquement si vous sélectionnez depuis la liste</div>
               </div>
+            </div>
+
+            {/* Téléphone */}
+            <div style={{ marginBottom: 16 }}>
+              <div style={labelStyle}>Téléphone</div>
+              <Input value={formData.telephone} onChange={(e) => handleChange("telephone", e.target.value)} style={inputStyle} placeholder="+243 XXX XXX XXX" />
             </div>
 
             {/* Email officiel (full width) */}
