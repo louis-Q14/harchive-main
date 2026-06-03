@@ -983,8 +983,6 @@ const rawData = [
   ["UCC-DON AKAM","UNIVERSITE CHRETIENNE CATHOLIQUE DON AKAM","Privé","Mont - Ngafula","Kinshasa","","Université","Privé Autorisé à Fonctionner"],
   ["HESDC/CEPRISE-PHD","Haute Ecole Supérieure Demez Christian du Centre d'Etude, de Promotion et des Recherches en Interventions Socio-Economiques-Père Hardy Développement","Privé","Kinshasa","Kinshasa","","Université","Privé Autorisé à Fonctionner"]
 ];
-mami", ""],
-];
 
 /**
  * Seed all establishments into the database
