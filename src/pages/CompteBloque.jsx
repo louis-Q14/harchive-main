@@ -88,7 +88,7 @@ export default function CompteBloque() {
       {/* Header */}
       <header className="flex items-center justify-between px-6 py-4" style={{ backgroundColor: '#16213e', borderBottom: '1px solid #2a2a4a' }}>
         <div className="flex items-center gap-3">
-          <img src="/assets/icons/logo HARCHIVE FA.png" alt="Harchive" className="h-8 w-auto" />
+          <img src="/assets/icons/6153a57fe_logoHARCHIVEF2.png" alt="Harchive" className="h-8 w-auto" />
           <span className="text-gray-400 text-sm">|</span>
           <span className="text-red-400 font-semibold text-sm">Compte suspendu</span>
         </div>

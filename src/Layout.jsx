@@ -422,7 +422,7 @@ export default function Layout({ children, currentPageName }) {
             <SidebarHeader style={{backgroundColor: '#2d2d2d', borderColor: '#2d2d2d'}} className="p-3">
               <Link to={createPageUrl("Journal")} className="flex flex-col items-center justify-center hover:opacity-80 transition-opacity">
                 <img 
-                  src="/assets/icons/logo HARCHIVE FA.png"
+                  src="/assets/icons/6153a57fe_logoHARCHIVEF2.png"
                   alt="Harchive Logo"
                   className="w-full h-auto max-h-20 object-contain"
                 />

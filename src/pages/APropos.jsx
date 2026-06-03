@@ -14,7 +14,7 @@ export default function APropos() {
           <CardHeader style={{backgroundColor:'#2d2d2d', borderColor:'#3d3d3d'}}>
             <CardTitle className="text-white flex items-center gap-2">
               <img 
-                src="/assets/icons/logo HARCHIVE FA.png"
+                src="/assets/icons/6153a57fe_logoHARCHIVEF2.png"
                 alt="Harchive Logo"
                 className="h-16 object-contain"
               />

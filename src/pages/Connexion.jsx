@@ -53,7 +53,7 @@ export default function Connexion() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Link to={createPageUrl("Home")} className="flex items-center gap-3">
-                <img src="/assets/icons/logo HARCHIVE FA.png" alt="Harchive Logo" className="h-10 w-auto object-contain" />
+                <img src="/assets/icons/6153a57fe_logoHARCHIVEF2.png" alt="Harchive Logo" className="h-10 w-auto object-contain" />
               </Link>
             </div>
             <Link to={createPageUrl("Home")}>
@@ -73,7 +73,7 @@ export default function Connexion() {
       {/* Hero + Formulaire */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="w-full text-center mb-10">
-          <img src="/assets/icons/logo HARCHIVE FA.png" alt="Harchive Logo" className="h-48 w-auto object-contain mx-auto mb-4" />
+          <img src="/assets/icons/6153a57fe_logoHARCHIVEF2.png" alt="Harchive Logo" className="h-48 w-auto object-contain mx-auto mb-4" />
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
             Connectez-vous pour accéder à votre espace sur la plateforme Harchive
           </p>
