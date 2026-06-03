@@ -557,7 +557,7 @@ export default function Home() {
                   </div>
                   <div>
                     <span className="text-gray-500 text-xs" style={CG}>Province</span>
-                    <p className="text-white text-sm" style={CG}>{detailEtab?.province || detailExtra?.inscription?.province || '—'}</p>
+                    <p className="text-white text-sm" style={CG}>{detailEtab?.province || detailExtra?.inscription?.province || detailEtab?.territoire || '—'}</p>
                   </div>
                   {(detailExtra?.inscription?.adresse || detailExtra?.registered?.address) && (
                     <div className="col-span-2">

@@ -662,7 +662,7 @@ export default function ListeEtablissements() {
                     </div>
                     <div>
                       <span className="text-gray-500 text-xs" style={CG}>Province</span>
-                      <p className="text-white text-sm" style={CG}>{detailEtab?.province || inscriptionData?.province || '—'}</p>
+                      <p className="text-white text-sm" style={CG}>{detailEtab?.province || inscriptionData?.province || detailEtab?.territoire || '—'}</p>
                     </div>
                     {(inscriptionData?.adresse || registeredEtab?.address) && (
                       <div className="col-span-2">
