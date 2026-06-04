@@ -424,7 +424,7 @@ export default function GalerieVideo() {
         maxWidth="max-w-lg"
       >
         <DraggableDialogBody>
-          <div className="grid gap-3" style={CG}>
+          <div className="grid gap-2" style={CG}>
             {pendingVideo?.video_url && (
               <div className="rounded-xl overflow-hidden" style={{ backgroundColor: '#000', height: 320 }}>
                 <video
@@ -435,40 +435,27 @@ export default function GalerieVideo() {
                 />
               </div>
             )}
-            <p className="text-gray-400 text-xs font-semibold uppercase tracking-widest pt-1" style={CG}>Où publier ?</p>
-            {PUBLISH_OPTIONS.map((opt) => {
-              const Icon = opt.icon;
-              const selected = publishTarget === opt.id;
-              return (
-                <button
-                  key={opt.id}
-                  onClick={() => setPublishTarget(opt.id)}
-                  className="w-full flex items-center gap-4 p-3.5 rounded-xl transition-all text-left"
-                  style={{
-                    backgroundColor: selected ? opt.bg : 'rgba(255,255,255,0.04)',
-                    border: "1.5px solid " + (selected ? opt.border : 'rgba(255,255,255,0.08)'),
-                    transform: selected ? 'scale(1.01)' : 'scale(1)',
-                  }}
-                >
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: selected ? opt.bg : 'rgba(255,255,255,0.06)', border: "1px solid " + (selected ? opt.border : 'transparent') }}
+            <p className="text-gray-500 text-xs font-semibold uppercase tracking-widest" style={CG}>Où publier ?</p>
+            <div className="flex gap-2">
+              {PUBLISH_OPTIONS.map((opt) => {
+                const Icon = opt.icon;
+                const selected = publishTarget === opt.id;
+                return (
+                  <button
+                    key={opt.id}
+                    onClick={() => setPublishTarget(opt.id)}
+                    className="flex-1 flex flex-col items-center gap-1 py-2 px-1 rounded-lg transition-all"
+                    style={{
+                      backgroundColor: selected ? opt.bg : 'rgba(255,255,255,0.04)',
+                      border: "1.5px solid " + (selected ? opt.border : 'rgba(255,255,255,0.08)'),
+                    }}
                   >
-                    <Icon className="w-5 h-5" style={{ color: selected ? opt.color : '#777' }} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-sm" style={{ ...CG, color: selected ? '#fff' : '#ccc' }}>{opt.label}</p>
-                    <p className="text-xs truncate" style={{ ...CG, color: selected ? '#bbb' : '#666' }}>{opt.sublabel}</p>
-                  </div>
-                  <div
-                    className="w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0"
-                    style={{ borderColor: selected ? opt.color : '#444', backgroundColor: selected ? opt.color : 'transparent' }}
-                  >
-                    {selected && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}
-                  </div>
-                </button>
-              );
-            })}
+                    <Icon className="w-4 h-4" style={{ color: selected ? opt.color : '#666' }} />
+                    <p className="text-xs font-semibold leading-tight text-center" style={{ ...CG, color: selected ? '#fff' : '#888', fontSize: 10 }}>{opt.label}</p>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </DraggableDialogBody>
         <DraggableDialogFooter>
