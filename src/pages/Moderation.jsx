@@ -233,7 +233,7 @@ export default function Moderation() {
   }, [publications, searchQuery, filterVisibility]);
 
   const filteredShorts = useMemo(() => {
-    let items = shorts;
+    let items = shorts.filter(s => s.status === 'published');
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       items = items.filter(s => s.creator_nom?.toLowerCase().includes(q) || s.titre?.toLowerCase().includes(q) || s.description?.toLowerCase().includes(q));
