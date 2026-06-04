@@ -318,7 +318,7 @@ export default function GalerieVideo() {
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8 gap-2">
+          <div className="grid gap-2" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(70px, 1fr))' }}>
             {filtered.map((video) => (
               <VideoCard
                 key={video.id}
