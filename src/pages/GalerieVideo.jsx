@@ -333,7 +333,6 @@ export default function GalerieVideo() {
           </div>
         )}
       </div>
-    </div>
 
       {/* ADD VIDEO DIALOG */}
       <DraggableDialog
