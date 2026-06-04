@@ -10,12 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { DraggableDialog, DraggableDialogBody, DraggableDialogFooter } from "@/components/ui/DraggableDialog";
 import {
   Video,
   Upload,
@@ -341,30 +336,29 @@ export default function GalerieVideo() {
       </div>
 
       {/* ADD VIDEO DIALOG */}
-      <Dialog open={addDialogOpen} onOpenChange={(open) => { if (!open) resetUploadForm(); }}>
-        <DialogContent className="max-w-lg" style={{ backgroundColor: '#1e1e2e', border: '1px solid #3d3d5c', color: '#fff' }}>
-          <DialogHeader>
-            <DialogTitle style={{ ...CG, color: '#fff' }}>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-purple-600/30 flex items-center justify-center">
-                  <Upload className="w-4 h-4 text-purple-400" />
-                </div>
-                Ajouter une video
-              </div>
-            </DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4" style={CG}>
+      <DraggableDialog
+        open={addDialogOpen}
+        onOpenChange={(open) => { if (!open) resetUploadForm(); }}
+        title={
+          <div style={CG}>
+            <div className="text-base font-semibold text-white flex items-center gap-2">
+              <Upload className="w-5 h-5 text-purple-400" /> Ajouter une vidéo
+            </div>
+            <div className="text-xs mt-0.5" style={{ color: '#b0b0b0' }}>Sélectionnez une vidéo et remplissez les détails</div>
+          </div>
+        }
+        maxWidth="max-w-lg"
+      >
+        <DraggableDialogBody>
+          <div className="grid gap-4" style={CG}>
             <div
-              className="border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all"
-              style={{
-                borderColor: selectedFile ? '#7c3aed' : '#4d4d6d',
-                backgroundColor: selectedFile ? 'rgba(124,58,237,0.06)' : '#14141f',
-              }}
+              className="border-2 border-dashed rounded-xl p-6 text-center cursor-pointer hover:border-purple-500 transition-colors"
+              style={{ borderColor: selectedFile ? '#7c3aed' : '#4d4d4d', backgroundColor: '#2d2d2d' }}
               onClick={() => !selectedFile && fileInputRef.current?.click()}
             >
               {previewUrl ? (
                 <div className="relative">
-                  <video src={previewUrl} className="max-h-52 mx-auto rounded-xl w-full object-contain" controls />
+                  <video src={previewUrl} className="max-h-48 mx-auto rounded-lg w-full object-contain" controls />
                   <button
                     className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/70 flex items-center justify-center hover:bg-red-600/80 transition-colors"
                     onClick={(e) => { e.stopPropagation(); setSelectedFile(null); setPreviewUrl(null); if (fileInputRef.current) fileInputRef.current.value = ''; }}
@@ -373,73 +367,66 @@ export default function GalerieVideo() {
                   </button>
                 </div>
               ) : (
-                <div className="space-y-3">
-                  <div className="w-14 h-14 rounded-2xl bg-purple-600/20 flex items-center justify-center mx-auto">
-                    <Video className="w-7 h-7 text-purple-400" />
-                  </div>
-                  <p className="text-white font-medium">Cliquer pour selectionner</p>
-                  <p className="text-gray-500 text-xs">MP4, WebM — max 150 MB</p>
-                </div>
+                <>
+                  <Video className="w-12 h-12 text-gray-500 mx-auto mb-2" />
+                  <p className="text-gray-400">Cliquez pour sélectionner une vidéo</p>
+                  <p className="text-gray-600 text-xs mt-1">MP4, WebM — max 150 MB</p>
+                </>
               )}
             </div>
             <input ref={fileInputRef} type="file" accept="video/mp4,video/webm,video/ogg" className="hidden" onChange={handleFileSelect} />
             <div className="space-y-1.5">
-              <Label className="text-gray-300 text-xs" style={CG}>Titre</Label>
+              <Label className="text-white text-xs font-medium" style={CG}>Titre</Label>
               <Input
-                placeholder="Titre de la video"
+                placeholder="Titre de la vidéo"
                 value={formData.titre}
                 onChange={(e) => setFormData(fd => ({ ...fd, titre: e.target.value }))}
-                style={{ backgroundColor: '#14141f', color: '#fff', borderColor: '#3d3d5c', ...CG }}
+                style={{ backgroundColor: '#2d2d2d', color: '#fff', borderColor: '#4d4d4d', ...CG }}
               />
             </div>
             <div className="space-y-1.5">
-              <Label className="text-gray-300 text-xs" style={CG}>Description</Label>
+              <Label className="text-white text-xs font-medium" style={CG}>Description</Label>
               <Textarea
                 placeholder="Description..."
                 value={formData.description}
                 onChange={(e) => setFormData(fd => ({ ...fd, description: e.target.value }))}
-                rows={2}
-                style={{ backgroundColor: '#14141f', color: '#fff', borderColor: '#3d3d5c', ...CG }}
+                style={{ backgroundColor: '#2d2d2d', color: '#fff', borderColor: '#4d4d4d', ...CG }}
               />
             </div>
           </div>
-          <div className="flex gap-3 pt-2">
-            <Button variant="ghost" onClick={resetUploadForm} disabled={uploading} style={{ color: '#888', ...CG }} className="flex-1">
-              Annuler
-            </Button>
-            <Button
-              onClick={handleUpload}
-              disabled={!selectedFile || uploading}
-              className="flex-1 bg-purple-600 hover:bg-purple-700"
-              style={CG}
-            >
-              {uploading ? (
-                <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Upload...</>
-              ) : (
-                <>Suivant <ChevronRight className="w-4 h-4 ml-1" /></>
-              )}
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
+        </DraggableDialogBody>
+        <DraggableDialogFooter>
+          <Button variant="outline" onClick={resetUploadForm} disabled={uploading} style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG }}>
+            Annuler
+          </Button>
+          <Button
+            onClick={handleUpload}
+            disabled={!selectedFile || uploading}
+            className="bg-purple-600 hover:bg-purple-700 text-white"
+            style={CG}
+          >
+            {uploading ? <><Loader2 className="w-4 h-4 animate-spin mr-2" /> Upload...</> : <><ChevronRight className="w-4 h-4 mr-2" /> Suivant</>}
+          </Button>
+        </DraggableDialogFooter>
+      </DraggableDialog>
 
       {/* PUBLISH MANAGER DIALOG */}
-      <Dialog open={publishDialogOpen} onOpenChange={(open) => { if (!open) { setPublishDialogOpen(false); setPublishTarget(null); setActiveTab("mes-videos"); } }}>
-        <DialogContent className="max-w-lg" style={{ backgroundColor: '#1e1e2e', border: '1px solid #3d3d5c', color: '#fff', padding: 0, overflow: 'hidden' }}>
-          <div className="p-5 pb-0">
-            <div className="flex items-center gap-3 mb-1">
-              <div className="w-9 h-9 rounded-xl bg-purple-600/25 flex items-center justify-center">
-                <Globe className="w-5 h-5 text-purple-400" />
-              </div>
-              <div>
-                <h2 className="text-white font-bold text-lg" style={CG}>Gestionnaire de publication</h2>
-                <p className="text-gray-500 text-xs" style={CG}>{pendingVideo?.titre || 'Video'}</p>
-              </div>
+      <DraggableDialog
+        open={publishDialogOpen}
+        onOpenChange={(open) => { if (!open) { setPublishDialogOpen(false); setPublishTarget(null); setActiveTab("mes-videos"); } }}
+        title={
+          <div style={CG}>
+            <div className="text-base font-semibold text-white flex items-center gap-2">
+              <Globe className="w-5 h-5 text-purple-400" /> Gestionnaire de publication
             </div>
+            <div className="text-xs mt-0.5" style={{ color: '#b0b0b0' }}>{pendingVideo?.titre || 'Vidéo'}</div>
           </div>
-
-          {pendingVideo?.video_url && (
-            <div className="px-5 py-3">
+        }
+        maxWidth="max-w-lg"
+      >
+        <DraggableDialogBody>
+          <div className="grid gap-3" style={CG}>
+            {pendingVideo?.video_url && (
               <div className="rounded-xl overflow-hidden" style={{ backgroundColor: '#000', maxHeight: 160 }}>
                 <video
                   src={resolveUrl(pendingVideo.video_url)}
@@ -449,11 +436,8 @@ export default function GalerieVideo() {
                   muted
                 />
               </div>
-            </div>
-          )}
-
-          <div className="px-5 pb-2 space-y-2">
-            <p className="text-gray-400 text-xs font-semibold uppercase tracking-widest mb-3" style={CG}>Ou publier ?</p>
+            )}
+            <p className="text-gray-400 text-xs font-semibold uppercase tracking-widest pt-1" style={CG}>Où publier ?</p>
             {PUBLISH_OPTIONS.map((opt) => {
               const Icon = opt.icon;
               const selected = publishTarget === opt.id;
@@ -461,16 +445,16 @@ export default function GalerieVideo() {
                 <button
                   key={opt.id}
                   onClick={() => setPublishTarget(opt.id)}
-                  className="w-full flex items-center gap-4 p-3.5 rounded-2xl transition-all text-left"
+                  className="w-full flex items-center gap-4 p-3.5 rounded-xl transition-all text-left"
                   style={{
-                    backgroundColor: selected ? opt.bg : 'rgba(255,255,255,0.03)',
-                    border: "1.5px solid " + (selected ? opt.border : 'rgba(255,255,255,0.07)'),
+                    backgroundColor: selected ? opt.bg : 'rgba(255,255,255,0.04)',
+                    border: "1.5px solid " + (selected ? opt.border : 'rgba(255,255,255,0.08)'),
                     transform: selected ? 'scale(1.01)' : 'scale(1)',
                   }}
                 >
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: selected ? opt.bg : 'rgba(255,255,255,0.05)', border: "1px solid " + (selected ? opt.border : 'transparent') }}
+                    style={{ backgroundColor: selected ? opt.bg : 'rgba(255,255,255,0.06)', border: "1px solid " + (selected ? opt.border : 'transparent') }}
                   >
                     <Icon className="w-5 h-5" style={{ color: selected ? opt.color : '#777' }} />
                   </div>
@@ -488,47 +472,52 @@ export default function GalerieVideo() {
               );
             })}
           </div>
-
-          <div className="p-5 pt-3 flex gap-3" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-            <Button
-              variant="ghost"
-              onClick={() => { setPublishDialogOpen(false); setPublishTarget(null); setActiveTab("mes-videos"); }}
-              disabled={publishing}
-              style={{ color: '#777', ...CG }}
-              className="flex-1"
-            >
-              Plus tard
-            </Button>
-            <Button
-              onClick={handlePublish}
-              disabled={!publishTarget || publishing}
-              className="flex-1 font-semibold"
-              style={{
-                background: publishTarget
-                  ? (PUBLISH_OPTIONS.find(o => o.id === publishTarget)?.color || '#6b21a8')
-                  : '#333',
-                color: '#fff',
-                opacity: !publishTarget ? 0.5 : 1,
-                ...CG,
-              }}
-            >
-              {publishing ? (
-                <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Publication...</>
-              ) : publishTarget === 'draft' ? (
-                <><Archive className="w-4 h-4 mr-2" /> Garder en brouillon</>
-              ) : publishTarget ? (
-                <><CheckCircle2 className="w-4 h-4 mr-2" /> Publier maintenant</>
-              ) : (
-                'Choisir une destination'
-              )}
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
+        </DraggableDialogBody>
+        <DraggableDialogFooter>
+          <Button
+            variant="outline"
+            onClick={() => { setPublishDialogOpen(false); setPublishTarget(null); setActiveTab("mes-videos"); }}
+            disabled={publishing}
+            style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG }}
+          >
+            Plus tard
+          </Button>
+          <Button
+            onClick={handlePublish}
+            disabled={!publishTarget || publishing}
+            style={{
+              background: publishTarget ? (PUBLISH_OPTIONS.find(o => o.id === publishTarget)?.color || '#6b21a8') : '#555',
+              color: '#fff',
+              opacity: !publishTarget ? 0.5 : 1,
+              ...CG,
+            }}
+          >
+            {publishing ? (
+              <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Publication...</>
+            ) : publishTarget === 'draft' ? (
+              <><Archive className="w-4 h-4 mr-2" /> Garder en brouillon</>
+            ) : publishTarget ? (
+              <><CheckCircle2 className="w-4 h-4 mr-2" /> Publier maintenant</>
+            ) : (
+              'Choisir une destination'
+            )}
+          </Button>
+        </DraggableDialogFooter>
+      </DraggableDialog>
 
       {/* VIDEO PLAYER DIALOG */}
-      <Dialog open={playerOpen} onOpenChange={setPlayerOpen}>
-        <DialogContent className="max-w-2xl p-0 overflow-hidden" style={{ backgroundColor: '#000', border: '1px solid #333' }}>
+      <DraggableDialog
+        open={playerOpen}
+        onOpenChange={setPlayerOpen}
+        title={
+          <div className="text-base font-semibold text-white flex items-center gap-2" style={CG}>
+            <Video className="w-5 h-5 text-purple-400" />
+            {currentVideo?.titre || 'Lecture'}
+          </div>
+        }
+        maxWidth="max-w-2xl"
+      >
+        <DraggableDialogBody style={{ padding: 0 }}>
           {currentVideo && (
             <div className="relative">
               <video
@@ -563,8 +552,8 @@ export default function GalerieVideo() {
               </div>
             </div>
           )}
-        </DialogContent>
-      </Dialog>
+        </DraggableDialogBody>
+      </DraggableDialog>
     </div>
   );
 }
