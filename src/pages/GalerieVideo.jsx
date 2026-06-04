@@ -525,6 +525,8 @@ function VideoCard({ video, currentUserId, onPlay, onDelete, onLike, onPublish }
     <div
       className="group relative overflow-hidden cursor-pointer rounded-lg"
       style={{ backgroundColor: '#1c1c24', aspectRatio: '9/16', border: '1px solid rgba(255,255,255,0.06)', transition: 'transform 0.2s, box-shadow 0.2s', transform: isHovered ? 'scale(1.04)' : 'scale(1)', boxShadow: isHovered ? '0 8px 24px rgba(0,0,0,0.6)' : 'none' }}
+      onMouseEnter={() => { setIsHovered(true); videoRef.current?.play(); }}
+      onMouseLeave={() => { setIsHovered(false); videoRef.current?.pause(); videoRef.current && (videoRef.current.currentTime = 0); }}
     >
       <video
         ref={videoRef}
@@ -532,8 +534,6 @@ function VideoCard({ video, currentUserId, onPlay, onDelete, onLike, onPublish }
         className="w-full h-full object-cover"
         preload="metadata"
         muted
-        onMouseEnter={() => { setIsHovered(true); videoRef.current?.play(); }}
-        onMouseLeave={() => { setIsHovered(false); videoRef.current?.pause(); videoRef.current && (videoRef.current.currentTime = 0); }}
         onClick={!isDraft ? onPlay : undefined}
       />
 
