@@ -2,12 +2,13 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { useAuth } from "@/lib/AuthContext";
+import { useTheme } from "@/lib/ThemeContext";
 import { dataService } from "@/api/dataService";
 import { authService } from "@/api/authService";
-import { 
-  LayoutDashboard, 
-  GraduationCap, 
-  BookOpen, 
+import {
+  LayoutDashboard,
+  GraduationCap,
+  BookOpen,
   Users, 
   FileText,
   LogOut,
@@ -165,6 +166,7 @@ export default function Layout({ children, currentPageName }) {
   const location = useLocation();
   const queryClient = useQueryClient();
   const { user, isLoadingAuth: loading, logout } = useAuth();
+  const { themeDef } = useTheme();
 
   // Derive page name from URL path if not passed as prop
   const derivedPageName = currentPageName || (() => {
@@ -294,30 +296,30 @@ export default function Layout({ children, currentPageName }) {
       <style>{`
         /* Couleurs principales selon l'image de référence */
         body {
-          background-color: #4d4d4d !important;
-          color: #ffffff !important;
+          background-color: var(--ha-bg) !important;
+          color: var(--ha-text) !important;
         }
         
         /* Remplacer tous les fonds gris */
         .bg-gray-50,
         [class*="bg-gray-50"] {
-          background-color: #4d4d4d !important;
+          background-color: var(--ha-bg) !important;
         }
         
         .bg-gray-100,
         [class*="bg-gray-100"] {
-          background-color: #3a3a3a !important;
+          background-color: var(--ha-surface) !important;
         }
         
         .bg-gray-200,
         [class*="bg-gray-200"] {
-          background-color: #3d3d3d !important;
+          background-color: var(--ha-surface2) !important;
         }
         
         .bg-white,
         [class*="bg-white"] {
-          background-color: #3d3d3d !important;
-          color: #ffffff !important;
+          background-color: var(--ha-surface2) !important;
+          color: var(--ha-text) !important;
         }
         
         /* Textes */
@@ -327,19 +329,19 @@ export default function Layout({ children, currentPageName }) {
         [class*="text-gray-8"],
         [class*="text-gray-9"],
         [class*="text-gray-7"] {
-          color: #ffffff !important;
+          color: var(--ha-text) !important;
         }
         
         .text-gray-600,
         .text-gray-500,
         [class*="text-gray-6"],
         [class*="text-gray-5"] {
-          color: #e0e0e0 !important;
+          color: var(--ha-text-muted) !important;
         }
         
         .text-gray-400,
         [class*="text-gray-4"] {
-          color: #b0b0b0 !important;
+          color: var(--ha-text-faint) !important;
         }
         
         /* Bordures */
@@ -347,23 +349,23 @@ export default function Layout({ children, currentPageName }) {
         .border-gray-300,
         [class*="border-gray-2"],
         [class*="border-gray-3"] {
-          border-color: #2d2d2d !important;
+          border-color: var(--ha-border) !important;
         }
         
         /* Hover states */
         .hover\\:bg-gray-100:hover,
         .hover\\:bg-gray-50:hover,
         [class*="hover:bg-gray"]:hover {
-          background-color: #2d2d2d !important;
+          background-color: var(--ha-hover) !important;
         }
         
         /* Cards et conteneurs */
         [role="dialog"],
         [role="menu"],
         [role="listbox"] {
-          background-color: #3d3d3d !important;
-          color: #ffffff !important;
-          border-color: #2d2d2d !important;
+          background-color: var(--ha-surface2) !important;
+          color: var(--ha-text) !important;
+          border-color: var(--ha-border) !important;
         }
         
         /* Inputs et selects */
@@ -371,39 +373,39 @@ export default function Layout({ children, currentPageName }) {
         textarea,
         select,
         [role="combobox"] {
-          background-color: #2d2d2d !important;
-          color: #ffffff !important;
-          border-color: #4d4d4d !important;
+          background-color: var(--ha-surface) !important;
+          color: var(--ha-text) !important;
+          border-color: var(--ha-border) !important;
         }
         
         input::placeholder,
         textarea::placeholder {
-          color: #b0b0b0 !important;
+          color: var(--ha-text-faint) !important;
         }
         
         /* Buttons */
         button[class*="bg-white"],
         button[class*="bg-gray"] {
-          background-color: #3d3d3d !important;
-          color: #ffffff !important;
-          border-color: #2d2d2d !important;
+          background-color: var(--ha-surface2) !important;
+          color: var(--ha-text) !important;
+          border-color: var(--ha-border) !important;
         }
         
         /* Tables */
         table {
-          background-color: #3d3d3d !important;
+          background-color: var(--ha-surface2) !important;
         }
         
         thead {
-          background-color: #2d2d2d !important;
+          background-color: var(--ha-surface) !important;
         }
         
         tbody tr {
-          border-color: #2d2d2d !important;
+          border-color: var(--ha-border) !important;
         }
         
         tbody tr:hover {
-          background-color: #474747 !important;
+          background-color: var(--ha-hover) !important;
         }
         
         /* Scrollbar */
@@ -413,21 +415,21 @@ export default function Layout({ children, currentPageName }) {
         }
         
         ::-webkit-scrollbar-track {
-          background: #2d2d2d;
+          background: var(--ha-surface);
         }
         
         ::-webkit-scrollbar-thumb {
-          background: #4d4d4d;
+          background: var(--ha-surface3);
           border-radius: 4px;
         }
         
         ::-webkit-scrollbar-thumb:hover {
-          background: #5a5a5a;
+          background: var(--ha-surface2);
         }
       `}</style>
-      <div className="min-h-screen flex w-full" style={{backgroundColor: '#4d4d4d'}}>
-        <Sidebar style={{backgroundColor: '#1a1a1a', borderColor: '#2d2d2d'}}>
-            <SidebarHeader style={{backgroundColor: '#2d2d2d', borderColor: '#2d2d2d'}} className="p-3">
+      <div className="min-h-screen flex w-full" style={{backgroundColor: 'var(--ha-bg)'}}>
+        <Sidebar style={{backgroundColor: 'var(--ha-sidebar-bg)', borderColor: 'var(--ha-border)'}}>
+            <SidebarHeader style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}} className="p-3">
               <Link to={createPageUrl("Journal")} className="flex flex-col items-center justify-center hover:opacity-80 transition-opacity">
                 <img 
                   src="/assets/icons/6153a57fe_logoHARCHIVEF2.png"
@@ -437,20 +439,20 @@ export default function Layout({ children, currentPageName }) {
               </Link>
             </SidebarHeader>
           
-          <SidebarContent className="px-2 py-2" style={{backgroundColor: '#1a1a1a'}}>
+          <SidebarContent className="px-2 py-2" style={{backgroundColor: 'var(--ha-sidebar-bg)'}}>
             {user && (
-              <div className="mb-3 p-2 rounded-lg" style={{backgroundColor: '#2d2d2d', borderColor: '#3d3d3d'}}>
-                <p className="text-xs font-medium uppercase tracking-wide mb-1" style={{color: '#b0b0b0'}}>
+              <div className="mb-3 p-2 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}>
+                <p className="text-xs font-medium uppercase tracking-wide mb-1" style={{color: 'var(--ha-text-muted)'}}>
                   Connecté en tant que
                 </p>
-                <p className="text-xs font-semibold" style={{color: '#ffffff'}}>
+                <p className="text-xs font-semibold" style={{color: 'var(--ha-text)'}}>
                   {getRoleLabel(user.role_archive)}
                 </p>
               </div>
             )}
 
             <SidebarGroup>
-              <SidebarGroupLabel className="text-xs font-bold uppercase tracking-wider px-2 py-1.5" style={{color: '#b0b0b0'}}>
+              <SidebarGroupLabel className="text-xs font-bold uppercase tracking-wider px-2 py-1.5" style={{color: 'var(--ha-text-muted)'}}>
                 Navigation
               </SidebarGroupLabel>
               <SidebarGroupContent>
@@ -465,8 +467,8 @@ export default function Layout({ children, currentPageName }) {
                             : ''
                         }`}
                         style={location.pathname === createPageUrl(item.url) 
-                          ? {backgroundColor: '#2d2d2d', color: '#ffffff'} 
-                          : {color: '#e0e0e0'}}
+                          ? {backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)'} 
+                          : {color: 'var(--ha-text-muted)'}}
                       >
                         <Link to={createPageUrl(item.url)} className="flex items-center gap-2.5 px-3 py-2 hover:opacity-80 w-full">
                           {item.isCustomIcon ? (
@@ -505,9 +507,9 @@ export default function Layout({ children, currentPageName }) {
             </div>
           </SidebarContent>
 
-          <SidebarFooter style={{backgroundColor: '#2d2d2d', borderColor: '#2d2d2d'}} className="p-3">
+          <SidebarFooter style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}} className="p-3">
             <div className="space-y-2">
-              <div className="flex items-center gap-2 p-2 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+              <div className="flex items-center gap-2 p-2 rounded-lg" style={{backgroundColor: 'var(--ha-surface3)'}}>
                 {user?.photo_url ? (
                   <img 
                     src={user.photo_url} 
@@ -515,7 +517,7 @@ export default function Layout({ children, currentPageName }) {
                     className="w-8 h-8 rounded-full object-cover shadow-sm"
                   />
                 ) : (
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center shadow-sm text-xs font-semibold" style={{backgroundColor: '#3d3d3d', color: '#ffffff'}}>
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center shadow-sm text-xs font-semibold" style={{backgroundColor: 'var(--ha-accent)', color: '#ffffff'}}>
                     {(displayName || '').split(' ').map(n => n[0]).join('').toUpperCase() || 'U'}
                   </div>
                 )}
@@ -530,7 +532,7 @@ export default function Layout({ children, currentPageName }) {
               <button
                 onClick={handleLogout}
                 className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 font-medium text-xs"
-                style={{backgroundColor: '#2d2d2d', color: '#ffffff', border: '1px solid #3d3d3d'}}
+                style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', border: '1px solid var(--ha-border)'}}
               >
                 <LogOut className="w-3.5 h-3.5" />
                 Déconnexion
@@ -539,8 +541,8 @@ export default function Layout({ children, currentPageName }) {
           </SidebarFooter>
         </Sidebar>
 
-        <main className="flex-1 flex flex-col" style={{backgroundColor: '#4d4d4d'}}>
-          <header style={{backgroundColor: '#2d2d2d', borderColor: '#3d3d3d'}} className="px-6 py-4 lg:hidden border-b">
+        <main className="flex-1 flex flex-col" style={{backgroundColor: 'var(--ha-bg)'}}>
+          <header style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}} className="px-6 py-4 lg:hidden border-b">
             <div className="flex items-center gap-4">
               <SidebarTrigger className="p-2 rounded-lg transition-colors" style={{color: '#ffffff'}} />
               <Link to={createPageUrl("Journal")}>
