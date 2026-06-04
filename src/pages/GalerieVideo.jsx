@@ -522,101 +522,98 @@ function VideoCard({ video, currentUserId, onPlay, onDelete, onLike, onPublish }
   const videoSrc = resolveUrl(video.video_url);
 
   return (
-    <div
-      className="group relative overflow-hidden cursor-pointer rounded-lg"
-      style={{ backgroundColor: '#1c1c24', aspectRatio: '9/16', border: '1px solid rgba(255,255,255,0.06)', transition: 'transform 0.2s, box-shadow 0.2s', transform: isHovered ? 'scale(1.04)' : 'scale(1)', boxShadow: isHovered ? '0 8px 24px rgba(0,0,0,0.6)' : 'none' }}
-      onMouseEnter={() => { setIsHovered(true); videoRef.current?.play(); }}
-      onMouseLeave={() => { setIsHovered(false); videoRef.current?.pause(); videoRef.current && (videoRef.current.currentTime = 0); }}
-    >
-      <video
-        ref={videoRef}
-        src={videoSrc}
-        className="w-full h-full object-cover"
-        preload="metadata"
-        muted
-        onClick={!isDraft ? onPlay : undefined}
-      />
-
-      {/* gradient overlay */}
+    <div className="flex flex-col" style={{ cursor: 'pointer' }}>
+      {/* thumbnail */}
       <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 45%, transparent 70%)' }}
-      />
+        className="group relative overflow-hidden rounded-lg"
+        style={{ backgroundColor: '#1c1c24', aspectRatio: '9/16', border: '1px solid rgba(255,255,255,0.06)', transition: 'transform 0.2s, box-shadow 0.2s', transform: isHovered ? 'scale(1.04)' : 'scale(1)', boxShadow: isHovered ? '0 8px 24px rgba(0,0,0,0.6)' : 'none' }}
+        onMouseEnter={() => { setIsHovered(true); videoRef.current?.play(); }}
+        onMouseLeave={() => { setIsHovered(false); videoRef.current?.pause(); videoRef.current && (videoRef.current.currentTime = 0); }}
+      >
+        <video
+          ref={videoRef}
+          src={videoSrc}
+          className="w-full h-full object-cover"
+          preload="metadata"
+          muted
+          onClick={!isDraft ? onPlay : undefined}
+        />
 
-      {/* play button — caché pendant la lecture en miniature */}
-      {!isDraft && !isHovered && (
-        <div
-          className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-          onClick={onPlay}
-        >
-          <div className="w-9 h-9 rounded-full bg-black/50 flex items-center justify-center backdrop-blur-sm" style={{ border: '1.5px solid rgba(255,255,255,0.3)' }}>
-            <Play className="w-4 h-4 text-white ml-0.5" fill="white" />
+        {/* play button — caché pendant la lecture en miniature */}
+        {!isDraft && !isHovered && (
+          <div
+            className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+            onClick={onPlay}
+          >
+            <div className="w-9 h-9 rounded-full bg-black/50 flex items-center justify-center backdrop-blur-sm" style={{ border: '1.5px solid rgba(255,255,255,0.3)' }}>
+              <Play className="w-4 h-4 text-white ml-0.5" fill="white" />
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* indicateur lecture en miniature */}
-      {isHovered && !isDraft && (
-        <div className="absolute top-1.5 left-1.5 flex items-center gap-1 px-1.5 py-0.5 rounded-full" style={{ backgroundColor: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(4px)' }}>
-          <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-          <span style={{ fontSize: 8, color: '#fff', fontFamily: '"Century Gothic", sans-serif' }}>Aperçu</span>
-        </div>
-      )}
+        {/* indicateur lecture en miniature */}
+        {isHovered && !isDraft && (
+          <div className="absolute top-1.5 left-1.5 flex items-center gap-1 px-1.5 py-0.5 rounded-full" style={{ backgroundColor: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(4px)' }}>
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+            <span style={{ fontSize: 8, color: '#fff', fontFamily: '"Century Gothic", sans-serif' }}>Aperçu</span>
+          </div>
+        )}
 
-      {/* bottom info */}
-      <div className="absolute bottom-0 left-0 right-0 px-1.5 pb-1.5" onClick={!isDraft ? onPlay : undefined}>
-        <p className="text-white font-semibold truncate leading-tight" style={{ fontSize: 9, fontFamily: '"Century Gothic", sans-serif' }}>
+        {/* draft overlay */}
+        {isDraft && (
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 rounded-lg"
+            style={{ background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(2px)' }}
+          >
+            <div
+              className="flex items-center gap-1 px-2 py-0.5 rounded-full"
+              style={{ backgroundColor: 'rgba(107,114,128,0.85)', color: '#fff', fontSize: 8, fontFamily: '"Century Gothic", sans-serif' }}
+            >
+              <Archive className="w-2 h-2" /> Brouillon
+            </div>
+            {isOwner && (
+              <button
+                className="flex items-center gap-1 px-2.5 py-1 rounded-full font-bold transition-all hover:scale-105 active:scale-95"
+                style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)', color: '#fff', fontSize: 9, fontFamily: '"Century Gothic", sans-serif', boxShadow: '0 3px 10px rgba(124,58,237,0.5)' }}
+                onClick={(e) => { e.stopPropagation(); onPublish(); }}
+              >
+                <Globe className="w-2.5 h-2.5" /> Publier
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* delete button */}
+        {isOwner && (
+          <button
+            className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600/80"
+            onClick={(e) => { e.stopPropagation(); onDelete(); }}
+          >
+            <Trash2 className="w-2.5 h-2.5 text-white" />
+          </button>
+        )}
+      </div>
+
+      {/* titre et stats SOUS la miniature */}
+      <div className="px-0.5 pt-1.5" onClick={!isDraft ? onPlay : undefined}>
+        <p className="text-white font-semibold truncate leading-tight" style={{ fontSize: 11, fontFamily: '"Century Gothic", sans-serif' }}>
           {video.titre || 'Sans titre'}
         </p>
         {!isDraft && (
-          <div className="flex items-center gap-1.5 mt-0.5">
+          <div className="flex items-center gap-2 mt-0.5">
             <button
               onClick={(e) => { e.stopPropagation(); onLike(); }}
               className="flex items-center gap-0.5 hover:text-red-400 transition-colors"
-              style={{ fontSize: 8, color: isLiked ? '#ff4458' : '#aaa' }}
+              style={{ fontSize: 9, color: isLiked ? '#ff4458' : '#aaa' }}
             >
-              <Heart className="w-2 h-2" fill={isLiked ? '#ff4458' : 'none'} /> {likeCount}
+              <Heart className="w-2.5 h-2.5" fill={isLiked ? '#ff4458' : 'none'} /> {likeCount}
             </button>
-            <span className="flex items-center gap-0.5" style={{ fontSize: 8, color: '#888' }}>
-              <Eye className="w-2 h-2" /> {video.views || 0}
+            <span className="flex items-center gap-0.5" style={{ fontSize: 9, color: '#888' }}>
+              <Eye className="w-2.5 h-2.5" /> {video.views || 0}
             </span>
           </div>
         )}
       </div>
-
-      {/* draft overlay */}
-      {isDraft && (
-        <div
-          className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 rounded-lg"
-          style={{ background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(2px)' }}
-        >
-          <div
-            className="flex items-center gap-1 px-2 py-0.5 rounded-full"
-            style={{ backgroundColor: 'rgba(107,114,128,0.85)', color: '#fff', fontSize: 8, fontFamily: '"Century Gothic", sans-serif' }}
-          >
-            <Archive className="w-2 h-2" /> Brouillon
-          </div>
-          {isOwner && (
-            <button
-              className="flex items-center gap-1 px-2.5 py-1 rounded-full font-bold transition-all hover:scale-105 active:scale-95"
-              style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)', color: '#fff', fontSize: 9, fontFamily: '"Century Gothic", sans-serif', boxShadow: '0 3px 10px rgba(124,58,237,0.5)' }}
-              onClick={(e) => { e.stopPropagation(); onPublish(); }}
-            >
-              <Globe className="w-2.5 h-2.5" /> Publier
-            </button>
-          )}
-        </div>
-      )}
-
-      {/* delete button */}
-      {isOwner && (
-        <button
-          className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600/80"
-          onClick={(e) => { e.stopPropagation(); onDelete(); }}
-        >
-          <Trash2 className="w-2.5 h-2.5 text-white" />
-        </button>
-      )}
     </div>
   );
 }
