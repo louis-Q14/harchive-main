@@ -546,6 +546,7 @@ export default function GalerieVideo() {
 
 function VideoCard({ video, currentUserId, onPlay, onDelete, onLike, onPublish }) {
   const videoRef = useRef(null);
+  const [isHovered, setIsHovered] = useState(false);
   const isOwner = currentUserId && video.creator_id === currentUserId;
   const isDraft = video.status === 'processing';
   const likeCount = Array.isArray(video.likes) ? video.likes.length : (video.nb_likes || 0);
@@ -555,7 +556,7 @@ function VideoCard({ video, currentUserId, onPlay, onDelete, onLike, onPublish }
   return (
     <div
       className="group relative overflow-hidden cursor-pointer rounded-lg"
-      style={{ backgroundColor: '#1c1c24', aspectRatio: '9/16', border: '1px solid rgba(255,255,255,0.06)' }}
+      style={{ backgroundColor: '#1c1c24', aspectRatio: '9/16', border: '1px solid rgba(255,255,255,0.06)', transition: 'transform 0.2s, box-shadow 0.2s', transform: isHovered ? 'scale(1.04)' : 'scale(1)', boxShadow: isHovered ? '0 8px 24px rgba(0,0,0,0.6)' : 'none' }}
     >
       <video
         ref={videoRef}
@@ -563,8 +564,8 @@ function VideoCard({ video, currentUserId, onPlay, onDelete, onLike, onPublish }
         className="w-full h-full object-cover"
         preload="metadata"
         muted
-        onMouseEnter={() => videoRef.current?.play()}
-        onMouseLeave={() => { videoRef.current?.pause(); videoRef.current && (videoRef.current.currentTime = 0); }}
+        onMouseEnter={() => { setIsHovered(true); videoRef.current?.play(); }}
+        onMouseLeave={() => { setIsHovered(false); videoRef.current?.pause(); videoRef.current && (videoRef.current.currentTime = 0); }}
         onClick={!isDraft ? onPlay : undefined}
       />
 
@@ -574,8 +575,8 @@ function VideoCard({ video, currentUserId, onPlay, onDelete, onLike, onPublish }
         style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 45%, transparent 70%)' }}
       />
 
-      {/* play button */}
-      {!isDraft && (
+      {/* play button — caché pendant la lecture en miniature */}
+      {!isDraft && !isHovered && (
         <div
           className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
           onClick={onPlay}
@@ -583,6 +584,14 @@ function VideoCard({ video, currentUserId, onPlay, onDelete, onLike, onPublish }
           <div className="w-9 h-9 rounded-full bg-black/50 flex items-center justify-center backdrop-blur-sm" style={{ border: '1.5px solid rgba(255,255,255,0.3)' }}>
             <Play className="w-4 h-4 text-white ml-0.5" fill="white" />
           </div>
+        </div>
+      )}
+
+      {/* indicateur lecture en miniature */}
+      {isHovered && !isDraft && (
+        <div className="absolute top-1.5 left-1.5 flex items-center gap-1 px-1.5 py-0.5 rounded-full" style={{ backgroundColor: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(4px)' }}>
+          <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+          <span style={{ fontSize: 8, color: '#fff', fontFamily: '"Century Gothic", sans-serif' }}>Aperçu</span>
         </div>
       )}
 
