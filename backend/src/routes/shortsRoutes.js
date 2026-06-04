@@ -20,10 +20,13 @@ router.post('/shorts', verifyToken, async (req, res) => {
       ? [userRow.prenom, userRow.nom, userRow.post_nom].filter(Boolean).join(' ')
       : 'Utilisateur';
 
+    // By default save as draft ('processing'); caller can pass status='published' to publish immediately
+    const status = req.body.status === 'published' ? 'published' : 'processing';
+
     await dbUtils.run(
-      `INSERT INTO short_videos (id, creator_id, creator_nom, creator_photo_url, titre, description, video_url, thumbnail_url, duration, width, height, tags, music_name, music_artist, is_from_live, source_live_id, likes)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '[]')`,
-      [id, user.id, creatorNom, userRow?.photo_url || '', titre || '', description || '', video_url, thumbnail_url || '', duration || 0, width || 0, height || 0, JSON.stringify(tags || []), music_name || '', music_artist || '', is_from_live ? 1 : 0, source_live_id || null]
+      `INSERT INTO short_videos (id, creator_id, creator_nom, creator_photo_url, titre, description, video_url, thumbnail_url, duration, width, height, tags, music_name, music_artist, is_from_live, source_live_id, likes, status)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '[]', ?)`,
+      [id, user.id, creatorNom, userRow?.photo_url || '', titre || '', description || '', video_url, thumbnail_url || '', duration || 0, width || 0, height || 0, JSON.stringify(tags || []), music_name || '', music_artist || '', is_from_live ? 1 : 0, source_live_id || null, status]
     );
 
     const [created] = await dbUtils.all('SELECT * FROM short_videos WHERE id = ?', [id]);
@@ -32,6 +35,44 @@ router.post('/shorts', verifyToken, async (req, res) => {
     res.json(created);
   } catch (err) {
     logger.error('Create short error:', err);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+});
+
+// ── Publish a draft short ──
+router.patch('/shorts/:id/publish', verifyToken, async (req, res) => {
+  try {
+    const [short] = await dbUtils.all('SELECT creator_id, status FROM short_videos WHERE id = ?', [req.params.id]);
+    if (!short) return res.status(404).json({ error: 'Short introuvable' });
+    if (short.creator_id !== req.user.id) return res.status(403).json({ error: 'Non autorisé' });
+    if (short.status === 'deleted') return res.status(400).json({ error: 'Impossible de publier un short supprimé' });
+
+    await dbUtils.run(`UPDATE short_videos SET status = 'published' WHERE id = ?`, [req.params.id]);
+    const [updated] = await dbUtils.all('SELECT * FROM short_videos WHERE id = ?', [req.params.id]);
+    updated.likes = safeParseJSON(updated.likes);
+    updated.tags = safeParseJSON(updated.tags);
+    res.json(updated);
+  } catch (err) {
+    logger.error('Publish short error:', err);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+});
+
+// ── Get all own shorts (including drafts) ──
+router.get('/shorts/mine', verifyToken, async (req, res) => {
+  try {
+    const shorts = await dbUtils.all(
+      `SELECT * FROM short_videos WHERE creator_id = ? AND status != 'deleted' ORDER BY created_date DESC LIMIT 100`,
+      [req.user.id]
+    );
+    res.json(shorts.map(s => ({
+      ...s,
+      likes: safeParseJSON(s.likes),
+      tags: safeParseJSON(s.tags),
+      is_liked: safeParseJSON(s.likes).includes(req.user.id),
+    })));
+  } catch (err) {
+    logger.error('Get mine shorts error:', err);
     res.status(500).json({ error: 'Erreur serveur' });
   }
 });

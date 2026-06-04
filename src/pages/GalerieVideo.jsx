@@ -29,7 +29,8 @@ import {
   Search,
   Eye,
   MessageCircle,
-  Film
+  Film,
+  Globe
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatUserName } from "@/components/utils/nameUtils";
@@ -65,12 +66,23 @@ export default function GalerieVideo() {
     staleTime: 1000 * 30,
   });
 
-  // Load user's own shorts
+  // Load user's own shorts (all, including drafts)
   const { data: mesVideos = [], isLoading: loadingMes } = useQuery({
     queryKey: ['galerie-video-mes', user?.id],
-    queryFn: () => shortsService.getUserShorts(user.id),
+    queryFn: () => shortsService.getMyShorts(),
     enabled: !!user?.id,
     staleTime: 1000 * 30,
+  });
+
+  const publishMutation = useMutation({
+    mutationFn: (id) => shortsService.publishShort(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['galerie-video-all'] });
+      queryClient.invalidateQueries({ queryKey: ['galerie-video-mes'] });
+      queryClient.invalidateQueries({ queryKey: ['shorts-feed'] });
+      toast.success("Vidéo publiée !");
+    },
+    onError: (err) => toast.error(err.message || "Erreur publication"),
   });
 
   const deleteMutation = useMutation({
@@ -127,6 +139,7 @@ export default function GalerieVideo() {
         width: 0,
         height: 0,
         tags: [],
+        status: 'processing', // saved as draft
       });
 
       queryClient.invalidateQueries({ queryKey: ['galerie-video-all'] });
@@ -134,7 +147,8 @@ export default function GalerieVideo() {
       queryClient.invalidateQueries({ queryKey: ['shorts-feed'] });
 
       resetForm();
-      toast.success("Vidéo publiée avec succès !");
+      setActiveTab("mes-videos");
+      toast.success("Vidéo ajoutée ! Vous pouvez la publier depuis l'onglet \"Mes vidéos\".");
     } catch (err) {
       console.error("Erreur upload vidéo:", err);
       toast.error(err.message || "Erreur lors de l'upload");
@@ -189,7 +203,7 @@ export default function GalerieVideo() {
               style={CG}
             >
               <Plus className="w-4 h-4 mr-2" />
-              Publier une vidéo
+              Ajouter une vidéo
             </Button>
           )}
         </div>
@@ -259,7 +273,7 @@ export default function GalerieVideo() {
                 style={CG}
               >
                 <Plus className="w-4 h-4 mr-2" />
-                Publier une vidéo
+                Ajouter une vidéo
               </Button>
             )}
           </div>
@@ -273,6 +287,7 @@ export default function GalerieVideo() {
                 onPlay={() => openPlayer(video)}
                 onDelete={() => deleteMutation.mutate(video.id)}
                 onLike={() => toggleLikeMutation.mutate(video.id)}
+                onPublish={() => publishMutation.mutate(video.id)}
               />
             ))}
           </div>
@@ -286,7 +301,7 @@ export default function GalerieVideo() {
             <DialogTitle style={{ ...CG, color: '#fff' }}>
               <div className="flex items-center gap-2">
                 <Upload className="w-5 h-5 text-purple-400" />
-                Publier une vidéo
+                Ajouter une vidéo
               </div>
             </DialogTitle>
           </DialogHeader>
@@ -358,7 +373,7 @@ export default function GalerieVideo() {
               {uploading ? (
                 <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Envoi en cours...</>
               ) : (
-                <><Upload className="w-4 h-4 mr-2" /> Publier</>
+                <><Upload className="w-4 h-4 mr-2" /> Enregistrer</>
               )}
             </Button>
           </DialogFooter>
@@ -430,9 +445,10 @@ export default function GalerieVideo() {
 }
 
 /* ─── Video Card ─── */
-function VideoCard({ video, currentUserId, onPlay, onDelete, onLike }) {
+function VideoCard({ video, currentUserId, onPlay, onDelete, onLike, onPublish }) {
   const videoRef = useRef(null);
   const isOwner = currentUserId && video.creator_id === currentUserId;
+  const isDraft = video.status === 'processing';
   const likeCount = Array.isArray(video.likes) ? video.likes.length : (video.nb_likes || 0);
   const isLiked = Array.isArray(video.likes) && video.likes.includes(currentUserId);
 
@@ -488,6 +504,31 @@ function VideoCard({ video, currentUserId, onPlay, onDelete, onLike }) {
           </div>
         </div>
       </div>
+
+      {/* Draft overlay */}
+      {isDraft && (
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-lg"
+          style={{ background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(1px)' }}
+        >
+          <span
+            className="text-xs font-semibold px-2 py-0.5 rounded-full"
+            style={{ backgroundColor: '#6b21a8', color: '#fff', fontFamily: '"Century Gothic", sans-serif' }}
+          >
+            Non publié
+          </span>
+          {isOwner && onPublish && (
+            <button
+              className="flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-full transition-colors"
+              style={{ backgroundColor: '#22c55e', color: '#fff', fontFamily: '"Century Gothic", sans-serif' }}
+              onClick={(e) => { e.stopPropagation(); onPublish(); }}
+            >
+              <Globe className="w-3 h-3" />
+              Publier
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Delete button (owner only) */}
       {isOwner && (

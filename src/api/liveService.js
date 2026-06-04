@@ -92,6 +92,12 @@ export const shortsService = {
   deleteShort: (id) =>
     fetchJSON(`${getBaseUrl()}/shorts/${id}`, { method: 'DELETE' }),
 
+  publishShort: (id) =>
+    fetchJSON(`${getBaseUrl()}/shorts/${id}/publish`, { method: 'PATCH' }),
+
+  getMyShorts: () =>
+    fetchJSON(`${getBaseUrl()}/shorts/mine`),
+
   getUserShorts: (userId) =>
     fetchJSON(`${getBaseUrl()}/shorts/user/${userId}`),
 };
