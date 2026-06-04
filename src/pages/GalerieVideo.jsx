@@ -502,11 +502,6 @@ export default function GalerieVideo() {
                       <span className="text-gray-500 text-xs flex items-center gap-1"><MessageCircle className="w-3 h-3" /> {currentVideo.nb_commentaires || 0}</span>
                     </div>
                   </div>
-                  {user?.id === currentVideo.creator_id && (
-                    <Button size="sm" variant="destructive" onClick={() => { deleteMutation.mutate(currentVideo.id); setPlayerOpen(false); }}>
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  )}
                 </div>
               </div>
             </div>
