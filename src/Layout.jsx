@@ -299,6 +299,20 @@ export default function Layout({ children, currentPageName }) {
           background-color: var(--ha-bg) !important;
           color: var(--ha-text) !important;
         }
+
+        /* Backgrounds sombres Tailwind → surface selon thème */
+        .bg-gray-950, .bg-gray-900, .bg-gray-800, .bg-gray-700,
+        .bg-zinc-950, .bg-zinc-900, .bg-zinc-800, .bg-zinc-700,
+        .bg-neutral-950, .bg-neutral-900, .bg-neutral-800, .bg-neutral-700,
+        .bg-slate-950, .bg-slate-900, .bg-slate-800, .bg-slate-700,
+        [class*="bg-gray-9"], [class*="bg-gray-8"], [class*="bg-gray-7"],
+        [class*="bg-zinc-9"], [class*="bg-zinc-8"], [class*="bg-zinc-7"] {
+          background-color: var(--ha-surface) !important;
+          color: var(--ha-text) !important;
+        }
+          background-color: var(--ha-bg) !important;
+          color: var(--ha-text) !important;
+        }
         
         /* Remplacer tous les fonds gris */
         .bg-gray-50,
@@ -320,6 +334,18 @@ export default function Layout({ children, currentPageName }) {
         [class*="bg-white"] {
           background-color: var(--ha-surface2) !important;
           color: var(--ha-text) !important;
+        }
+
+        /* Textes blancs forcés → texte selon thème */
+        .text-white,
+        [class*="text-white"] {
+          color: var(--ha-text) !important;
+        }
+
+        /* Textes clairs Tailwind → thème */
+        .text-gray-100, .text-gray-200, .text-gray-300,
+        [class*="text-gray-1"], [class*="text-gray-2"], [class*="text-gray-3"] {
+          color: var(--ha-text-muted) !important;
         }
         
         /* Textes */
@@ -435,6 +461,7 @@ export default function Layout({ children, currentPageName }) {
                   src="/assets/icons/6153a57fe_logoHARCHIVEF2.png"
                   alt="Harchive Logo"
                   className="w-full h-auto max-h-20 object-contain"
+                  style={themeDef?.group === 'light' ? {filter: 'brightness(0)'} : {}}
                 />
               </Link>
             </SidebarHeader>

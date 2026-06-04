@@ -83,11 +83,11 @@ export const THEMES = {
   },
 };
 
-const ThemeContext = createContext({ theme: 'dark-standard', setTheme: () => {} });
+const ThemeContext = createContext({ theme: 'light-offwhite', setTheme: () => {} });
 
 export function ThemeProvider({ children }) {
   const [theme, setThemeState] = useState(() =>
-    localStorage.getItem('harchive-theme') || 'dark-standard'
+    localStorage.getItem('harchive-theme') || 'light-offwhite'
   );
 
   const applyTheme = (t) => {
