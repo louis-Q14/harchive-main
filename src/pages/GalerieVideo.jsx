@@ -96,15 +96,9 @@ export default function GalerieVideo() {
   const [publishing, setPublishing] = useState(false);
   const [publishTarget, setPublishTarget] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeTab, setActiveTab] = useState("all");
+  const [activeTab, setActiveTab] = useState("mes-videos");
   const [formData, setFormData] = useState({ titre: "", description: "" });
   const fileInputRef = useRef(null);
-
-  const { data: allVideos = [], isLoading: loadingAll } = useQuery({
-    queryKey: ['galerie-video-all'],
-    queryFn: () => user ? shortsService.getFeed(100) : shortsService.getPublicFeed(100),
-    staleTime: 1000 * 30,
-  });
 
   const { data: mesVideos = [], isLoading: loadingMes } = useQuery({
     queryKey: ['galerie-video-mes', user?.id],
@@ -239,13 +233,11 @@ export default function GalerieVideo() {
     shortsService.recordView(video.id).catch(() => {});
   };
 
-  const displayVideos = activeTab === "mes-videos" ? mesVideos : allVideos;
-  const filtered = displayVideos.filter(v =>
+  const filtered = mesVideos.filter(v =>
     !searchQuery ||
-    v.titre?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    v.creator_nom?.toLowerCase().includes(searchQuery.toLowerCase())
+    v.titre?.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  const isLoading = activeTab === "mes-videos" ? loadingMes : loadingAll;
+  const isLoading = loadingMes;
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#111118' }}>
@@ -267,25 +259,8 @@ export default function GalerieVideo() {
             </Button>
           )}
         </div>
-        {/* TABS + SEARCH */}
+        {/* SEARCH */}
         <div className="flex items-center gap-3">
-          <div className="flex rounded-lg overflow-hidden" style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}>
-            {[["all", "Toutes"], ["mes-videos", "Mes vidéos"]].map(([tab, label]) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className="px-3 py-1.5 text-xs font-medium transition-all"
-                style={{
-                  ...CG,
-                  backgroundColor: activeTab === tab ? 'rgba(124,58,237,0.7)' : 'transparent',
-                  color: activeTab === tab ? '#fff' : '#999',
-                  borderRadius: 6,
-                }}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
           <div className="flex-1 relative max-w-xs">
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
             <Input
@@ -308,9 +283,7 @@ export default function GalerieVideo() {
         ) : filtered.length === 0 ? (
           <div className="text-center py-20">
             <Film className="w-14 h-14 mx-auto mb-3" style={{ color: '#333' }} />
-            <p className="text-sm" style={{ color: '#666', ...CG }}>
-              {activeTab === "mes-videos" ? "Aucune vidéo ajoutée" : "Aucune vidéo publiée"}
-            </p>
+            <p className="text-sm" style={{ color: '#666', ...CG }}>Aucune vidéo ajoutée</p>
             {user && (
               <Button onClick={() => setAddDialogOpen(true)} size="sm" className="mt-4" style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)', color: '#fff', ...CG }}>
                 <Plus className="w-3.5 h-3.5 mr-1.5" /> Ajouter
