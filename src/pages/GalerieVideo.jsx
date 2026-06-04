@@ -5,7 +5,6 @@ import { shortsService } from "@/api/liveService";
 import { uploadFile } from "@/api/uploadService";
 import { dataService } from "@/api/dataService";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -249,77 +248,77 @@ export default function GalerieVideo() {
   const isLoading = activeTab === "mes-videos" ? loadingMes : loadingAll;
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{ backgroundColor: '#4d4d4d' }}>
-      <div className="w-full px-4 space-y-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="p-3 rounded-xl" style={{ backgroundColor: '#3d3d3d' }}>
-              <Film className="w-8 h-8 text-purple-400" />
+    <div className="min-h-screen" style={{ backgroundColor: '#111118' }}>
+      {/* HEADER */}
+      <div className="px-5 pt-5 pb-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <div className="flex items-center justify-between gap-3 mb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)' }}>
+              <Film className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-white" style={CG}>Galerie Video</h1>
-              <p className="text-gray-400" style={CG}>{filtered.length} video{filtered.length !== 1 ? 's' : ''}</p>
+              <h1 className="text-xl font-bold text-white leading-none" style={CG}>Galerie Vidéo</h1>
+              <p className="text-xs mt-0.5" style={{ color: '#888', ...CG }}>{filtered.length} vidéo{filtered.length !== 1 ? 's' : ''}</p>
             </div>
           </div>
           {user && (
-            <Button onClick={() => setAddDialogOpen(true)} className="bg-purple-600 hover:bg-purple-700" style={CG}>
-              <Plus className="w-4 h-4 mr-2" />
-              Ajouter une video
+            <Button onClick={() => setAddDialogOpen(true)} size="sm" style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)', color: '#fff', border: 'none', ...CG }}>
+              <Plus className="w-3.5 h-3.5 mr-1.5" /> Ajouter une vidéo
             </Button>
           )}
         </div>
+        {/* TABS + SEARCH */}
+        <div className="flex items-center gap-3">
+          <div className="flex rounded-lg overflow-hidden" style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}>
+            {[["all", "Toutes"], ["mes-videos", "Mes vidéos"]].map(([tab, label]) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className="px-3 py-1.5 text-xs font-medium transition-all"
+                style={{
+                  ...CG,
+                  backgroundColor: activeTab === tab ? 'rgba(124,58,237,0.7)' : 'transparent',
+                  color: activeTab === tab ? '#fff' : '#999',
+                  borderRadius: 6,
+                }}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <div className="flex-1 relative max-w-xs">
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+            <Input
+              placeholder="Rechercher..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-8 h-8 text-xs"
+              style={{ backgroundColor: 'rgba(255,255,255,0.06)', borderColor: 'rgba(255,255,255,0.1)', color: '#fff', ...CG }}
+            />
+          </div>
+        </div>
+      </div>
 
-        <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
-          <CardContent className="p-4">
-            <div className="flex flex-col md:flex-row gap-4 items-center">
-              <div className="flex rounded-lg overflow-hidden" style={{ backgroundColor: '#2d2d2d' }}>
-                {["all", "mes-videos"].map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setActiveTab(tab)}
-                    className="px-4 py-2 text-sm font-medium transition-colors"
-                    style={{
-                      ...CG,
-                      backgroundColor: activeTab === tab ? '#6b21a8' : 'transparent',
-                      color: activeTab === tab ? '#fff' : '#b0b0b0',
-                    }}
-                  >
-                    {tab === "all" ? "Toutes les videos" : "Mes videos"}
-                  </button>
-                ))}
-              </div>
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <Input
-                  placeholder="Rechercher une video..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                  style={{ backgroundColor: '#2d2d2d', borderColor: '#404040', color: '#fff', ...CG }}
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
+      {/* GRID */}
+      <div className="p-4">
         {isLoading ? (
-          <div className="flex justify-center py-12">
-            <Loader2 className="w-8 h-8 text-white animate-spin" />
+          <div className="flex justify-center py-16">
+            <Loader2 className="w-7 h-7 text-purple-400 animate-spin" />
           </div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-16">
-            <Film className="w-20 h-20 text-gray-600 mx-auto mb-4" />
-            <p className="text-gray-400 text-lg" style={CG}>
-              {activeTab === "mes-videos" ? "Vous n avez pas encore ajoute de video" : "Aucune video publiee"}
+          <div className="text-center py-20">
+            <Film className="w-14 h-14 mx-auto mb-3" style={{ color: '#333' }} />
+            <p className="text-sm" style={{ color: '#666', ...CG }}>
+              {activeTab === "mes-videos" ? "Aucune vidéo ajoutée" : "Aucune vidéo publiée"}
             </p>
             {user && (
-              <Button onClick={() => setAddDialogOpen(true)} className="mt-4 bg-purple-600 hover:bg-purple-700" style={CG}>
-                <Plus className="w-4 h-4 mr-2" /> Ajouter une video
+              <Button onClick={() => setAddDialogOpen(true)} size="sm" className="mt-4" style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)', color: '#fff', ...CG }}>
+                <Plus className="w-3.5 h-3.5 mr-1.5" /> Ajouter
               </Button>
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8 gap-2">
             {filtered.map((video) => (
               <VideoCard
                 key={video.id}
@@ -334,6 +333,7 @@ export default function GalerieVideo() {
           </div>
         )}
       </div>
+    </div>
 
       {/* ADD VIDEO DIALOG */}
       <DraggableDialog
@@ -568,8 +568,8 @@ function VideoCard({ video, currentUserId, onPlay, onDelete, onLike, onPublish }
 
   return (
     <div
-      className="group relative overflow-hidden cursor-pointer rounded-xl"
-      style={{ backgroundColor: '#2d2d2d', aspectRatio: '9/16' }}
+      className="group relative overflow-hidden cursor-pointer rounded-lg"
+      style={{ backgroundColor: '#1c1c24', aspectRatio: '9/16', border: '1px solid rgba(255,255,255,0.06)' }}
     >
       <video
         ref={videoRef}
@@ -582,69 +582,76 @@ function VideoCard({ video, currentUserId, onPlay, onDelete, onLike, onPublish }
         onClick={!isDraft ? onPlay : undefined}
       />
 
+      {/* gradient overlay */}
       <div
-        className="absolute inset-0"
-        style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%)' }}
-        onClick={!isDraft ? onPlay : undefined}
-      >
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 45%, transparent 70%)' }}
+      />
+
+      {/* play button */}
+      {!isDraft && (
+        <div
+          className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+          onClick={onPlay}
+        >
+          <div className="w-9 h-9 rounded-full bg-black/50 flex items-center justify-center backdrop-blur-sm" style={{ border: '1.5px solid rgba(255,255,255,0.3)' }}>
+            <Play className="w-4 h-4 text-white ml-0.5" fill="white" />
+          </div>
+        </div>
+      )}
+
+      {/* bottom info */}
+      <div className="absolute bottom-0 left-0 right-0 px-1.5 pb-1.5" onClick={!isDraft ? onPlay : undefined}>
+        <p className="text-white font-semibold truncate leading-tight" style={{ fontSize: 9, fontFamily: '"Century Gothic", sans-serif' }}>
+          {video.titre || 'Sans titre'}
+        </p>
         {!isDraft && (
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-            <div className="w-14 h-14 rounded-full bg-black/60 flex items-center justify-center backdrop-blur-sm">
-              <Play className="w-7 h-7 text-white ml-1" fill="white" />
-            </div>
+          <div className="flex items-center gap-1.5 mt-0.5">
+            <button
+              onClick={(e) => { e.stopPropagation(); onLike(); }}
+              className="flex items-center gap-0.5 hover:text-red-400 transition-colors"
+              style={{ fontSize: 8, color: isLiked ? '#ff4458' : '#aaa' }}
+            >
+              <Heart className="w-2 h-2" fill={isLiked ? '#ff4458' : 'none'} /> {likeCount}
+            </button>
+            <span className="flex items-center gap-0.5" style={{ fontSize: 8, color: '#888' }}>
+              <Eye className="w-2 h-2" /> {video.views || 0}
+            </span>
           </div>
         )}
-        <div className="absolute bottom-0 left-0 right-0 p-3">
-          <p className="text-white text-xs font-semibold truncate" style={{ fontFamily: '"Century Gothic", sans-serif' }}>
-            {video.titre || 'Sans titre'}
-          </p>
-          <p className="text-gray-300 text-xs truncate opacity-80">{video.creator_nom}</p>
-          {!isDraft && (
-            <div className="flex items-center gap-2 mt-1">
-              <button
-                onClick={(e) => { e.stopPropagation(); onLike(); }}
-                className="flex items-center gap-1 text-xs hover:text-red-400 transition-colors"
-                style={{ color: isLiked ? '#ff4458' : '#ccc' }}
-              >
-                <Heart className="w-3 h-3" fill={isLiked ? '#ff4458' : 'none'} /> {likeCount}
-              </button>
-              <span className="flex items-center gap-1 text-xs text-gray-400">
-                <Eye className="w-3 h-3" /> {video.views || 0}
-              </span>
-            </div>
-          )}
-        </div>
       </div>
 
+      {/* draft overlay */}
       {isDraft && (
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 rounded-xl"
-          style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(2px)' }}
+          className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 rounded-lg"
+          style={{ background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(2px)' }}
         >
           <div
-            className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold"
-            style={{ backgroundColor: 'rgba(107,114,128,0.8)', color: '#fff', fontFamily: '"Century Gothic", sans-serif' }}
+            className="flex items-center gap-1 px-2 py-0.5 rounded-full"
+            style={{ backgroundColor: 'rgba(107,114,128,0.85)', color: '#fff', fontSize: 8, fontFamily: '"Century Gothic", sans-serif' }}
           >
-            <Archive className="w-3 h-3" /> Brouillon
+            <Archive className="w-2 h-2" /> Brouillon
           </div>
           {isOwner && (
             <button
-              className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all hover:scale-105 active:scale-95"
-              style={{ background: 'linear-gradient(135deg, #7c3aed, #4f46e5)', color: '#fff', fontFamily: '"Century Gothic", sans-serif', boxShadow: '0 4px 15px rgba(124,58,237,0.4)' }}
+              className="flex items-center gap-1 px-2.5 py-1 rounded-full font-bold transition-all hover:scale-105 active:scale-95"
+              style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)', color: '#fff', fontSize: 9, fontFamily: '"Century Gothic", sans-serif', boxShadow: '0 3px 10px rgba(124,58,237,0.5)' }}
               onClick={(e) => { e.stopPropagation(); onPublish(); }}
             >
-              <Globe className="w-3.5 h-3.5" /> Publier
+              <Globe className="w-2.5 h-2.5" /> Publier
             </button>
           )}
         </div>
       )}
 
+      {/* delete button */}
       {isOwner && (
         <button
-          className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600/80"
+          className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600/80"
           onClick={(e) => { e.stopPropagation(); onDelete(); }}
         >
-          <Trash2 className="w-3.5 h-3.5 text-white" />
+          <Trash2 className="w-2.5 h-2.5 text-white" />
         </button>
       )}
     </div>
