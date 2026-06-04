@@ -452,6 +452,78 @@ export default function Layout({ children, currentPageName }) {
         ::-webkit-scrollbar-thumb:hover {
           background: var(--ha-surface2);
         }
+
+        /* =============================================
+           LIGHT THEME: Override dark inline backgrounds
+           Browsers convert hex to rgb() in style attr
+           !important in stylesheet overrides inline styles
+           ============================================= */
+
+        /* Dark backgrounds: #000 → #555 */
+        [data-theme*="light"] [style*="background-color: rgb(0, 0, 0)"],
+        [data-theme*="light"] [style*="background-color: rgb(26, 26, 26)"],
+        [data-theme*="light"] [style*="background-color: rgb(28, 28, 28)"],
+        [data-theme*="light"] [style*="background-color: rgb(30, 30, 30)"],
+        [data-theme*="light"] [style*="background-color: rgb(36, 36, 36)"],
+        [data-theme*="light"] [style*="background-color: rgb(38, 38, 38)"],
+        [data-theme*="light"] [style*="background-color: rgb(42, 42, 42)"],
+        [data-theme*="light"] [style*="background-color: rgb(44, 44, 44)"],
+        [data-theme*="light"] [style*="background-color: rgb(45, 45, 45)"],
+        [data-theme*="light"] [style*="background-color: rgb(51, 51, 51)"],
+        [data-theme*="light"] [style*="background-color: rgb(58, 58, 58)"],
+        [data-theme*="light"] [style*="background-color: rgb(61, 61, 61)"],
+        [data-theme*="light"] [style*="background-color: rgb(63, 63, 63)"],
+        [data-theme*="light"] [style*="background-color: rgb(64, 64, 64)"],
+        [data-theme*="light"] [style*="background-color: rgb(68, 68, 68)"],
+        [data-theme*="light"] [style*="background-color: rgb(71, 71, 71)"],
+        [data-theme*="light"] [style*="background-color: rgb(77, 77, 77)"],
+        [data-theme*="light"] [style*="background-color: rgb(85, 85, 85)"],
+        [data-theme*="light"] [style*="background-color: rgb(90, 90, 90)"] {
+          background-color: var(--ha-surface) !important;
+          border-color: var(--ha-border) !important;
+          color: var(--ha-text) !important;
+        }
+
+        /* Force borders dark */
+        [data-theme*="light"] [style*="border-color: rgb(45, 45, 45)"],
+        [data-theme*="light"] [style*="border-color: rgb(61, 61, 61)"],
+        [data-theme*="light"] [style*="border-color: rgb(64, 64, 64)"],
+        [data-theme*="light"] [style*="border-color: rgb(77, 77, 77)"],
+        [data-theme*="light"] [style*="border-color: rgb(85, 85, 85)"] {
+          border-color: var(--ha-border) !important;
+        }
+
+        /* White/light text → dark */
+        [data-theme*="light"] [style*="color: rgb(255, 255, 255)"],
+        [data-theme*="light"] [style*="color: rgb(250, 250, 250)"],
+        [data-theme*="light"] [style*="color: rgb(224, 224, 224)"],
+        [data-theme*="light"] [style*="color: rgb(176, 176, 176)"],
+        [data-theme*="light"] [style*="color: rgb(192, 192, 192)"] {
+          color: var(--ha-text-muted) !important;
+        }
+
+        /* Tailwind arbitrary dark bg classes in light mode */
+        [data-theme*="light"] .bg-\\[\\#000\\],
+        [data-theme*="light"] .bg-\\[\\#000000\\],
+        [data-theme*="light"] .bg-\\[\\#1a1a1a\\],
+        [data-theme*="light"] .bg-\\[\\#262626\\],
+        [data-theme*="light"] .bg-\\[\\#2a2a2a\\],
+        [data-theme*="light"] .bg-\\[\\#2d2d2d\\],
+        [data-theme*="light"] .bg-\\[\\#333\\],
+        [data-theme*="light"] .bg-\\[\\#333333\\],
+        [data-theme*="light"] .bg-\\[\\#3a3a3a\\],
+        [data-theme*="light"] .bg-\\[\\#3d3d3d\\],
+        [data-theme*="light"] .bg-\\[\\#404040\\],
+        [data-theme*="light"] .bg-\\[\\#444\\],
+        [data-theme*="light"] .bg-\\[\\#444444\\],
+        [data-theme*="light"] .bg-\\[\\#474747\\],
+        [data-theme*="light"] .bg-\\[\\#4d4d4d\\] {
+          background-color: var(--ha-surface) !important;
+          color: var(--ha-text) !important;
+        }
+
+        /* Tailwind dark text classes → light mode text */
+        [data-theme*="light"] .text-white { color: var(--ha-text) !important; }
       `}</style>
       <div className="min-h-screen flex w-full" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Sidebar style={{backgroundColor: 'var(--ha-sidebar-bg)', borderColor: 'var(--ha-border)'}}>
