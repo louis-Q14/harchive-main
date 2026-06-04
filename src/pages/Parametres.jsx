@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/lib/AuthContext";
+import { useTheme, THEMES } from "@/lib/ThemeContext";
 import { createHttpClient } from "@/api/httpClient";
 import { backendConfig } from "@/api/backendConfig";
 import {
   Lock, Mail, Bell, Shield, Eye, EyeOff, Check, X, Send, User,
-  ChevronRight, AlertTriangle, Smartphone, Globe, BookOpen
+  ChevronRight, AlertTriangle, Smartphone, Globe, BookOpen, Palette
 } from "lucide-react";
 
 const api = () => createHttpClient({ baseURL: backendConfig.localBackendUrl });
@@ -151,6 +152,75 @@ const PasswordStrength = ({ password }) => {
     </div>
   );
 };
+
+// ─── ThemeSection ──────────────────────────────────────────────────────────────
+function ThemeSection() {
+  const { theme, setTheme } = useTheme();
+
+  const groups = [
+    {
+      key: 'dark',
+      label: 'Mode Sombre',
+      icon: '🌙',
+      themes: Object.entries(THEMES).filter(([, t]) => t.group === 'dark'),
+    },
+    {
+      key: 'light',
+      label: 'Mode Clair',
+      icon: '☀️',
+      themes: Object.entries(THEMES).filter(([, t]) => t.group === 'light'),
+    },
+  ];
+
+  return (
+    <Section icon={Palette} title="Personnalisation de l'affichage" subtitle="Choisissez le thème visuel de l'application">
+      <div className="space-y-5">
+        {groups.map(group => (
+          <div key={group.key}>
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+              <span>{group.icon}</span> {group.label}
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              {group.themes.map(([key, def]) => {
+                const selected = theme === key;
+                return (
+                  <button
+                    key={key}
+                    onClick={() => setTheme(key)}
+                    className="relative rounded-xl p-3 text-left transition-all"
+                    style={{
+                      background: selected ? 'rgba(124,58,237,0.15)' : 'rgba(255,255,255,0.04)',
+                      border: `1.5px solid ${selected ? '#7c3aed' : 'rgba(255,255,255,0.08)'}`,
+                      transform: selected ? 'scale(1.02)' : 'scale(1)',
+                    }}
+                  >
+                    {/* Preview swatches */}
+                    <div className="flex gap-1 mb-2.5">
+                      {def.preview.map((color, i) => (
+                        <div
+                          key={i}
+                          className="rounded-md flex-1 h-6"
+                          style={{ backgroundColor: color, border: '1px solid rgba(0,0,0,0.1)' }}
+                        />
+                      ))}
+                    </div>
+                    <p className="text-sm font-semibold" style={{ color: selected ? '#a78bfa' : '#e5e7eb' }}>{def.label}</p>
+                    <p className="text-xs mt-0.5" style={{ color: '#9ca3af' }}>{def.description}</p>
+                    {selected && (
+                      <div className="absolute top-2.5 right-2.5 w-5 h-5 rounded-full bg-purple-600 flex items-center justify-center">
+                        <Check className="w-3 h-3 text-white" />
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
 
 // ─── Main component ────────────────────────────────────────────────────────────
 export default function Parametres() {
@@ -435,6 +505,9 @@ export default function Parametres() {
             </Btn>
           </div>
         </Section>
+
+        {/* ── Personnalisation d'affichage ── */}
+        <ThemeSection />
 
         {/* ── Info système ── */}
         <Section icon={Shield} title="Informations du compte">

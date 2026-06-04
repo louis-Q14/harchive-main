@@ -156,3 +156,66 @@ button:focus-visible {
     @apply bg-background text-foreground;
   }
 }
+
+/* ═══════════════════════════════════════════════════
+   HARCHIVE THEMES
+════════════════════════════════════════════════════ */
+
+/* Sombre Standard (défaut) */
+[data-theme="dark-standard"] {
+  --ha-bg:        #111118;
+  --ha-surface:   #1c1c24;
+  --ha-surface2:  #242430;
+  --ha-border:    rgba(255,255,255,0.07);
+  --ha-text:      #ffffff;
+  --ha-text-muted:#9ca3af;
+  --ha-sidebar-bg:#0e0e14;
+  --ha-sidebar-border: rgba(255,255,255,0.06);
+  --ha-accent:    #7c3aed;
+}
+
+/* Sombre Anthracite */
+[data-theme="dark-anthracite"] {
+  --ha-bg:        #18181b;
+  --ha-surface:   #27272a;
+  --ha-surface2:  #3f3f46;
+  --ha-border:    rgba(255,255,255,0.09);
+  --ha-text:      #fafafa;
+  --ha-text-muted:#a1a1aa;
+  --ha-sidebar-bg:#111113;
+  --ha-sidebar-border: rgba(255,255,255,0.07);
+  --ha-accent:    #a855f7;
+}
+
+/* Clair Crème */
+[data-theme="light-cream"] {
+  --ha-bg:        #faf7f2;
+  --ha-surface:   #f0ebe2;
+  --ha-surface2:  #e8e1d6;
+  --ha-border:    rgba(0,0,0,0.08);
+  --ha-text:      #1c1917;
+  --ha-text-muted:#78716c;
+  --ha-sidebar-bg:#f5f0e8;
+  --ha-sidebar-border: rgba(0,0,0,0.06);
+  --ha-accent:    #7c3aed;
+}
+
+/* Clair Blanc Cassé */
+[data-theme="light-offwhite"] {
+  --ha-bg:        #f5f5f0;
+  --ha-surface:   #ebebeb;
+  --ha-surface2:  #e0e0da;
+  --ha-border:    rgba(0,0,0,0.07);
+  --ha-text:      #111111;
+  --ha-text-muted:#6b7280;
+  --ha-sidebar-bg:#eeeeea;
+  --ha-sidebar-border: rgba(0,0,0,0.05);
+  --ha-accent:    #6d28d9;
+}
+
+/* Apply theme vars to key elements */
+body {
+  background-color: var(--ha-bg, #111118);
+  color: var(--ha-text, #ffffff);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

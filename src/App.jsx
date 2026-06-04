@@ -1,5 +1,6 @@
 import './App.css'
 import { Toaster } from "@/components/ui/toaster"
+import { ThemeProvider } from '@/lib/ThemeContext';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
@@ -82,6 +83,7 @@ const AuthenticatedApp = () => {
 
 function App() {
   return (
+    <ThemeProvider>
     <ErrorBoundary>
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>
@@ -94,6 +96,7 @@ function App() {
       </QueryClientProvider>
     </AuthProvider>
     </ErrorBoundary>
+    </ThemeProvider>
   );
 }
 
