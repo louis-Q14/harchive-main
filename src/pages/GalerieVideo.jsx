@@ -426,11 +426,10 @@ export default function GalerieVideo() {
         <DraggableDialogBody>
           <div className="grid gap-3" style={CG}>
             {pendingVideo?.video_url && (
-              <div className="rounded-xl overflow-hidden" style={{ backgroundColor: '#000', maxHeight: 160 }}>
+              <div className="rounded-xl overflow-hidden" style={{ backgroundColor: '#000', height: 320 }}>
                 <video
                   src={resolveUrl(pendingVideo.video_url)}
-                  className="w-full object-contain"
-                  style={{ maxHeight: 160 }}
+                  className="w-full h-full object-contain"
                   controls
                   muted
                 />
