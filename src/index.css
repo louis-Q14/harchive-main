@@ -189,8 +189,8 @@ button:focus-visible {
 
 /* Clair Crème */
 [data-theme="light-cream"] {
-  --ha-bg:        #ffffff;
-  --ha-surface:   #ffffff;
+  --ha-bg:        #eef0f3;
+  --ha-surface:   #f9fafb;
   --ha-surface2:  #f3f4f6;
   --ha-surface3:  #e5e7eb;
   --ha-border:    rgba(0,0,0,0.10);
@@ -205,10 +205,10 @@ button:focus-visible {
 
 /* Clair Blanc Cassé */
 [data-theme="light-offwhite"] {
-  --ha-bg:        #ffffff;
-  --ha-surface:   #ffffff;
-  --ha-surface2:  #f9fafb;
-  --ha-surface3:  #f3f4f6;
+  --ha-bg:        #eef0f3;
+  --ha-surface:   #f9fafb;
+  --ha-surface2:  #f3f4f6;
+  --ha-surface3:  #e5e7eb;
   --ha-border:    rgba(0,0,0,0.10);
   --ha-text:      #000000;
   --ha-text-muted:#374151;

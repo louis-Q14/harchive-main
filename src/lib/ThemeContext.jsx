@@ -112,11 +112,11 @@ export function ThemeProvider({ children }) {
 
     // For light themes: reset shadcn/ui CSS vars to light values so bg-card, bg-background etc. go white
     if (def.group === 'light') {
-      root.style.setProperty('--card', '0 0% 100%');
+      root.style.setProperty('--card', '220 14% 98%');         // #f9fafb - same as sidebar
       root.style.setProperty('--card-foreground', '0 0% 3.9%');
-      root.style.setProperty('--background', '0 0% 100%');
+      root.style.setProperty('--background', '215 9% 94%');    // #eef0f3
       root.style.setProperty('--foreground', '0 0% 3.9%');
-      root.style.setProperty('--popover', '0 0% 100%');
+      root.style.setProperty('--popover', '220 14% 98%');
       root.style.setProperty('--popover-foreground', '0 0% 3.9%');
       root.style.setProperty('--muted', '0 0% 96.1%');
       root.style.setProperty('--muted-foreground', '0 0% 45.1%');
