@@ -93,7 +93,6 @@ export function ThemeProvider({ children }) {
   const applyTheme = (t) => {
     const def = THEMES[t] || THEMES['dark-standard'];
     const root = document.documentElement;
-
     // Remove old theme classes
     Object.keys(THEMES).forEach(k => root.classList.remove(`theme-${k}`));
     root.setAttribute('data-theme', t);
@@ -151,9 +150,11 @@ export function ThemeProvider({ children }) {
     applyTheme(t);
   };
 
-  // Apply on mount
+  // Apply on mount + expose applyTheme globally for page-level overrides
   useEffect(() => {
     applyTheme(theme);
+    window.__applyHarchiveTheme = applyTheme;
+    return () => { delete window.__applyHarchiveTheme; };
     // eslint-disable-next-line
   }, []);
 

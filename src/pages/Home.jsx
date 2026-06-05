@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/AuthContext';
 import { dataService } from '@/api';
 import { useQuery } from '@tanstack/react-query';
@@ -27,6 +27,42 @@ export default function Home() {
   const navigate = useNavigate();
   const { user, isLoadingAuth, logout } = useAuth();
   const [activeTab, setActiveTab] = useState('publications');
+
+  // Force dark mode on this page regardless of selected theme
+  useEffect(() => {
+    const html = document.documentElement;
+    const prevTheme = html.getAttribute('data-theme');
+    const hadDark = html.classList.contains('dark');
+
+    html.setAttribute('data-theme', 'dark-standard');
+    html.classList.add('dark');
+    html.style.setProperty('--ha-bg', '#111118');
+    html.style.setProperty('--ha-surface', '#1c1c24');
+    html.style.setProperty('--ha-surface2', '#2d2d2d');
+    html.style.setProperty('--ha-surface3', '#3d3d3d');
+    html.style.setProperty('--ha-border', 'rgba(255,255,255,0.07)');
+    html.style.setProperty('--ha-text', '#ffffff');
+    html.style.setProperty('--ha-text-muted', '#9ca3af');
+    html.style.setProperty('--ha-text-faint', '#6b7280');
+    html.style.setProperty('--ha-sidebar-bg', '#0e0e14');
+    html.style.setProperty('--ha-accent', '#7c3aed');
+    html.style.setProperty('--ha-hover', 'rgba(255,255,255,0.06)');
+    html.style.setProperty('--card', '0 0% 3.9%');
+    html.style.setProperty('--card-foreground', '0 0% 98%');
+    html.style.setProperty('--background', '0 0% 3.9%');
+    html.style.setProperty('--foreground', '0 0% 98%');
+    document.body.style.backgroundColor = '#111118';
+    document.body.style.color = '#ffffff';
+
+    return () => {
+      // Restore previous theme on unmount
+      if (prevTheme) html.setAttribute('data-theme', prevTheme);
+      if (!hadDark) html.classList.remove('dark');
+      // Re-apply the stored theme
+      const stored = localStorage.getItem('harchive-theme');
+      if (stored && window.__applyHarchiveTheme) window.__applyHarchiveTheme(stored);
+    };
+  }, []);
 
   // Agenda Universitaire modal state
   const [agendaOpen, setAgendaOpen] = useState(false);
