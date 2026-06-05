@@ -294,236 +294,73 @@ export default function Layout({ children, currentPageName }) {
   return (
     <SidebarProvider>
       <style>{`
-        /* Couleurs principales selon l'image de référence */
+        /* === BASE : corps de page selon le thème === */
         body {
           background-color: var(--ha-bg) !important;
           color: var(--ha-text) !important;
         }
 
-        /* Backgrounds sombres Tailwind → surface selon thème */
-        .bg-gray-950, .bg-gray-900, .bg-gray-800, .bg-gray-700,
-        .bg-zinc-950, .bg-zinc-900, .bg-zinc-800, .bg-zinc-700,
-        .bg-neutral-950, .bg-neutral-900, .bg-neutral-800, .bg-neutral-700,
-        .bg-slate-950, .bg-slate-900, .bg-slate-800, .bg-slate-700,
-        [class*="bg-gray-9"], [class*="bg-gray-8"], [class*="bg-gray-7"],
-        [class*="bg-zinc-9"], [class*="bg-zinc-8"], [class*="bg-zinc-7"] {
-          background-color: var(--ha-surface) !important;
-          color: var(--ha-text) !important;
-        }
-          background-color: var(--ha-bg) !important;
-          color: var(--ha-text) !important;
-        }
-        
-        /* Remplacer tous les fonds gris */
-        .bg-gray-50,
-        [class*="bg-gray-50"] {
-          background-color: var(--ha-bg) !important;
-        }
-        
-        .bg-gray-100,
-        [class*="bg-gray-100"] {
-          background-color: var(--ha-surface) !important;
-        }
-        
-        .bg-gray-200,
-        [class*="bg-gray-200"] {
-          background-color: var(--ha-surface2) !important;
-        }
-        
-        .bg-white,
-        [class*="bg-white"] {
-          background-color: var(--ha-surface2) !important;
-          color: var(--ha-text) !important;
+        /* === THÈME CLAIR : tout blanc, tout noir === */
+        /* Tous les conteneurs → blanc pur */
+        [data-theme*="light"] *:not(svg):not(path):not(img):not(video):not(canvas):not(iframe) {
+          background-color: #ffffff !important;
+          color: #000000 !important;
+          border-color: rgba(0,0,0,0.10) !important;
         }
 
-        /* Textes blancs forcés → texte selon thème */
-        .text-white,
-        [class*="text-white"] {
-          color: var(--ha-text) !important;
-        }
+        /* Exceptions : éléments qui gardent LEUR fond coloré */
+        [data-theme*="light"] .bg-red-500, [data-theme*="light"] .bg-red-600, [data-theme*="light"] .bg-red-700 { background-color: #dc2626 !important; color: #ffffff !important; }
+        [data-theme*="light"] .bg-blue-500, [data-theme*="light"] .bg-blue-600 { background-color: #2563eb !important; color: #ffffff !important; }
+        [data-theme*="light"] .bg-green-500, [data-theme*="light"] .bg-green-600 { background-color: #16a34a !important; color: #ffffff !important; }
+        [data-theme*="light"] .bg-yellow-500 { background-color: #ca8a04 !important; color: #000000 !important; }
+        [data-theme*="light"] .bg-purple-500, [data-theme*="light"] .bg-purple-600 { background-color: #9333ea !important; color: #ffffff !important; }
+        [data-theme*="light"] .bg-orange-500 { background-color: #f97316 !important; color: #ffffff !important; }
+        [data-theme*="light"] .bg-indigo-500, [data-theme*="light"] .bg-indigo-600 { background-color: #4f46e5 !important; color: #ffffff !important; }
+        [data-theme*="light"] .bg-pink-500 { background-color: #ec4899 !important; color: #ffffff !important; }
+        [data-theme*="light"] .bg-teal-500 { background-color: #14b8a6 !important; color: #ffffff !important; }
+        [data-theme*="light"] .bg-cyan-500 { background-color: #06b6d4 !important; color: #ffffff !important; }
+        [data-theme*="light"] .animate-pulse.bg-red-500 { background-color: #ef4444 !important; }
 
-        /* Textes clairs Tailwind → thème */
-        .text-gray-100, .text-gray-200, .text-gray-300,
-        [class*="text-gray-1"], [class*="text-gray-2"], [class*="text-gray-3"] {
-          color: var(--ha-text-muted) !important;
+        /* Exceptions : textes colorés gardent leur couleur */
+        [data-theme*="light"] .text-red-500, [data-theme*="light"] .text-red-600 { color: #dc2626 !important; }
+        [data-theme*="light"] .text-blue-400, [data-theme*="light"] .text-blue-500, [data-theme*="light"] .text-blue-600 { color: #2563eb !important; }
+        [data-theme*="light"] .text-green-500, [data-theme*="light"] .text-green-600 { color: #16a34a !important; }
+        [data-theme*="light"] .text-yellow-500 { color: #ca8a04 !important; }
+        [data-theme*="light"] .text-purple-400, [data-theme*="light"] .text-purple-500 { color: #9333ea !important; }
+        [data-theme*="light"] .text-orange-500 { color: #f97316 !important; }
+        [data-theme*="light"] .text-gray-400, [data-theme*="light"] .text-gray-500 { color: #6b7280 !important; }
+        [data-theme*="light"] .text-gray-600, [data-theme*="light"] .text-gray-700 { color: #374151 !important; }
+        [data-theme*="light"] .text-muted-foreground { color: #6b7280 !important; }
+
+        /* Inputs et textareas → fond légèrement gris pour distinction */
+        [data-theme*="light"] input,
+        [data-theme*="light"] textarea,
+        [data-theme*="light"] select {
+          background-color: #f9fafb !important;
+          color: #000000 !important;
+          border-color: rgba(0,0,0,0.15) !important;
         }
-        
-        /* Textes */
-        .text-gray-800,
-        .text-gray-900,
-        .text-gray-700,
-        [class*="text-gray-8"],
-        [class*="text-gray-9"],
-        [class*="text-gray-7"] {
-          color: var(--ha-text) !important;
-        }
-        
-        .text-gray-600,
-        .text-gray-500,
-        [class*="text-gray-6"],
-        [class*="text-gray-5"] {
-          color: var(--ha-text-muted) !important;
-        }
-        
-        .text-gray-400,
-        [class*="text-gray-4"] {
-          color: var(--ha-text-faint) !important;
-        }
-        
-        /* Bordures */
-        .border-gray-200,
-        .border-gray-300,
-        [class*="border-gray-2"],
-        [class*="border-gray-3"] {
-          border-color: var(--ha-border) !important;
-        }
-        
-        /* Hover states */
-        .hover\\:bg-gray-100:hover,
-        .hover\\:bg-gray-50:hover,
-        [class*="hover:bg-gray"]:hover {
-          background-color: var(--ha-hover) !important;
-        }
-        
-        /* Cards et conteneurs */
-        [role="dialog"],
-        [role="menu"],
-        [role="listbox"] {
-          background-color: var(--ha-surface2) !important;
-          color: var(--ha-text) !important;
-          border-color: var(--ha-border) !important;
-        }
-        
-        /* Inputs et selects */
-        input,
-        textarea,
-        select,
-        [role="combobox"] {
-          background-color: var(--ha-surface) !important;
-          color: var(--ha-text) !important;
-          border-color: var(--ha-border) !important;
-        }
-        
-        input::placeholder,
-        textarea::placeholder {
-          color: var(--ha-text-faint) !important;
-        }
-        
-        /* Buttons */
-        button[class*="bg-white"],
-        button[class*="bg-gray"] {
-          background-color: var(--ha-surface2) !important;
-          color: var(--ha-text) !important;
-          border-color: var(--ha-border) !important;
-        }
-        
-        /* Tables */
-        table {
-          background-color: var(--ha-surface2) !important;
-        }
-        
-        thead {
-          background-color: var(--ha-surface) !important;
-        }
-        
-        tbody tr {
-          border-color: var(--ha-border) !important;
-        }
-        
-        tbody tr:hover {
-          background-color: var(--ha-hover) !important;
-        }
-        
+        [data-theme*="light"] input::placeholder,
+        [data-theme*="light"] textarea::placeholder { color: #9ca3af !important; }
+
+        /* Sidebar légèrement gris pour distinction */
+        [data-theme*="light"] [data-sidebar],
+        [data-theme*="light"] aside { background-color: #f9fafb !important; }
+
         /* Scrollbar */
-        ::-webkit-scrollbar {
-          width: 8px;
-          height: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-          background: var(--ha-surface);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-          background: var(--ha-surface3);
-          border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-          background: var(--ha-surface2);
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--ha-surface); }
+        ::-webkit-scrollbar-thumb { background: var(--ha-surface3); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--ha-surface2); }
 
-        /* =============================================
-           LIGHT THEME: Override dark inline backgrounds
-           Browsers convert hex to rgb() in style attr
-           !important in stylesheet overrides inline styles
-           ============================================= */
-
-        /* Dark backgrounds: #000 → #555 */
-        [data-theme*="light"] [style*="background-color: rgb(0, 0, 0)"],
-        [data-theme*="light"] [style*="background-color: rgb(26, 26, 26)"],
-        [data-theme*="light"] [style*="background-color: rgb(28, 28, 28)"],
-        [data-theme*="light"] [style*="background-color: rgb(30, 30, 30)"],
-        [data-theme*="light"] [style*="background-color: rgb(36, 36, 36)"],
-        [data-theme*="light"] [style*="background-color: rgb(38, 38, 38)"],
-        [data-theme*="light"] [style*="background-color: rgb(42, 42, 42)"],
-        [data-theme*="light"] [style*="background-color: rgb(44, 44, 44)"],
-        [data-theme*="light"] [style*="background-color: rgb(45, 45, 45)"],
-        [data-theme*="light"] [style*="background-color: rgb(51, 51, 51)"],
-        [data-theme*="light"] [style*="background-color: rgb(58, 58, 58)"],
-        [data-theme*="light"] [style*="background-color: rgb(61, 61, 61)"],
-        [data-theme*="light"] [style*="background-color: rgb(63, 63, 63)"],
-        [data-theme*="light"] [style*="background-color: rgb(64, 64, 64)"],
-        [data-theme*="light"] [style*="background-color: rgb(68, 68, 68)"],
-        [data-theme*="light"] [style*="background-color: rgb(71, 71, 71)"],
-        [data-theme*="light"] [style*="background-color: rgb(77, 77, 77)"],
-        [data-theme*="light"] [style*="background-color: rgb(85, 85, 85)"],
-        [data-theme*="light"] [style*="background-color: rgb(90, 90, 90)"] {
-          background-color: var(--ha-surface) !important;
-          border-color: var(--ha-border) !important;
-          color: var(--ha-text) !important;
+        /* === THÈME SOMBRE : conserver les couleurs var() === */
+        [data-theme*="dark"] body,
+        [data-theme*="dark"] div,
+        [data-theme*="dark"] main,
+        [data-theme*="dark"] aside {
+          background-color: var(--ha-bg);
+          color: var(--ha-text);
         }
-
-        /* Force borders dark */
-        [data-theme*="light"] [style*="border-color: rgb(45, 45, 45)"],
-        [data-theme*="light"] [style*="border-color: rgb(61, 61, 61)"],
-        [data-theme*="light"] [style*="border-color: rgb(64, 64, 64)"],
-        [data-theme*="light"] [style*="border-color: rgb(77, 77, 77)"],
-        [data-theme*="light"] [style*="border-color: rgb(85, 85, 85)"] {
-          border-color: var(--ha-border) !important;
-        }
-
-        /* White/light text → dark */
-        [data-theme*="light"] [style*="color: rgb(255, 255, 255)"],
-        [data-theme*="light"] [style*="color: rgb(250, 250, 250)"],
-        [data-theme*="light"] [style*="color: rgb(224, 224, 224)"],
-        [data-theme*="light"] [style*="color: rgb(176, 176, 176)"],
-        [data-theme*="light"] [style*="color: rgb(192, 192, 192)"] {
-          color: var(--ha-text-muted) !important;
-        }
-
-        /* Tailwind arbitrary dark bg classes in light mode */
-        [data-theme*="light"] .bg-\\[\\#000\\],
-        [data-theme*="light"] .bg-\\[\\#000000\\],
-        [data-theme*="light"] .bg-\\[\\#1a1a1a\\],
-        [data-theme*="light"] .bg-\\[\\#262626\\],
-        [data-theme*="light"] .bg-\\[\\#2a2a2a\\],
-        [data-theme*="light"] .bg-\\[\\#2d2d2d\\],
-        [data-theme*="light"] .bg-\\[\\#333\\],
-        [data-theme*="light"] .bg-\\[\\#333333\\],
-        [data-theme*="light"] .bg-\\[\\#3a3a3a\\],
-        [data-theme*="light"] .bg-\\[\\#3d3d3d\\],
-        [data-theme*="light"] .bg-\\[\\#404040\\],
-        [data-theme*="light"] .bg-\\[\\#444\\],
-        [data-theme*="light"] .bg-\\[\\#444444\\],
-        [data-theme*="light"] .bg-\\[\\#474747\\],
-        [data-theme*="light"] .bg-\\[\\#4d4d4d\\] {
-          background-color: var(--ha-surface) !important;
-          color: var(--ha-text) !important;
-        }
-
-        /* Tailwind dark text classes → light mode text */
-        [data-theme*="light"] .text-white { color: var(--ha-text) !important; }
       `}</style>
       <div className="min-h-screen flex w-full" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Sidebar style={{backgroundColor: 'var(--ha-sidebar-bg)', borderColor: 'var(--ha-border)'}}>
