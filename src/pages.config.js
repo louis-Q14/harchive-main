@@ -55,6 +55,7 @@ import BibliothequeNumerique from './pages/BibliothequeNumerique';
 import BlocNotes from './pages/BlocNotes';
 import CalendrierAcademique from './pages/CalendrierAcademique';
 import CalendrierPersonnel from './pages/CalendrierPersonnel';
+import CommuniqueHarchive from './pages/CommuniqueHarchive';
 import Connexion from './pages/Connexion';
 import CompteBloque from './pages/CompteBloque';
 import Dashboard from './pages/Dashboard';
@@ -116,6 +117,7 @@ export const PAGES = {
     "CalendrierPersonnel": CalendrierPersonnel,
     "Connexion": Connexion,
     "CompteBloque": CompteBloque,
+    "CommuniqueHarchive": CommuniqueHarchive,
     "Dashboard": Dashboard,
     "DifferenciationModule": DifferenciationModule,
     "Documents": Documents,

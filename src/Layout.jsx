@@ -58,6 +58,7 @@ const roleNavigation = {
     { title: "Applications", url: "Applications", icon: "/assets/icons/3453b132d_menu1.png", isCustomIcon: true },
     { title: "Modération", url: "Moderation", icon: "/assets/icons/1cad146b6_shield.png", isCustomIcon: true },
     { title: "Inscriptions", url: "GestionInscriptions", icon: "/assets/icons/58206507a_open-enrollment.png", isCustomIcon: true },
+    { title: "Communiqués Harchive", url: "CommuniqueHarchive", icon: "/assets/icons/e5073e7f6_chat.png", isCustomIcon: true },
     { title: "Établissements", url: "Etablissements", icon: "/assets/icons/0e7785a54_university.png", isCustomIcon: true },
     { title: "Liste des Établissements", url: "ListeEtablissements", icon: "/assets/icons/b527bb6dc_university1.png", isCustomIcon: true },
     { title: "Utilisateurs", url: "Users", icon: "/assets/icons/6961e1dfa_user1.png", isCustomIcon: true },
@@ -75,9 +76,15 @@ const roleNavigation = {
     { title: "Applications", url: "Applications", icon: "/assets/icons/3453b132d_menu1.png", isCustomIcon: true },
     { title: "Modération", url: "Moderation", icon: "/assets/icons/1cad146b6_shield.png", isCustomIcon: true },
     { title: "Inscriptions", url: "GestionInscriptions", icon: "/assets/icons/58206507a_open-enrollment.png", isCustomIcon: true },
+    { title: "Communiqués Harchive", url: "CommuniqueHarchive", icon: "/assets/icons/e5073e7f6_chat.png", isCustomIcon: true },
     { title: "Établissements", url: "Etablissements", icon: "/assets/icons/0e7785a54_university.png", isCustomIcon: true },
     { title: "Liste des Établissements", url: "ListeEtablissements", icon: "/assets/icons/b527bb6dc_university1.png", isCustomIcon: true },
     { title: "Utilisateurs", url: "Users", icon: "/assets/icons/6961e1dfa_user1.png", isCustomIcon: true },
+    { title: "Paramètres", url: "Parametres", icon: Settings },
+  ],
+  harchive_officiel: [
+    { title: "Journal", url: "Journal", icon: "/assets/icons/eb36099c9_news-paper.png", isCustomIcon: true },
+    { title: "Communiqués Harchive", url: "CommuniqueHarchive", icon: "/assets/icons/e5073e7f6_chat.png", isCustomIcon: true },
     { title: "Paramètres", url: "Parametres", icon: Settings },
   ],
   admin_etablissement: [

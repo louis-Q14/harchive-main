@@ -167,8 +167,9 @@ export default function PublicationItem({ publication, currentUser }) {
   };
 
   const isLiked = likesArray.includes(currentUser?.id);
-  const isAdminPost = publication.auteur_role === 'admin_systeme' || publication.auteur_role === 'super_admin' || publication.auteur_role === 'admin_etablissement' || publication.auteur_role === 'admin_ministeriel';
-  const canDelete = currentUser?.role_archive === 'admin_systeme' || currentUser?.role_archive === 'super_admin' || publication.auteur_id === currentUser?.id;
+  const isHarchiveOfficiel = publication.auteur_role === 'harchive_officiel';
+  const isAdminPost = isHarchiveOfficiel || publication.auteur_role === 'admin_systeme' || publication.auteur_role === 'super_admin' || publication.auteur_role === 'admin_etablissement' || publication.auteur_role === 'admin_ministeriel';
+  const canDelete = currentUser?.role_archive === 'admin_systeme' || currentUser?.role_archive === 'super_admin' || currentUser?.role_archive === 'harchive_officiel' || publication.auteur_id === currentUser?.id;
   const canDeleteComment = (comment) => {
     return currentUser?.role_archive === 'admin_systeme' || currentUser?.role_archive === 'super_admin' || comment.auteur_id === currentUser?.id;
   };
@@ -199,6 +200,7 @@ export default function PublicationItem({ publication, currentUser }) {
       admin_systeme: "Administrateur Système",
       admin_ministeriel: "Admin Ministériel",
       admin_etablissement: "Administrateur Établissement",
+      harchive_officiel: "Harchive",
       professeur: "Professeur",
       etudiant: "Étudiant",
       parent: "Parent"
@@ -235,7 +237,12 @@ export default function PublicationItem({ publication, currentUser }) {
                     style={{ color: 'var(--ha-text)' }}
                     onClick={() => setShowProfilModal(true)}
                   >{authorDisplayName}</p>
-                  {isAdminPost && (
+                  {isHarchiveOfficiel ? (
+                    <span className="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: 'linear-gradient(135deg, #6d28d9, #7c3aed)', color: '#ffffff' }}>
+                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                      HARCHIVE
+                    </span>
+                  ) : isAdminPost && (
                     <Badge className={`${publication.auteur_role === 'admin_ministeriel' ? 'bg-yellow-500 text-black' : ''} text-xs`}
                       style={publication.auteur_role !== 'admin_ministeriel' ? { backgroundColor: 'var(--ha-surface3)', color: 'var(--ha-text)' } : {}}>
                       <BadgeIcon className="w-3 h-3 mr-1" />

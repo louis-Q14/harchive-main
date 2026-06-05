@@ -316,6 +316,19 @@ const createInscriptionTables = async () => {
     logger.info('\u{1F451} Super Admin seeded: LOUIS-QUATORZE KAZADI / louisquatorze.kazadi@harchive.local');
   }
 
+  // Seed compte officiel Harchive
+  const harchiveExists = await dbGet("SELECT id FROM users WHERE id = 'harchive-officiel-001'");
+  if (!harchiveExists) {
+    const bcryptH = await import('bcrypt');
+    const hPwd = process.env.HARCHIVE_ACCOUNT_PASSWORD || 'Harchive@2026!';
+    const hHash = await bcryptH.default.hash(hPwd, 10);
+    await dbRun(`
+      INSERT IGNORE INTO users (id, username, email, password_hash, prenom, nom, role, role_archive, isRegistered, photo_url)
+      VALUES ('harchive-officiel-001', 'harchive@harchive.net', 'harchive@harchive.net', ?, 'HARCHIVE', 'Officiel', 'harchive_officiel', 'harchive_officiel', 1, '/assets/icons/6153a57fe_logoHARCHIVEF2.png')
+    `, [hHash]);
+    logger.info('🏛️ Compte Harchive Officiel seeded: harchive@harchive.net');
+  }
+
   logger.info('\u2705 Inscription tables created');
 };
 
