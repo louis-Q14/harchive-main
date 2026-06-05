@@ -300,7 +300,81 @@ export default function Layout({ children, currentPageName }) {
           color: var(--ha-text) !important;
         }
 
-        /* Backgrounds sombres Tailwind → surface selon thème */
+        /* LIGHT THEME GLOBAL: tout blanc, tout noir */
+        [data-theme*="light"] * {
+          color: inherit;
+        }
+        [data-theme*="light"] {
+          background-color: var(--ha-bg);
+          color: var(--ha-text);
+        }
+        [data-theme*="light"] p,
+        [data-theme*="light"] span,
+        [data-theme*="light"] h1,
+        [data-theme*="light"] h2,
+        [data-theme*="light"] h3,
+        [data-theme*="light"] h4,
+        [data-theme*="light"] h5,
+        [data-theme*="light"] h6,
+        [data-theme*="light"] label,
+        [data-theme*="light"] li,
+        [data-theme*="light"] td,
+        [data-theme*="light"] th,
+        [data-theme*="light"] div,
+        [data-theme*="light"] button,
+        [data-theme*="light"] a {
+          color: var(--ha-text) !important;
+        }
+        /* Exceptions : textes accentués/colorés gardent leur couleur */
+        [data-theme*="light"] .text-red-500,
+        [data-theme*="light"] .text-red-600,
+        [data-theme*="light"] .text-red-700 { color: #dc2626 !important; }
+        [data-theme*="light"] .text-blue-400,
+        [data-theme*="light"] .text-blue-500,
+        [data-theme*="light"] .text-blue-600 { color: #2563eb !important; }
+        [data-theme*="light"] .text-green-400,
+        [data-theme*="light"] .text-green-500,
+        [data-theme*="light"] .text-green-600 { color: #16a34a !important; }
+        [data-theme*="light"] .text-yellow-400,
+        [data-theme*="light"] .text-yellow-500 { color: #ca8a04 !important; }
+        [data-theme*="light"] .text-purple-400,
+        [data-theme*="light"] .text-purple-500,
+        [data-theme*="light"] .text-purple-600 { color: #9333ea !important; }
+        [data-theme*="light"] .text-gray-400,
+        [data-theme*="light"] .text-gray-500 { color: var(--ha-text-faint) !important; }
+        [data-theme*="light"] .text-gray-600,
+        [data-theme*="light"] .text-gray-700 { color: var(--ha-text-muted) !important; }
+
+        /* Tous les fonds → blanc */
+        [data-theme*="light"] div,
+        [data-theme*="light"] section,
+        [data-theme*="light"] aside,
+        [data-theme*="light"] main,
+        [data-theme*="light"] header,
+        [data-theme*="light"] footer,
+        [data-theme*="light"] nav,
+        [data-theme*="light"] article {
+          background-color: var(--ha-bg) !important;
+          border-color: var(--ha-border) !important;
+        }
+        /* Cards et inputs légèrement distincts */
+        [data-theme*="light"] .rounded-lg,
+        [data-theme*="light"] .rounded-xl,
+        [data-theme*="light"] .rounded-2xl,
+        [data-theme*="light"] [class*="Card"],
+        [data-theme*="light"] input,
+        [data-theme*="light"] textarea,
+        [data-theme*="light"] select {
+          background-color: #ffffff !important;
+          border-color: var(--ha-border) !important;
+          color: #000000 !important;
+        }
+        [data-theme*="light"] input::placeholder,
+        [data-theme*="light"] textarea::placeholder {
+          color: var(--ha-text-faint) !important;
+        }
+
+        /* Backgrounds sombres Tailwind → blanc */
         .bg-gray-950, .bg-gray-900, .bg-gray-800, .bg-gray-700,
         .bg-zinc-950, .bg-zinc-900, .bg-zinc-800, .bg-zinc-700,
         .bg-neutral-950, .bg-neutral-900, .bg-neutral-800, .bg-neutral-700,
