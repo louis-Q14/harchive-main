@@ -111,6 +111,35 @@ export function ThemeProvider({ children }) {
       root.style.setProperty(key, val);
     });
 
+    // For light themes: reset shadcn/ui CSS vars to light values so bg-card, bg-background etc. go white
+    if (def.group === 'light') {
+      root.style.setProperty('--card', '0 0% 100%');
+      root.style.setProperty('--card-foreground', '0 0% 3.9%');
+      root.style.setProperty('--background', '0 0% 100%');
+      root.style.setProperty('--foreground', '0 0% 3.9%');
+      root.style.setProperty('--popover', '0 0% 100%');
+      root.style.setProperty('--popover-foreground', '0 0% 3.9%');
+      root.style.setProperty('--muted', '0 0% 96.1%');
+      root.style.setProperty('--muted-foreground', '0 0% 45.1%');
+      root.style.setProperty('--secondary', '0 0% 96.1%');
+      root.style.setProperty('--secondary-foreground', '0 0% 9%');
+      root.style.setProperty('--border', '0 0% 89.8%');
+      root.style.setProperty('--input', '0 0% 89.8%');
+    } else {
+      root.style.setProperty('--card', '0 0% 3.9%');
+      root.style.setProperty('--card-foreground', '0 0% 98%');
+      root.style.setProperty('--background', '0 0% 3.9%');
+      root.style.setProperty('--foreground', '0 0% 98%');
+      root.style.setProperty('--popover', '0 0% 3.9%');
+      root.style.setProperty('--popover-foreground', '0 0% 98%');
+      root.style.setProperty('--muted', '0 0% 14.9%');
+      root.style.setProperty('--muted-foreground', '0 0% 63.9%');
+      root.style.setProperty('--secondary', '0 0% 14.9%');
+      root.style.setProperty('--secondary-foreground', '0 0% 98%');
+      root.style.setProperty('--border', '0 0% 14.9%');
+      root.style.setProperty('--input', '0 0% 14.9%');
+    }
+
     // Apply background & color directly to body
     document.body.style.backgroundColor = def.vars['--ha-bg'];
     document.body.style.color = def.vars['--ha-text'];

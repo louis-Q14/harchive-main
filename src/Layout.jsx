@@ -339,10 +339,26 @@ export default function Layout({ children, currentPageName }) {
         /* ============================================================
            MODE CLAIR : fond blanc, texte noir sur tout
            ============================================================ */
+        /* Réinitialiser les variables shadcn/ui qui restent sombres */
+        [data-theme*="light"] {
+          --card: 0 0% 100%;
+          --card-foreground: 0 0% 3.9%;
+          --popover: 0 0% 100%;
+          --popover-foreground: 0 0% 3.9%;
+          --background: 0 0% 100%;
+          --foreground: 0 0% 3.9%;
+          --muted: 0 0% 96.1%;
+          --muted-foreground: 0 0% 45.1%;
+          --secondary: 0 0% 96.1%;
+          --secondary-foreground: 0 0% 9%;
+        }
+        /* Cibler tout élément avec var(--ha-surface) en style inline */
+        [data-theme*="light"] [style*="--ha-surface"] { background-color: #ffffff !important; }
+        [data-theme*="light"] [style*="--ha-bg"] { background-color: #ffffff !important; }
+        /* Forcer bg-card (shadcn) en blanc */
+        [data-theme*="light"] .bg-card { background-color: #ffffff !important; color: #000000 !important; }
         [data-theme*="light"] .bg-white, [data-theme*="light"] .bg-gray-50,
         [data-theme*="light"] .bg-gray-100, [data-theme*="light"] .bg-gray-200 { background-color: #ffffff !important; }
-        /* Forcer bg-card (shadcn) en blanc pour les thèmes clairs */
-        [data-theme*="light"] .bg-card { background-color: #ffffff !important; color: #000000 !important; }
         [data-theme*="light"] .bg-gray-950, [data-theme*="light"] .bg-gray-900,
         [data-theme*="light"] .bg-gray-800, [data-theme*="light"] .bg-gray-700 { background-color: #f3f4f6 !important; color: #000000 !important; }
         [data-theme*="light"] .text-white, [data-theme*="light"] .text-gray-100,
