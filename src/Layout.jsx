@@ -294,73 +294,94 @@ export default function Layout({ children, currentPageName }) {
   return (
     <SidebarProvider>
       <style>{`
-        /* === BASE : corps de page selon le thème === */
+        /* === BASE === */
         body {
           background-color: var(--ha-bg) !important;
           color: var(--ha-text) !important;
         }
 
-        /* === THÈME CLAIR : tout blanc, tout noir === */
-        /* Tous les conteneurs → blanc pur */
-        [data-theme*="light"] *:not(svg):not(path):not(img):not(video):not(canvas):not(iframe) {
-          background-color: #ffffff !important;
-          color: #000000 !important;
-          border-color: rgba(0,0,0,0.10) !important;
+        /* ============================================================
+           MODE SOMBRE : convertir les classes Tailwind claires en sombres
+           ============================================================ */
+        [data-theme*="dark"] .bg-white,
+        [data-theme*="dark"] [class*="bg-white"] {
+          background-color: var(--ha-surface2) !important;
+          color: var(--ha-text) !important;
         }
+        [data-theme*="dark"] .bg-gray-50, [data-theme*="dark"] [class*="bg-gray-50"] { background-color: var(--ha-bg) !important; }
+        [data-theme*="dark"] .bg-gray-100, [data-theme*="dark"] [class*="bg-gray-100"] { background-color: var(--ha-surface) !important; }
+        [data-theme*="dark"] .bg-gray-200, [data-theme*="dark"] [class*="bg-gray-200"] { background-color: var(--ha-surface2) !important; }
+        [data-theme*="dark"] .bg-gray-950, [data-theme*="dark"] .bg-gray-900,
+        [data-theme*="dark"] .bg-gray-800, [data-theme*="dark"] .bg-gray-700 { background-color: var(--ha-surface) !important; color: var(--ha-text) !important; }
+        [data-theme*="dark"] .text-gray-900, [data-theme*="dark"] .text-gray-800, [data-theme*="dark"] .text-gray-700 { color: var(--ha-text) !important; }
+        [data-theme*="dark"] .text-gray-600, [data-theme*="dark"] .text-gray-500 { color: var(--ha-text-muted) !important; }
+        [data-theme*="dark"] .text-gray-400 { color: var(--ha-text-faint) !important; }
+        [data-theme*="dark"] .text-gray-100, [data-theme*="dark"] .text-gray-200, [data-theme*="dark"] .text-gray-300 { color: var(--ha-text-muted) !important; }
+        [data-theme*="dark"] .text-white { color: var(--ha-text) !important; }
+        [data-theme*="dark"] .border-gray-200, [data-theme*="dark"] .border-gray-300,
+        [data-theme*="dark"] [class*="border-gray-2"], [data-theme*="dark"] [class*="border-gray-3"] { border-color: var(--ha-border) !important; }
+        [data-theme*="dark"] .hover\\:bg-gray-100:hover, [data-theme*="dark"] .hover\\:bg-gray-50:hover { background-color: var(--ha-hover) !important; }
+        [data-theme*="dark"] [role="dialog"], [data-theme*="dark"] [role="menu"], [data-theme*="dark"] [role="listbox"] {
+          background-color: var(--ha-surface2) !important; color: var(--ha-text) !important; border-color: var(--ha-border) !important;
+        }
+        [data-theme*="dark"] input, [data-theme*="dark"] textarea, [data-theme*="dark"] select, [data-theme*="dark"] [role="combobox"] {
+          background-color: var(--ha-surface) !important; color: var(--ha-text) !important; border-color: var(--ha-border) !important;
+        }
+        [data-theme*="dark"] input::placeholder, [data-theme*="dark"] textarea::placeholder { color: var(--ha-text-faint) !important; }
+        [data-theme*="dark"] button[class*="bg-white"], [data-theme*="dark"] button[class*="bg-gray"] {
+          background-color: var(--ha-surface2) !important; color: var(--ha-text) !important;
+        }
+        [data-theme*="dark"] table { background-color: var(--ha-surface2) !important; }
+        [data-theme*="dark"] thead { background-color: var(--ha-surface) !important; }
+        [data-theme*="dark"] tbody tr { border-color: var(--ha-border) !important; }
+        [data-theme*="dark"] tbody tr:hover { background-color: var(--ha-hover) !important; }
 
-        /* Exceptions : éléments qui gardent LEUR fond coloré */
-        [data-theme*="light"] .bg-red-500, [data-theme*="light"] .bg-red-600, [data-theme*="light"] .bg-red-700 { background-color: #dc2626 !important; color: #ffffff !important; }
-        [data-theme*="light"] .bg-blue-500, [data-theme*="light"] .bg-blue-600 { background-color: #2563eb !important; color: #ffffff !important; }
-        [data-theme*="light"] .bg-green-500, [data-theme*="light"] .bg-green-600 { background-color: #16a34a !important; color: #ffffff !important; }
-        [data-theme*="light"] .bg-yellow-500 { background-color: #ca8a04 !important; color: #000000 !important; }
-        [data-theme*="light"] .bg-purple-500, [data-theme*="light"] .bg-purple-600 { background-color: #9333ea !important; color: #ffffff !important; }
-        [data-theme*="light"] .bg-orange-500 { background-color: #f97316 !important; color: #ffffff !important; }
-        [data-theme*="light"] .bg-indigo-500, [data-theme*="light"] .bg-indigo-600 { background-color: #4f46e5 !important; color: #ffffff !important; }
-        [data-theme*="light"] .bg-pink-500 { background-color: #ec4899 !important; color: #ffffff !important; }
-        [data-theme*="light"] .bg-teal-500 { background-color: #14b8a6 !important; color: #ffffff !important; }
-        [data-theme*="light"] .bg-cyan-500 { background-color: #06b6d4 !important; color: #ffffff !important; }
-        [data-theme*="light"] .animate-pulse.bg-red-500 { background-color: #ef4444 !important; }
-
-        /* Exceptions : textes colorés gardent leur couleur */
-        [data-theme*="light"] .text-red-500, [data-theme*="light"] .text-red-600 { color: #dc2626 !important; }
-        [data-theme*="light"] .text-blue-400, [data-theme*="light"] .text-blue-500, [data-theme*="light"] .text-blue-600 { color: #2563eb !important; }
-        [data-theme*="light"] .text-green-500, [data-theme*="light"] .text-green-600 { color: #16a34a !important; }
-        [data-theme*="light"] .text-yellow-500 { color: #ca8a04 !important; }
-        [data-theme*="light"] .text-purple-400, [data-theme*="light"] .text-purple-500 { color: #9333ea !important; }
-        [data-theme*="light"] .text-orange-500 { color: #f97316 !important; }
+        /* ============================================================
+           MODE CLAIR : fond blanc, texte noir sur tout
+           ============================================================ */
+        [data-theme*="light"] .bg-white, [data-theme*="light"] .bg-gray-50,
+        [data-theme*="light"] .bg-gray-100, [data-theme*="light"] .bg-gray-200 { background-color: #ffffff !important; }
+        [data-theme*="light"] .bg-gray-950, [data-theme*="light"] .bg-gray-900,
+        [data-theme*="light"] .bg-gray-800, [data-theme*="light"] .bg-gray-700 { background-color: #f3f4f6 !important; color: #000000 !important; }
+        [data-theme*="light"] .text-white, [data-theme*="light"] .text-gray-100,
+        [data-theme*="light"] .text-gray-200, [data-theme*="light"] .text-gray-300 { color: #374151 !important; }
         [data-theme*="light"] .text-gray-400, [data-theme*="light"] .text-gray-500 { color: #6b7280 !important; }
-        [data-theme*="light"] .text-gray-600, [data-theme*="light"] .text-gray-700 { color: #374151 !important; }
-        [data-theme*="light"] .text-muted-foreground { color: #6b7280 !important; }
+        [data-theme*="light"] .text-gray-600, [data-theme*="light"] .text-gray-700,
+        [data-theme*="light"] .text-gray-800, [data-theme*="light"] .text-gray-900 { color: #111827 !important; }
 
-        /* Inputs et textareas → fond légèrement gris pour distinction */
-        [data-theme*="light"] input,
-        [data-theme*="light"] textarea,
-        [data-theme*="light"] select {
-          background-color: #f9fafb !important;
-          color: #000000 !important;
-          border-color: rgba(0,0,0,0.15) !important;
+        /* Inline styles sombres → blanc en mode clair */
+        [data-theme*="light"] [style*="background-color: rgb(0, 0, 0)"],
+        [data-theme*="light"] [style*="background-color: rgb(26, 26, 26)"],
+        [data-theme*="light"] [style*="background-color: rgb(38, 38, 38)"],
+        [data-theme*="light"] [style*="background-color: rgb(45, 45, 45)"],
+        [data-theme*="light"] [style*="background-color: rgb(61, 61, 61)"],
+        [data-theme*="light"] [style*="background-color: rgb(63, 63, 63)"],
+        [data-theme*="light"] [style*="background-color: rgb(64, 64, 64)"],
+        [data-theme*="light"] [style*="background-color: rgb(77, 77, 77)"],
+        [data-theme*="light"] [style*="background-color: rgb(85, 85, 85)"] {
+          background-color: #ffffff !important; border-color: rgba(0,0,0,0.10) !important; color: #000000 !important;
         }
-        [data-theme*="light"] input::placeholder,
-        [data-theme*="light"] textarea::placeholder { color: #9ca3af !important; }
+        [data-theme*="light"] [style*="color: rgb(255, 255, 255)"],
+        [data-theme*="light"] [style*="color: rgb(176, 176, 176)"],
+        [data-theme*="light"] [style*="color: rgb(224, 224, 224)"] { color: #374151 !important; }
 
-        /* Sidebar légèrement gris pour distinction */
-        [data-theme*="light"] [data-sidebar],
-        [data-theme*="light"] aside { background-color: #f9fafb !important; }
+        [data-theme*="light"] input, [data-theme*="light"] textarea, [data-theme*="light"] select {
+          background-color: #f9fafb !important; color: #000000 !important; border-color: rgba(0,0,0,0.15) !important;
+        }
+        [data-theme*="light"] input::placeholder, [data-theme*="light"] textarea::placeholder { color: #9ca3af !important; }
+        [data-theme*="light"] [role="dialog"], [data-theme*="light"] [role="menu"], [data-theme*="light"] [role="listbox"] {
+          background-color: #ffffff !important; color: #000000 !important; border-color: rgba(0,0,0,0.10) !important;
+        }
+        [data-theme*="light"] table { background-color: #ffffff !important; }
+        [data-theme*="light"] thead { background-color: #f9fafb !important; }
+        [data-theme*="light"] tbody tr { border-color: rgba(0,0,0,0.08) !important; }
+        [data-theme*="light"] tbody tr:hover { background-color: #f3f4f6 !important; }
 
         /* Scrollbar */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--ha-surface); }
         ::-webkit-scrollbar-thumb { background: var(--ha-surface3); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--ha-surface2); }
-
-        /* === THÈME SOMBRE : conserver les couleurs var() === */
-        [data-theme*="dark"] body,
-        [data-theme*="dark"] div,
-        [data-theme*="dark"] main,
-        [data-theme*="dark"] aside {
-          background-color: var(--ha-bg);
-          color: var(--ha-text);
-        }
       `}</style>
       <div className="min-h-screen flex w-full" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Sidebar style={{backgroundColor: 'var(--ha-sidebar-bg)', borderColor: 'var(--ha-border)'}}>
