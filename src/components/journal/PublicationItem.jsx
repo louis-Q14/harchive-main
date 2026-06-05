@@ -280,7 +280,7 @@ export default function PublicationItem({ publication, currentUser }) {
 
         <CardContent className="pt-4">
           {/* Contenu */}
-          <p className="mb-4 whitespace-pre-wrap" style={{ color: 'var(--ha-text)' }}>{publication.contenu}</p>
+          <p className="mb-4 whitespace-pre-wrap text-left" style={{ color: 'var(--ha-text)' }}>{publication.contenu}</p>
 
           {/* Media */}
           {publication.media_url && (

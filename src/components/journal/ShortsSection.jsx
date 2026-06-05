@@ -313,9 +313,9 @@ function ReelsPlayer({ shorts = [], currentIndex = 0, goNext = () => {}, goPrev 
 
         {/* ===== BOTTOM: Title + Creator ===== */}
         <div className="absolute bottom-0 left-0 z-20 pointer-events-none" style={{ maxWidth: '75%' }}>
-          <div className="bg-gradient-to-t from-black/80 via-black/40 to-transparent px-4 pb-4 pt-10">
-            <p className="text-white text-sm font-semibold drop-shadow-lg">{short.creator_nom}</p>
-            <p className="text-white/80 text-xs mt-1 line-clamp-2 drop-shadow-lg">{short.titre || 'Sans titre'}</p>
+          <div className="px-4 pb-4 pt-4 text-left">
+            <p className="text-white text-sm font-semibold drop-shadow-lg text-left">{short.creator_nom}</p>
+            <p className="text-white text-xs mt-1 line-clamp-2 drop-shadow-lg text-left">{short.titre || 'Sans titre'}</p>
           </div>
         </div>
 

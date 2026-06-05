@@ -271,7 +271,7 @@ export default function ProfilPublicationItem({ pub, currentUser, isProfileOwner
 
         {/* Content */}
         {pub.contenu && (
-          <p style={{ color: "var(--ha-text)", fontSize: "0.88rem", lineHeight: 1.6, whiteSpace: "pre-wrap", marginBottom: pub.media_url ? 10 : 0 }}>
+          <p style={{ color: "var(--ha-text)", fontSize: "0.88rem", lineHeight: 1.6, whiteSpace: "pre-wrap", marginBottom: pub.media_url ? 10 : 0, textAlign: "left" }}>
             {pub.contenu}
           </p>
         )}
