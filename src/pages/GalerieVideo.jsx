@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useState, useRef } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { shortsService } from "@/api/liveService";
@@ -240,7 +240,7 @@ export default function GalerieVideo() {
   const isLoading = loadingMes;
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#111118' }}>
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--ha-bg)' }}>
       {/* HEADER */}
       <div className="px-5 pt-5 pb-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
         <div className="flex items-center justify-between gap-3 mb-3">
@@ -250,7 +250,7 @@ export default function GalerieVideo() {
             </div>
             <div>
               <h1 className="text-xl font-bold text-white leading-none" style={CG}>Galerie Vidéo</h1>
-              <p className="text-xs mt-0.5" style={{ color: '#888', ...CG }}>{filtered.length} vidéo{filtered.length !== 1 ? 's' : ''}</p>
+              <p className="text-xs mt-0.5" style={{ color: 'var(--ha-text-faint)', ...CG }}>{filtered.length} vidéo{filtered.length !== 1 ? 's' : ''}</p>
             </div>
           </div>
           {user && (
@@ -268,7 +268,7 @@ export default function GalerieVideo() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-8 h-8 text-xs"
-              style={{ backgroundColor: 'rgba(255,255,255,0.06)', borderColor: 'rgba(255,255,255,0.1)', color: '#fff', ...CG }}
+              style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)', color: 'var(--ha-text)', ...CG }}
             />
           </div>
         </div>
@@ -282,8 +282,8 @@ export default function GalerieVideo() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-20">
-            <Film className="w-14 h-14 mx-auto mb-3" style={{ color: '#333' }} />
-            <p className="text-sm" style={{ color: '#666', ...CG }}>Aucune vidéo ajoutée</p>
+            <Film className="w-14 h-14 mx-auto mb-3" style={{ color: 'var(--ha-text-faint)' }} />
+            <p className="text-sm" style={{ color: 'var(--ha-text-faint)', ...CG }}>Aucune vidéo ajoutée</p>
             {user && (
               <Button onClick={() => setAddDialogOpen(true)} size="sm" className="mt-4" style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)', color: '#fff', ...CG }}>
                 <Plus className="w-3.5 h-3.5 mr-1.5" /> Ajouter
@@ -608,7 +608,7 @@ function VideoCard({ video, currentUserId, onPlay, onDelete, onLike, onPublish }
             >
               <Heart className="w-2.5 h-2.5" fill={isLiked ? '#ff4458' : 'none'} /> {likeCount}
             </button>
-            <span className="flex items-center gap-0.5" style={{ fontSize: 9, color: '#888' }}>
+            <span className="flex items-center gap-0.5" style={{ fontSize: 9, color: 'var(--ha-text-faint)' }}>
               <Eye className="w-2.5 h-2.5" /> {video.views || 0}
             </span>
           </div>
