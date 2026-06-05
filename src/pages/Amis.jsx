@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { dataService, socialService } from "@/api";
 import { useAuth } from "@/lib/AuthContext";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -26,7 +26,7 @@ const UserCard = ({ u, height = 260, actions, navigate }) => (
       {u.photo_url ? (
         <img src={u.photo_url} alt={formatUserName(u)} className="absolute inset-0 w-full h-full object-cover" />
       ) : (
-        <div className="absolute inset-0 w-full h-full flex items-center justify-center text-5xl font-bold" style={{ background: 'linear-gradient(135deg, #555, #333)', color: '#fff' }}>
+        <div className="absolute inset-0 w-full h-full flex items-center justify-center text-5xl font-bold" style={{ background: 'var(--ha-surface3)', color: 'var(--ha-text)' }}>
           {getInitials(formatUserName(u))}
         </div>
       )}
@@ -34,7 +34,7 @@ const UserCard = ({ u, height = 260, actions, navigate }) => (
       <div className="absolute bottom-0 left-0 right-0 p-3 z-10">
         <p className="font-semibold text-xs text-white truncate" style={CG}>{formatUserName(u)}</p>
         {getRoleLabel(u.role_archive) && (
-          <p className="text-[9px] mt-0.5" style={{ color: '#aaa' }}>{getRoleLabel(u.role_archive)}</p>
+          <p className="text-[9px] mt-0.5" style={{ color: 'var(--ha-text-faint)' }}>{getRoleLabel(u.role_archive)}</p>
         )}
         <div className="flex gap-1.5 mt-2" onClick={e => e.stopPropagation()}>
           {actions}
@@ -205,7 +205,7 @@ export default function Amis() {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#262626' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--ha-bg)' }}>
         <Loader2 className="w-12 h-12 animate-spin" style={{ color: 'var(--ha-text-muted)' }} />
       </div>
     );
@@ -218,7 +218,7 @@ export default function Amis() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: '#555' }}>
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: 'var(--ha-surface3)' }}>
               <Users className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -226,7 +226,7 @@ export default function Amis() {
               <p className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Gérez vos connexions</p>
             </div>
           </div>
-          <Badge style={{ background: '#555', color: '#fff', fontSize: '0.8rem' }} className="px-3 py-1.5">
+          <Badge style={{ background: 'var(--ha-surface3)', color: '#fff', fontSize: '0.8rem' }} className="px-3 py-1.5">
             {mesAmis.length} ami{mesAmis.length !== 1 ? 's' : ''}
           </Badge>
         </div>
@@ -256,20 +256,20 @@ export default function Amis() {
           {/* Mes Amis */}
           <TabsContent value="amis" className="mt-4">
             <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
-              <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid #404040' }}>
+              <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid var(--ha-border)' }}>
                 <CardTitle className="text-white text-sm">Mes Amis</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
                 {mesAmis.length === 0 ? (
                   <div className="text-center py-12">
-                    <Users className="w-14 h-14 mx-auto mb-3" style={{ color: '#555' }} />
-                    <p className="text-sm" style={{ color: '#888' }}>Vous n'avez pas encore d'amis</p>
+                    <Users className="w-14 h-14 mx-auto mb-3" style={{ color: 'var(--ha-text-faint)' }} />
+                    <p className="text-sm" style={{ color: 'var(--ha-text-faint)' }}>Vous n'avez pas encore d'amis</p>
                   </div>
                 ) : (
                   <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))' }}>
                     {mesAmis.map(friend => (
                       <UserCard key={friend.id} u={friend} navigate={navigate} actions={<>
-                        <button onClick={() => createConversationMutation.mutate(friend.id)} className={iconBtn} style={{ background: '#1d4ed8', color: '#fff' }} title="Message">
+                        <button onClick={() => createConversationMutation.mutate(friend.id)} className={iconBtn} style={{ background: '#1d4ed8', color: 'var(--ha-text)' }} title="Message">
                           <MessageCircle className="w-3.5 h-3.5 mx-auto" />
                         </button>
                         <button onClick={() => { if (confirm("Retirer cet ami ?")) removeFriendMutation.mutate(friend.id); }} disabled={removeFriendMutation.isPending} className={iconBtn} style={{ background: '#7f1d1d', color: '#fca5a5' }} title="Retirer">
@@ -289,14 +289,14 @@ export default function Amis() {
           {/* Demandes reçues */}
           <TabsContent value="demandes" className="mt-4">
             <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
-              <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid #404040' }}>
+              <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid var(--ha-border)' }}>
                 <CardTitle className="text-white text-sm">Demandes d'Amis Reçues</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
                 {demandesRecues.length === 0 ? (
                   <div className="text-center py-12">
-                    <Mail className="w-14 h-14 mx-auto mb-3" style={{ color: '#555' }} />
-                    <p className="text-sm" style={{ color: '#888' }}>Aucune demande en attente</p>
+                    <Mail className="w-14 h-14 mx-auto mb-3" style={{ color: 'var(--ha-text-faint)' }} />
+                    <p className="text-sm" style={{ color: 'var(--ha-text-faint)' }}>Aucune demande en attente</p>
                   </div>
                 ) : (
                   <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))' }}>
@@ -319,21 +319,21 @@ export default function Amis() {
           {/* Suggestions */}
           <TabsContent value="suggestions" className="mt-4">
             <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
-              <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid #404040' }}>
+              <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid var(--ha-border)' }}>
                 <CardTitle className="text-white text-sm">Personnes que vous pourriez connaître</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
                 {suggestions.length === 0 ? (
                   <div className="text-center py-12">
-                    <Sparkles className="w-14 h-14 mx-auto mb-3" style={{ color: '#555' }} />
-                    <p className="text-sm" style={{ color: '#888' }}>Aucune suggestion pour le moment</p>
-                    <p className="text-xs mt-1" style={{ color: '#666' }}>Basées sur votre établissement, classe et centres d'intérêt</p>
+                    <Sparkles className="w-14 h-14 mx-auto mb-3" style={{ color: 'var(--ha-text-faint)' }} />
+                    <p className="text-sm" style={{ color: 'var(--ha-text-faint)' }}>Aucune suggestion pour le moment</p>
+                    <p className="text-xs mt-1" style={{ color: 'var(--ha-text-faint)' }}>Basées sur votre établissement, classe et centres d'intérêt</p>
                   </div>
                 ) : (
                   <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))' }}>
                     {suggestions.map(u => (
                       <UserCard key={u.id} u={u} navigate={navigate} actions={<>
-                        <button onClick={() => sendRequestMutation.mutate(u.id)} disabled={sendingIds.has(u.id)} className={`${iconBtn} w-full`} style={{ background: '#1d4ed8', color: '#fff' }}>
+                        <button onClick={() => sendRequestMutation.mutate(u.id)} disabled={sendingIds.has(u.id)} className={`${iconBtn} w-full`} style={{ background: '#1d4ed8', color: 'var(--ha-text)' }}>
                           {sendingIds.has(u.id) ? <Loader2 className="w-3.5 h-3.5 mx-auto animate-spin" /> : <UserPlus className="w-3.5 h-3.5 mx-auto" />}
                         </button>
                       </>} />
@@ -349,26 +349,26 @@ export default function Amis() {
             <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardContent className="p-3">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#888' }} />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'var(--ha-text-faint)' }} />
                   <Input
                     placeholder="Rechercher par nom ou email..."
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
                     className="pl-9 border-0 focus-visible:ring-0"
-                    style={{ backgroundColor: 'var(--ha-surface)', color: '#fff' }}
+                    style={{ backgroundColor: 'var(--ha-surface)', color: 'var(--ha-text)' }}
                   />
                 </div>
               </CardContent>
             </Card>
             <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
-              <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid #404040' }}>
+              <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid var(--ha-border)' }}>
                 <CardTitle className="text-white text-sm">Résultats ({autresUtilisateurs.length})</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
                 {autresUtilisateurs.length === 0 ? (
                   <div className="text-center py-12">
-                    <Users className="w-14 h-14 mx-auto mb-3" style={{ color: '#555' }} />
-                    <p className="text-sm" style={{ color: '#888' }}>{searchQuery ? 'Aucun utilisateur trouvé' : 'Tapez un nom pour rechercher'}</p>
+                    <Users className="w-14 h-14 mx-auto mb-3" style={{ color: 'var(--ha-text-faint)' }} />
+                    <p className="text-sm" style={{ color: 'var(--ha-text-faint)' }}>{searchQuery ? 'Aucun utilisateur trouvé' : 'Tapez un nom pour rechercher'}</p>
                   </div>
                 ) : (
                   <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))' }}>
@@ -400,14 +400,14 @@ export default function Amis() {
           {/* Utilisateurs bloqués */}
           <TabsContent value="bloques" className="mt-4">
             <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
-              <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid #404040' }}>
+              <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid var(--ha-border)' }}>
                 <CardTitle className="text-white text-sm">Utilisateurs Bloqués</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
                 {blockedUsers.length === 0 ? (
                   <div className="text-center py-12">
-                    <Shield className="w-14 h-14 mx-auto mb-3" style={{ color: '#555' }} />
-                    <p className="text-sm" style={{ color: '#888' }}>Aucun utilisateur bloqué</p>
+                    <Shield className="w-14 h-14 mx-auto mb-3" style={{ color: 'var(--ha-text-faint)' }} />
+                    <p className="text-sm" style={{ color: 'var(--ha-text-faint)' }}>Aucun utilisateur bloqué</p>
                   </div>
                 ) : (
                   <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))' }}>
