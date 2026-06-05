@@ -218,8 +218,8 @@ export default function PublicationItem({ publication, currentUser }) {
           auteurRole={publication.auteur_role}
         />
       )}
-      <Card className="bg-white border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-        <CardHeader className="border-b border-gray-200">
+      <Card className="shadow-sm hover:shadow-md transition-shadow" style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
+        <CardHeader className="border-b" style={{ borderColor: 'var(--ha-border)' }}>
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-3">
               <UserAvatarPopover
@@ -231,17 +231,19 @@ export default function PublicationItem({ publication, currentUser }) {
               <div>
                 <div className="flex items-center gap-2">
                   <p
-                    className="font-semibold text-gray-800 cursor-pointer hover:underline"
+                    className="font-semibold cursor-pointer hover:underline"
+                    style={{ color: 'var(--ha-text)' }}
                     onClick={() => setShowProfilModal(true)}
                   >{authorDisplayName}</p>
                   {isAdminPost && (
-                    <Badge className={`${publication.auteur_role === 'admin_ministeriel' ? 'bg-yellow-500 text-black' : 'bg-gray-700 text-white'} text-xs`}>
+                    <Badge className={`${publication.auteur_role === 'admin_ministeriel' ? 'bg-yellow-500 text-black' : ''} text-xs`}
+                      style={publication.auteur_role !== 'admin_ministeriel' ? { backgroundColor: 'var(--ha-surface3)', color: 'var(--ha-text)' } : {}}>
                       <BadgeIcon className="w-3 h-3 mr-1" />
                       Officiel
                     </Badge>
                   )}
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--ha-text-muted)' }}>
                   {isAdminPost && <School className="w-4 h-4" />}
                   <span>{getRoleLabel(publication.auteur_role)}</span>
                   <span>•</span>
@@ -271,7 +273,7 @@ export default function PublicationItem({ publication, currentUser }) {
 
         <CardContent className="pt-4">
           {/* Contenu */}
-          <p className="text-gray-800 mb-4 whitespace-pre-wrap">{publication.contenu}</p>
+          <p className="mb-4 whitespace-pre-wrap" style={{ color: 'var(--ha-text)' }}>{publication.contenu}</p>
 
           {/* Media */}
           {publication.media_url && (
@@ -298,11 +300,12 @@ export default function PublicationItem({ publication, currentUser }) {
 
           {/* Actions */}
           {currentUser ? (
-            <div className="flex items-center gap-4 pt-4 border-t border-gray-200">
+            <div className="flex items-center gap-4 pt-4 border-t" style={{ borderColor: 'var(--ha-border)' }}>
               <Button
                 variant="ghost"
                 onClick={handleLike}
-                className={`flex items-center gap-2 ${isLiked ? 'text-red-600' : 'text-gray-600'} hover:text-red-600`}
+                className={`flex items-center gap-2 ${isLiked ? 'text-red-600' : ''} hover:text-red-600`}
+                style={isLiked ? {} : { color: 'var(--ha-text-muted)' }}
               >
                 <Heart className={`w-5 h-5 ${isLiked ? 'fill-current' : ''}`} />
                 <span className="font-medium">{likesArray.length}</span>
@@ -310,14 +313,15 @@ export default function PublicationItem({ publication, currentUser }) {
               <Button
                 variant="ghost"
                 onClick={() => setShowComments(!showComments)}
-                className="flex items-center gap-2 text-gray-600 hover:text-blue-600"
+                className="flex items-center gap-2 hover:text-blue-600"
+                style={{ color: 'var(--ha-text-muted)' }}
               >
                 <MessageCircle className="w-5 h-5" />
                 <span className="font-medium">{commentaires.length}</span>
               </Button>
             </div>
           ) : (
-            <div className="flex items-center gap-4 pt-4 border-t border-gray-200 text-gray-500">
+            <div className="flex items-center gap-4 pt-4 border-t" style={{ borderColor: 'var(--ha-border)', color: 'var(--ha-text-muted)' }}>
               <div className="flex items-center gap-2">
                 <Heart className="w-5 h-5" />
                 <span className="font-medium">{likesArray.length}</span>
@@ -331,12 +335,12 @@ export default function PublicationItem({ publication, currentUser }) {
 
           {/* Section Commentaires */}
           {showComments && (
-            <div className="mt-4 pt-4 border-t border-gray-200 space-y-4">
+            <div className="mt-4 pt-4 border-t space-y-4" style={{ borderColor: 'var(--ha-border)' }}>
               {/* Liste des commentaires */}
               <div className="space-y-3 max-h-96 overflow-y-auto">
                 {commentaires.map((comment) => {
                   return (
-                    <div key={comment.id} className="flex gap-3 p-3 bg-gray-50 rounded-lg">
+                    <div key={comment.id} className="flex gap-3 p-3 rounded-lg" style={{ backgroundColor: 'var(--ha-surface2)' }}>
                       <UserAvatarPopover
                         name={comment.auteur_nom}
                         role={comment.auteur_role}
@@ -346,8 +350,8 @@ export default function PublicationItem({ publication, currentUser }) {
                       <div className="flex-1">
                         <div className="flex items-center justify-between gap-2 mb-1">
                         <div className="flex items-center gap-2">
-                          <p className="font-semibold text-sm text-gray-800">{comment.auteur_nom}</p>
-                          <span className="text-xs text-gray-500">
+                          <p className="font-semibold text-sm" style={{ color: 'var(--ha-text)' }}>{comment.auteur_nom}</p>
+                          <span className="text-xs" style={{ color: 'var(--ha-text-faint)' }}>
                             {format(new Date(comment.created_date), 'PPp', { locale: fr })}
                           </span>
                         </div>
@@ -362,7 +366,7 @@ export default function PublicationItem({ publication, currentUser }) {
                             </Button>
                           )}
                         </div>
-                        <p className="text-sm text-gray-700">{comment.contenu}</p>
+                        <p className="text-sm" style={{ color: 'var(--ha-text-muted)' }}>{comment.contenu}</p>
                       </div>
                     </div>
                   );
@@ -379,12 +383,12 @@ export default function PublicationItem({ publication, currentUser }) {
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
                     placeholder="Ajouter un commentaire..."
-                    className="min-h-[60px] border-gray-200 resize-none"
+                    className="min-h-[60px] resize-none" style={{ borderColor: 'var(--ha-border)', backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)' }}
                   />
                   <Button
                     onClick={handleComment}
                     disabled={!commentText.trim() || commentMutation.isPending}
-                    className="bg-gray-700 hover:bg-gray-800 text-white"
+                    style={{ backgroundColor: 'var(--ha-accent)', color: '#ffffff' }}
                   >
                     {commentMutation.isPending ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
