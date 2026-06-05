@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+﻿import React, { useState, useEffect, useMemo } from "react";
 import { dataService } from "@/api";
 import { useAuth } from "@/lib/AuthContext";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -430,7 +430,7 @@ export default function GestionStructureAcademique() {
 
   if (showEtabSelector) {
     return (
-      <div className="min-h-screen bg-[#484848] p-4 md:p-8">
+      <div className="min-h-screen bg-[var(--ha-bg)] p-4 md:p-8">
         <div className="max-w-2xl mx-auto space-y-6">
           <div className="flex items-center gap-3">
             <School className="w-8 h-8 text-white" />
@@ -458,7 +458,7 @@ export default function GestionStructureAcademique() {
   const hasStructure = facultes.length > 0 || departements.length > 0 || orientations.length > 0 || options.length > 0 || salles.length > 0;
 
   return (
-    <div className="min-h-screen bg-[#484848] p-4 md:p-8">
+    <div className="min-h-screen bg-[var(--ha-bg)] p-4 md:p-8">
       <div className="w-full px-4 space-y-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -483,7 +483,7 @@ export default function GestionStructureAcademique() {
               {facultes.map((faculte) => {
                 const faculteDepts = departements.filter(d => d.faculte_id === faculte.id);
                 return (
-                  <div key={faculte.id} className="border border-[#2d2d2d] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface2)'}}>
+                  <div key={faculte.id} className="border border-[var(--ha-border)] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface2)'}}>
                     <div className="flex items-center gap-2">
                       <button onClick={() => toggleExpand('faculte', faculte.id)} className="text-white">
                         {expandedFacultes[faculte.id] ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
@@ -495,7 +495,7 @@ export default function GestionStructureAcademique() {
                     {expandedFacultes[faculte.id] && (
                       <div className="ml-7 mt-3 space-y-2">
                         {faculteDepts.map((dept) => (
-                          <div key={dept.id} className="border border-[#3d3d3d] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface)'}}>
+                          <div key={dept.id} className="border border-[var(--ha-border)] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface)'}}>
                             <div className="flex items-center gap-2">
                               <button onClick={() => toggleExpand('departement', dept.id)} className="text-white">
                                 {expandedDepartements[dept.id] ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
@@ -514,7 +514,7 @@ export default function GestionStructureAcademique() {
                                   </div>
                                 ))}
                                 {orientations.filter(o => o.departement_id === dept.id).map((orientation) => (
-                                  <div key={orientation.id} className="border border-[#4d4d4d] rounded-lg p-3" style={{backgroundColor: '#474747'}}>
+                                  <div key={orientation.id} className="border border-[var(--ha-border)] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface2)'}}>
                                     <div className="flex items-center gap-2">
                                       <button onClick={() => toggleExpand('orientation', orientation.id)} className="text-white">
                                         {expandedOrientations[orientation.id] ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
@@ -532,7 +532,7 @@ export default function GestionStructureAcademique() {
                                           </div>
                                         ))}
                                         {options.filter(o => o.orientation_id === orientation.id).map((opt) => (
-                                          <div key={opt.id} className="border border-[#5a5a5a] rounded-lg p-2" style={{backgroundColor: '#5a5a5a'}}>
+                                          <div key={opt.id} className="border border-[var(--ha-border)] rounded-lg p-2" style={{backgroundColor: 'var(--ha-surface3)'}}>
                                             <div className="flex items-center gap-2">
                                               <button onClick={() => toggleExpand('option', opt.id)} className="text-white">
                                                 {expandedOptions[opt.id] ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
@@ -558,7 +558,7 @@ export default function GestionStructureAcademique() {
                                   </div>
                                 ))}
                                 {options.filter(o => o.departement_id === dept.id && !o.orientation_id).map((opt) => (
-                                  <div key={opt.id} className="border border-[#5a5a5a] rounded-lg p-2" style={{backgroundColor: '#5a5a5a'}}>
+                                  <div key={opt.id} className="border border-[var(--ha-border)] rounded-lg p-2" style={{backgroundColor: 'var(--ha-surface3)'}}>
                                     <div className="flex items-center gap-2">
                                       <button onClick={() => toggleExpand('option', opt.id)} className="text-white">
                                         {expandedOptions[opt.id] ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
@@ -589,7 +589,7 @@ export default function GestionStructureAcademique() {
                 );
               })}
               {departements.filter(d => !d.faculte_id).map((dept) => (
-                <div key={dept.id} className="border border-[#3d3d3d] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface)'}}>
+                <div key={dept.id} className="border border-[var(--ha-border)] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface)'}}>
                   <div className="flex items-center gap-2">
                     <button onClick={() => toggleExpand('departement', dept.id)} className="text-white">
                       {expandedDepartements[dept.id] ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
@@ -608,7 +608,7 @@ export default function GestionStructureAcademique() {
                         </div>
                       ))}
                       {orientations.filter(o => o.departement_id === dept.id).map((orientation) => (
-                        <div key={orientation.id} className="border border-[#4d4d4d] rounded-lg p-3" style={{backgroundColor: '#474747'}}>
+                        <div key={orientation.id} className="border border-[var(--ha-border)] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface2)'}}>
                           <div className="flex items-center gap-2">
                             <Badge className="bg-orange-600">Orientation</Badge>
                             <span className="text-white font-medium">{orientation.nom}</span>
@@ -616,7 +616,7 @@ export default function GestionStructureAcademique() {
                         </div>
                       ))}
                       {options.filter(o => o.departement_id === dept.id && !o.orientation_id).map((opt) => (
-                        <div key={opt.id} className="border border-[#5a5a5a] rounded-lg p-2" style={{backgroundColor: '#5a5a5a'}}>
+                        <div key={opt.id} className="border border-[var(--ha-border)] rounded-lg p-2" style={{backgroundColor: 'var(--ha-surface3)'}}>
                           <div className="flex items-center gap-2">
                             <Badge className="bg-green-600 text-xs">Option</Badge>
                             <span className="text-white text-sm font-medium">{opt.nom}</span>
@@ -675,7 +675,7 @@ export default function GestionStructureAcademique() {
             {facultes.map((faculte) => {
               const faculteDepts = departements.filter(d => d.faculte_id === faculte.id);
               return (
-                <div key={faculte.id} className="border border-[#2d2d2d] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface2)'}}>
+                <div key={faculte.id} className="border border-[var(--ha-border)] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface2)'}}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <button onClick={() => toggleExpand('faculte', faculte.id)} className="text-white">
@@ -703,7 +703,7 @@ export default function GestionStructureAcademique() {
                       {faculteDepts.map((dept) => {
                         const deptOptions = options.filter(o => o.departement_id === dept.id);
                         return (
-                          <div key={dept.id} className="border border-[#3d3d3d] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface)'}}>
+                          <div key={dept.id} className="border border-[var(--ha-border)] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface)'}}>
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-2">
                                 <button onClick={() => toggleExpand('departement', dept.id)} className="text-white">
@@ -765,7 +765,7 @@ export default function GestionStructureAcademique() {
                                  const orientOptions = options.filter(o => o.orientation_id === orientation.id);
                                  const orientSalles = salles.filter(s => s.orientation_id === orientation.id && !s.option_id);
                                  return (
-                                   <div key={orientation.id} className="border border-[#4d4d4d] rounded-lg p-3" style={{backgroundColor: '#474747'}}>
+                                   <div key={orientation.id} className="border border-[var(--ha-border)] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface2)'}}>
                                      <div className="flex items-center justify-between">
                                        <div className="flex items-center gap-2">
                                          <button onClick={() => toggleExpand('orientation', orientation.id)} className="text-white">
@@ -823,7 +823,7 @@ export default function GestionStructureAcademique() {
                                          {orientOptions.map((opt) => {
                                            const optSalles = salles.filter(s => s.option_id === opt.id);
                                            return (
-                                             <div key={opt.id} className="border border-[#5a5a5a] rounded-lg p-2" style={{backgroundColor: '#5a5a5a'}}>
+                                             <div key={opt.id} className="border border-[var(--ha-border)] rounded-lg p-2" style={{backgroundColor: 'var(--ha-surface3)'}}>
                                                <div className="flex items-center justify-between">
                                                  <div className="flex items-center gap-2">
                                                    <button onClick={() => toggleExpand('option', opt.id)} className="text-white">
@@ -881,7 +881,7 @@ export default function GestionStructureAcademique() {
                                 {options.filter(o => o.departement_id === dept.id && !o.orientation_id).map((opt) => {
                                  const optSalles = salles.filter(s => s.option_id === opt.id);
                                  return (
-                                   <div key={opt.id} className="border border-[#5a5a5a] rounded-lg p-2" style={{backgroundColor: '#5a5a5a'}}>
+                                   <div key={opt.id} className="border border-[var(--ha-border)] rounded-lg p-2" style={{backgroundColor: 'var(--ha-surface3)'}}>
                                      <div className="flex items-center justify-between">
                                        <div className="flex items-center gap-2">
                                          <button onClick={() => toggleExpand('option', opt.id)} className="text-white">
@@ -943,7 +943,7 @@ export default function GestionStructureAcademique() {
 
             {/* Départements sans faculté */}
             {departements.filter(d => !d.faculte_id).map((dept) => (
-              <div key={dept.id} className="border border-[#3d3d3d] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface)'}}>
+              <div key={dept.id} className="border border-[var(--ha-border)] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface)'}}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <button onClick={() => toggleExpand('departement', dept.id)} className="text-white">
@@ -1003,7 +1003,7 @@ export default function GestionStructureAcademique() {
                       const orientOptions = options.filter(o => o.orientation_id === orientation.id);
                       const orientSalles = salles.filter(s => s.orientation_id === orientation.id && !s.option_id);
                       return (
-                        <div key={orientation.id} className="border border-[#4d4d4d] rounded-lg p-3" style={{backgroundColor: '#474747'}}>
+                        <div key={orientation.id} className="border border-[var(--ha-border)] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface2)'}}>
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                               <button onClick={() => toggleExpand('orientation', orientation.id)} className="text-white">
@@ -1057,7 +1057,7 @@ export default function GestionStructureAcademique() {
                               {orientOptions.map((opt) => {
                                 const optSalles = salles.filter(s => s.option_id === opt.id);
                                 return (
-                                  <div key={opt.id} className="border border-[#5a5a5a] rounded-lg p-2" style={{backgroundColor: '#5a5a5a'}}>
+                                  <div key={opt.id} className="border border-[var(--ha-border)] rounded-lg p-2" style={{backgroundColor: 'var(--ha-surface3)'}}>
                                     <div className="flex items-center justify-between">
                                       <div className="flex items-center gap-2">
                                         <button onClick={() => toggleExpand('option', opt.id)} className="text-white">
@@ -1113,7 +1113,7 @@ export default function GestionStructureAcademique() {
                     {options.filter(o => o.departement_id === dept.id && !o.orientation_id).map((opt) => {
                       const optSalles = salles.filter(s => s.option_id === opt.id);
                       return (
-                        <div key={opt.id} className="border border-[#5a5a5a] rounded-lg p-2" style={{backgroundColor: '#5a5a5a'}}>
+                        <div key={opt.id} className="border border-[var(--ha-border)] rounded-lg p-2" style={{backgroundColor: 'var(--ha-surface3)'}}>
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                               <button onClick={() => toggleExpand('option', opt.id)} className="text-white">
@@ -1176,7 +1176,7 @@ export default function GestionStructureAcademique() {
           </div>
         </DraggableDialogBody>
         <DraggableDialogFooter>
-          <Button variant="outline" onClick={() => setShowStructureDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>Fermer</Button>
+          <Button variant="outline" onClick={() => setShowStructureDialog(false)} style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)', color: 'var(--ha-text-muted)', ...CG}}>Fermer</Button>
         </DraggableDialogFooter>
       </DraggableDialog>
 
@@ -1188,11 +1188,11 @@ export default function GestionStructureAcademique() {
                 <>
                   <div>
                     <Label className="text-white text-xs font-medium" style={CG}>Nom *</Label>
-                    <Input value={formData.nom || ""} onChange={(e) => setFormData({...formData, nom: e.target.value})} style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d', ...CG}} />
+                    <Input value={formData.nom || ""} onChange={(e) => setFormData({...formData, nom: e.target.value})} style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)', ...CG}} />
                   </div>
                   <div>
                     <Label className="text-white text-xs font-medium" style={CG}>Code</Label>
-                    <Input value={formData.code || ""} onChange={(e) => setFormData({...formData, code: e.target.value})} style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d', ...CG}} />
+                    <Input value={formData.code || ""} onChange={(e) => setFormData({...formData, code: e.target.value})} style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)', ...CG}} />
                   </div>
                 </>
               )}
@@ -1202,7 +1202,7 @@ export default function GestionStructureAcademique() {
                 <div>
                   <Label className="text-white text-xs font-medium" style={CG}>Faculté (optionnel)</Label>
                   <Select value={formData.faculte_id || ""} onValueChange={(v) => setFormData({...formData, faculte_id: v || undefined})}>
-                    <SelectTrigger style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d', ...CG}}>
+                    <SelectTrigger style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)', ...CG}}>
                       <SelectValue placeholder="Sans faculté" />
                     </SelectTrigger>
                     <SelectContent>
@@ -1218,7 +1218,7 @@ export default function GestionStructureAcademique() {
                   <div>
                     <Label className="text-white text-xs font-medium" style={CG}>Faculté (optionnel)</Label>
                     <Select value={formData.faculte_id || ""} onValueChange={(v) => setFormData({...formData, faculte_id: v || undefined, departement_id: undefined})}>
-                      <SelectTrigger style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d', ...CG}}>
+                      <SelectTrigger style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)', ...CG}}>
                         <SelectValue placeholder="Sans faculté" />
                       </SelectTrigger>
                       <SelectContent>
@@ -1230,7 +1230,7 @@ export default function GestionStructureAcademique() {
                   <div>
                     <Label className="text-white text-xs font-medium" style={CG}>Département (optionnel)</Label>
                     <Select value={formData.departement_id || ""} onValueChange={(v) => setFormData({...formData, departement_id: v || undefined})}>
-                      <SelectTrigger style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d', ...CG}}>
+                      <SelectTrigger style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)', ...CG}}>
                         <SelectValue placeholder="Sans département" />
                       </SelectTrigger>
                       <SelectContent>
@@ -1247,7 +1247,7 @@ export default function GestionStructureAcademique() {
                   <div>
                     <Label className="text-white text-xs font-medium" style={CG}>Faculté (optionnel)</Label>
                     <Select value={formData.faculte_id || ""} onValueChange={(v) => setFormData({...formData, faculte_id: v || undefined, departement_id: undefined, orientation_id: undefined})}>
-                      <SelectTrigger style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d', ...CG}}>
+                      <SelectTrigger style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)', ...CG}}>
                         <SelectValue placeholder="Sans faculté" />
                       </SelectTrigger>
                       <SelectContent>
@@ -1259,7 +1259,7 @@ export default function GestionStructureAcademique() {
                   <div>
                     <Label className="text-white text-xs font-medium" style={CG}>Département (optionnel)</Label>
                     <Select value={formData.departement_id || ""} onValueChange={(v) => setFormData({...formData, departement_id: v || undefined, orientation_id: undefined})}>
-                      <SelectTrigger style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d', ...CG}}>
+                      <SelectTrigger style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)', ...CG}}>
                         <SelectValue placeholder="Sans département" />
                       </SelectTrigger>
                       <SelectContent>
@@ -1271,7 +1271,7 @@ export default function GestionStructureAcademique() {
                   <div>
                     <Label className="text-white text-xs font-medium" style={CG}>Orientation (optionnel)</Label>
                     <Select value={formData.orientation_id || ""} onValueChange={(v) => setFormData({...formData, orientation_id: v || undefined})}>
-                      <SelectTrigger style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d', ...CG}}>
+                      <SelectTrigger style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)', ...CG}}>
                         <SelectValue placeholder="Sans orientation" />
                       </SelectTrigger>
                       <SelectContent>
@@ -1288,7 +1288,7 @@ export default function GestionStructureAcademique() {
                   <div>
                     <Label className="text-white text-xs font-medium" style={CG}>Promotion *</Label>
                     <Select value={formData.niveau_academique || ""} onValueChange={(v) => setFormData({...formData, niveau_academique: v})}>
-                      <SelectTrigger style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d', ...CG}}>
+                      <SelectTrigger style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)', ...CG}}>
                         <SelectValue placeholder="Sélectionnez la promotion du système LMD" />
                       </SelectTrigger>
                       <SelectContent>
@@ -1306,15 +1306,15 @@ export default function GestionStructureAcademique() {
                   </div>
                   <div>
                     <Label className="text-white text-xs font-medium" style={CG}>Code</Label>
-                    <Input value={formData.code || ""} onChange={(e) => setFormData({...formData, code: e.target.value})} style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d', ...CG}} placeholder="Ex: A, B, C" />
+                    <Input value={formData.code || ""} onChange={(e) => setFormData({...formData, code: e.target.value})} style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)', ...CG}} placeholder="Ex: A, B, C" />
                   </div>
                   <div>
                     <Label className="text-white text-xs font-medium" style={CG}>Capacité (nombre max d'étudiants) *</Label>
-                    <Input type="number" value={formData.capacite || ""} onChange={(e) => setFormData({...formData, capacite: e.target.value})} style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d', ...CG}} />
+                    <Input type="number" value={formData.capacite || ""} onChange={(e) => setFormData({...formData, capacite: e.target.value})} style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)', ...CG}} />
                   </div>
                   <div>
                     <Label className="text-white text-xs font-medium" style={CG}>Nombre actuel d'étudiants</Label>
-                    <Input type="number" value={formData.nombre_etudiants || 0} onChange={(e) => setFormData({...formData, nombre_etudiants: e.target.value})} style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d', ...CG}} />
+                    <Input type="number" value={formData.nombre_etudiants || 0} onChange={(e) => setFormData({...formData, nombre_etudiants: e.target.value})} style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)', ...CG}} />
                   </div>
                 </>
               )}
@@ -1323,14 +1323,14 @@ export default function GestionStructureAcademique() {
                 <>
                   <div>
                     <Label className="text-white text-xs font-medium" style={CG}>Description</Label>
-                    <Input value={formData.description || ""} onChange={(e) => setFormData({...formData, description: e.target.value})} style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d', ...CG}} />
+                    <Input value={formData.description || ""} onChange={(e) => setFormData({...formData, description: e.target.value})} style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)', ...CG}} />
                   </div>
                 </>
               )}
             </div>
           </DraggableDialogBody>
           <DraggableDialogFooter>
-              <Button variant="outline" onClick={() => setShowDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>Annuler</Button>
+              <Button variant="outline" onClick={() => setShowDialog(false)} style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)', color: 'var(--ha-text-muted)', ...CG}}>Annuler</Button>
               <Button onClick={handleSubmit} className="bg-blue-600 hover:bg-blue-700 text-white" style={CG}>
                 {formData.isEdit ? "Modifier" : "Créer"}
               </Button>
