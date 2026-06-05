@@ -341,6 +341,8 @@ export default function Layout({ children, currentPageName }) {
            ============================================================ */
         [data-theme*="light"] .bg-white, [data-theme*="light"] .bg-gray-50,
         [data-theme*="light"] .bg-gray-100, [data-theme*="light"] .bg-gray-200 { background-color: #ffffff !important; }
+        /* Forcer bg-card (shadcn) en blanc pour les thèmes clairs */
+        [data-theme*="light"] .bg-card { background-color: #ffffff !important; color: #000000 !important; }
         [data-theme*="light"] .bg-gray-950, [data-theme*="light"] .bg-gray-900,
         [data-theme*="light"] .bg-gray-800, [data-theme*="light"] .bg-gray-700 { background-color: #f3f4f6 !important; color: #000000 !important; }
         [data-theme*="light"] .text-white, [data-theme*="light"] .text-gray-100,
