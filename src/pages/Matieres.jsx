@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+﻿import React, { useEffect, useMemo, useState } from "react";
 import { dataService, functionService } from "@/api";
 import { useAuth } from "@/lib/AuthContext";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -664,7 +664,7 @@ export default function Matieres() {
   }
 
   return (
-    <div className="min-h-screen bg-[#484848] p-4 md:p-8">
+    <div className="min-h-screen bg-[var(--ha-bg)] p-4 md:p-8">
       <div className="w-full px-4 space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -689,9 +689,9 @@ export default function Matieres() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="border-gray-300"
-                style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d'}}
+                style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)'}}
               />
-              <div className="text-sm" style={{color:'#e0e0e0'}}>Total: {displayedMatieres.length}</div>
+              <div className="text-sm" style={{color:'var(--ha-text-muted)'}}>Total: {displayedMatieres.length}</div>
             </div>
           </CardContent>
         </Card>
@@ -721,7 +721,7 @@ export default function Matieres() {
               return (
                 <Card key={faculte.id} style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                   <CardHeader 
-                    style={{backgroundColor:'#2d2d2d', borderColor:'#3d3d3d'}}
+                    style={{backgroundColor:'var(--ha-surface)', borderColor:'var(--ha-border)'}}
                     className="cursor-pointer"
                     onClick={() => setExpandedFacultes(prev => ({ ...prev, [faculte.id]: !isExpanded }))}
                   >
@@ -766,11 +766,11 @@ export default function Matieres() {
                             </Badge>
                           </div>
                           
-                          <div className="border border-[#2d2d2d] rounded-lg overflow-hidden">
+                          <div className="border border-[var(--ha-border)] rounded-lg overflow-hidden">
                             <div className="overflow-x-auto">
                               <Table className="text-white [&_*]:text-white">
                                 <TableHeader>
-                                  <TableRow style={{backgroundColor:'#2d2d2d'}}>
+                                  <TableRow style={{backgroundColor:'var(--ha-surface)'}}>
                                     <TableHead className="text-white w-[100px]">Code</TableHead>
                                     <TableHead className="text-white w-[250px]">Nom de la Matière</TableHead>
                                     <TableHead className="text-white w-[300px]">Promotion</TableHead>
@@ -782,7 +782,7 @@ export default function Matieres() {
                                 </TableHeader>
                                 <TableBody>
                                   {matieresUniques.map((m) => (
-                                    <TableRow key={m.id} className="hover:bg-[#2d2d2d]">
+                                    <TableRow key={m.id} className="hover:bg-[var(--ha-hover)]">
                                       <TableCell className="font-medium text-white">
                                         <Badge variant="outline" className="text-white border-gray-500">
                                           {m.code || "-"}
@@ -814,7 +814,7 @@ export default function Matieres() {
                                             size="icon" 
                                             variant="ghost" 
                                             onClick={() => openEdit(m)} 
-                                            className="h-8 w-8 text-white hover:bg-[#4d4d4d]"
+                                            className="h-8 w-8 text-white hover:bg-[var(--ha-surface2)]"
                                           >
                                             <Pencil className="h-4 w-4" />
                                           </Button>
@@ -873,28 +873,28 @@ export default function Matieres() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="nom" className="text-white">Nom *</Label>
-                  <Input id="nom" value={formData.nom} style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d'}} onChange={(e) => setFormData({ ...formData, nom: e.target.value })} />
+                  <Input id="nom" value={formData.nom} style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)'}} onChange={(e) => setFormData({ ...formData, nom: e.target.value })} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="code" className="text-white">Code</Label>
-                  <Input id="code" value={formData.code} style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d'}} onChange={(e) => setFormData({ ...formData, code: e.target.value })} />
+                  <Input id="code" value={formData.code} style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)'}} onChange={(e) => setFormData({ ...formData, code: e.target.value })} />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="coef" className="text-white">Coefficient</Label>
-                  <Input id="coef" type="number" min={1} value={formData.coefficient} style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d'}} onChange={(e) => setFormData({ ...formData, coefficient: e.target.value })} />
+                  <Input id="coef" type="number" min={1} value={formData.coefficient} style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)'}} onChange={(e) => setFormData({ ...formData, coefficient: e.target.value })} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="heures" className="text-white">Nombre d'heures</Label>
-                  <Input id="heures" type="number" min={0} value={formData.nombre_heures} style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d'}} onChange={(e) => setFormData({ ...formData, nombre_heures: e.target.value })} placeholder="Ex: 60" />
+                  <Input id="heures" type="number" min={0} value={formData.nombre_heures} style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)'}} onChange={(e) => setFormData({ ...formData, nombre_heures: e.target.value })} placeholder="Ex: 60" />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-white">Couleur</Label>
                   <div className="flex items-center gap-3">
                     <input type="color" value={formData.couleur} onChange={(e) => setFormData({ ...formData, couleur: e.target.value })} className="h-10 w-12 p-0 border rounded" />
-                    <Input value={formData.couleur} style={{backgroundColor:'#2d2d2d', color:'#ffffff', borderColor:'#4d4d4d'}} onChange={(e) => setFormData({ ...formData, couleur: e.target.value })} />
+                    <Input value={formData.couleur} style={{backgroundColor:'var(--ha-surface)', color:'var(--ha-text)', borderColor:'var(--ha-border)'}} onChange={(e) => setFormData({ ...formData, couleur: e.target.value })} />
                   </div>
                 </div>
 
@@ -908,7 +908,7 @@ export default function Matieres() {
                       <p className="text-sm text-gray-400">Aucune faculté disponible</p>
                     ) : (
                       etablissementFacultes.map((f) => (
-                        <label key={f.id} className="flex items-center gap-2 p-1 hover:bg-[#3d3d3d] rounded cursor-pointer">
+                        <label key={f.id} className="flex items-center gap-2 p-1 hover:bg-[var(--ha-hover)] rounded cursor-pointer">
                           <input
                             type="checkbox"
                             checked={formData.faculte_ids.includes(f.id)}
@@ -950,7 +950,7 @@ export default function Matieres() {
                       <p className="text-sm text-gray-400">Aucun département disponible</p>
                     ) : (
                       departementsFiltered.map((d) => (
-                        <label key={d.id} className="flex items-center gap-2 p-1 hover:bg-[#3d3d3d] rounded cursor-pointer">
+                        <label key={d.id} className="flex items-center gap-2 p-1 hover:bg-[var(--ha-hover)] rounded cursor-pointer">
                           <input
                             type="checkbox"
                             checked={formData.departement_ids.includes(d.id)}
@@ -990,7 +990,7 @@ export default function Matieres() {
                       <p className="text-sm text-gray-400">Aucune orientation disponible</p>
                     ) : (
                       orientationsFiltered.map((o) => (
-                        <label key={o.id} className="flex items-center gap-2 p-1 hover:bg-[#3d3d3d] rounded cursor-pointer">
+                        <label key={o.id} className="flex items-center gap-2 p-1 hover:bg-[var(--ha-hover)] rounded cursor-pointer">
                           <input
                             type="checkbox"
                             checked={formData.orientation_ids.includes(o.id)}
@@ -1028,7 +1028,7 @@ export default function Matieres() {
                       <p className="text-sm text-gray-400">Aucune option disponible</p>
                     ) : (
                       optionsFiltered.map((o) => (
-                        <label key={o.id} className="flex items-center gap-2 p-1 hover:bg-[#3d3d3d] rounded cursor-pointer">
+                        <label key={o.id} className="flex items-center gap-2 p-1 hover:bg-[var(--ha-hover)] rounded cursor-pointer">
                           <input
                             type="checkbox"
                             checked={formData.option_ids.includes(o.id)}
@@ -1098,7 +1098,7 @@ export default function Matieres() {
                                           <div className="space-y-1 mb-2">
                                             <div className="text-xs text-gray-400 uppercase font-semibold">Niveaux Académiques</div>
                                             {sallesDirect.map(salle => (
-                                              <label key={salle.id} className="flex items-center gap-2 p-1.5 hover:bg-[#3d3d3d] rounded cursor-pointer">
+                                              <label key={salle.id} className="flex items-center gap-2 p-1.5 hover:bg-[var(--ha-hover)] rounded cursor-pointer">
                                                 <input
                                                   type="checkbox"
                                                   checked={formData.niveau_classes.includes(salle.nom)}
@@ -1133,7 +1133,7 @@ export default function Matieres() {
                                                   <div className="space-y-1 mb-2">
                                                     <div className="text-xs text-gray-400 uppercase font-semibold">Niveaux Académiques</div>
                                                     {sallesOrient.map(salle => (
-                                                      <label key={salle.id} className="flex items-center gap-2 p-1.5 hover:bg-[#3d3d3d] rounded cursor-pointer">
+                                                      <label key={salle.id} className="flex items-center gap-2 p-1.5 hover:bg-[var(--ha-hover)] rounded cursor-pointer">
                                                         <input
                                                           type="checkbox"
                                                           checked={formData.niveau_classes.includes(salle.nom)}
@@ -1163,7 +1163,7 @@ export default function Matieres() {
                                                       {sallesOpt.length > 0 && (
                                                         <div className="ml-4 mt-1 space-y-1">
                                                           {sallesOpt.map(salle => (
-                                                            <label key={salle.id} className="flex items-center gap-2 p-1 hover:bg-[#3d3d3d] rounded cursor-pointer">
+                                                            <label key={salle.id} className="flex items-center gap-2 p-1 hover:bg-[var(--ha-hover)] rounded cursor-pointer">
                                                               <input
                                                                 type="checkbox"
                                                                 checked={formData.niveau_classes.includes(salle.nom)}
@@ -1201,7 +1201,7 @@ export default function Matieres() {
                                               {sallesOpt.length > 0 && (
                                                 <div className="ml-4 mt-1 space-y-1">
                                                   {sallesOpt.map(salle => (
-                                                    <label key={salle.id} className="flex items-center gap-2 p-1 hover:bg-[#3d3d3d] rounded cursor-pointer">
+                                                    <label key={salle.id} className="flex items-center gap-2 p-1 hover:bg-[var(--ha-hover)] rounded cursor-pointer">
                                                       <input
                                                         type="checkbox"
                                                         checked={formData.niveau_classes.includes(salle.nom)}
@@ -1242,7 +1242,7 @@ export default function Matieres() {
                 </div>
                 </DraggableDialogBody>
           <DraggableDialogFooter>
-            <Button variant="outline" onClick={() => setShowForm(false)} style={{...CG, backgroundColor: 'rgba(255,255,255,0.08)', color: 'var(--ha-text)', borderColor: 'rgba(255,255,255,0.15)'}}>
+            <Button variant="outline" onClick={() => setShowForm(false)} style={{...CG, backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)'}}>
               Annuler
             </Button>
             <Button onClick={submitForm} className="bg-blue-600 hover:bg-blue-700 text-white" style={CG} disabled={createMutation.isPending || updateMutation.isPending}>
@@ -1263,7 +1263,7 @@ export default function Matieres() {
             <div className="py-2 text-white" style={CG}>{toDelete?.nom} ({toDelete?.code || "sans code"})</div>
           </DraggableDialogBody>
           <DraggableDialogFooter>
-            <Button variant="outline" onClick={() => setShowDelete(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>Annuler</Button>
+            <Button variant="outline" onClick={() => setShowDelete(false)} style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)', color: 'var(--ha-text-muted)', ...CG}}>Annuler</Button>
             <Button variant="destructive" onClick={() => toDelete && deleteMutation.mutate(toDelete.id)} disabled={deleteMutation.isPending} className="bg-red-600 hover:bg-red-700 text-white" style={CG}>
               {deleteMutation.isPending ? (
                 <>
