@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useState } from "react";
 import { dataService } from "@/api";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -173,8 +173,8 @@ export default function ProfilPublicationItem({ pub, currentUser, isProfileOwner
     <>
       <div
         style={{
-          background: isHidden ? "rgba(38,38,38,0.5)" : "#262626",
-          border: `1px solid ${isPinned ? "#ca8a04" : "#404040"}`,
+          background: isHidden ? "var(--ha-surface2)" : "var(--ha-surface)",
+          border: `1px solid ${isPinned ? "#ca8a04" : "var(--ha-border)"}`,
           borderRadius: 12,
           padding: "16px",
           opacity: isHidden ? 0.6 : 1,
@@ -191,7 +191,7 @@ export default function ProfilPublicationItem({ pub, currentUser, isProfileOwner
 
         {/* Hidden indicator (owner only) */}
         {isHidden && isProfileOwner && (
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8, color: "#888", fontSize: "0.72rem", fontStyle: "italic" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8, color: "var(--ha-text-faint)", fontSize: "0.72rem", fontStyle: "italic" }}>
             <EyeOff style={{ width: 12, height: 12 }} />
             Publication masquée — visible uniquement par vous
           </div>
@@ -203,13 +203,13 @@ export default function ProfilPublicationItem({ pub, currentUser, isProfileOwner
             {authorPhoto ? (
               <img src={authorPhoto} alt={authorName} style={{ width: 40, height: 40, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
             ) : (
-              <div style={{ width: 40, height: 40, borderRadius: "50%", background: "#555", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: "bold", flexShrink: 0 }}>
+              <div style={{ width: 40, height: 40, borderRadius: "50%", background: "var(--ha-surface3)", color: "var(--ha-text)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: "bold", flexShrink: 0 }}>
                 {getInitials(authorName)}
               </div>
             )}
             <div>
-              <p style={{ color: "#fff", fontWeight: 600, fontSize: "0.88rem" }}>{authorName}</p>
-              <p style={{ color: "#888", fontSize: "0.72rem" }}>
+              <p style={{ color: "var(--ha-text)", fontWeight: 600, fontSize: "0.88rem" }}>{authorName}</p>
+              <p style={{ color: "var(--ha-text-faint)", fontSize: "0.72rem" }}>
                 {format(new Date(pub.created_date), "d MMM yyyy 'à' HH:mm", { locale: fr })}
               </p>
             </div>
@@ -219,13 +219,13 @@ export default function ProfilPublicationItem({ pub, currentUser, isProfileOwner
           <div style={{ position: "relative" }}>
             <button
               onClick={() => setShowMenu(v => !v)}
-              style={{ width: 32, height: 32, borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", background: "transparent", border: "none", color: "#888", cursor: "pointer" }}
+              style={{ width: 32, height: 32, borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", background: "transparent", border: "none", color: "var(--ha-text-faint)", cursor: "pointer" }}
             >
               <MoreHorizontal style={{ width: 18, height: 18 }} />
             </button>
             {showMenu && (
               <div
-                style={{ position: "absolute", right: 0, top: 36, background: "#1a1a1a", border: "1px solid #404040", borderRadius: 10, zIndex: 50, minWidth: 170, boxShadow: "0 8px 24px rgba(0,0,0,0.5)", overflow: "hidden" }}
+                style={{ position: "absolute", right: 0, top: 36, background: "var(--ha-surface)", border: "1px solid var(--ha-border)", borderRadius: 10, zIndex: 50, minWidth: 170, boxShadow: "0 8px 24px rgba(0,0,0,0.5)", overflow: "hidden" }}
                 onMouseLeave={() => setShowMenu(false)}
               >
                 {/* Share */}
@@ -271,7 +271,7 @@ export default function ProfilPublicationItem({ pub, currentUser, isProfileOwner
 
         {/* Content */}
         {pub.contenu && (
-          <p style={{ color: "#e0e0e0", fontSize: "0.88rem", lineHeight: 1.6, whiteSpace: "pre-wrap", marginBottom: pub.media_url ? 10 : 0 }}>
+          <p style={{ color: "var(--ha-text)", fontSize: "0.88rem", lineHeight: 1.6, whiteSpace: "pre-wrap", marginBottom: pub.media_url ? 10 : 0 }}>
             {pub.contenu}
           </p>
         )}
@@ -290,7 +290,7 @@ export default function ProfilPublicationItem({ pub, currentUser, isProfileOwner
         )}
 
         {/* Stats bar */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 12, paddingTop: 10, borderTop: "1px solid #404040" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 12, paddingTop: 10, borderTop: "1px solid var(--ha-border)" }}>
           <div style={{ display: "flex", gap: 16 }}>
             {/* Like */}
             <button
@@ -324,14 +324,14 @@ export default function ProfilPublicationItem({ pub, currentUser, isProfileOwner
 
         {/* Comments section */}
         {showComments && (
-          <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #333" }}>
+          <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid var(--ha-border)" }}>
             {/* Add comment */}
             {currentUser && (
               <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
                 {currentUser.photo_url ? (
                   <img src={currentUser.photo_url} alt="" style={{ width: 30, height: 30, borderRadius: "50%", objectFit: "cover", flexShrink: 0, marginTop: 4 }} />
                 ) : (
-                  <div style={{ width: 30, height: 30, borderRadius: "50%", background: "#555", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: "bold", flexShrink: 0, marginTop: 4 }}>
+                  <div style={{ width: 30, height: 30, borderRadius: "50%", background: "var(--ha-surface3)", color: "var(--ha-text)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: "bold", flexShrink: 0, marginTop: 4 }}>
                     {getInitials(formatUserName(currentUser))}
                   </div>
                 )}
@@ -342,12 +342,12 @@ export default function ProfilPublicationItem({ pub, currentUser, isProfileOwner
                     onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); if (commentText.trim()) commentMutation.mutate(commentText.trim()); } }}
                     placeholder="Écrire un commentaire..."
                     rows={1}
-                    style={{ background: "#1a1a1a", color: "#fff", border: "1px solid #404040", borderRadius: 8, resize: "none", fontSize: "0.82rem", padding: "8px 10px", flex: 1, ...CG }}
+                    style={{ background: "var(--ha-surface2)", color: "var(--ha-text)", border: "1px solid var(--ha-border)", borderRadius: 8, resize: "none", fontSize: "0.82rem", padding: "8px 10px", flex: 1, ...CG }}
                   />
                   <button
                     onClick={() => commentText.trim() && commentMutation.mutate(commentText.trim())}
                     disabled={!commentText.trim() || commentMutation.isPending}
-                    style={{ width: 34, height: 34, borderRadius: 8, background: commentText.trim() ? "#2563eb" : "#333", border: "none", cursor: commentText.trim() ? "pointer" : "default", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, alignSelf: "center" }}
+                    style={{ width: 34, height: 34, borderRadius: 8, background: commentText.trim() ? "#2563eb" : "var(--ha-surface3)", border: "none", cursor: commentText.trim() ? "pointer" : "default", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, alignSelf: "center" }}
                   >
                     {commentMutation.isPending ? <Loader2 style={{ width: 14, height: 14, animation: "spin 1s linear infinite" }} /> : <Send style={{ width: 14, height: 14 }} />}
                   </button>
@@ -361,7 +361,7 @@ export default function ProfilPublicationItem({ pub, currentUser, isProfileOwner
                 <Loader2 style={{ width: 16, height: 16, color: "#888", animation: "spin 1s linear infinite", display: "inline-block" }} />
               </div>
             ) : commentaires.length === 0 ? (
-              <p style={{ color: "#666", fontSize: "0.78rem", textAlign: "center", padding: "4px 0" }}>Aucun commentaire. Soyez le premier !</p>
+              <p style={{ color: "var(--ha-text-faint)", fontSize: "0.78rem", textAlign: "center", padding: "4px 0" }}>Aucun commentaire. Soyez le premier !</p>
             ) : (
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 {commentaires.map(c => {
@@ -371,23 +371,23 @@ export default function ProfilPublicationItem({ pub, currentUser, isProfileOwner
                       {c.auteur_photo_url ? (
                         <img src={c.auteur_photo_url} alt="" style={{ width: 28, height: 28, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
                       ) : (
-                        <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#555", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: "bold", flexShrink: 0 }}>
+                        <div style={{ width: 28, height: 28, borderRadius: "50%", background: "var(--ha-surface3)", color: "var(--ha-text)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: "bold", flexShrink: 0 }}>
                           {getInitials(c.auteur_nom || "?")}
                         </div>
                       )}
-                      <div style={{ flex: 1, background: "#1a1a1a", borderRadius: 8, padding: "7px 10px", position: "relative" }}>
+                      <div style={{ flex: 1, background: "var(--ha-surface2)", borderRadius: 8, padding: "7px 10px", position: "relative" }}>
                         <div style={{ display: "flex", alignItems: "baseline", gap: 6, justifyContent: "space-between" }}>
-                          <span style={{ color: "#fff", fontWeight: 600, fontSize: "0.78rem" }}>{c.auteur_nom || "Utilisateur"}</span>
+                          <span style={{ color: "var(--ha-text)", fontWeight: 600, fontSize: "0.78rem" }}>{c.auteur_nom || "Utilisateur"}</span>
                           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                            <span style={{ color: "#666", fontSize: "0.68rem" }}>{c.created_date ? format(new Date(c.created_date), "d MMM HH:mm", { locale: fr }) : ""}</span>
+                            <span style={{ color: "var(--ha-text-faint)", fontSize: "0.68rem" }}>{c.created_date ? format(new Date(c.created_date), "d MMM HH:mm", { locale: fr }) : ""}</span>
                             {canDelC && (
-                              <button onClick={() => deleteCommentMutation.mutate(c.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#666", padding: 0 }}>
+                              <button onClick={() => deleteCommentMutation.mutate(c.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--ha-text-faint)", padding: 0 }}>
                                 <Trash2 style={{ width: 11, height: 11 }} />
                               </button>
                             )}
                           </div>
                         </div>
-                        <p style={{ color: "#d0d0d0", fontSize: "0.8rem", marginTop: 2, lineHeight: 1.4 }}>{c.contenu}</p>
+                        <p style={{ color: "var(--ha-text-muted)", fontSize: "0.8rem", marginTop: 2, lineHeight: 1.4 }}>{c.contenu}</p>
                       </div>
                     </div>
                   );
@@ -411,15 +411,15 @@ export default function ProfilPublicationItem({ pub, currentUser, isProfileOwner
 
       {/* Delete dialog */}
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent style={{ background: "#1a1a1a", border: "1px solid #404040", ...CG }}>
+        <AlertDialogContent style={{ background: "var(--ha-surface)", border: "1px solid var(--ha-border)", ...CG }}>
           <AlertDialogHeader>
-            <AlertDialogTitle style={{ color: "#fff" }}>Supprimer la publication ?</AlertDialogTitle>
-            <AlertDialogDescription style={{ color: "#b0b0b0" }}>
+            <AlertDialogTitle style={{ color: "var(--ha-text)" }}>Supprimer la publication ?</AlertDialogTitle>
+            <AlertDialogDescription style={{ color: "var(--ha-text-muted)" }}>
               Cette action est irréversible. La publication et tous ses commentaires seront définitivement supprimés.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel style={{ background: "#333", color: "#fff", border: "1px solid #555" }}>Annuler</AlertDialogCancel>
+            <AlertDialogCancel style={{ background: "var(--ha-surface2)", color: "var(--ha-text)", border: "1px solid var(--ha-border)" }}>Annuler</AlertDialogCancel>
             <AlertDialogAction onClick={() => deleteMutation.mutate()} style={{ background: "#ef4444", color: "#fff" }} disabled={deleteMutation.isPending}>
               {deleteMutation.isPending ? <Loader2 style={{ width: 14, height: 14, animation: "spin 1s linear infinite" }} /> : "Supprimer"}
             </AlertDialogAction>
@@ -439,7 +439,7 @@ const menuItemStyle = {
   background: "transparent",
   border: "none",
   cursor: "pointer",
-  color: "#e0e0e0",
+  color: "var(--ha-text)",
   fontSize: "0.82rem",
   fontFamily: '"Century Gothic", sans-serif',
   textAlign: "left",
