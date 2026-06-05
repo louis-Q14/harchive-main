@@ -237,12 +237,12 @@ export default function Journal() {
       <div className="max-w-4xl mx-auto">
         {/* En-tête */}
         <div className="text-center mb-6">
-          <p className="text-gray-300 text-sm mb-5">
+          <p className="text-sm mb-5" style={{ color: 'var(--ha-text-muted)' }}>
             Partagez et découvrez les actualités de la communauté
           </p>
 
           {/* Tabs */}
-          <div className="flex items-center gap-0 rounded-full p-1 w-full" style={{ backgroundColor: 'var(--ha-surface)' }}>
+          <div className="flex items-center gap-0 rounded-full p-1 w-full" style={{ backgroundColor: 'var(--ha-surface2)', border: '1px solid var(--ha-border)' }}>
             {JOURNAL_TABS.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -250,13 +250,13 @@ export default function Journal() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-full text-sm font-medium transition-all ${
-                    isActive
-                      ? 'bg-[#3d3d3d] text-white shadow-lg'
-                      : 'text-gray-500 hover:text-gray-300'
-                  }`}
+                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full text-sm font-medium transition-all"
+                  style={isActive
+                    ? { backgroundColor: 'var(--ha-surface3)', color: 'var(--ha-text)', boxShadow: '0 1px 4px rgba(0,0,0,0.15)' }
+                    : { color: 'var(--ha-text-muted)' }
+                  }
                 >
-                  <Icon className={`w-4 h-4 ${tab.id === 'live' ? 'text-gray-400' : ''}`} />
+                  <Icon className="w-4 h-4" />
                   {tab.label}
                   {tab.id === 'live' && (
                     <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
