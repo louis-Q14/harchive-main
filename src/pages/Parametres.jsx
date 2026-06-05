@@ -13,14 +13,14 @@ const api = () => createHttpClient({ baseURL: backendConfig.localBackendUrl });
 // ─── Reusable components ───────────────────────────────────────────────────────
 
 const Section = ({ icon: Icon, title, subtitle, children }) => (
-  <div className="rounded-2xl border" style={{ background: 'rgba(30,30,40,0.7)', borderColor: 'rgba(255,255,255,0.08)' }}>
-    <div className="px-6 py-4 border-b flex items-center gap-3" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+  <div className="rounded-2xl border" style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
+    <div className="px-6 py-4 border-b flex items-center gap-3" style={{ borderColor: 'var(--ha-border)' }}>
       <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(59,130,246,0.15)' }}>
         <Icon className="w-5 h-5 text-blue-400" />
       </div>
       <div>
-        <div className="font-semibold text-white text-sm">{title}</div>
-        {subtitle && <div className="text-xs text-gray-400 mt-0.5">{subtitle}</div>}
+        <div className="font-semibold text-sm" style={{ color: 'var(--ha-text)' }}>{title}</div>
+        {subtitle && <div className="text-xs mt-0.5" style={{ color: 'var(--ha-text-muted)' }}>{subtitle}</div>}
       </div>
     </div>
     <div className="p-6 space-y-5">{children}</div>
@@ -29,9 +29,9 @@ const Section = ({ icon: Icon, title, subtitle, children }) => (
 
 const Field = ({ label, children, hint }) => (
   <div className="space-y-1.5">
-    <label className="block text-xs font-medium text-gray-400 uppercase tracking-wider">{label}</label>
+    <label className="block text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--ha-text-muted)' }}>{label}</label>
     {children}
-    {hint && <p className="text-xs text-gray-500">{hint}</p>}
+    {hint && <p className="text-xs" style={{ color: 'var(--ha-text-faint)' }}>{hint}</p>}
   </div>
 );
 
@@ -368,13 +368,13 @@ export default function Parametres() {
   };
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{ backgroundColor: '#1a1a2e' }}>
-      <div className="max-w-2xl mx-auto space-y-6">
+    <div className="min-h-screen p-4 md:p-8" style={{ backgroundColor: 'var(--ha-bg)' }}>
+      <div className="w-full space-y-6">
 
         {/* ── Header ── */}
         <div>
-          <h1 className="text-2xl font-bold text-white">Paramètres</h1>
-          <p className="text-sm text-gray-400 mt-1">Gérez votre compte et vos préférences</p>
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--ha-text)' }}>Paramètres</h1>
+          <p className="text-sm mt-1" style={{ color: 'var(--ha-text-muted)' }}>Gérez votre compte et vos préférences</p>
         </div>
 
         {/* ── Account Info (read-only summary) ── */}
@@ -388,8 +388,8 @@ export default function Parametres() {
             }
           </div>
           <div className="min-w-0">
-            <div className="font-semibold text-white truncate">{user?.prenom} {user?.nom}</div>
-            <div className="text-sm text-gray-400 truncate">{user?.email}</div>
+            <div className="font-semibold truncate" style={{ color: 'var(--ha-text)' }}>{user?.prenom} {user?.nom}</div>
+            <div className="text-sm truncate" style={{ color: 'var(--ha-text-muted)' }}>{user?.email}</div>
             <span className="inline-block mt-1 text-xs px-2 py-0.5 rounded-full" style={{ background: 'rgba(59,130,246,0.2)', color: '#93c5fd' }}>
               {roleLabel[user?.role_archive] || user?.role_archive}
             </span>
