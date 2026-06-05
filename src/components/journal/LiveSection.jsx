@@ -133,7 +133,7 @@ export default function LiveSection() {
             />
           </div>
           <div className="flex justify-end gap-2 pt-2">
-            <Button variant="ghost" onClick={() => setShowGoLive(false)} style={{ color: '#aaa' }}>Annuler</Button>
+            <Button variant="ghost" onClick={() => setShowGoLive(false)} style={{ color: 'var(--ha-text-muted)' }}>Annuler</Button>
             <Button
               onClick={handleGoLive}
               disabled={!titre.trim() || creating}
@@ -498,7 +498,7 @@ function LiveReelsPlayer({ streams = [], currentIndex = 0, goNext = () => {}, go
           <div className="px-6 py-4 space-y-4">
             <p className="text-gray-400 text-sm">Votre live sera terminé et tous les spectateurs seront déconnectés.</p>
             <div className="flex justify-end gap-2">
-              <Button variant="ghost" onClick={() => setShowStopConfirm(false)} style={{ color: '#aaa' }}>Annuler</Button>
+              <Button variant="ghost" onClick={() => setShowStopConfirm(false)} style={{ color: 'var(--ha-text-muted)' }}>Annuler</Button>
               <Button
                 onClick={() => {
                   liveService.endStream(stream.id).catch(() => {});

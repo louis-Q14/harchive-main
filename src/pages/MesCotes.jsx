@@ -261,7 +261,7 @@ export default function MesCotes() {
           </div>
         </div>
 
-        <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="mb-6">
+        <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="mb-6">
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2 text-white">
               <BookOpen className="w-5 h-5" />
@@ -302,7 +302,7 @@ export default function MesCotes() {
         </Card>
 
         {Object.keys(sortedGroupedNotes).length === 0 ? (
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardHeader>
               <CardTitle className="text-white">Aucune cote disponible</CardTitle>
             </CardHeader>
@@ -316,7 +316,7 @@ export default function MesCotes() {
           </Card>
         ) : (
           Object.keys(sortedGroupedNotes).map((matiere) => (
-            <Card key={matiere} style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="mb-3">
+            <Card key={matiere} style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="mb-3">
               <CardHeader
                 className={`bg-[#2d2d2d] py-3 cursor-pointer select-none ${collapsedMatieres[matiere] ? 'rounded-lg' : 'rounded-t-lg'}`}
                 onClick={() => toggleMatiere(matiere)}

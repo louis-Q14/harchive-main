@@ -150,7 +150,7 @@ export default function Etablissement() {
 
   if (loading || loadingDemandes || loadingEtab) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
@@ -158,9 +158,9 @@ export default function Etablissement() {
 
   if (!user?.etablissement_nom) {
     return (
-      <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
         <div className="w-full px-4">
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="py-12 text-center">
               <BookOpen className="w-16 h-16 text-gray-500 mx-auto mb-4" />
               <p className="text-white text-lg font-semibold mb-2">Vous n'êtes pas lié à un établissement</p>
@@ -181,7 +181,7 @@ export default function Etablissement() {
   const totalEtudiants = demandesUtilisateurs.filter(d => d.type_utilisateur === 'etudiant').length;
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="w-full px-4">
         {/* Header */}
         <div className="mb-8">
@@ -200,7 +200,7 @@ export default function Etablissement() {
 
         {/* Statistiques */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -212,7 +212,7 @@ export default function Etablissement() {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -224,7 +224,7 @@ export default function Etablissement() {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -238,7 +238,7 @@ export default function Etablissement() {
         </div>
 
         {/* Barre de recherche */}
-        <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="mb-6">
+        <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="mb-6">
           <CardContent className="pt-6">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -253,7 +253,7 @@ export default function Etablissement() {
         </Card>
 
         {/* Arborescence - Établissement en tête */}
-        <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+        <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
           <CardContent className="pt-6">
             {Object.keys(facultesAvecDemandes).length === 0 ? (
               <div className="text-center py-12">

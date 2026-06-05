@@ -394,7 +394,7 @@ export default function UsersPage() {
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center text-white" style={{ backgroundColor: '#262626' }}>
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center text-white" style={{ backgroundColor: 'var(--ha-surface)' }}>
                 <Users className="w-6 h-6" />
               </div>
               <h1 className="text-3xl font-bold text-gray-800">Gestion des Utilisateurs</h1>
@@ -863,7 +863,7 @@ export default function UsersPage() {
           <DraggableDialogFooter>
             <Button
               onClick={() => setShowUserDialog(false)}
-              style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>
+              style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>
               Fermer
             </Button>
           </DraggableDialogFooter>
@@ -942,7 +942,7 @@ export default function UsersPage() {
           <DraggableDialogFooter>
             <Button
               onClick={() => { setShowCreateAdminDialog(false); setNewAdminForm({ nom: '', prenom: '', email: '', password: '', role_type: 'admin_systeme', province_affectation: '' }); }}
-              style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}
+              style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}
               disabled={creatingAdmin}>
               Annuler
             </Button>
@@ -1021,7 +1021,7 @@ export default function UsersPage() {
           <DraggableDialogFooter>
             <Button
               onClick={() => { setShowEditDialog(false); setEditingUser(null); }}
-              style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}
+              style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}
               disabled={savingEdit}>
               Annuler
             </Button>

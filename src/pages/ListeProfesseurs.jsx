@@ -288,7 +288,7 @@ export default function ListeProfesseurs() {
           open={showEdit} 
           onOpenChange={setShowEdit}
           title={
-            <span style={{fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif", fontWeight: 600, color: '#ffffff'}}>
+            <span style={{fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif", fontWeight: 600, color: 'var(--ha-text)'}}>
               Modifier le professeur
             </span>
           }
@@ -350,13 +350,13 @@ export default function ListeProfesseurs() {
             </div>
           </DraggableDialogBody>
           <DraggableDialogFooter>
-            <Button variant="outline" onClick={() => setShowEdit(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', color: '#ffffff', borderColor: 'rgba(255,255,255,0.15)', fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif"}}>
+            <Button variant="outline" onClick={() => setShowEdit(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', color: 'var(--ha-text)', borderColor: 'rgba(255,255,255,0.15)', fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif"}}>
               Annuler
             </Button>
             <Button
               onClick={handleUpdate}
               disabled={updateMutation.isPending}
-              style={{backgroundColor: '#3b82f6', color: '#ffffff', fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif"}}
+              style={{backgroundColor: '#3b82f6', color: 'var(--ha-text)', fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif"}}
             >
               {updateMutation.isPending ? (
                 <>
@@ -379,7 +379,7 @@ export default function ListeProfesseurs() {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel style={{backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#5a5a5a'}}>Annuler</AlertDialogCancel>
+              <AlertDialogCancel style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: '#5a5a5a'}}>Annuler</AlertDialogCancel>
               <AlertDialogAction
                 onClick={handleDelete}
                 disabled={deleteMutation.isPending}

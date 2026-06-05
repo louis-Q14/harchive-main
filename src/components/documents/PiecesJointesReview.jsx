@@ -60,7 +60,7 @@ function PieceRow({ label, fieldPJ, fieldStatut, fieldMotif, data, adminUser, on
   };
 
   return (
-    <div className="rounded-lg p-2 space-y-2" style={{ backgroundColor: '#1a1a1a', border: '1px solid #3d3d3d' }}>
+    <div className="rounded-lg p-2 space-y-2" style={{ backgroundColor: 'var(--ha-surface2)', border: '1px solid #3d3d3d' }}>
       <div className="flex items-center justify-between gap-2 flex-wrap">
         <div className="flex items-center gap-2">
           {/* Miniature du fichier */}
@@ -119,7 +119,7 @@ function PieceRow({ label, fieldPJ, fieldStatut, fieldMotif, data, adminUser, on
             placeholder="Précisez le motif du rejet (obligatoire)..."
             rows={2}
             className="w-full text-xs text-white rounded p-2 resize-none outline-none"
-            style={{ backgroundColor: '#2d2d2d', border: '1px solid #4d4d4d', ...CG }}
+            style={{ backgroundColor: 'var(--ha-surface2)', border: '1px solid #4d4d4d', ...CG }}
           />
           <div className="flex gap-2">
             <Button size="sm" onClick={handleRejeter} disabled={loading || !motif.trim()} className="h-6 px-2 bg-red-700 hover:bg-red-800 text-white text-xs">

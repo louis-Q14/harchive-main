@@ -681,7 +681,7 @@ export default function Matieres() {
         </div>
 
         {/* Search */}
-        <Card style={{backgroundColor: '#3d3d3d', borderColor: '#4d4d4d'}}>
+        <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
           <CardContent className="pt-6">
             <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
               <Input
@@ -699,7 +699,7 @@ export default function Matieres() {
         {/* Matières organisées par Faculté et Niveau */}
         <div className="space-y-6">
           {etablissementFacultes.length === 0 ? (
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#4d4d4d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardContent className="py-12 text-center">
                 <BookOpen className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                 <p className="text-white mb-2">Aucune structure académique configurée</p>
@@ -719,7 +719,7 @@ export default function Matieres() {
               const isExpanded = expandedFacultes[faculte.id] !== false;
 
               return (
-                <Card key={faculte.id} style={{backgroundColor: '#3d3d3d', borderColor: '#4d4d4d'}}>
+                <Card key={faculte.id} style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                   <CardHeader 
                     style={{backgroundColor:'#2d2d2d', borderColor:'#3d3d3d'}}
                     className="cursor-pointer"
@@ -845,7 +845,7 @@ export default function Matieres() {
           )}
 
           {filteredMatieres.length === 0 && etablissementFacultes.length > 0 && (
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#4d4d4d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardContent className="py-12 text-center">
                 <BookOpen className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                 <p className="text-white mb-2">Aucune matière créée</p>
@@ -862,7 +862,7 @@ export default function Matieres() {
           title={
             <div style={CG}>
               <div className="text-base font-semibold text-white">{editing ? "Modifier la matière" : "Nouvelle matière"}</div>
-              <div className="text-xs mt-0.5" style={{color: '#b0b0b0'}}>Renseignez les informations de la matière et ses rattachements</div>
+              <div className="text-xs mt-0.5" style={{color: 'var(--ha-text-muted)'}}>Renseignez les informations de la matière et ses rattachements</div>
             </div>
           }
           maxWidth="max-w-2xl"
@@ -903,7 +903,7 @@ export default function Matieres() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-white">Facultés (sélection multiple)</Label>
-                  <div className="border rounded-md p-2 max-h-40 overflow-y-auto" style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d'}}>
+                  <div className="border rounded-md p-2 max-h-40 overflow-y-auto" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}>
                     {etablissementFacultes.length === 0 ? (
                       <p className="text-sm text-gray-400">Aucune faculté disponible</p>
                     ) : (
@@ -943,7 +943,7 @@ export default function Matieres() {
 
                 <div className="space-y-2">
                   <Label className="text-white">Départements (sélection multiple)</Label>
-                  <div className="border rounded-md p-2 max-h-40 overflow-y-auto" style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d'}}>
+                  <div className="border rounded-md p-2 max-h-40 overflow-y-auto" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}>
                     {formData.faculte_ids.length === 0 ? (
                       <p className="text-sm text-gray-400">Sélectionnez d'abord une faculté</p>
                     ) : departementsFiltered.length === 0 ? (
@@ -983,7 +983,7 @@ export default function Matieres() {
 
                 <div className="space-y-2">
                   <Label className="text-white">Orientations (sélection multiple)</Label>
-                  <div className="border rounded-md p-2 max-h-40 overflow-y-auto" style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d'}}>
+                  <div className="border rounded-md p-2 max-h-40 overflow-y-auto" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}>
                     {formData.departement_ids.length === 0 ? (
                       <p className="text-sm text-gray-400">Sélectionnez d'abord un département</p>
                     ) : orientationsFiltered.length === 0 ? (
@@ -1021,7 +1021,7 @@ export default function Matieres() {
 
                 <div className="space-y-2">
                   <Label className="text-white">Options (sélection multiple)</Label>
-                  <div className="border rounded-md p-2 max-h-40 overflow-y-auto" style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d'}}>
+                  <div className="border rounded-md p-2 max-h-40 overflow-y-auto" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}>
                     {(formData.departement_ids.length === 0 && formData.orientation_ids.length === 0) ? (
                       <p className="text-sm text-gray-400">Sélectionnez d'abord un département ou une orientation</p>
                     ) : optionsFiltered.length === 0 ? (
@@ -1059,7 +1059,7 @@ export default function Matieres() {
               {/* Hiérarchie avec expansion/collapse */}
               <div className="space-y-2">
                 <Label className="text-white">Structure Académique</Label>
-                <div className="border rounded-md p-2 h-96 overflow-y-auto" style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d'}}>
+                <div className="border rounded-md p-2 h-96 overflow-y-auto" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}>
                   {formData.faculte_ids.length === 0 ? (
                     <p className="text-sm text-gray-400 text-center py-8">
                       Sélectionnez d'abord une ou plusieurs facultés ci-dessus
@@ -1242,7 +1242,7 @@ export default function Matieres() {
                 </div>
                 </DraggableDialogBody>
           <DraggableDialogFooter>
-            <Button variant="outline" onClick={() => setShowForm(false)} style={{...CG, backgroundColor: 'rgba(255,255,255,0.08)', color: '#ffffff', borderColor: 'rgba(255,255,255,0.15)'}}>
+            <Button variant="outline" onClick={() => setShowForm(false)} style={{...CG, backgroundColor: 'rgba(255,255,255,0.08)', color: 'var(--ha-text)', borderColor: 'rgba(255,255,255,0.15)'}}>
               Annuler
             </Button>
             <Button onClick={submitForm} className="bg-blue-600 hover:bg-blue-700 text-white" style={CG} disabled={createMutation.isPending || updateMutation.isPending}>
@@ -1263,7 +1263,7 @@ export default function Matieres() {
             <div className="py-2 text-white" style={CG}>{toDelete?.nom} ({toDelete?.code || "sans code"})</div>
           </DraggableDialogBody>
           <DraggableDialogFooter>
-            <Button variant="outline" onClick={() => setShowDelete(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>Annuler</Button>
+            <Button variant="outline" onClick={() => setShowDelete(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>Annuler</Button>
             <Button variant="destructive" onClick={() => toDelete && deleteMutation.mutate(toDelete.id)} disabled={deleteMutation.isPending} className="bg-red-600 hover:bg-red-700 text-white" style={CG}>
               {deleteMutation.isPending ? (
                 <>

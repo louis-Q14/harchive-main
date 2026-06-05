@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Diagnostic() {
   return (
-    <div style={{ padding: '20px', fontFamily: 'monospace', backgroundColor: '#1a1a1a', color: '#00ff00', minHeight: '100vh' }}>
+    <div style={{ padding: '20px', fontFamily: 'monospace', backgroundColor: 'var(--ha-surface2)', color: '#00ff00', minHeight: '100vh' }}>
       <h1>🔍 Diagnostic</h1>
       <p>Si tu vois ceci, React marche !</p>
       

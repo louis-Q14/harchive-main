@@ -208,7 +208,7 @@ export default function ShortCreator({ onClose, onCreated }) {
         <div className="space-y-4">
           <div
             className="p-8 border-2 border-dashed rounded-xl text-center cursor-pointer hover:border-purple-500/50 transition-colors"
-            style={{ borderColor: '#555', backgroundColor: '#1a1a1a' }}
+            style={{ borderColor: 'var(--ha-border)', backgroundColor: 'var(--ha-surface2)' }}
             onClick={() => fileInputRef.current?.click()}
           >
             <Upload className="w-12 h-12 text-gray-400 mx-auto mb-3" />
@@ -295,7 +295,7 @@ export default function ShortCreator({ onClose, onCreated }) {
 
           {/* Trim controls */}
           {videoDuration > 0 && (
-            <div className="p-3 rounded-lg border" style={{ backgroundColor: '#1a1a1a', borderColor: '#404040' }}>
+            <div className="p-3 rounded-lg border" style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}>
               <div className="flex items-center gap-2 mb-2">
                 <Scissors className="w-4 h-4 text-gray-400" />
                 <span className="text-white text-sm font-medium">Découpage</span>
@@ -339,7 +339,7 @@ export default function ShortCreator({ onClose, onCreated }) {
           )}
 
           {/* Filters */}
-          <div className="p-3 rounded-lg border" style={{ backgroundColor: '#1a1a1a', borderColor: '#404040' }}>
+          <div className="p-3 rounded-lg border" style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}>
             <div className="flex items-center gap-2 mb-3">
               <Sparkles className="w-4 h-4 text-gray-400" />
               <span className="text-white text-sm font-medium">Filtres</span>
@@ -389,7 +389,7 @@ export default function ShortCreator({ onClose, onCreated }) {
                   onChange={(e) => setTitre(e.target.value)}
                   placeholder="Ajoutez un titre..."
                   className="w-full px-3 py-2 rounded-lg text-sm text-white placeholder-gray-500 border"
-                  style={{ backgroundColor: '#1a1a1a', borderColor: '#555' }}
+                  style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}
                   maxLength={200}
                 />
               </div>
@@ -400,7 +400,7 @@ export default function ShortCreator({ onClose, onCreated }) {
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Décrivez votre vidéo..."
                   className="w-full px-3 py-2 rounded-lg text-sm text-white placeholder-gray-500 border min-h-[60px] resize-none"
-                  style={{ backgroundColor: '#1a1a1a', borderColor: '#555' }}
+                  style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}
                   maxLength={500}
                 />
               </div>
@@ -408,7 +408,7 @@ export default function ShortCreator({ onClose, onCreated }) {
           </div>
 
           {/* Music */}
-          <div className="p-3 rounded-lg border" style={{ backgroundColor: '#1a1a1a', borderColor: '#404040' }}>
+          <div className="p-3 rounded-lg border" style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}>
             <div className="flex items-center gap-2 mb-2">
               <Music className="w-4 h-4 text-gray-400" />
               <span className="text-white text-sm font-medium">Musique (optionnel)</span>
@@ -419,7 +419,7 @@ export default function ShortCreator({ onClose, onCreated }) {
               onChange={(e) => setMusicName(e.target.value)}
               placeholder="Nom de la musique..."
               className="w-full px-3 py-2 rounded-lg text-sm text-white placeholder-gray-500 border"
-              style={{ backgroundColor: '#262626', borderColor: '#555' }}
+              style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}
               maxLength={200}
             />
           </div>

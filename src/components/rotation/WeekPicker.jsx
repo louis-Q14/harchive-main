@@ -134,13 +134,13 @@ export default function WeekPicker({ value, onChange }) {
         top: dropdownPos.top,
         left: dropdownPos.left,
         width: dropdownPos.width,
-        backgroundColor: '#2d2d2d',
-        borderColor: '#4d4d4d',
+        backgroundColor: 'var(--ha-surface2)',
+        borderColor: 'var(--ha-border)',
         zIndex: 9999,
       }}
     >
       {/* Header navigation mois */}
-      <div className="flex items-center justify-between px-3 py-2" style={{backgroundColor: '#1a1a1a'}}>
+      <div className="flex items-center justify-between px-3 py-2" style={{backgroundColor: 'var(--ha-surface2)'}}>
         <button onClick={prevMonth} className="p-1 rounded hover:bg-gray-700 transition-colors">
           <ChevronLeft className="w-4 h-4 text-white" />
         </button>
@@ -155,7 +155,7 @@ export default function WeekPicker({ value, onChange }) {
       {/* Entêtes jours */}
       <div className="grid grid-cols-7 px-2 pt-2 pb-1">
         {JOURS.map((j, i) => (
-          <div key={i} className="text-center text-xs font-bold" style={{color: '#b0b0b0'}}>{j}</div>
+          <div key={i} className="text-center text-xs font-bold" style={{color: 'var(--ha-text-muted)'}}>{j}</div>
         ))}
       </div>
 
@@ -205,17 +205,17 @@ export default function WeekPicker({ value, onChange }) {
         onClick={() => setOpen(o => !o)}
         className="w-full flex items-center justify-between px-3 py-2 rounded-md border text-sm transition-colors"
         style={{
-          backgroundColor: '#2d2d2d',
+          backgroundColor: 'var(--ha-surface2)',
           color: triggerLabel() ? 'white' : '#b0b0b0',
-          borderColor: '#4d4d4d',
+          borderColor: 'var(--ha-border)',
           minHeight: '36px',
         }}
       >
         <span className="flex items-center gap-2 truncate">
-          <Calendar className="w-3.5 h-3.5 flex-shrink-0" style={{color: '#b0b0b0'}} />
+          <Calendar className="w-3.5 h-3.5 flex-shrink-0" style={{color: 'var(--ha-text-muted)'}} />
           {triggerLabel() || "Sélectionner"}
         </span>
-        <ChevronDown className="w-4 h-4 flex-shrink-0" style={{color: '#b0b0b0', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s'}} />
+        <ChevronDown className="w-4 h-4 flex-shrink-0" style={{color: 'var(--ha-text-muted)', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s'}} />
       </button>
 
       {dropdown}

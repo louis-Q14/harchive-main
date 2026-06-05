@@ -100,7 +100,7 @@ export default function MesMatieres() {
 
   if (loading || isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
@@ -114,7 +114,7 @@ export default function MesMatieres() {
   const isEtudiant = user.role_archive === 'etudiant';
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="w-full px-4">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
@@ -134,7 +134,7 @@ export default function MesMatieres() {
           </p>
         </div>
 
-        <Card style={{backgroundColor: '#3d3d3d', borderColor: '#4d4d4d'}}>
+        <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
           <CardHeader>
             <CardTitle className="text-xl text-white">
               {isProfesseur ? 'Mes Affectations' : 'Programme de ma Classe'}
@@ -152,7 +152,7 @@ export default function MesMatieres() {
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
-                    <TableRow style={{backgroundColor: '#2d2d2d'}}>
+                    <TableRow style={{backgroundColor: 'var(--ha-surface2)'}}>
                       <TableHead className="text-white">Matière</TableHead>
                       <TableHead className="text-white">Faculté</TableHead>
                       <TableHead className="text-white">Département</TableHead>
@@ -182,7 +182,7 @@ export default function MesMatieres() {
                       return (
                         <TableRow 
                           key={aff.id} 
-                          style={{borderColor: '#4d4d4d'}} 
+                          style={{borderColor: 'var(--ha-border)'}} 
                           className="hover:bg-[#474747]"
                         >
                           <TableCell className={`text-white font-semibold ${showMatiere ? 'bg-[#2d2d2d]' : 'bg-[#1a1a1a] text-gray-500'}`}>
@@ -210,13 +210,13 @@ export default function MesMatieres() {
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {matieres.map((matiere) => (
-                  <Card key={matiere.id} style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d'}}>
+                  <Card key={matiere.id} style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}>
                     <CardHeader>
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <CardTitle className="text-white text-lg mb-2">{matiere.nom}</CardTitle>
                           {matiere.code && (
-                            <Badge variant="outline" className="text-xs" style={{color: 'white', borderColor: '#4d4d4d'}}>
+                            <Badge variant="outline" className="text-xs" style={{color: 'white', borderColor: 'var(--ha-border)'}}>
                               {matiere.code}
                             </Badge>
                           )}

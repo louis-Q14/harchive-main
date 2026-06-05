@@ -392,7 +392,7 @@ export default function GroupeDetails() {
               <Button
                 size="sm"
                 onClick={() => setShowInviteDialog(true)}
-                style={{backgroundColor: '#3d3d3d', color: '#ffffff', borderColor: '#5a5a5a'}}>
+                style={{backgroundColor: 'var(--ha-surface)', color: 'var(--ha-text)', borderColor: '#5a5a5a'}}>
                 <UserPlus className="w-4 h-4 mr-2" />
                 Inviter
               </Button>
@@ -401,7 +401,7 @@ export default function GroupeDetails() {
               <Button
                 size="sm"
                 onClick={() => setShowRequestsDialog(true)}
-                style={{backgroundColor: '#3d3d3d', color: '#ffffff', borderColor: '#5a5a5a'}}>
+                style={{backgroundColor: 'var(--ha-surface)', color: 'var(--ha-text)', borderColor: '#5a5a5a'}}>
                 <UserPlus className="w-4 h-4 mr-2" />
                 {group.demandes_adhesion.length} demande(s)
               </Button>
@@ -409,7 +409,7 @@ export default function GroupeDetails() {
             <Button
               size="sm"
               onClick={() => setShowMembersDialog(true)}
-              style={{backgroundColor: '#3d3d3d', color: '#ffffff', borderColor: '#5a5a5a'}}>
+              style={{backgroundColor: 'var(--ha-surface)', color: 'var(--ha-text)', borderColor: '#5a5a5a'}}>
               <Users className="w-4 h-4 mr-2" />
               Membres
             </Button>
@@ -417,7 +417,7 @@ export default function GroupeDetails() {
               <Button
                 size="sm"
                 onClick={() => setShowSettingsDialog(true)}
-                style={{backgroundColor: '#3d3d3d', color: '#ffffff', borderColor: '#5a5a5a'}}>
+                style={{backgroundColor: 'var(--ha-surface)', color: 'var(--ha-text)', borderColor: '#5a5a5a'}}>
                 <Settings className="w-4 h-4" />
               </Button>
             )}
@@ -576,7 +576,7 @@ export default function GroupeDetails() {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button size="icon" disabled={uploading} style={{backgroundColor: '#4b5563', color: '#ffffff', borderColor: '#4b5563'}}>
+              <Button size="icon" disabled={uploading} style={{backgroundColor: '#4b5563', color: 'var(--ha-text)', borderColor: '#4b5563'}}>
                 <Paperclip className="w-4 h-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -658,7 +658,7 @@ export default function GroupeDetails() {
                           <MoreVertical className="w-4 h-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" style={{ backgroundColor: '#2d2d2d', borderColor: '#4d4d4d' }}>
+                      <DropdownMenuContent align="end" style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}>
                         <DropdownMenuItem
                           className="text-red-400 focus:text-red-400 focus:bg-red-900/20"
                           style={CG}
@@ -689,14 +689,14 @@ export default function GroupeDetails() {
                   leaveGroupMutation.mutate();
                 }
               }}
-              style={{ backgroundColor: '#dc2626', color: '#ffffff', borderColor: '#dc2626', ...CG }}>
+              style={{ backgroundColor: '#dc2626', color: 'var(--ha-text)', borderColor: '#dc2626', ...CG }}>
               Quitter le groupe
             </Button>
           ) : (
             <Button
               variant="outline"
               onClick={() => setShowMembersDialog(false)}
-              style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG }}>
+              style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG }}>
               Fermer
             </Button>
           )}

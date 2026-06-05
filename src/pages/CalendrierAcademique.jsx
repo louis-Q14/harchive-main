@@ -391,7 +391,7 @@ export default function CalendrierAcademique() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="w-12 h-12 animate-spin" style={{ color: '#ffffff' }} />
+        <Loader2 className="w-12 h-12 animate-spin" style={{ color: 'var(--ha-text)' }} />
       </div>
     );
   }
@@ -399,9 +399,9 @@ export default function CalendrierAcademique() {
   if (!canView) {
     return (
       <div className="min-h-screen flex items-center justify-center p-8">
-        <Card style={{ backgroundColor: '#3d3d3d' }}>
+        <Card style={{ backgroundColor: 'var(--ha-surface)' }}>
           <CardContent className="pt-6 text-center">
-            <p style={{ color: '#ffffff' }}>Accès non autorisé</p>
+            <p style={{ color: 'var(--ha-text)' }}>Accès non autorisé</p>
           </CardContent>
         </Card>
       </div>
@@ -415,7 +415,7 @@ export default function CalendrierAcademique() {
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-3xl font-bold flex items-center gap-3" style={{ color: '#ffffff' }}>
+              <h1 className="text-3xl font-bold flex items-center gap-3" style={{ color: 'var(--ha-text)' }}>
                 <img 
                   src="/assets/icons/346bbc18d_calendrier.png"
                   alt="Calendrier"
@@ -423,12 +423,12 @@ export default function CalendrierAcademique() {
                 />
                 Calendrier Académique
               </h1>
-              <p style={{ color: '#b0b0b0' }} className="mt-1">
+              <p style={{ color: 'var(--ha-text-muted)' }} className="mt-1">
                 {canEdit ? 'Gérez les cours, examens et événements de votre établissement' : 'Consultez le calendrier des cours et événements'}
               </p>
             </div>
             {canEdit && (
-              <Button onClick={() => setShowEventDialog(true)} style={{ backgroundColor: '#3b82f6', color: '#ffffff' }}>
+              <Button onClick={() => setShowEventDialog(true)} style={{ backgroundColor: '#3b82f6', color: 'var(--ha-text)' }}>
                 <Plus className="w-4 h-4 mr-2" />
                 Ajouter un événement
               </Button>
@@ -438,7 +438,7 @@ export default function CalendrierAcademique() {
           {/* Filtres */}
           <div className="flex flex-wrap gap-3">
             <Select value={filterClasse} onValueChange={setFilterClasse}>
-              <SelectTrigger className="w-48" style={{ backgroundColor: '#3d3d3d', color: '#ffffff', borderColor: '#4d4d4d' }}>
+              <SelectTrigger className="w-48" style={{ backgroundColor: 'var(--ha-surface)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)' }}>
                 <SelectValue placeholder="Toutes les classes" />
               </SelectTrigger>
               <SelectContent>
@@ -450,7 +450,7 @@ export default function CalendrierAcademique() {
             </Select>
 
             <Select value={filterType} onValueChange={setFilterType}>
-              <SelectTrigger className="w-48" style={{ backgroundColor: '#3d3d3d', color: '#ffffff', borderColor: '#4d4d4d' }}>
+              <SelectTrigger className="w-48" style={{ backgroundColor: 'var(--ha-surface)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)' }}>
                 <SelectValue placeholder="Tous les types" />
               </SelectTrigger>
               <SelectContent>
@@ -466,25 +466,25 @@ export default function CalendrierAcademique() {
         </div>
 
         {/* Navigation du calendrier */}
-        <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#4d4d4d' }} className="mb-6">
+        <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }} className="mb-6">
           <CardContent className="pt-6">
             <div className="flex items-center justify-between mb-4">
               <Button
                 variant="outline"
                 onClick={() => setCurrentDate(subMonths(currentDate, 1))}
-                style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d' }}
+                style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)' }}
               >
                 <ChevronLeft className="w-4 h-4" />
               </Button>
               
-              <h2 className="text-2xl font-bold capitalize" style={{ color: '#ffffff' }}>
+              <h2 className="text-2xl font-bold capitalize" style={{ color: 'var(--ha-text)' }}>
                 {format(currentDate, 'MMMM yyyy', { locale: fr })}
               </h2>
               
               <Button
                 variant="outline"
                 onClick={() => setCurrentDate(addMonths(currentDate, 1))}
-                style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d' }}
+                style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)' }}
               >
                 <ChevronRight className="w-4 h-4" />
               </Button>
@@ -493,7 +493,7 @@ export default function CalendrierAcademique() {
             {/* Grille du calendrier */}
             <div className="grid grid-cols-7 gap-2">
               {['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'].map(day => (
-                <div key={day} className="text-center font-semibold p-2" style={{ color: '#b0b0b0' }}>
+                <div key={day} className="text-center font-semibold p-2" style={{ color: 'var(--ha-text-muted)' }}>
                   {day}
                 </div>
               ))}
@@ -527,7 +527,7 @@ export default function CalendrierAcademique() {
                         <div
                           key={idx}
                           className="text-xs p-1 rounded truncate"
-                          style={{ backgroundColor: event.couleur, color: '#ffffff' }}
+                          style={{ backgroundColor: event.couleur, color: 'var(--ha-text)' }}
                           onClick={(e) => {
                             e.stopPropagation();
                             if (canEdit) {
@@ -539,7 +539,7 @@ export default function CalendrierAcademique() {
                         </div>
                       ))}
                       {dayEvents.length > 2 && (
-                        <div className="text-xs" style={{ color: '#b0b0b0' }}>
+                        <div className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>
                           +{dayEvents.length - 2} autres
                         </div>
                       )}
@@ -702,7 +702,7 @@ export default function CalendrierAcademique() {
                 </div>
 
                 {/* Récurrence */}
-                <div className="col-span-2 border-t pt-4" style={{ borderColor: '#4d4d4d' }}>
+                <div className="col-span-2 border-t pt-4" style={{ borderColor: 'var(--ha-border)' }}>
                   <div className="flex items-center gap-2 mb-4">
                     <input
                       type="checkbox"
@@ -762,8 +762,8 @@ export default function CalendrierAcademique() {
                                 }}
                                 style={{
                                   backgroundColor: formData.recurrence.jours_semaine.includes(index) ? '#3b82f6' : '#2d2d2d',
-                                  color: '#ffffff',
-                                  borderColor: '#4d4d4d'
+                                  color: 'var(--ha-text)',
+                                  borderColor: 'var(--ha-border)'
                                 }}
                               >
                                 {jour}
@@ -802,14 +802,14 @@ export default function CalendrierAcademique() {
                       setShowEventDialog(false);
                     }
                   }}
-                  style={{ backgroundColor: '#991b1b', color: '#ffffff', borderColor: '#991b1b', ...CG }}
+                  style={{ backgroundColor: '#991b1b', color: 'var(--ha-text)', borderColor: '#991b1b', ...CG }}
                   className="mr-auto"
                 >
                   <Trash2 className="w-4 h-4 mr-2" />
                   Supprimer
                 </Button>
               )}
-              <Button variant="outline" onClick={() => { setShowEventDialog(false); setEditingEvent(null); resetForm(); }} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>Annuler</Button>
+              <Button variant="outline" onClick={() => { setShowEventDialog(false); setEditingEvent(null); resetForm(); }} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>Annuler</Button>
               <Button onClick={handleSubmit} disabled={!formData.titre || !formData.date_debut || !formData.date_fin || !formData.heure_debut || !formData.heure_fin || createEventMutation.isPending || updateEventMutation.isPending} className="bg-blue-600 hover:bg-blue-700 text-white" style={CG}>
                 {(createEventMutation.isPending || updateEventMutation.isPending) && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                 {editingEvent ? "Modifier" : "Créer"}

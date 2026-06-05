@@ -28,7 +28,7 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <div className="w-12 h-12 border-4 border-gray-600 border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -51,7 +51,7 @@ export default function Dashboard() {
       return <ParentDashboard user={user} />;
     default:
       return (
-        <div className="min-h-screen p-8" style={{backgroundColor: '#4d4d4d'}}>
+        <div className="min-h-screen p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
           <div className="w-full px-4 text-center">
             <h1 className="text-2xl font-bold text-white mb-4">
               Bienvenue sur Harchive

@@ -282,28 +282,28 @@ export default function MesDossiersAcademiques() {
   function Section({ title, icon, children }) {
     return (
       <div className="rounded-lg overflow-hidden" style={{ border: '1px solid #4d4d4d' }}>
-        <div className="flex items-center gap-2 px-3 py-1.5" style={{ backgroundColor: '#1a1a1a' }}>
+        <div className="flex items-center gap-2 px-3 py-1.5" style={{ backgroundColor: 'var(--ha-surface2)' }}>
           {icon}
           <h3 className="text-white font-semibold text-xs" style={CG}>{title}</h3>
         </div>
-        <div className="p-2 space-y-0.5" style={{ backgroundColor: '#2d2d2d' }}>{children}</div>
+        <div className="p-2 space-y-0.5" style={{ backgroundColor: 'var(--ha-surface2)' }}>{children}</div>
       </div>
     );
   }
 
   if (!user || loadingRoot) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#4d4d4d' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--ha-bg)' }}>
         <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-6" style={{ backgroundColor: '#4d4d4d' }}>
+    <div className="min-h-screen p-4 md:p-6" style={{ backgroundColor: 'var(--ha-bg)' }}>
       {/* Header */}
       <div className="mb-6 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#2d2d2d' }}>
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'var(--ha-surface2)' }}>
           <GraduationCap className="w-5 h-5 text-blue-400" />
         </div>
         <div>
@@ -389,7 +389,7 @@ export default function MesDossiersAcademiques() {
       )}
 
       {!rootFolder && !isLoading ? (
-        <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+        <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
           <CardContent className="py-16 text-center">
             <GraduationCap className="w-16 h-16 text-gray-500 mx-auto mb-4" />
             <p className="text-gray-300 font-medium" style={CG}>Aucun dossier académique disponible</p>
@@ -403,7 +403,7 @@ export default function MesDossiersAcademiques() {
           <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
         </div>
       ) : items.length === 0 ? (
-        <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+        <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
           <CardContent className="py-12 text-center">
             <Folder className="w-12 h-12 text-gray-500 mx-auto mb-3" />
             <p className="text-gray-400 text-sm" style={CG}>Ce dossier est vide</p>
@@ -461,7 +461,7 @@ export default function MesDossiersAcademiques() {
                   )}
                   </div>
                   </ContextMenuTrigger>
-                <ContextMenuContent style={{ backgroundColor: '#2d2d2d', borderColor: '#4d4d4d' }}>
+                <ContextMenuContent style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}>
                    {!!item.is_fichier && item.fichier_type === 'formulaire_inscription' && (
                      <ContextMenuItem onClick={() => openFiche(item)} className="text-white text-xs hover:bg-[#474747] cursor-pointer">
                        <Eye className="w-3.5 h-3.5 mr-2 text-blue-400" /> Ouvrir
@@ -556,7 +556,7 @@ export default function MesDossiersAcademiques() {
                     </div>
                   </div>
                 ) : (
-                  <div className="p-3 rounded-lg text-center" style={{ backgroundColor: '#1a1a1a', border: '1px solid #4d4d4d' }}>
+                  <div className="p-3 rounded-lg text-center" style={{ backgroundColor: 'var(--ha-surface2)', border: '1px solid #4d4d4d' }}>
                     <h2 className="text-sm font-bold text-white" style={CG}>{ficheData.etablissement_nom}</h2>
                     <p className="text-blue-400 font-semibold text-xs mt-0.5" style={CG}>FORMULAIRE D'INSCRIPTION</p>
                   </div>

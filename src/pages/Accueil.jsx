@@ -131,7 +131,7 @@ export default function Accueil() {
     return (
       <div className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center">
-          <div className="p-12 border rounded-lg" style={{ backgroundColor: '#262626', borderColor: '#404040' }}>
+          <div className="p-12 border rounded-lg" style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
             <Lock className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h2 className="text-xl font-bold text-white mb-3">Accès restreint</h2>
             <p className="text-gray-400">
@@ -168,8 +168,8 @@ export default function Accueil() {
 
         {/* Formulaire de publication */}
         {canPublish && (
-          <Card className="mb-6 border" style={{ backgroundColor: '#262626', borderColor: '#404040' }}>
-            <CardHeader className="py-3 border-b" style={{ borderColor: '#404040' }}>
+          <Card className="mb-6 border" style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
+            <CardHeader className="py-3 border-b" style={{ borderColor: 'var(--ha-border)' }}>
               <div className="flex items-center gap-3">
                 <UserAvatarPopover
                   name={displayName}
@@ -198,12 +198,12 @@ export default function Accueil() {
                 value={contenu}
                 onChange={(e) => setContenu(e.target.value)}
                 className="mb-3 min-h-[80px] text-white placeholder-gray-500 border"
-                style={{ backgroundColor: '#1a1a1a', borderColor: '#555555' }}
+                style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}
                 disabled={uploading}
               />
 
               {mediaPreview && (
-                <div className="relative mb-4 rounded-lg p-2" style={{ backgroundColor: '#1a1a1a' }}>
+                <div className="relative mb-4 rounded-lg p-2" style={{ backgroundColor: 'var(--ha-surface2)' }}>
                   <button
                     onClick={() => { setMediaFile(null); setMediaPreview(null); setTypeMedia("texte"); }}
                     className="absolute top-4 right-4 bg-red-600 text-white rounded-full p-2 hover:bg-red-700 z-10"
@@ -234,10 +234,10 @@ export default function Accueil() {
 
               <div className="flex items-center justify-between">
                 <div className="flex gap-1">
-                  <Button size="sm" variant="ghost" onClick={() => imageInputRef.current?.click()} style={{ color: '#b0b0b0', padding: '4px 8px' }} disabled={uploading}>
+                  <Button size="sm" variant="ghost" onClick={() => imageInputRef.current?.click()} style={{ color: 'var(--ha-text-muted)', padding: '4px 8px' }} disabled={uploading}>
                     <ImageIcon className="w-4 h-4 mr-1" /> Photo
                   </Button>
-                  <Button size="sm" variant="ghost" onClick={() => videoInputRef.current?.click()} style={{ color: '#b0b0b0', padding: '4px 8px' }} disabled={uploading}>
+                  <Button size="sm" variant="ghost" onClick={() => videoInputRef.current?.click()} style={{ color: 'var(--ha-text-muted)', padding: '4px 8px' }} disabled={uploading}>
                     <Video className="w-4 h-4 mr-1" /> Vidéo
                   </Button>
                 </div>
@@ -265,8 +265,8 @@ export default function Accueil() {
             <Loader2 className="w-8 h-8 text-white animate-spin" />
           </div>
         ) : publications.length === 0 ? (
-          <div className="p-12 text-center border rounded-lg" style={{ backgroundColor: '#262626', borderColor: '#404040' }}>
-            <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#404040' }}>
+          <div className="p-12 text-center border rounded-lg" style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: 'var(--ha-surface2)' }}>
               <Newspaper className="w-8 h-8 text-gray-400" />
             </div>
             <p className="text-white text-lg mb-2">Aucune publication officielle</p>

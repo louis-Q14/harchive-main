@@ -251,14 +251,14 @@ export default function CalendrierPersonnel() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-6">
@@ -275,7 +275,7 @@ export default function CalendrierPersonnel() {
               </div>
             </div>
             <div className="flex gap-2">
-              <Button onClick={exportCalendar} variant="outline" style={{backgroundColor: '#333333', color: '#ffffff'}}>
+              <Button onClick={exportCalendar} variant="outline" style={{backgroundColor: 'var(--ha-surface)', color: 'var(--ha-text)'}}>
                 <Download className="w-4 h-4 mr-2" />
                 Export
               </Button>
@@ -366,17 +366,17 @@ export default function CalendrierPersonnel() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <Button variant="outline" size="icon" onClick={goToPreviousMonth} style={{backgroundColor: '#333333', color: '#ffffff'}}>
+                <Button variant="outline" size="icon" onClick={goToPreviousMonth} style={{backgroundColor: 'var(--ha-surface)', color: 'var(--ha-text)'}}>
                   <ChevronLeft className="w-4 h-4" />
                 </Button>
                 <h2 className="text-xl font-bold text-white">
                   {format(currentDate, 'MMMM yyyy', { locale: fr })}
                 </h2>
-                <Button variant="outline" size="icon" onClick={goToNextMonth} style={{backgroundColor: '#333333', color: '#ffffff'}}>
+                <Button variant="outline" size="icon" onClick={goToNextMonth} style={{backgroundColor: 'var(--ha-surface)', color: 'var(--ha-text)'}}>
                   <ChevronRight className="w-4 h-4" />
                 </Button>
               </div>
-              <Button variant="outline" onClick={goToToday} style={{backgroundColor: '#333333', color: '#ffffff'}}>
+              <Button variant="outline" onClick={goToToday} style={{backgroundColor: 'var(--ha-surface)', color: 'var(--ha-text)'}}>
                 Aujourd'hui
               </Button>
             </div>
@@ -455,7 +455,7 @@ export default function CalendrierPersonnel() {
         <DraggableDialog open={openDialog} onOpenChange={setOpenDialog}
           title={<div style={CG}>
             <div className="text-base font-semibold text-white">{selectedEvent ? "Modifier l'événement" : "Nouvel événement"}</div>
-            <div className="text-xs mt-0.5" style={{color: '#b0b0b0'}}>Renseignez les détails de votre événement</div>
+            <div className="text-xs mt-0.5" style={{color: 'var(--ha-text-muted)'}}>Renseignez les détails de votre événement</div>
           </div>}
           maxWidth="max-w-2xl">
           <DraggableDialogBody>
@@ -588,7 +588,7 @@ export default function CalendrierPersonnel() {
                 Supprimer
               </Button>
             )}
-            <Button variant="outline" onClick={() => setOpenDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>Annuler</Button>
+            <Button variant="outline" onClick={() => setOpenDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>Annuler</Button>
             <Button onClick={handleSubmit} className="bg-blue-600 hover:bg-blue-700 text-white" style={CG}>
               {selectedEvent ? "Modifier" : "Créer"}
             </Button>

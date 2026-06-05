@@ -198,7 +198,7 @@ export default function LiveViewer({ streamId, onClose }) { // @ts-ignore
   return (
     <div className="flex flex-col lg:flex-row gap-4 h-[calc(100vh-200px)] min-h-[500px]">
       {/* Video Area */}
-      <div className="flex-1 flex flex-col rounded-xl overflow-hidden border" style={{ backgroundColor: '#000', borderColor: '#404040' }}>
+      <div className="flex-1 flex flex-col rounded-xl overflow-hidden border" style={{ backgroundColor: '#000', borderColor: 'var(--ha-border)' }}>
         {/* Top bar */}
         <div className="flex items-center justify-between p-3 bg-black/80 z-10">
           <div className="flex items-center gap-3">
@@ -257,8 +257,8 @@ export default function LiveViewer({ streamId, onClose }) { // @ts-ignore
       </div>
 
       {/* Chat Panel */}
-      <div className="w-full lg:w-80 flex flex-col rounded-xl border" style={{ backgroundColor: '#262626', borderColor: '#404040' }}>
-        <div className="p-3 border-b flex items-center gap-2" style={{ borderColor: '#404040' }}>
+      <div className="w-full lg:w-80 flex flex-col rounded-xl border" style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
+        <div className="p-3 border-b flex items-center gap-2" style={{ borderColor: 'var(--ha-border)' }}>
           <MessageCircle className="w-4 h-4 text-gray-400" />
           <span className="text-white text-sm font-medium">Chat en direct</span>
           {streamInfo && (
@@ -295,7 +295,7 @@ export default function LiveViewer({ streamId, onClose }) { // @ts-ignore
         </div>
 
         {/* Reactions */}
-        <div className="px-3 py-2 border-t flex gap-2" style={{ borderColor: '#404040' }}>
+        <div className="px-3 py-2 border-t flex gap-2" style={{ borderColor: 'var(--ha-border)' }}>
           {['❤️', '🔥', '👏', '😂', '😮', '🎉'].map(emoji => (
             <button
               key={emoji}
@@ -309,7 +309,7 @@ export default function LiveViewer({ streamId, onClose }) { // @ts-ignore
         </div>
 
         {/* Input */}
-        <div className="p-3 border-t flex gap-2" style={{ borderColor: '#404040' }}>
+        <div className="p-3 border-t flex gap-2" style={{ borderColor: 'var(--ha-border)' }}>
           <input
             type="text"
             value={chatInput}
@@ -317,7 +317,7 @@ export default function LiveViewer({ streamId, onClose }) { // @ts-ignore
             onKeyDown={(e) => e.key === 'Enter' && sendChat()}
             placeholder="Envoyer un message..."
             className="flex-1 px-3 py-2 rounded-lg text-sm text-white placeholder-gray-500 border"
-            style={{ backgroundColor: '#1a1a1a', borderColor: '#555' }}
+            style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}
             maxLength={500}
           />
           <Button size="sm" onClick={sendChat} disabled={!chatInput.trim()} className="px-3" style={{ background: '#555', color: '#fff' }}>

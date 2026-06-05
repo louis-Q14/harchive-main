@@ -93,7 +93,7 @@ function EmptyState({ onCreateClick = () => {} }) {
       <button
         onClick={onCreateClick}
         className="px-5 py-2.5 rounded-md text-sm font-medium text-white transition hover:brightness-125"
-        style={{ backgroundColor: '#3a3a3a' }}
+        style={{ backgroundColor: 'var(--ha-surface)' }}
       >
         <Plus className="w-4 h-4 inline mr-1.5" />
         Créer un Short

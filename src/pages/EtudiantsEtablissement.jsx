@@ -1,4 +1,4 @@
-ï»¿import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { authService, dataService, functionService } from "@/api";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -64,7 +64,7 @@ export default function EtudiantsEtablissement() {
     }
   };
 
-  // Charger tous les Ã©tudiants approuvÃ©s depuis DemandeInscription
+  // Charger tous les étudiants approuvés depuis DemandeInscription
   const { data: etudiants = [], isLoading: loadingEtudiants } = useQuery({
     queryKey: ['etudiants-inscrits', user?.etablissement_nom],
     queryFn: async () => {
@@ -86,7 +86,7 @@ export default function EtudiantsEtablissement() {
     enabled: !!user?.etablissement_nom
   });
 
-  // Mutation pour modifier un Ã©tudiant
+  // Mutation pour modifier un étudiant
   const updateEtudiantMutation = useMutation({
     mutationFn: async ({ id, data }) => {
       return await dataService.update('DemandeInscription', id, data);
@@ -98,11 +98,11 @@ export default function EtudiantsEtablissement() {
     }
   });
 
-  // Extraire les facultÃ©s et classes uniques
+  // Extraire les facultés et classes uniques
   const facultes = [...new Set(etudiants.map(e => e.faculte).filter(Boolean))];
   const classes = [...new Set(etudiants.map(e => e.classe).filter(Boolean))];
 
-  // Filtrer les Ã©tudiants
+  // Filtrer les étudiants
   const etudiantsFiltres = etudiants.filter(e => {
     const matchSearch = 
       e.nom?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -139,7 +139,7 @@ export default function EtudiantsEtablissement() {
 
   if (loading || loadingEtudiants) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
@@ -147,14 +147,14 @@ export default function EtudiantsEtablissement() {
 
   if (!user?.etablissement_nom) {
     return (
-      <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
         <div className="max-w-7xl mx-auto">
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="py-12 text-center">
               <GraduationCap className="w-16 h-16 text-gray-500 mx-auto mb-4" />
-              <p className="text-white text-lg font-semibold mb-2">Aucun Ã©tablissement liÃ©</p>
+              <p className="text-white text-lg font-semibold mb-2">Aucun établissement lié</p>
               <p className="text-gray-400 text-sm">
-                Votre compte n'est pas associÃ© Ã©Â  un Ã©tablissement.
+                Votre compte n'est pas associé é  un établissement.
               </p>
             </CardContent>
           </Card>
@@ -164,14 +164,14 @@ export default function EtudiantsEtablissement() {
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="w-full px-4">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
             <GraduationCap className="w-10 h-10 text-blue-500" />
             <div>
-              <h1 className="text-3xl font-bold text-white">Ã‰tudiants Inscrits</h1>
+              <h1 className="text-3xl font-bold text-white">Étudiants Inscrits</h1>
               <p className="text-gray-300">{user.etablissement_nom}</p>
             </div>
           </div>
@@ -179,11 +179,11 @@ export default function EtudiantsEtablissement() {
 
         {/* Statistiques */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">Total Ã‰tudiants</p>
+                  <p className="text-sm text-gray-400 mb-1">Total Étudiants</p>
                   <p className="text-3xl font-bold text-white">{etudiants.length}</p>
                 </div>
                 <Users className="w-12 h-12 text-blue-500" />
@@ -191,11 +191,11 @@ export default function EtudiantsEtablissement() {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">FacultÃ©s</p>
+                  <p className="text-sm text-gray-400 mb-1">Facultés</p>
                   <p className="text-3xl font-bold text-white">{facultes.length}</p>
                 </div>
                 <BookOpen className="w-12 h-12 text-purple-500" />
@@ -203,7 +203,7 @@ export default function EtudiantsEtablissement() {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -217,13 +217,13 @@ export default function EtudiantsEtablissement() {
         </div>
 
         {/* Filtres */}
-        <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="mb-8">
+        <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="mb-8">
           <CardContent className="pt-6">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <Input
-                  placeholder="Rechercher par nom, prÃ©nom, matricule ou email..."
+                  placeholder="Rechercher par nom, prénom, matricule ou email..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
@@ -231,10 +231,10 @@ export default function EtudiantsEtablissement() {
               </div>
               <Select value={selectedFaculte} onValueChange={setSelectedFaculte}>
                 <SelectTrigger className="w-full md:w-56">
-                  <SelectValue placeholder="Toutes les facultÃ©s" />
+                  <SelectValue placeholder="Toutes les facultés" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="toutes">Toutes les facultÃ©s</SelectItem>
+                  <SelectItem value="toutes">Toutes les facultés</SelectItem>
                   {facultes.map(f => (
                     <SelectItem key={f} value={f}>{f}</SelectItem>
                   ))}
@@ -255,19 +255,19 @@ export default function EtudiantsEtablissement() {
           </CardContent>
         </Card>
 
-        {/* Liste des Ã©tudiants */}
-        <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+        {/* Liste des étudiants */}
+        <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
               <Users className="w-5 h-5 text-blue-500" />
-              Liste des Ã©tudiants ({etudiantsFiltres.length})
+              Liste des étudiants ({etudiantsFiltres.length})
             </CardTitle>
           </CardHeader>
           <CardContent>
             {etudiantsFiltres.length === 0 ? (
               <div className="text-center py-12">
                 <GraduationCap className="w-16 h-16 text-gray-500 mx-auto mb-4" />
-                <p className="text-gray-400">Aucun Ã©tudiant trouvÃ©</p>
+                <p className="text-gray-400">Aucun étudiant trouvé</p>
               </div>
             ) : (
               <div className="overflow-x-auto">
@@ -278,7 +278,7 @@ export default function EtudiantsEtablissement() {
                       <TableHead className="text-white whitespace-nowrap">Nom Complet</TableHead>
                       <TableHead className="text-white whitespace-nowrap">Matricule</TableHead>
                       <TableHead className="text-white whitespace-nowrap">Email</TableHead>
-                      <TableHead className="text-white whitespace-nowrap">FacultÃ©</TableHead>
+                      <TableHead className="text-white whitespace-nowrap">Faculté</TableHead>
                       <TableHead className="text-white whitespace-nowrap">Classe</TableHead>
                       <TableHead className="text-white whitespace-nowrap">Date Inscription</TableHead>
                       <TableHead className="text-white whitespace-nowrap">Actions</TableHead>
@@ -335,8 +335,8 @@ export default function EtudiantsEtablissement() {
         open={editDialogOpen} 
         onOpenChange={setEditDialogOpen}
         title={
-          <span style={{fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif", fontWeight: 600, color: '#ffffff'}}>
-            Modifier l'Ã©tudiant
+          <span style={{fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif", fontWeight: 600, color: 'var(--ha-text)'}}>
+            Modifier l'étudiant
           </span>
         }
         maxWidth="max-w-2xl"
@@ -351,7 +351,7 @@ export default function EtudiantsEtablissement() {
                   <Input
                     value={editingEtudiant.nom || ""}
                     disabled
-                    style={{backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d'}}
+                    style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)'}}
                   />
                 </div>
                 <div>
@@ -359,15 +359,15 @@ export default function EtudiantsEtablissement() {
                   <Input
                     value={editingEtudiant.post_nom || ""}
                     disabled
-                    style={{backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d'}}
+                    style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)'}}
                   />
                 </div>
                 <div>
-                  <Label className="text-white">PrÃ©nom</Label>
+                  <Label className="text-white">Prénom</Label>
                   <Input
                     value={editingEtudiant.prenom || ""}
                     disabled
-                    style={{backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d'}}
+                    style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)'}}
                   />
                 </div>
               </div>
@@ -378,7 +378,7 @@ export default function EtudiantsEtablissement() {
                   <Input
                     value={editingEtudiant.matricule || ""}
                     disabled
-                    style={{backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d'}}
+                    style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)'}}
                   />
                 </div>
                 <div>
@@ -386,7 +386,7 @@ export default function EtudiantsEtablissement() {
                   <Input
                     value={editingEtudiant.date_naissance || ""}
                     disabled
-                    style={{backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d'}}
+                    style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)'}}
                   />
                 </div>
               </div>
@@ -397,17 +397,17 @@ export default function EtudiantsEtablissement() {
                   type="email"
                   value={editingEtudiant.email || ""}
                   onChange={(e) => setEditingEtudiant({...editingEtudiant, email: e.target.value})}
-                  style={{backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d'}}
+                  style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)'}}
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-white">FacultÃ© / Option</Label>
+                  <Label className="text-white">Faculté / Option</Label>
                   <Input
                     value={editingEtudiant.faculte || ""}
                     onChange={(e) => setEditingEtudiant({...editingEtudiant, faculte: e.target.value})}
-                    style={{backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d'}}
+                    style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)'}}
                   />
                 </div>
                 <div>
@@ -415,7 +415,7 @@ export default function EtudiantsEtablissement() {
                   <Input
                     value={editingEtudiant.classe || ""}
                     onChange={(e) => setEditingEtudiant({...editingEtudiant, classe: e.target.value})}
-                    style={{backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d'}}
+                    style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)'}}
                   />
                 </div>
               </div>
@@ -426,14 +426,14 @@ export default function EtudiantsEtablissement() {
           <Button
             variant="outline"
             onClick={() => setEditDialogOpen(false)}
-            style={{backgroundColor: 'rgba(255,255,255,0.08)', color: '#ffffff', borderColor: 'rgba(255,255,255,0.15)', fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif"}}
+            style={{backgroundColor: 'rgba(255,255,255,0.08)', color: 'var(--ha-text)', borderColor: 'rgba(255,255,255,0.15)', fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif"}}
           >
             Annuler
           </Button>
           <Button
             onClick={handleSaveEtudiant}
             disabled={updateEtudiantMutation.isPending}
-            style={{backgroundColor: '#3b82f6', color: '#ffffff', fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif"}}
+            style={{backgroundColor: '#3b82f6', color: 'var(--ha-text)', fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif"}}
           >
             {updateEtudiantMutation.isPending ? (
               <>

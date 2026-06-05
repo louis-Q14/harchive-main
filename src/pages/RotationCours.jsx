@@ -710,7 +710,7 @@ export default function RotationCours() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
@@ -733,7 +733,7 @@ export default function RotationCours() {
   const publiesCount = rotations.filter(r => r.statut_publication === 'publie').length;
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="w-full px-4">
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
@@ -751,7 +751,7 @@ export default function RotationCours() {
             <div className="flex gap-2">
               {canEdit && (
                 <>
-                  <Button onClick={() => setEditingHeures(true)} variant="outline" style={{color: 'white', borderColor: '#4d4d4d', backgroundColor: '#3d3d3d'}}>
+                  <Button onClick={() => setEditingHeures(true)} variant="outline" style={{color: 'white', borderColor: 'var(--ha-border)', backgroundColor: 'var(--ha-surface)'}}>
                     <Settings className="w-4 h-4 mr-2" />
                     Gérer les horaires
                   </Button>
@@ -767,7 +767,7 @@ export default function RotationCours() {
         </div>
 
         {/* Filtres */}
-        <Card className="mb-4" style={{backgroundColor: '#3d3d3d', borderColor: '#4d4d4d'}}>
+        <Card className="mb-4" style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
           <CardContent className="pt-6">
             <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
               <div>
@@ -779,7 +779,7 @@ export default function RotationCours() {
                   setSelectedOrientation("");
                   setSelectedClasse("");
                 }}>
-                  <SelectTrigger style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}>
+                  <SelectTrigger style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}>
                     <SelectValue placeholder="Sélectionner" />
                   </SelectTrigger>
                   <SelectContent>
@@ -802,7 +802,7 @@ export default function RotationCours() {
                   }}
                   disabled={!selectedFaculte}
                 >
-                  <SelectTrigger style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}>
+                  <SelectTrigger style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}>
                     <SelectValue placeholder="Sélectionner" />
                   </SelectTrigger>
                   <SelectContent>
@@ -824,7 +824,7 @@ export default function RotationCours() {
                   }}
                   disabled={!selectedDepartement}
                 >
-                  <SelectTrigger style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}>
+                  <SelectTrigger style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}>
                     <SelectValue placeholder="Sélectionner" />
                   </SelectTrigger>
                   <SelectContent>
@@ -845,7 +845,7 @@ export default function RotationCours() {
                   }}
                   disabled={!selectedDepartement}
                 >
-                  <SelectTrigger style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}>
+                  <SelectTrigger style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}>
                     <SelectValue placeholder="Sélectionner" />
                   </SelectTrigger>
                   <SelectContent>
@@ -859,7 +859,7 @@ export default function RotationCours() {
               <div>
                 <Label style={{color: 'white'}} className="mb-2 block">Promotion</Label>
                 <Select value={selectedClasse} onValueChange={setSelectedClasse} disabled={!selectedDepartement}>
-                  <SelectTrigger style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}>
+                  <SelectTrigger style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}>
                     <SelectValue placeholder="Sélectionner" />
                   </SelectTrigger>
                   <SelectContent>
@@ -879,7 +879,7 @@ export default function RotationCours() {
         </Card>
 
         {(!selectedFaculte || !selectedDepartement || !selectedClasse || !selectedWeek) && (
-          <div className="mb-4 px-4 py-3 rounded-lg flex items-center gap-2" style={{backgroundColor: '#2d2d2d', borderLeft: '4px solid #f59e0b'}}>
+          <div className="mb-4 px-4 py-3 rounded-lg flex items-center gap-2" style={{backgroundColor: 'var(--ha-surface2)', borderLeft: '4px solid #f59e0b'}}>
             <AlertCircle className="w-4 h-4 text-yellow-400 flex-shrink-0" />
             <p className="text-yellow-300 text-sm">
               Veuillez sélectionner{[
@@ -892,18 +892,18 @@ export default function RotationCours() {
           </div>
         )}
 
-        <Card style={{backgroundColor: '#3d3d3d', borderColor: '#4d4d4d'}}>
+        <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
           <CardContent className="pt-6">
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse" style={{backgroundColor: '#3d3d3d'}}>
+              <table className="w-full border-collapse" style={{backgroundColor: 'var(--ha-surface)'}}>
                 <thead>
-                  <tr style={{backgroundColor: '#2d2d2d'}}>
-                    <th className="p-3 text-left text-white border" style={{borderColor: '#4d4d4d', minWidth: '100px'}}>
+                  <tr style={{backgroundColor: 'var(--ha-surface2)'}}>
+                    <th className="p-3 text-left text-white border" style={{borderColor: 'var(--ha-border)', minWidth: '100px'}}>
                       <Clock className="w-4 h-4 inline mr-2" />
                       Horaire
                     </th>
                     {jours.map(jour => (
-                      <th key={jour} className="p-3 text-center text-white border capitalize" style={{borderColor: '#4d4d4d', minWidth: '150px'}}>
+                      <th key={jour} className="p-3 text-center text-white border capitalize" style={{borderColor: 'var(--ha-border)', minWidth: '150px'}}>
                         {jour}
                       </th>
                     ))}
@@ -911,15 +911,15 @@ export default function RotationCours() {
                 </thead>
                 <tbody>
                   {heures.map(heure => (
-                    <tr key={heure} style={{borderColor: '#4d4d4d'}}>
-                      <td className="p-3 text-white font-semibold border" style={{borderColor: '#4d4d4d', backgroundColor: '#2d2d2d'}}>
+                    <tr key={heure} style={{borderColor: 'var(--ha-border)'}}>
+                      <td className="p-3 text-white font-semibold border" style={{borderColor: 'var(--ha-border)', backgroundColor: 'var(--ha-surface2)'}}>
                         {heure}
                       </td>
                       {jours.map(jour => {
                         const coursSlots = getRotationsForDayAndHour(jour, heure);
                         const canShowRotations = selectedFaculte && selectedDepartement && selectedClasse && selectedWeek;
                         return (
-                          <td key={`${jour}-${heure}`} className="p-2 border align-top" style={{borderColor: '#4d4d4d'}}>
+                          <td key={`${jour}-${heure}`} className="p-2 border align-top" style={{borderColor: 'var(--ha-border)'}}>
                             {canShowRotations && coursSlots.length > 0 ? (
                               <div className="space-y-1">
                                 {coursSlots.map(cours => (
@@ -986,7 +986,7 @@ export default function RotationCours() {
 
             {/* Boutons Enregistrer et Publier */}
             {canEdit && rotations.length > 0 && (
-              <div className="mt-6 flex items-center justify-between p-4 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+              <div className="mt-6 flex items-center justify-between p-4 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)'}}>
                 <div className="text-white">
                   <p className="text-sm mb-1">
                     <span className="font-semibold">{brouillonsCount}</span> rotation(s) en brouillon · 
@@ -1000,7 +1000,7 @@ export default function RotationCours() {
                   <Button 
                     onClick={handleSaveRotations}
                     variant="outline"
-                    style={{color: 'white', borderColor: '#4d4d4d', backgroundColor: '#3d3d3d'}}
+                    style={{color: 'white', borderColor: 'var(--ha-border)', backgroundColor: 'var(--ha-surface)'}}
                   >
                     <Save className="w-4 h-4 mr-2" />
                     Enregistrer
@@ -1038,7 +1038,7 @@ export default function RotationCours() {
             )}
           </div>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#4d4d4d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="pt-6">
               {instructions.length === 0 ? (
                 <div className="text-center py-12">
@@ -1069,7 +1069,7 @@ export default function RotationCours() {
                                 Important
                               </Badge>
                             )}
-                            <Badge variant="outline" className="text-xs" style={{color: 'white', borderColor: '#4d4d4d'}}>
+                            <Badge variant="outline" className="text-xs" style={{color: 'white', borderColor: 'var(--ha-border)'}}>
                               {instruction.type}
                             </Badge>
                           </div>
@@ -1133,7 +1133,7 @@ export default function RotationCours() {
           open={showDialog}
           onOpenChange={(open) => { if (!open) { setShowDialog(false); setEditingSlot(null); resetForm(); } }}
           title={
-            <span style={{fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif", fontWeight: 600, color: '#ffffff'}}>
+            <span style={{fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif", fontWeight: 600, color: 'var(--ha-text)'}}>
               {editingSlot ? "Modifier le cours" : "Ajouter un cours"}
             </span>
           }
@@ -1145,7 +1145,7 @@ export default function RotationCours() {
                 <div>
                   <Label style={{color: 'white'}}>Matière *</Label>
                   <Select value={formData.matiere_id} onValueChange={handleMatiereChange}>
-                    <SelectTrigger style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}>
+                    <SelectTrigger style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}>
                       <SelectValue placeholder="Sélectionner" />
                     </SelectTrigger>
                     <SelectContent>
@@ -1194,7 +1194,7 @@ export default function RotationCours() {
                       });
                     }}
                   >
-                    <SelectTrigger style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}>
+                    <SelectTrigger style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}>
                       <SelectValue placeholder="Sélectionner faculté" />
                     </SelectTrigger>
                     <SelectContent>
@@ -1223,7 +1223,7 @@ export default function RotationCours() {
                     }}
                     disabled={!formData.faculte}
                   >
-                    <SelectTrigger style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}>
+                    <SelectTrigger style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}>
                       <SelectValue placeholder={formData.faculte ? "Sélectionner département" : "Choisir faculté d'abord"} />
                     </SelectTrigger>
                     <SelectContent>
@@ -1255,7 +1255,7 @@ export default function RotationCours() {
                     }}
                     disabled={!formData.departement}
                   >
-                    <SelectTrigger style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}>
+                    <SelectTrigger style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}>
                       <SelectValue placeholder={formData.departement ? "Sélectionner option" : "Choisir département d'abord"} />
                     </SelectTrigger>
                     <SelectContent>
@@ -1286,7 +1286,7 @@ export default function RotationCours() {
                     }}
                     disabled={!formData.departement}
                   >
-                    <SelectTrigger style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}>
+                    <SelectTrigger style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}>
                       <SelectValue placeholder="Sélectionner orientation (optionnel)" />
                     </SelectTrigger>
                     <SelectContent>
@@ -1305,7 +1305,7 @@ export default function RotationCours() {
                 <div>
                   <Label style={{color: 'white'}}>Promotion *</Label>
                   <Select value={formData.classe_id} onValueChange={handleClasseChange}>
-                    <SelectTrigger style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}>
+                    <SelectTrigger style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}>
                       <SelectValue placeholder="Sélectionner" />
                     </SelectTrigger>
                     <SelectContent>
@@ -1331,7 +1331,7 @@ export default function RotationCours() {
                       });
                     }}
                   >
-                    <SelectTrigger style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}>
+                    <SelectTrigger style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}>
                       <SelectValue placeholder="Sélectionner un professeur" />
                     </SelectTrigger>
                     <SelectContent>
@@ -1352,7 +1352,7 @@ export default function RotationCours() {
                 <div>
                   <Label style={{color: 'white'}}>Jour *</Label>
                   <Select value={formData.jour} onValueChange={(val) => setFormData({...formData, jour: val})}>
-                    <SelectTrigger style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}>
+                    <SelectTrigger style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -1369,7 +1369,7 @@ export default function RotationCours() {
                     type="date"
                     value={formData.date_cours}
                     onChange={(e) => setFormData({...formData, date_cours: e.target.value})}
-                    style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}
+                    style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}
                   />
                 </div>
 
@@ -1379,7 +1379,7 @@ export default function RotationCours() {
                     type="time"
                     value={formData.heure_debut}
                     onChange={(e) => setFormData({...formData, heure_debut: e.target.value})}
-                    style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}
+                    style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}
                   />
                 </div>
 
@@ -1389,7 +1389,7 @@ export default function RotationCours() {
                     type="time"
                     value={formData.heure_fin}
                     onChange={(e) => setFormData({...formData, heure_fin: e.target.value})}
-                    style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}
+                    style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}
                   />
                 </div>
               </div>
@@ -1400,7 +1400,7 @@ export default function RotationCours() {
             <Button
               variant="outline"
               onClick={() => { setShowDialog(false); setEditingSlot(null); resetForm(); }}
-              style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}
+              style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}
             >
               Annuler
             </Button>
@@ -1421,7 +1421,7 @@ export default function RotationCours() {
           open={editingHeures}
           onOpenChange={setEditingHeures}
           title={
-            <span style={{fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif", fontWeight: 600, color: '#ffffff'}}>
+            <span style={{fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif", fontWeight: 600, color: 'var(--ha-text)'}}>
               Gérer les Horaires
             </span>
           }
@@ -1440,7 +1440,7 @@ export default function RotationCours() {
                         newHeures[index] = e.target.value;
                         setCustomHeures(newHeures);
                       }}
-                      style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}
+                      style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}
                     />
                     <Button
                       size="sm"
@@ -1463,7 +1463,7 @@ export default function RotationCours() {
                 }}
                 variant="outline"
                 className="w-full"
-                style={{color: 'white', borderColor: '#4d4d4d', backgroundColor: '#2d2d2d', fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif"}}
+                style={{color: 'white', borderColor: 'var(--ha-border)', backgroundColor: 'var(--ha-surface2)', fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif"}}
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Ajouter un horaire
@@ -1480,7 +1480,7 @@ export default function RotationCours() {
                 if (saved) { setCustomHeures(JSON.parse(saved)); }
                 else { setCustomHeures(["07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00"]); }
               }}
-              style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d', fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif"}}
+              style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)', fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif"}}
             >
               Annuler
             </Button>
@@ -1506,7 +1506,7 @@ export default function RotationCours() {
                 <div>
                   <Label style={{color: 'white'}}>Promotion *</Label>
                   <Select value={instructionForm.classe_id} onValueChange={(val) => setInstructionForm({...instructionForm, classe_id: val})}>
-                    <SelectTrigger style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}>
+                    <SelectTrigger style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}>
                       <SelectValue placeholder="Sélectionner" />
                     </SelectTrigger>
                     <SelectContent>
@@ -1532,7 +1532,7 @@ export default function RotationCours() {
                 <div>
                   <Label style={{color: 'white'}}>Matière *</Label>
                   <Select value={instructionForm.matiere_id} onValueChange={(val) => setInstructionForm({...instructionForm, matiere_id: val})}>
-                    <SelectTrigger style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}>
+                    <SelectTrigger style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}>
                       <SelectValue placeholder="Sélectionner" />
                     </SelectTrigger>
                     <SelectContent>
@@ -1574,7 +1574,7 @@ export default function RotationCours() {
                 <div>
                   <Label style={{color: 'white'}}>Type *</Label>
                   <Select value={instructionForm.type} onValueChange={(val) => setInstructionForm({...instructionForm, type: val})}>
-                    <SelectTrigger style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}>
+                    <SelectTrigger style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -1591,7 +1591,7 @@ export default function RotationCours() {
                     type="date"
                     value={instructionForm.date_cours}
                     onChange={(e) => setInstructionForm({...instructionForm, date_cours: e.target.value})}
-                    style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}
+                    style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}
                   />
                 </div>
 
@@ -1601,7 +1601,7 @@ export default function RotationCours() {
                     value={instructionForm.titre}
                     onChange={(e) => setInstructionForm({...instructionForm, titre: e.target.value})}
                     placeholder="Ex: Devoirs pour la prochaine séance"
-                    style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}
+                    style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}
                   />
                 </div>
 
@@ -1612,7 +1612,7 @@ export default function RotationCours() {
                     onChange={(e) => setInstructionForm({...instructionForm, contenu: e.target.value})}
                     placeholder="Écrivez vos instructions ou communiqué..."
                     rows={6}
-                    style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}
+                    style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}
                   />
                 </div>
 
@@ -1636,7 +1636,7 @@ export default function RotationCours() {
             <Button
               variant="outline"
               onClick={() => { setShowInstructionDialog(false); setEditingInstruction(null); resetInstructionForm(); }}
-              style={{backgroundColor: '#2d2d2d', color: 'white', borderColor: '#4d4d4d'}}
+              style={{backgroundColor: 'var(--ha-surface2)', color: 'white', borderColor: 'var(--ha-border)'}}
             >
               Annuler
             </Button>

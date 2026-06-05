@@ -114,19 +114,19 @@ export default function EtudiantDashboard({ user }) {
   const tauxRetard = derniereStat?.taux_retard || 0;
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="w-full space-y-6">
         {/* Header avec photo de profil */}
-        <div className="flex items-center gap-4 p-6 rounded-xl shadow-lg" style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+        <div className="flex items-center gap-4 p-6 rounded-xl shadow-lg" style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
           {user.photo_url ? (
             <img 
               src={user.photo_url} 
               alt={user.full_name}
               className="w-20 h-20 rounded-full object-cover border-4"
-              style={{borderColor: '#4d4d4d'}}
+              style={{borderColor: 'var(--ha-border)'}}
             />
           ) : (
-            <div className="w-20 h-20 rounded-full flex items-center justify-center text-white font-bold text-2xl border-4" style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d'}}>
+            <div className="w-20 h-20 rounded-full flex items-center justify-center text-white font-bold text-2xl border-4" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}>
               {user.full_name?.split(' ').map(n => n[0]).join('').toUpperCase() || 'E'}
             </div>
           )}
@@ -156,7 +156,7 @@ export default function EtudiantDashboard({ user }) {
 
         {/* Stats principales - Réorganisées */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="hover:shadow-lg transition-all">
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="hover:shadow-lg transition-all">
             <CardContent className="pt-6 pb-6">
               <div className="flex items-center justify-between mb-3">
                 <div className="p-3 bg-blue-600 rounded-xl">
@@ -173,7 +173,7 @@ export default function EtudiantDashboard({ user }) {
 
           <Link to={createPageUrl("MesStatistiques")}>
             <Card 
-              style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} 
+              style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} 
               className="hover:shadow-lg transition-all cursor-pointer hover:scale-105"
             >
               <CardContent className="pt-6 pb-6">
@@ -201,7 +201,7 @@ export default function EtudiantDashboard({ user }) {
             </Card>
           </Link>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="hover:shadow-lg transition-all">
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="hover:shadow-lg transition-all">
             <CardContent className="pt-6 pb-6">
               <div className="flex items-center justify-between">
                 <div className="p-3 bg-purple-600 rounded-xl">
@@ -215,7 +215,7 @@ export default function EtudiantDashboard({ user }) {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="hover:shadow-lg transition-all">
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="hover:shadow-lg transition-all">
             <CardContent className="pt-6 pb-6">
               <div className="flex items-center justify-between">
                 <div className="p-3 bg-orange-600 rounded-xl">
@@ -235,7 +235,7 @@ export default function EtudiantDashboard({ user }) {
           <div className="lg:col-span-2 space-y-6">
             {/* Statistiques de présence détaillées */}
             {mesStatistiquesPresence.length > 0 && (
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardHeader>
                   <CardTitle className="text-white flex items-center gap-2">
                     <Activity className="w-5 h-5" />
@@ -246,7 +246,7 @@ export default function EtudiantDashboard({ user }) {
                 <CardContent>
                   <div className="space-y-3">
                     {mesStatistiquesPresence.map((stat) => (
-                      <div key={stat.id} className="p-4 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+                      <div key={stat.id} className="p-4 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)'}}>
                         <div className="flex items-center justify-between mb-3">
                           <h3 className="font-semibold text-white">Semaine {stat.semaine}</h3>
                           <p className="text-xs text-gray-400">
@@ -254,7 +254,7 @@ export default function EtudiantDashboard({ user }) {
                           </p>
                         </div>
                         <div className="grid grid-cols-4 gap-2">
-                          <div className="text-center p-2 rounded" style={{backgroundColor: '#3d3d3d'}}>
+                          <div className="text-center p-2 rounded" style={{backgroundColor: 'var(--ha-surface)'}}>
                             <p className="text-lg font-bold text-white">{stat.total_cours}</p>
                             <p className="text-xs text-gray-400">Cours</p>
                           </div>
@@ -279,7 +279,7 @@ export default function EtudiantDashboard({ user }) {
             )}
 
             {/* Dernières notes */}
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-white flex items-center gap-2">
@@ -295,7 +295,7 @@ export default function EtudiantDashboard({ user }) {
                 {notesEtudiant.length > 0 ? (
                   <div className="space-y-3">
                     {notesEtudiant.slice(0, 5).map((note) => (
-                      <div key={note.id} className="flex items-center justify-between p-3 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+                      <div key={note.id} className="flex items-center justify-between p-3 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)'}}>
                         <div className="flex-1">
                           <p className="font-semibold text-white">{note.matiere_nom}</p>
                           <p className="text-sm text-gray-400">{note.type_evaluation} • {note.periode}</p>
@@ -319,7 +319,7 @@ export default function EtudiantDashboard({ user }) {
 
             {/* Publications récentes */}
             {publications.length > 0 && (
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-white flex items-center gap-2">
@@ -334,9 +334,9 @@ export default function EtudiantDashboard({ user }) {
                 <CardContent>
                   <div className="space-y-3">
                     {publications.map((pub) => (
-                      <div key={pub.id} className="p-3 rounded-lg border" style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d'}}>
+                      <div key={pub.id} className="p-3 rounded-lg border" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}>
                         <div className="flex items-start gap-3">
-                          <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style={{backgroundColor: '#4d4d4d'}}>
+                          <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style={{backgroundColor: 'var(--ha-bg)'}}>
                             {pub.auteur_nom?.split(' ').map(n => n[0]).join('').toUpperCase() || 'A'}
                           </div>
                           <div className="flex-1">
@@ -358,7 +358,7 @@ export default function EtudiantDashboard({ user }) {
           {/* Colonne droite */}
           <div className="space-y-6">
             {/* Prochains cours */}
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
                   <Calendar className="w-5 h-5" />
@@ -369,7 +369,7 @@ export default function EtudiantDashboard({ user }) {
                 {rotationsCours.length > 0 ? (
                   <div className="space-y-3">
                     {rotationsCours.map((cours) => (
-                      <div key={cours.id} className="p-3 rounded-lg border-l-4" style={{backgroundColor: '#2d2d2d', borderColor: cours.couleur || '#3b82f6'}}>
+                      <div key={cours.id} className="p-3 rounded-lg border-l-4" style={{backgroundColor: 'var(--ha-surface2)', borderColor: cours.couleur || '#3b82f6'}}>
                         <div className="flex items-start gap-2">
                           <Clock className="w-4 h-4 text-gray-400 mt-1" />
                           <div className="flex-1">
@@ -396,7 +396,7 @@ export default function EtudiantDashboard({ user }) {
 
             {/* Observations */}
             {observations.length > 0 && (
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardHeader>
                   <CardTitle className="text-white flex items-center gap-2">
                     <Target className="w-5 h-5" />
@@ -413,7 +413,7 @@ export default function EtudiantDashboard({ user }) {
                         alerte: 'bg-red-600'
                       };
                       return (
-                        <div key={obs.id} className="p-3 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+                        <div key={obs.id} className="p-3 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)'}}>
                           <div className="flex items-start gap-2 mb-2">
                             <Badge className={colors[obs.categorie]}>{obs.categorie}</Badge>
                             <Badge className="bg-[#4d4d4d]">{obs.type}</Badge>
@@ -431,7 +431,7 @@ export default function EtudiantDashboard({ user }) {
             )}
 
             {/* Actions rapides */}
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardHeader>
                 <CardTitle className="text-white">Actions Rapides</CardTitle>
               </CardHeader>

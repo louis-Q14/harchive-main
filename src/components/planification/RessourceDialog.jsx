@@ -9,7 +9,7 @@ import { Save } from "lucide-react";
 import { uploadFile } from "@/api/uploadService";
 
 const CG = { fontFamily: '"Century Gothic", "AppleGothic", "Gill Sans", "Trebuchet MS", sans-serif' };
-const inputStyle = { backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG };
+const inputStyle = { backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG };
 
 export default function RessourceDialog({
   open,
@@ -92,7 +92,7 @@ export default function RessourceDialog({
           <div style={{ marginBottom: 14 }}>
             <Label className="text-white text-xs font-medium" style={CG}>Fichier</Label>
             <Input type="file" onChange={handleFileUpload} disabled={uploadingFile} style={inputStyle} />
-            {uploadingFile && <p style={{ fontSize: 12, color: '#b0b0b0', marginTop: 4, ...CG }}>Upload en cours...</p>}
+            {uploadingFile && <p style={{ fontSize: 12, color: 'var(--ha-text-muted)', marginTop: 4, ...CG }}>Upload en cours...</p>}
             {ressourceForm.fichier_url && <p style={{ fontSize: 12, color: '#4ade80', marginTop: 4, ...CG }}>Fichier uploadé ✓</p>}
           </div>
 
@@ -119,7 +119,7 @@ export default function RessourceDialog({
 
         <DraggableDialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}
-            style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG }}>
+            style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG }}>
             Annuler
           </Button>
           <Button onClick={handleSaveRessource}

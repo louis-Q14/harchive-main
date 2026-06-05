@@ -174,7 +174,7 @@ export default function Groupes() {
 
           {/* Statistiques */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <Card style={{backgroundColor: '#333333', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardContent className="pt-6">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
@@ -187,7 +187,7 @@ export default function Groupes() {
                 </div>
               </CardContent>
             </Card>
-            <Card style={{backgroundColor: '#333333', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardContent className="pt-6">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">

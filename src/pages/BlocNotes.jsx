@@ -266,14 +266,14 @@ export default function BlocNotes() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -298,7 +298,7 @@ export default function BlocNotes() {
           <DraggableDialog open={openDialog} onOpenChange={setOpenDialog}
             title={<div style={CG}>
               <div className="text-base font-semibold text-white">{selectedNote ? "Modifier la note" : "Créer une note"}</div>
-              <div className="text-xs mt-0.5" style={{color: '#b0b0b0'}}>Organisez vos idées et pensées</div>
+              <div className="text-xs mt-0.5" style={{color: 'var(--ha-text-muted)'}}>Organisez vos idées et pensées</div>
             </div>}
             maxWidth="max-w-2xl" resizable={false}>
             <DraggableDialogBody>
@@ -446,7 +446,7 @@ export default function BlocNotes() {
               </div>
             </DraggableDialogBody>
             <DraggableDialogFooter>
-              <Button variant="outline" onClick={() => setOpenDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>Annuler</Button>
+              <Button variant="outline" onClick={() => setOpenDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>Annuler</Button>
               <Button onClick={handleSubmit} className="bg-blue-600 hover:bg-blue-700 text-white" style={CG}>
                 {selectedNote ? "Modifier" : "Créer"}
               </Button>

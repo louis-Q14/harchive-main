@@ -130,7 +130,7 @@ export default function ProfesseurDashboard({ user }) {
   ];
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="w-full px-4 space-y-8">
         {/* Header */}
         <div>
@@ -146,7 +146,7 @@ export default function ProfesseurDashboard({ user }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
             <Link key={index} to={stat.link}>
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="hover:shadow-lg transition-all duration-300 cursor-pointer">
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="hover:shadow-lg transition-all duration-300 cursor-pointer">
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between mb-4">
                     <div className={`p-3 ${stat.bgColor} rounded-xl`}>
@@ -176,7 +176,7 @@ export default function ProfesseurDashboard({ user }) {
         {(notesEnAttente > 0 || observationsRecentes > 0) && (
           <div className="grid md:grid-cols-2 gap-6">
             {notesEnAttente > 0 && (
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardHeader>
                   <div className="flex items-center gap-2">
                     <ClipboardList className="w-5 h-5 text-yellow-500" />
@@ -198,7 +198,7 @@ export default function ProfesseurDashboard({ user }) {
             )}
 
             {observationsRecentes > 0 && (
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardHeader>
                   <div className="flex items-center gap-2">
                     <Eye className="w-5 h-5 text-blue-500" />
@@ -224,7 +224,7 @@ export default function ProfesseurDashboard({ user }) {
         {/* Vue d'ensemble pédagogique */}
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Mes Classes et Matières */}
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <BookOpen className="w-5 h-5 text-blue-500" />
@@ -244,7 +244,7 @@ export default function ProfesseurDashboard({ user }) {
                     const etudiantsClasse = etudiants.filter(e => e.classe_id === classe.id);
                     
                     return (
-                      <div key={classe.id} className="p-4 rounded-lg hover:bg-[#474747] transition-colors" style={{backgroundColor: '#2d2d2d'}}>
+                      <div key={classe.id} className="p-4 rounded-lg hover:bg-[#474747] transition-colors" style={{backgroundColor: 'var(--ha-surface2)'}}>
                         <div className="flex items-start justify-between mb-2">
                           <div>
                             <p className="font-semibold text-white mb-1">{classe.nom}</p>
@@ -281,7 +281,7 @@ export default function ProfesseurDashboard({ user }) {
           </Card>
 
           {/* Modules pédagogiques */}
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <Lightbulb className="w-5 h-5 text-yellow-500" />
@@ -329,7 +329,7 @@ export default function ProfesseurDashboard({ user }) {
 
         {/* Activité récente */}
         <div className="grid lg:grid-cols-3 gap-6">
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <BarChart3 className="w-5 h-5 text-purple-500" />
@@ -354,7 +354,7 @@ export default function ProfesseurDashboard({ user }) {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <Brain className="w-5 h-5 text-orange-500" />
@@ -379,7 +379,7 @@ export default function ProfesseurDashboard({ user }) {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <Eye className="w-5 h-5 text-blue-500" />

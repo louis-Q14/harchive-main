@@ -180,7 +180,7 @@ export default function EtablissementsMinisteriel() {
         key={salle.id}
         onClick={() => openStudentsDialog(salle, etabNom)}
         className="w-full flex items-center gap-2 p-2 rounded hover:bg-[#4d4d4d] transition-colors cursor-pointer"
-        style={{ backgroundColor: '#3d3d3d' }}
+        style={{ backgroundColor: 'var(--ha-surface)' }}
       >
         <Users className="w-4 h-4 text-pink-400" />
         <span className="text-white text-sm">{salle.nom}</span>

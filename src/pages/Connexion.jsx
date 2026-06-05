@@ -46,9 +46,9 @@ export default function Connexion() {
   };
 
   return (
-    <div className="min-h-screen" style={{backgroundColor: '#333333'}}>
+    <div className="min-h-screen" style={{backgroundColor: 'var(--ha-surface)'}}>
       {/* Header - identique au Home */}
-      <header style={{backgroundColor: '#262626', borderBottom: '1px solid #404040'}} className="shadow-sm sticky top-0 z-50">
+      <header style={{backgroundColor: 'var(--ha-surface)', borderBottom: '1px solid #404040'}} className="shadow-sm sticky top-0 z-50">
         <div className="w-full px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -59,7 +59,7 @@ export default function Connexion() {
             <Link to={createPageUrl("Home")}>
               <Button
                 variant="outline"
-                style={{borderColor: '#555555', color: 'white', backgroundColor: '#404040'}}
+                style={{borderColor: 'var(--ha-border)', color: 'white', backgroundColor: 'var(--ha-surface2)'}}
                 className="hover:opacity-80"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -81,7 +81,7 @@ export default function Connexion() {
 
         {/* Formulaire de connexion */}
         <div className="max-w-md mx-auto mb-12">
-          <Card style={{backgroundColor: '#262626', borderColor: '#404040'}} className="shadow-md">
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="shadow-md">
             <CardContent className="pt-8 pb-8 px-6">
               <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-6" style={{backgroundColor: '#555555'}}>
                 <LogIn className="w-7 h-7 text-white" />
@@ -105,7 +105,7 @@ export default function Connexion() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="pl-10 text-white placeholder:text-gray-500"
-                      style={{backgroundColor: '#1a1a1a', borderColor: '#404040'}}
+                      style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}
                       required
                     />
                   </div>
@@ -121,7 +121,7 @@ export default function Connexion() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="pl-10 pr-10 text-white placeholder:text-gray-500"
-                      style={{backgroundColor: '#1a1a1a', borderColor: '#404040'}}
+                      style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}
                       required
                     />
                     <button
@@ -163,7 +163,7 @@ export default function Connexion() {
             Pas encore de compte ? Inscrivez-vous
           </p>
           <div className="grid md:grid-cols-3 gap-4">
-            <Card style={{backgroundColor: '#262626', borderColor: '#404040'}} className="shadow-md hover:shadow-lg transition-all">
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="shadow-md hover:shadow-lg transition-all">
               <CardContent className="pt-6 pb-6 text-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-white" style={{backgroundColor: '#555555'}}>
                   <School className="w-6 h-6" />
@@ -179,7 +179,7 @@ export default function Connexion() {
               </CardContent>
             </Card>
 
-            <Card style={{backgroundColor: '#262626', borderColor: '#404040'}} className="shadow-md hover:shadow-lg transition-all">
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="shadow-md hover:shadow-lg transition-all">
               <CardContent className="pt-6 pb-6 text-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-white" style={{backgroundColor: '#555555'}}>
                   <GraduationCap className="w-6 h-6" />
@@ -195,7 +195,7 @@ export default function Connexion() {
               </CardContent>
             </Card>
 
-            <Card style={{backgroundColor: '#262626', borderColor: '#404040'}} className="shadow-md hover:shadow-lg transition-all">
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="shadow-md hover:shadow-lg transition-all">
               <CardContent className="pt-6 pb-6 text-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-white" style={{backgroundColor: '#555555'}}>
                   <Heart className="w-6 h-6" />
@@ -215,7 +215,7 @@ export default function Connexion() {
       </section>
 
       {/* Footer - identique au Home */}
-      <footer style={{backgroundColor: '#262626', borderTop: '1px solid #404040'}} className="py-6 mt-12">
+      <footer style={{backgroundColor: 'var(--ha-surface)', borderTop: '1px solid #404040'}} className="py-6 mt-12">
         <div className="w-full px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-sm text-gray-400">
             © {new Date().getFullYear()} Harchive — Plateforme de gestion académique de la RDC

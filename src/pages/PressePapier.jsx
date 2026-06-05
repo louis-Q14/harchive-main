@@ -296,14 +296,14 @@ export default function PressePapier() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-6">
@@ -320,11 +320,11 @@ export default function PressePapier() {
               </div>
             </div>
             <div className="flex gap-2">
-              <Button onClick={() => setShowStats(!showStats)} variant="outline" style={{backgroundColor: '#333333', color: '#ffffff'}}>
+              <Button onClick={() => setShowStats(!showStats)} variant="outline" style={{backgroundColor: 'var(--ha-surface)', color: 'var(--ha-text)'}}>
                 <BarChart3 className="w-4 h-4 mr-2" />
                 Stats
               </Button>
-              <Button onClick={exportClips} variant="outline" style={{backgroundColor: '#333333', color: '#ffffff'}}>
+              <Button onClick={exportClips} variant="outline" style={{backgroundColor: 'var(--ha-surface)', color: 'var(--ha-text)'}}>
                 <Download className="w-4 h-4 mr-2" />
                 Export
               </Button>
@@ -662,7 +662,7 @@ export default function PressePapier() {
             </div>
           </DraggableDialogBody>
           <DraggableDialogFooter>
-                <Button variant="outline" onClick={() => setOpenDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>
+                <Button variant="outline" onClick={() => setOpenDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>
                   Annuler
                 </Button>
                 <Button onClick={handleSubmit} className="bg-orange-600 hover:bg-orange-700 text-white" style={CG}>

@@ -11,7 +11,7 @@ export default function ChatMessages({ messages }) {
           className={`flex gap-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
         >
           {msg.role === 'assistant' && (
-            <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#3d3d3d' }}>
+            <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'var(--ha-surface)' }}>
               <Cpu className="w-5 h-5" style={{ color: '#60a5fa' }} />
             </div>
           )}
@@ -24,7 +24,7 @@ export default function ChatMessages({ messages }) {
             }`}
             style={{
               backgroundColor: msg.role === 'user' ? '#2d2d2d' : '#3d3d3d',
-              color: '#ffffff',
+              color: 'var(--ha-text)',
               borderColor: msg.role === 'user' ? '#4d4d4d' : '#5a5a5a',
               border: '1px solid'
             }}
@@ -33,7 +33,7 @@ export default function ChatMessages({ messages }) {
           </div>
 
           {msg.role === 'user' && (
-            <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#3d3d3d' }}>
+            <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'var(--ha-surface)' }}>
               <User className="w-5 h-5" style={{ color: '#a0a0a0' }} />
             </div>
           )}

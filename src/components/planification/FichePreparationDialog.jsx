@@ -8,9 +8,9 @@ import { DraggableDialog, DraggableDialogBody, DraggableDialogFooter } from "@/c
 import { Plus, Trash2, Save, Loader2 } from "lucide-react";
 
 const CG = { fontFamily: '"Century Gothic", "AppleGothic", "Gill Sans", "Trebuchet MS", sans-serif' };
-const inputStyle = { backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG };
+const inputStyle = { backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG };
 const sectionStyle = {
-  fontWeight: 600, color: '#ffffff', background: 'rgba(255,255,255,0.08)',
+  fontWeight: 600, color: 'var(--ha-text)', background: 'rgba(255,255,255,0.08)',
   padding: '8px 12px', borderRadius: 6, marginBottom: 4, ...CG
 };
 
@@ -94,7 +94,7 @@ export default function FichePreparationDialog({
                   <SelectTrigger style={inputStyle}><SelectValue placeholder="Choisir une promotion" /></SelectTrigger>
                   <SelectContent style={{ zIndex: 99999 }}>
                     {classes.length > 0 ? classes.map((c) => <SelectItem key={c.id} value={c.id}>{c.nom}</SelectItem>)
-                      : <div style={{ padding: '10px 8px', fontSize: 13, color: '#b0b0b0', ...CG }}>Aucune promotion assignée</div>}
+                      : <div style={{ padding: '10px 8px', fontSize: 13, color: 'var(--ha-text-muted)', ...CG }}>Aucune promotion assignée</div>}
                   </SelectContent>
                 </Select>
               </div>
@@ -104,7 +104,7 @@ export default function FichePreparationDialog({
                   <SelectTrigger style={inputStyle}><SelectValue placeholder="Choisir une matière" /></SelectTrigger>
                   <SelectContent style={{ zIndex: 99999 }}>
                     {matieres.length > 0 ? matieres.map((m) => <SelectItem key={m.id} value={m.id}>{m.nom}</SelectItem>)
-                      : <div style={{ padding: '10px 8px', fontSize: 13, color: '#b0b0b0', ...CG }}>Aucune matière assignée</div>}
+                      : <div style={{ padding: '10px 8px', fontSize: 13, color: 'var(--ha-text-muted)', ...CG }}>Aucune matière assignée</div>}
                   </SelectContent>
                 </Select>
               </div>
@@ -258,7 +258,7 @@ export default function FichePreparationDialog({
 
         <DraggableDialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}
-            style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG }}>
+            style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG }}>
             Annuler
           </Button>
           <Button onClick={handleSaveFiche} disabled={isSaving}

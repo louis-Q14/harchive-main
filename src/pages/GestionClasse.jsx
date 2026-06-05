@@ -621,14 +621,14 @@ export default function GestionClasse() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="w-full px-4">
         {/* Header */}
         <div className="mb-8">
@@ -649,7 +649,7 @@ export default function GestionClasse() {
           </div>
 
           {/* Sélection classe et matière */}
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="pt-6">
               <div className="flex items-center gap-4 flex-wrap">
                 <div className="flex items-center gap-4">
@@ -692,7 +692,7 @@ export default function GestionClasse() {
         </div>
 
         {!selectedClasse ? (
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="py-12 text-center">
               <Users className="w-16 h-16 text-gray-500 mx-auto mb-4" />
               <p className="text-gray-400">Veuillez sélectionner une promotion pour commencer</p>
@@ -702,7 +702,7 @@ export default function GestionClasse() {
           <>
             {/* Statistiques */}
             <div className="grid md:grid-cols-4 gap-6 mb-8">
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
@@ -714,7 +714,7 @@ export default function GestionClasse() {
                 </CardContent>
               </Card>
 
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
@@ -726,7 +726,7 @@ export default function GestionClasse() {
                 </CardContent>
               </Card>
 
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
@@ -740,7 +740,7 @@ export default function GestionClasse() {
                 </CardContent>
               </Card>
 
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
@@ -764,7 +764,7 @@ export default function GestionClasse() {
 
               {/* TAB: Présences */}
               <TabsContent value="presences" className="space-y-6">
-                <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+                <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <div>
@@ -1074,7 +1074,7 @@ export default function GestionClasse() {
               {/* TAB: Statistiques de présence */}
               <TabsContent value="statistiques" className="space-y-6">
                 {/* Statistiques par Promotion */}
-                <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+                <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <Users className="w-5 h-5" />
@@ -1102,7 +1102,7 @@ export default function GestionClasse() {
                               return acc;
                             }, {})
                         ).map(([className, stats]) => (
-                          <div key={className} className="rounded-lg overflow-hidden" style={{backgroundColor: '#2d2d2d'}}>
+                          <div key={className} className="rounded-lg overflow-hidden" style={{backgroundColor: 'var(--ha-surface2)'}}>
                             <button
                               onClick={() => setExpandedPromotions(prev => ({
                                 ...prev,
@@ -1126,12 +1126,12 @@ export default function GestionClasse() {
                             {expandedPromotions[className] && (
                               <div className="px-4 pb-4 space-y-3">
                                 {stats.map(stat => (
-                                  <div key={stat.id} className="p-3 rounded-lg" style={{backgroundColor: '#3d3d3d'}}>
+                                  <div key={stat.id} className="p-3 rounded-lg" style={{backgroundColor: 'var(--ha-surface)'}}>
                                     <p className="text-sm text-gray-400 mb-3">
                                       Semaine {stat.semaine} • {format(new Date(stat.date_debut), 'dd/MM')} - {format(new Date(stat.date_fin), 'dd/MM/yyyy')}
                                     </p>
                                     <div className="grid grid-cols-4 gap-3">
-                                      <div className="text-center p-2 rounded" style={{backgroundColor: '#2d2d2d'}}>
+                                      <div className="text-center p-2 rounded" style={{backgroundColor: 'var(--ha-surface2)'}}>
                                         <p className="text-xl font-bold text-white">{stat.total_cours}</p>
                                         <p className="text-xs text-gray-400">Cours</p>
                                       </div>
@@ -1163,7 +1163,7 @@ export default function GestionClasse() {
 
               {/* TAB: Observations */}
               <TabsContent value="observations" className="space-y-6">
-                <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+                <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                   <CardContent className="pt-6">
                     <div className="flex justify-between items-center">
                       <div className="relative flex-1 max-w-md">
@@ -1191,7 +1191,7 @@ export default function GestionClasse() {
 
                 <div className="grid gap-4">
                   {observations.length === 0 ? (
-                    <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+                    <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                       <CardContent className="py-12 text-center">
                         <Eye className="w-16 h-16 text-gray-500 mx-auto mb-4" />
                         <p className="text-gray-400">Aucune observation enregistrée</p>
@@ -1199,7 +1199,7 @@ export default function GestionClasse() {
                     </Card>
                   ) : (
                     observations.map(obs => (
-                      <Card key={obs.id} style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+                      <Card key={obs.id} style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                         <CardHeader>
                           <div className="flex items-start justify-between">
                             <div>
@@ -1251,7 +1251,7 @@ export default function GestionClasse() {
 
               {/* TAB: Règles */}
               <TabsContent value="regles" className="space-y-6">
-                <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+                <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                   <CardContent className="pt-6">
                     <div className="flex justify-end">
                       <Button
@@ -1270,7 +1270,7 @@ export default function GestionClasse() {
 
                 <div className="grid gap-4">
                   {regles.filter(r => r.active).map((regle, idx) => (
-                    <Card key={regle.id} style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+                    <Card key={regle.id} style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                       <CardHeader>
                         <div className="flex items-start justify-between">
                           <div className="flex items-start gap-3">
@@ -1310,7 +1310,7 @@ export default function GestionClasse() {
                       <CardContent>
                         <p className="text-gray-300 mb-2">{regle.description}</p>
                         {regle.consequences && (
-                          <div className="mt-3 p-3 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+                          <div className="mt-3 p-3 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)'}}>
                             <p className="text-sm font-semibold text-white mb-1">Conséquences:</p>
                             <p className="text-sm text-gray-400">{regle.consequences}</p>
                           </div>
@@ -1323,7 +1323,7 @@ export default function GestionClasse() {
 
               {/* TAB: Groupes */}
               <TabsContent value="groupes" className="space-y-6">
-                <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+                <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                   <CardContent className="pt-6">
                     <div className="flex justify-between items-center gap-4">
                       <div className="flex gap-2">
@@ -1358,7 +1358,7 @@ export default function GestionClasse() {
 
                 <div className="grid md:grid-cols-2 gap-6">
                   {groupes.map(groupe => (
-                    <Card key={groupe.id} style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+                    <Card key={groupe.id} style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                       <CardHeader>
                         <div className="flex items-start justify-between">
                           <div>
@@ -1383,7 +1383,7 @@ export default function GestionClasse() {
                       <CardContent>
                         <div className="space-y-2">
                           {groupe.membres.map((membre, idx) => (
-                            <div key={idx} className="flex items-center gap-2 p-2 rounded" style={{backgroundColor: '#2d2d2d'}}>
+                            <div key={idx} className="flex items-center gap-2 p-2 rounded" style={{backgroundColor: 'var(--ha-surface2)'}}>
                               <UserPlus className="w-4 h-4 text-gray-400" />
                               <span className="text-white text-sm">{membre.etudiant_nom}</span>
                             </div>
@@ -1507,7 +1507,7 @@ export default function GestionClasse() {
             </div>
           </DraggableDialogBody>
           <DraggableDialogFooter>
-              <Button variant="outline" onClick={() => setOpenObservationDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>
+              <Button variant="outline" onClick={() => setOpenObservationDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>
                 Annuler
               </Button>
               <Button onClick={handleSaveObservation} className="bg-blue-600 hover:bg-blue-700 text-white" style={CG}>
@@ -1588,7 +1588,7 @@ export default function GestionClasse() {
             </div>
           </DraggableDialogBody>
           <DraggableDialogFooter>
-              <Button variant="outline" onClick={() => setOpenRegleDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>
+              <Button variant="outline" onClick={() => setOpenRegleDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>
                 Annuler
               </Button>
               <Button onClick={handleSaveRegle} className="bg-blue-600 hover:bg-blue-700 text-white" style={CG}>

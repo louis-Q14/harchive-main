@@ -159,14 +159,14 @@ export default function DifferenciationModule() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="w-full px-4">
         {/* Header */}
         <div className="mb-8">
@@ -197,7 +197,7 @@ export default function DifferenciationModule() {
 
           {/* TAB: Parcours Personnalisés */}
           <TabsContent value="parcours" className="space-y-6">
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardContent className="pt-6">
                 <Button
                   onClick={() => {
@@ -213,7 +213,7 @@ export default function DifferenciationModule() {
             </Card>
 
             {parcours.length === 0 ? (
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardContent className="py-12 text-center">
                   <BookOpen className="w-16 h-16 text-gray-500 mx-auto mb-4" />
                   <p className="text-gray-400 mb-2">Aucun parcours créé</p>
@@ -223,7 +223,7 @@ export default function DifferenciationModule() {
             ) : (
               <div className="grid gap-6">
                 {parcours.map(p => (
-                  <Card key={p.id} style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+                  <Card key={p.id} style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                     <CardHeader>
                       <div className="flex items-start justify-between">
                         <div>
@@ -285,7 +285,7 @@ export default function DifferenciationModule() {
 
           {/* TAB: Profils d'Apprentissage */}
           <TabsContent value="profils" className="space-y-6">
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
                   <Users className="w-5 h-5" />
@@ -303,7 +303,7 @@ export default function DifferenciationModule() {
                     { title: "Kinesthésiques", desc: "Apprentissage par pratique et manipulation", icon: "🤲" },
                     { title: "Lecteurs-Rédacteurs", desc: "Apprentissage par lecture et écriture", icon: "📝" }
                   ].map((profil, idx) => (
-                    <div key={idx} className="p-4 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+                    <div key={idx} className="p-4 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)'}}>
                       <div className="text-3xl mb-2">{profil.icon}</div>
                       <h4 className="font-semibold text-white mb-1">{profil.title}</h4>
                       <p className="text-sm text-gray-400">{profil.desc}</p>
@@ -313,7 +313,7 @@ export default function DifferenciationModule() {
               </CardContent>
             </Card>
 
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
                   <Target className="w-5 h-5" />
@@ -329,7 +329,7 @@ export default function DifferenciationModule() {
                     "Mettre en place des évaluations adaptées à chaque profil",
                     "Encourager l'apprentissage collaboratif"
                   ].map((strategie, idx) => (
-                    <div key={idx} className="flex items-start gap-3 p-3 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+                    <div key={idx} className="flex items-start gap-3 p-3 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)'}}>
                       <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-1" />
                       <p className="text-gray-300">{strategie}</p>
                     </div>
@@ -404,7 +404,7 @@ export default function DifferenciationModule() {
 
           </DraggableDialogBody>
           <DraggableDialogFooter>
-              <Button variant="outline" onClick={() => setOpenParcoursDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>
+              <Button variant="outline" onClick={() => setOpenParcoursDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>
                 Annuler
               </Button>
               <Button onClick={handleSaveParcours} className="bg-blue-600 hover:bg-blue-700 text-white" style={CG}>

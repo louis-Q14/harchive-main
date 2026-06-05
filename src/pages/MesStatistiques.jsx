@@ -129,7 +129,7 @@ export default function MesStatistiques() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-gray-600 border-t-transparent rounded-full animate-spin" />
           <p className="text-white font-medium">Chargement...</p>
@@ -139,7 +139,7 @@ export default function MesStatistiques() {
   }
 
   return (
-    <div className="min-h-screen p-6" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-6" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="max-w-7xl mx-auto">
         {/* En-tête */}
         <div className="mb-8">
@@ -149,7 +149,7 @@ export default function MesStatistiques() {
 
         {/* Tabs pour les différentes sections */}
         <Tabs defaultValue="presence" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-6" style={{backgroundColor: '#3d3d3d'}}>
+          <TabsList className="grid w-full grid-cols-2 mb-6" style={{backgroundColor: 'var(--ha-surface)'}}>
             <TabsTrigger value="presence" className="data-[state=active]:bg-blue-600">
               Statistiques de Présence
             </TabsTrigger>
@@ -163,7 +163,7 @@ export default function MesStatistiques() {
 
             {/* Résumé Global */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -177,7 +177,7 @@ export default function MesStatistiques() {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -192,7 +192,7 @@ export default function MesStatistiques() {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -207,7 +207,7 @@ export default function MesStatistiques() {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -224,7 +224,7 @@ export default function MesStatistiques() {
             </div>
 
             {/* Graphique de progression */}
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
               <TrendingUp className="w-5 h-5" />
@@ -259,7 +259,7 @@ export default function MesStatistiques() {
             </Card>
 
             {/* Historique des statistiques par semaine */}
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
               <Activity className="w-5 h-5" />
@@ -303,9 +303,9 @@ export default function MesStatistiques() {
                     </Button>
 
                     {expandedWeeks[stat.id] && (
-                      <div className="mt-3 p-4 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+                      <div className="mt-3 p-4 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)'}}>
                         <div className="grid grid-cols-4 gap-4 mb-4">
-                          <div className="text-center p-3 rounded" style={{backgroundColor: '#3d3d3d'}}>
+                          <div className="text-center p-3 rounded" style={{backgroundColor: 'var(--ha-surface)'}}>
                             <p className="text-2xl font-bold text-white">{stat.total_cours}</p>
                             <p className="text-xs text-gray-400">Total Cours</p>
                           </div>
@@ -380,7 +380,7 @@ export default function MesStatistiques() {
           <TabsContent value="reussite" className="space-y-6">
             {/* Résumé Global Réussite */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
@@ -395,7 +395,7 @@ export default function MesStatistiques() {
                 </CardContent>
               </Card>
 
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
@@ -410,7 +410,7 @@ export default function MesStatistiques() {
                 </CardContent>
               </Card>
 
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
@@ -425,7 +425,7 @@ export default function MesStatistiques() {
                 </CardContent>
               </Card>
 
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
@@ -442,7 +442,7 @@ export default function MesStatistiques() {
             </div>
 
             {/* Graphique de répartition */}
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
                   <Activity className="w-5 h-5" />
@@ -492,7 +492,7 @@ export default function MesStatistiques() {
             </Card>
 
             {/* Liste détaillée des notes */}
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
                   <Activity className="w-5 h-5" />
@@ -518,7 +518,7 @@ export default function MesStatistiques() {
                         <div 
                           key={note.id} 
                           className="p-4 rounded-lg flex items-center justify-between"
-                          style={{backgroundColor: '#2d2d2d'}}
+                          style={{backgroundColor: 'var(--ha-surface2)'}}
                         >
                           <div className="flex-1">
                             <h4 className="font-semibold text-white">{note.matiere_nom}</h4>

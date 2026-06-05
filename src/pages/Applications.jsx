@@ -158,14 +158,14 @@ export default function Applications() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#4d4d4d' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--ha-bg)' }}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>);
 
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{ backgroundColor: '#4d4d4d' }}>
+    <div className="min-h-screen p-4 md:p-8" style={{ backgroundColor: 'var(--ha-bg)' }}>
       <div className="w-full px-4">
         {/* Header */}
         <div className="mb-8">

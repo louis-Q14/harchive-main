@@ -218,19 +218,19 @@ export default function GaleriePhotos() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#4d4d4d' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--ha-bg)' }}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{ backgroundColor: '#4d4d4d' }}>
+    <div className="min-h-screen p-4 md:p-8" style={{ backgroundColor: 'var(--ha-bg)' }}>
       <div className="w-full px-4 space-y-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-xl" style={{ backgroundColor: '#3d3d3d' }}>
+            <div className="p-3 rounded-xl" style={{ backgroundColor: 'var(--ha-surface)' }}>
               <img src="/assets/icons/6db68e5c5_photos.png" alt="Galerie" className="w-8 h-8" />
             </div>
             <div>
@@ -248,7 +248,7 @@ export default function GaleriePhotos() {
         </div>
 
         {/* Filtres */}
-        <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+        <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
           <CardContent className="p-4">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1 relative">
@@ -258,11 +258,11 @@ export default function GaleriePhotos() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
-                  style={{ backgroundColor: '#2d2d2d', borderColor: '#404040' }}
+                  style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}
                 />
               </div>
               <Select value={filterAlbum} onValueChange={setFilterAlbum}>
-                <SelectTrigger className="w-full md:w-48" style={{ backgroundColor: '#2d2d2d', borderColor: '#404040' }}>
+                <SelectTrigger className="w-full md:w-48" style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}>
                   <FolderOpen className="w-4 h-4 mr-2" />
                   <SelectValue placeholder="Album" />
                 </SelectTrigger>
@@ -294,7 +294,7 @@ export default function GaleriePhotos() {
               <div
                 key={photo.id}
                 className="group relative aspect-square overflow-hidden cursor-pointer"
-                style={{ backgroundColor: '#2d2d2d' }}
+                style={{ backgroundColor: 'var(--ha-surface2)' }}
                 onClick={() => openViewer(index)}
               >
                 <img
@@ -306,7 +306,7 @@ export default function GaleriePhotos() {
                   <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                     <p className="text-white font-medium text-sm truncate">{photo.titre}</p>
                     <div className="flex items-center gap-2 mt-1">
-                      <Badge className="text-xs" style={{ backgroundColor: '#3d3d3d' }}>
+                      <Badge className="text-xs" style={{ backgroundColor: 'var(--ha-surface)' }}>
                         {getVisibilityIcon(photo.visibilite)}
                         <span className="ml-1">{photo.visibilite}</span>
                       </Badge>
@@ -340,14 +340,14 @@ export default function GaleriePhotos() {
       <DraggableDialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}
         title={<div style={CG}>
           <div className="text-base font-semibold text-white flex items-center gap-2"><Upload className="w-5 h-5 text-purple-400" /> Ajouter une photo</div>
-          <div className="text-xs mt-0.5" style={{color: '#b0b0b0'}}>Sélectionnez une image et remplissez les détails</div>
+          <div className="text-xs mt-0.5" style={{color: 'var(--ha-text-muted)'}}>Sélectionnez une image et remplissez les détails</div>
         </div>}
         maxWidth="max-w-lg">
         <DraggableDialogBody>
           <div className="grid gap-4" style={CG}>
             <div
               className="border-2 border-dashed rounded-xl p-6 text-center cursor-pointer hover:border-purple-500 transition-colors"
-              style={{ borderColor: '#4d4d4d', backgroundColor: '#2d2d2d' }}
+              style={{ borderColor: 'var(--ha-border)', backgroundColor: 'var(--ha-surface2)' }}
               onClick={() => document.getElementById('photo-input').click()}
             >
               {previewUrl ? (
@@ -411,7 +411,7 @@ export default function GaleriePhotos() {
           </div>
         </DraggableDialogBody>
         <DraggableDialogFooter>
-          <Button variant="outline" onClick={resetForm} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>Annuler</Button>
+          <Button variant="outline" onClick={resetForm} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>Annuler</Button>
           <Button
             onClick={handleUpload}
             disabled={!selectedFile || uploading}
@@ -478,7 +478,7 @@ export default function GaleriePhotos() {
                     value={currentPhoto.visibilite || 'privee'}
                     onValueChange={(val) => updateVisibilityMutation.mutate({ photoId: currentPhoto.id, visibilite: val })}
                   >
-                    <SelectTrigger className="w-36 h-7 text-xs" style={{ backgroundColor: '#2d2d2d', borderColor: '#4d4d4d', color: '#e0e0e0' }}>
+                    <SelectTrigger className="w-36 h-7 text-xs" style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)', color: 'var(--ha-text-muted)' }}>
                       <div className="flex items-center gap-1">
                         {getVisibilityIcon(currentPhoto.visibilite)}
                         <SelectValue />

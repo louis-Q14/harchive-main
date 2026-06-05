@@ -163,14 +163,14 @@ export default function EvaluationModule() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="w-full px-4">
         {/* Header */}
         <div className="mb-8">
@@ -195,7 +195,7 @@ export default function EvaluationModule() {
 
         {/* Statistiques */}
         <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -207,7 +207,7 @@ export default function EvaluationModule() {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -219,7 +219,7 @@ export default function EvaluationModule() {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -231,7 +231,7 @@ export default function EvaluationModule() {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -253,7 +253,7 @@ export default function EvaluationModule() {
 
           {/* TAB: Mes Évaluations */}
           <TabsContent value="evaluations" className="space-y-6">
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardContent className="pt-6">
                 <Button
                   onClick={() => {
@@ -269,7 +269,7 @@ export default function EvaluationModule() {
             </Card>
 
             {notes.length === 0 ? (
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardContent className="py-12 text-center">
                   <BarChart3 className="w-16 h-16 text-gray-500 mx-auto mb-4" />
                   <p className="text-gray-400 mb-2">Aucune évaluation créée</p>
@@ -277,7 +277,7 @@ export default function EvaluationModule() {
                 </CardContent>
               </Card>
             ) : (
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardContent className="pt-6">
                   <div className="overflow-x-auto">
                     <Table>
@@ -337,7 +337,7 @@ export default function EvaluationModule() {
 
           {/* TAB: Résultats */}
           <TabsContent value="resultats" className="space-y-6">
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardHeader>
                 <CardTitle className="text-white">Distribution des Notes</CardTitle>
               </CardHeader>
@@ -364,20 +364,20 @@ export default function EvaluationModule() {
               </CardContent>
             </Card>
 
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardHeader>
                 <CardTitle className="text-white">Analyse des Résultats</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  <div className="flex items-start gap-3 p-3 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+                  <div className="flex items-start gap-3 p-3 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)'}}>
                     <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-1" />
                     <div>
                       <p className="text-white font-semibold">Points forts</p>
                       <p className="text-sm text-gray-400">La majorité des élèves comprennent les concepts fondamentaux</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3 p-3 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+                  <div className="flex items-start gap-3 p-3 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)'}}>
                     <AlertCircle className="w-5 h-5 text-orange-500 flex-shrink-0 mt-1" />
                     <div>
                       <p className="text-white font-semibold">Axes d'amélioration</p>
@@ -391,7 +391,7 @@ export default function EvaluationModule() {
 
           {/* TAB: Stratégies */}
           <TabsContent value="strategies" className="space-y-6">
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardHeader>
                 <CardTitle className="text-white">Types d'Évaluation</CardTitle>
               </CardHeader>
@@ -414,7 +414,7 @@ export default function EvaluationModule() {
                       exemples: ["Réflexion personnelle", "Portfolio", "Auto-questionnaire"]
                     }
                   ].map((item, idx) => (
-                    <div key={idx} className="p-4 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+                    <div key={idx} className="p-4 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)'}}>
                       <h4 className="font-semibold text-white mb-2">{item.title}</h4>
                       <p className="text-sm text-gray-400 mb-3">{item.desc}</p>
                       <div className="flex flex-wrap gap-2">
@@ -430,7 +430,7 @@ export default function EvaluationModule() {
               </CardContent>
             </Card>
 
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardHeader>
                 <CardTitle className="text-white">Bonnes Pratiques</CardTitle>
               </CardHeader>
@@ -444,7 +444,7 @@ export default function EvaluationModule() {
                     "Analyser les résultats pour améliorer l'enseignement",
                     "Valoriser les efforts et les progrès réalisés"
                   ].map((pratique, idx) => (
-                    <div key={idx} className="flex items-start gap-3 p-3 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+                    <div key={idx} className="flex items-start gap-3 p-3 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)'}}>
                       <CheckCircle2 className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
                       <p className="text-gray-300">{pratique}</p>
                     </div>
@@ -518,7 +518,7 @@ export default function EvaluationModule() {
             </div>
           </DraggableDialogBody>
           <DraggableDialogFooter>
-              <Button variant="outline" onClick={() => setOpenEvalDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>
+              <Button variant="outline" onClick={() => setOpenEvalDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>
                 Annuler
               </Button>
               <Button onClick={handleSaveEval} className="bg-orange-600 hover:bg-orange-700 text-white" style={CG}>

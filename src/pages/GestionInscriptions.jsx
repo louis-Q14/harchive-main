@@ -716,7 +716,7 @@ export default function GestionInscriptions() {
                                             </h5>
                                             <Table>
                                               <TableHeader>
-                                                <TableRow style={{ backgroundColor: '#2d2d2d' }}>
+                                                <TableRow style={{ backgroundColor: 'var(--ha-surface2)' }}>
                                                   <TableHead className="font-semibold text-gray-300">Nom</TableHead>
                                                   <TableHead className="font-semibold text-gray-300">Email</TableHead>
                                                   <TableHead className="font-semibold text-gray-300">Matricule</TableHead>
@@ -1020,7 +1020,7 @@ export default function GestionInscriptions() {
                 setAction(null);
                 setMotifRejet("");
               }}
-              style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>
+              style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>
               Annuler
             </Button>
             <Button
@@ -1209,7 +1209,7 @@ export default function GestionInscriptions() {
                 setAction(null);
                 setEditFormData(null);
               }}
-              style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>
+              style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>
               Annuler
             </Button>
             <Button

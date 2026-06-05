@@ -509,14 +509,14 @@ const [expandedClasses, setExpandedClasses] = useState(new Set());
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="w-full px-4">
         {/* Header */}
         <div className="mb-8">
@@ -543,7 +543,7 @@ const [expandedClasses, setExpandedClasses] = useState(new Set());
           {/* TAB: Saisie */}
           <TabsContent value="saisie" className="space-y-6">
             {/* Filtres */}
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
                   <Filter className="w-5 h-5" />
@@ -655,7 +655,7 @@ const [expandedClasses, setExpandedClasses] = useState(new Set());
 
             {/* Tableau de saisie */}
             {selectedClasse && selectedMatiere && selectedPeriode && (
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-white flex items-center gap-2">
@@ -742,7 +742,7 @@ const [expandedClasses, setExpandedClasses] = useState(new Set());
             {(() => {
               if (!archives?.length) {
                 return (
-                  <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+                  <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                     <CardHeader>
                       <CardTitle className="text-white">Aucune archive</CardTitle>
                     </CardHeader>
@@ -798,7 +798,7 @@ const [expandedClasses, setExpandedClasses] = useState(new Set());
                       const bulletinKey = `${classeNom}__${bKey}`;
                       const isOpen = expandedBulletins.has(bulletinKey);
                       return (
-                        <Card key={bulletinKey} style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d', marginBottom: 8, marginLeft: 20}}>
+                        <Card key={bulletinKey} style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)', marginBottom: 8, marginLeft: 20}}>
                           <CardHeader style={{cursor:'pointer', userSelect:'none', padding:'10px 16px'}} onClick={() => toggleSet(setExpandedBulletins, bulletinKey)}>
                             <div className="flex items-center gap-3">
                               {isOpen ? <ChevronDown className="w-4 h-4 text-gray-400"/> : <ChevronRight className="w-4 h-4 text-gray-400"/>}
@@ -859,7 +859,7 @@ const [expandedClasses, setExpandedClasses] = useState(new Set());
           {/* TAB: Guide Pédagogique */}
           <TabsContent value="guide">
             <div className="grid gap-6">
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardHeader>
                   <CardTitle className="text-white">📚 Guide Pédagogique - Cahier de Cotation</CardTitle>
                 </CardHeader>
@@ -925,7 +925,7 @@ const [expandedClasses, setExpandedClasses] = useState(new Set());
               </div>
             </DraggableDialogBody>
             <DraggableDialogFooter>
-              <Button variant="outline" onClick={() => { setOpenDialog(false); setEditingNote(null); }} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>Annuler</Button>
+              <Button variant="outline" onClick={() => { setOpenDialog(false); setEditingNote(null); }} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>Annuler</Button>
               <Button className="bg-blue-600 hover:bg-blue-700 text-white" style={CG} onClick={handleSubmitEdit}>Enregistrer</Button>
             </DraggableDialogFooter>
           </DraggableDialog>
@@ -948,17 +948,17 @@ const [expandedClasses, setExpandedClasses] = useState(new Set());
                   {/* En-tête style QuestionnaireViewer */}
                   <div style={{ textAlign: 'center', marginBottom: 20, borderBottom: '2px solid #4d4d4d', paddingBottom: 16, ...CG }}>
                     <h2 style={{ fontSize: 18, fontWeight: 'bold', margin: '0 0 4px 0', color: '#fff' }}>NOTES ENREGISTRÉES</h2>
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginTop: 8, fontSize: 13, color: '#aaa' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginTop: 8, fontSize: 13, color: 'var(--ha-text-muted)' }}>
                       <span><strong>Type :</strong> {typeEvaluation}</span>
                       {titreEvaluation && <span><strong>Titre :</strong> {titreEvaluation}</span>}
                       <span><strong>Matière :</strong> {matieres.find(m => m.id === selectedMatiere)?.nom || ''}</span>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginTop: 4, fontSize: 13, color: '#aaa' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginTop: 4, fontSize: 13, color: 'var(--ha-text-muted)' }}>
                       <span><strong>Classe :</strong> {classes.find(c => c.id === selectedClasse)?.nom || ''}</span>
                       <span><strong>Période :</strong> {selectedPeriode}</span>
                       <span><strong>Note sur :</strong> {notesExistantes[0]?.note_sur || noteSur} pts</span>
                     </div>
-                    <div style={{ fontSize: 13, color: '#aaa', marginTop: 4 }}>
+                    <div style={{ fontSize: 13, color: 'var(--ha-text-muted)', marginTop: 4 }}>
                       <strong>Professeur :</strong> {user?.full_name || ''}
                     </div>
                   </div>
@@ -1014,7 +1014,7 @@ const [expandedClasses, setExpandedClasses] = useState(new Set());
               )}
             </DraggableDialogBody>
             <DraggableDialogFooter>
-              <Button variant="outline" onClick={() => setConsulterDialogOpen(false)} style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG }}>Fermer</Button>
+              <Button variant="outline" onClick={() => setConsulterDialogOpen(false)} style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG }}>Fermer</Button>
               <Button className="bg-green-600 hover:bg-green-700 text-white" style={CG} disabled={!notesExistantes?.length || notesExistantes.every(n => n.statut === 'soumis')} onClick={() => handlePublishNotes()}>
                 <Send className="w-4 h-4 mr-2" /> Tout envoyer à l'admin
               </Button>
@@ -1031,7 +1031,7 @@ const [expandedClasses, setExpandedClasses] = useState(new Set());
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel style={{backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#5a5a5a'}}>
+                <AlertDialogCancel style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: '#5a5a5a'}}>
                   Annuler
                 </AlertDialogCancel>
                 <AlertDialogAction
@@ -1054,7 +1054,7 @@ const [expandedClasses, setExpandedClasses] = useState(new Set());
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel style={{backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#5a5a5a'}}>
+                <AlertDialogCancel style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: '#5a5a5a'}}>
                   Annuler
                 </AlertDialogCancel>
                 <AlertDialogAction
@@ -1077,7 +1077,7 @@ const [expandedClasses, setExpandedClasses] = useState(new Set());
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel style={{backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#5a5a5a'}}>
+                <AlertDialogCancel style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: '#5a5a5a'}}>
                   Annuler
                 </AlertDialogCancel>
                 <AlertDialogAction

@@ -86,7 +86,7 @@ export default function ColorManagementDialog({ open, onClose, etablissementId }
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl max-h-[90vh]" style={{backgroundColor: '#3d3d3d', borderColor: '#4d4d4d'}}>
+      <DialogContent className="max-w-3xl max-h-[90vh]" style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
         <DialogHeader>
           <DialogTitle className="text-xl text-white flex items-center gap-2">
             <Palette className="w-5 h-5" />
@@ -106,7 +106,7 @@ export default function ColorManagementDialog({ open, onClose, etablissementId }
                 <div 
                   key={idx} 
                   className="flex items-center gap-4 p-4 rounded-lg"
-                  style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d', border: '1px solid'}}
+                  style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)', border: '1px solid'}}
                 >
                   <div className="flex-1">
                     <p className="text-white font-semibold">

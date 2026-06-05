@@ -204,7 +204,7 @@ export default function FichesFolderView({ fiches, user, queryClient, createPage
                       />
                     </div>
                   </ContextMenuTrigger>
-                  <ContextMenuContent style={{ backgroundColor: '#2d2d2d', borderColor: '#4d4d4d' }}>
+                  <ContextMenuContent style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}>
                     <ContextMenuItem onClick={() => openFolder(nextLevel, val)} className="text-white text-xs hover:bg-[#474747] cursor-pointer">
                       <Folder className="w-3.5 h-3.5 mr-2 text-yellow-400" /> Ouvrir le dossier
                     </ContextMenuItem>
@@ -239,15 +239,15 @@ export default function FichesFolderView({ fiches, user, queryClient, createPage
                     </div>
                   </div>
                 </ContextMenuTrigger>
-                <ContextMenuContent style={{ backgroundColor: '#2d2d2d', borderColor: '#4d4d4d' }}>
+                <ContextMenuContent style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}>
                   <ContextMenuItem onClick={() => setViewingFiche(fiche)} className="text-white text-xs hover:bg-[#474747] cursor-pointer">
                     <Eye className="w-3.5 h-3.5 mr-2 text-blue-400" /> Ouvrir
                   </ContextMenuItem>
-                  <ContextMenuSeparator style={{ backgroundColor: '#4d4d4d' }} />
+                  <ContextMenuSeparator style={{ backgroundColor: 'var(--ha-bg)' }} />
                   <ContextMenuItem onClick={() => { setRenameItem(fiche); setNewName(fiche.titre_seance); }} className="text-white text-xs hover:bg-[#474747] cursor-pointer">
                     <Edit2 className="w-3.5 h-3.5 mr-2 text-blue-400" /> Renommer
                   </ContextMenuItem>
-                  <ContextMenuSeparator style={{ backgroundColor: '#4d4d4d' }} />
+                  <ContextMenuSeparator style={{ backgroundColor: 'var(--ha-bg)' }} />
                   <ContextMenuItem onClick={() => handleApprouver(fiche)} className="text-white text-xs hover:bg-[#474747] cursor-pointer">
                     <CheckCircle2 className="w-3.5 h-3.5 mr-2 text-green-400" /> Approuver
                   </ContextMenuItem>
@@ -263,7 +263,7 @@ export default function FichesFolderView({ fiches, user, queryClient, createPage
 
       {renameItem && (
         <Dialog open={!!renameItem} onOpenChange={() => setRenameItem(null)}>
-          <DialogContent style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+          <DialogContent style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
             <DialogHeader>
               <DialogTitle className="text-white">Renommer</DialogTitle>
             </DialogHeader>

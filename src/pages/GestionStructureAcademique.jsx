@@ -438,7 +438,7 @@ export default function GestionStructureAcademique() {
           </div>
           <div className="space-y-2">
             {etablissementsList.map((etab) => (
-              <Card key={etab.id} className="cursor-pointer hover:border-purple-500 transition-colors" style={{backgroundColor: '#3d3d3d', borderColor: '#4d4d4d'}} onClick={() => selectEtablissement(etab)}>
+              <Card key={etab.id} className="cursor-pointer hover:border-purple-500 transition-colors" style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} onClick={() => selectEtablissement(etab)}>
                 <CardContent className="p-4 flex items-center justify-between">
                   <div>
                     <p className="text-white font-semibold">{etab.denomination || etab.sigle}</p>
@@ -475,7 +475,7 @@ export default function GestionStructureAcademique() {
 
         {/* Read-only summary when structure exists */}
         {hasStructure ? (
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#4d4d4d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardHeader>
               <CardTitle className="text-white" style={CG}>Structure Hiérarchique</CardTitle>
             </CardHeader>
@@ -483,7 +483,7 @@ export default function GestionStructureAcademique() {
               {facultes.map((faculte) => {
                 const faculteDepts = departements.filter(d => d.faculte_id === faculte.id);
                 return (
-                  <div key={faculte.id} className="border border-[#2d2d2d] rounded-lg p-3" style={{backgroundColor: '#2d2d2d'}}>
+                  <div key={faculte.id} className="border border-[#2d2d2d] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface2)'}}>
                     <div className="flex items-center gap-2">
                       <button onClick={() => toggleExpand('faculte', faculte.id)} className="text-white">
                         {expandedFacultes[faculte.id] ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
@@ -495,7 +495,7 @@ export default function GestionStructureAcademique() {
                     {expandedFacultes[faculte.id] && (
                       <div className="ml-7 mt-3 space-y-2">
                         {faculteDepts.map((dept) => (
-                          <div key={dept.id} className="border border-[#3d3d3d] rounded-lg p-3" style={{backgroundColor: '#3a3a3a'}}>
+                          <div key={dept.id} className="border border-[#3d3d3d] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface)'}}>
                             <div className="flex items-center gap-2">
                               <button onClick={() => toggleExpand('departement', dept.id)} className="text-white">
                                 {expandedDepartements[dept.id] ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
@@ -507,7 +507,7 @@ export default function GestionStructureAcademique() {
                             {expandedDepartements[dept.id] && (
                               <div className="ml-6 mt-3 space-y-2">
                                 {salles.filter(s => s.departement_id === dept.id && !s.orientation_id && !s.option_id).map((salle) => (
-                                  <div key={salle.id} className="flex items-center gap-2 p-2 rounded" style={{backgroundColor: '#3d3d3d'}}>
+                                  <div key={salle.id} className="flex items-center gap-2 p-2 rounded" style={{backgroundColor: 'var(--ha-surface)'}}>
                                     <Users className="w-4 h-4 text-pink-400" />
                                     <span className="text-white text-sm">{salle.nom}</span>
                                     <Badge variant="outline" className="text-xs">{salle.nombre_etudiants || 0} / {salle.capacite}</Badge>
@@ -525,7 +525,7 @@ export default function GestionStructureAcademique() {
                                     {expandedOrientations[orientation.id] && (
                                       <div className="ml-6 mt-3 space-y-2">
                                         {salles.filter(s => s.orientation_id === orientation.id && !s.option_id).map((salle) => (
-                                          <div key={salle.id} className="flex items-center gap-2 p-2 rounded" style={{backgroundColor: '#3d3d3d'}}>
+                                          <div key={salle.id} className="flex items-center gap-2 p-2 rounded" style={{backgroundColor: 'var(--ha-surface)'}}>
                                             <Users className="w-4 h-4 text-pink-400" />
                                             <span className="text-white text-sm">{salle.nom}</span>
                                             <Badge variant="outline" className="text-xs">{salle.nombre_etudiants || 0} / {salle.capacite}</Badge>
@@ -543,7 +543,7 @@ export default function GestionStructureAcademique() {
                                             {expandedOptions[opt.id] && salles.filter(s => s.option_id === opt.id).length > 0 && (
                                               <div className="ml-5 mt-2 space-y-1">
                                                 {salles.filter(s => s.option_id === opt.id).map((salle) => (
-                                                  <div key={salle.id} className="flex items-center gap-2 p-2 rounded" style={{backgroundColor: '#4d4d4d'}}>
+                                                  <div key={salle.id} className="flex items-center gap-2 p-2 rounded" style={{backgroundColor: 'var(--ha-bg)'}}>
                                                     <Users className="w-4 h-4 text-pink-400" />
                                                     <span className="text-white text-sm">{salle.nom}</span>
                                                     <Badge variant="outline" className="text-xs">{salle.nombre_etudiants || 0} / {salle.capacite}</Badge>
@@ -569,7 +569,7 @@ export default function GestionStructureAcademique() {
                                     {expandedOptions[opt.id] && salles.filter(s => s.option_id === opt.id).length > 0 && (
                                       <div className="ml-5 mt-2 space-y-1">
                                         {salles.filter(s => s.option_id === opt.id).map((salle) => (
-                                          <div key={salle.id} className="flex items-center gap-2 p-2 rounded" style={{backgroundColor: '#4d4d4d'}}>
+                                          <div key={salle.id} className="flex items-center gap-2 p-2 rounded" style={{backgroundColor: 'var(--ha-bg)'}}>
                                             <Users className="w-4 h-4 text-pink-400" />
                                             <span className="text-white text-sm">{salle.nom}</span>
                                             <Badge variant="outline" className="text-xs">{salle.nombre_etudiants || 0} / {salle.capacite}</Badge>
@@ -589,7 +589,7 @@ export default function GestionStructureAcademique() {
                 );
               })}
               {departements.filter(d => !d.faculte_id).map((dept) => (
-                <div key={dept.id} className="border border-[#3d3d3d] rounded-lg p-3" style={{backgroundColor: '#3a3a3a'}}>
+                <div key={dept.id} className="border border-[#3d3d3d] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface)'}}>
                   <div className="flex items-center gap-2">
                     <button onClick={() => toggleExpand('departement', dept.id)} className="text-white">
                       {expandedDepartements[dept.id] ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
@@ -601,7 +601,7 @@ export default function GestionStructureAcademique() {
                   {expandedDepartements[dept.id] && (
                     <div className="ml-6 mt-3 space-y-2">
                       {salles.filter(s => s.departement_id === dept.id && !s.orientation_id && !s.option_id).map((salle) => (
-                        <div key={salle.id} className="flex items-center gap-2 p-2 rounded" style={{backgroundColor: '#3d3d3d'}}>
+                        <div key={salle.id} className="flex items-center gap-2 p-2 rounded" style={{backgroundColor: 'var(--ha-surface)'}}>
                           <Users className="w-4 h-4 text-pink-400" />
                           <span className="text-white text-sm">{salle.nom}</span>
                           <Badge variant="outline" className="text-xs">{salle.nombre_etudiants || 0} / {salle.capacite}</Badge>
@@ -675,7 +675,7 @@ export default function GestionStructureAcademique() {
             {facultes.map((faculte) => {
               const faculteDepts = departements.filter(d => d.faculte_id === faculte.id);
               return (
-                <div key={faculte.id} className="border border-[#2d2d2d] rounded-lg p-3" style={{backgroundColor: '#2d2d2d'}}>
+                <div key={faculte.id} className="border border-[#2d2d2d] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface2)'}}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <button onClick={() => toggleExpand('faculte', faculte.id)} className="text-white">
@@ -703,7 +703,7 @@ export default function GestionStructureAcademique() {
                       {faculteDepts.map((dept) => {
                         const deptOptions = options.filter(o => o.departement_id === dept.id);
                         return (
-                          <div key={dept.id} className="border border-[#3d3d3d] rounded-lg p-3" style={{backgroundColor: '#3a3a3a'}}>
+                          <div key={dept.id} className="border border-[#3d3d3d] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface)'}}>
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-2">
                                 <button onClick={() => toggleExpand('departement', dept.id)} className="text-white">
@@ -739,7 +739,7 @@ export default function GestionStructureAcademique() {
                                   <div className="space-y-1">
                                     <div className="text-xs text-gray-400 uppercase font-semibold mb-1">Niveaux Académiques</div>
                                     {salles.filter(s => s.departement_id === dept.id && !s.orientation_id && !s.option_id).map((salle) => (
-                                      <div key={salle.id} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: '#3d3d3d'}}>
+                                      <div key={salle.id} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: 'var(--ha-surface)'}}>
                                         <div className="flex items-center gap-2">
                                           <Users className="w-4 h-4 text-pink-400" />
                                           <span className="text-white text-sm">{salle.nom}</span>
@@ -798,7 +798,7 @@ export default function GestionStructureAcademique() {
                                            <div className="space-y-1">
                                              <div className="text-xs text-gray-400 uppercase font-semibold mb-1">Niveaux Académiques</div>
                                              {orientSalles.map((salle) => (
-                                               <div key={salle.id} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: '#3d3d3d'}}>
+                                               <div key={salle.id} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: 'var(--ha-surface)'}}>
                                                  <div className="flex items-center gap-2">
                                                    <Users className="w-4 h-4 text-pink-400" />
                                                    <span className="text-white text-sm">{salle.nom}</span>
@@ -848,7 +848,7 @@ export default function GestionStructureAcademique() {
                                                {expandedOptions[opt.id] && optSalles.length > 0 && (
                                                  <div className="ml-5 mt-2 space-y-1">
                                                    {optSalles.map((salle) => (
-                                                     <div key={salle.id} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: '#4d4d4d'}}>
+                                                     <div key={salle.id} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: 'var(--ha-bg)'}}>
                                                        <div className="flex items-center gap-2">
                                                          <Users className="w-4 h-4 text-pink-400" />
                                                          <span className="text-white text-sm">{salle.nom}</span>
@@ -907,7 +907,7 @@ export default function GestionStructureAcademique() {
                                      {expandedOptions[opt.id] && optSalles.length > 0 && (
                                        <div className="ml-5 mt-2 space-y-1">
                                          {optSalles.map((salle) => (
-                                           <div key={salle.id} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: '#4d4d4d'}}>
+                                           <div key={salle.id} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: 'var(--ha-bg)'}}>
                                              <div className="flex items-center gap-2">
                                                <Users className="w-4 h-4 text-pink-400" />
                                                <span className="text-white text-sm">{salle.nom}</span>
@@ -943,7 +943,7 @@ export default function GestionStructureAcademique() {
 
             {/* Départements sans faculté */}
             {departements.filter(d => !d.faculte_id).map((dept) => (
-              <div key={dept.id} className="border border-[#3d3d3d] rounded-lg p-3" style={{backgroundColor: '#3a3a3a'}}>
+              <div key={dept.id} className="border border-[#3d3d3d] rounded-lg p-3" style={{backgroundColor: 'var(--ha-surface)'}}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <button onClick={() => toggleExpand('departement', dept.id)} className="text-white">
@@ -979,7 +979,7 @@ export default function GestionStructureAcademique() {
                       <div className="space-y-1">
                         <div className="text-xs text-gray-400 uppercase font-semibold mb-1">Niveaux Académiques</div>
                         {salles.filter(s => s.departement_id === dept.id && !s.orientation_id && !s.option_id).map((salle) => (
-                          <div key={salle.id} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: '#3d3d3d'}}>
+                          <div key={salle.id} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: 'var(--ha-surface)'}}>
                             <div className="flex items-center gap-2">
                               <Users className="w-4 h-4 text-pink-400" />
                               <span className="text-white text-sm">{salle.nom}</span>
@@ -1035,7 +1035,7 @@ export default function GestionStructureAcademique() {
                                 <div className="space-y-1">
                                   <div className="text-xs text-gray-400 uppercase font-semibold mb-1">Niveaux Académiques</div>
                                   {orientSalles.map((salle) => (
-                                    <div key={salle.id} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: '#3d3d3d'}}>
+                                    <div key={salle.id} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: 'var(--ha-surface)'}}>
                                       <div className="flex items-center gap-2">
                                         <Users className="w-4 h-4 text-pink-400" />
                                         <span className="text-white text-sm">{salle.nom}</span>
@@ -1082,7 +1082,7 @@ export default function GestionStructureAcademique() {
                                     {expandedOptions[opt.id] && optSalles.length > 0 && (
                                       <div className="ml-5 mt-2 space-y-1">
                                         {optSalles.map((salle) => (
-                                          <div key={salle.id} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: '#4d4d4d'}}>
+                                          <div key={salle.id} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: 'var(--ha-bg)'}}>
                                             <div className="flex items-center gap-2">
                                               <Users className="w-4 h-4 text-pink-400" />
                                               <span className="text-white text-sm">{salle.nom}</span>
@@ -1139,7 +1139,7 @@ export default function GestionStructureAcademique() {
                           {expandedOptions[opt.id] && optSalles.length > 0 && (
                             <div className="ml-5 mt-2 space-y-1">
                               {optSalles.map((salle) => (
-                                <div key={salle.id} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: '#4d4d4d'}}>
+                                <div key={salle.id} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: 'var(--ha-bg)'}}>
                                   <div className="flex items-center gap-2">
                                     <Users className="w-4 h-4 text-pink-400" />
                                     <span className="text-white text-sm">{salle.nom}</span>
@@ -1176,7 +1176,7 @@ export default function GestionStructureAcademique() {
           </div>
         </DraggableDialogBody>
         <DraggableDialogFooter>
-          <Button variant="outline" onClick={() => setShowStructureDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>Fermer</Button>
+          <Button variant="outline" onClick={() => setShowStructureDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>Fermer</Button>
         </DraggableDialogFooter>
       </DraggableDialog>
 
@@ -1330,7 +1330,7 @@ export default function GestionStructureAcademique() {
             </div>
           </DraggableDialogBody>
           <DraggableDialogFooter>
-              <Button variant="outline" onClick={() => setShowDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>Annuler</Button>
+              <Button variant="outline" onClick={() => setShowDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>Annuler</Button>
               <Button onClick={handleSubmit} className="bg-blue-600 hover:bg-blue-700 text-white" style={CG}>
                 {formData.isEdit ? "Modifier" : "Créer"}
               </Button>

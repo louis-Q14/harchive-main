@@ -118,7 +118,7 @@ export default function Home() {
 
   if (isLoadingAuth) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#333333'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-surface)'}}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
@@ -178,9 +178,9 @@ export default function Home() {
   });
 
   return (
-    <div className="min-h-screen" style={{backgroundColor: '#333333'}}>
+    <div className="min-h-screen" style={{backgroundColor: 'var(--ha-surface)'}}>
       {/* Header */}
-      <header style={{backgroundColor: '#262626', borderBottom: '1px solid #404040'}} className="shadow-sm sticky top-0 z-50">
+      <header style={{backgroundColor: 'var(--ha-surface)', borderBottom: '1px solid #404040'}} className="shadow-sm sticky top-0 z-50">
         <div className="w-full px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -201,7 +201,7 @@ export default function Home() {
                     variant="ghost"
                     onClick={() => logout()}
                     className="text-white hover:opacity-80"
-                    style={{backgroundColor: '#404040'}}
+                    style={{backgroundColor: 'var(--ha-surface2)'}}
                   >
                     <LogOut className="w-4 h-4 mr-2" />
                     Déconnexion
@@ -211,7 +211,7 @@ export default function Home() {
                 <Button
                   variant="outline"
                   onClick={handleLogin}
-                  style={{borderColor: '#555555', color: 'white', backgroundColor: '#404040'}}
+                  style={{borderColor: 'var(--ha-border)', color: 'white', backgroundColor: 'var(--ha-surface2)'}}
                   className="hover:opacity-80"
                 >
                   Connexion
@@ -237,7 +237,7 @@ export default function Home() {
 
           {/* Onglets d'inscription */}
           <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-8">
-            <Card style={{backgroundColor: '#262626', borderColor: '#404040'}} className="shadow-md hover:shadow-lg transition-all">
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="shadow-md hover:shadow-lg transition-all">
               <CardContent className="pt-6 pb-6 text-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-white" style={{backgroundColor: '#555555'}}>
                   <School className="w-6 h-6" />
@@ -252,7 +252,7 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <Card style={{backgroundColor: '#262626', borderColor: '#404040'}} className="shadow-md hover:shadow-lg transition-all">
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="shadow-md hover:shadow-lg transition-all">
               <CardContent className="pt-6 pb-6 text-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-white" style={{backgroundColor: '#555555'}}>
                   <GraduationCap className="w-6 h-6" />
@@ -267,7 +267,7 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <Card style={{backgroundColor: '#262626', borderColor: '#404040'}} className="shadow-md hover:shadow-lg transition-all">
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="shadow-md hover:shadow-lg transition-all">
               <CardContent className="pt-6 pb-6 text-center">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-white" style={{backgroundColor: '#555555'}}>
                   <Users className="w-6 h-6" />
@@ -294,7 +294,7 @@ export default function Home() {
             </p>
 
             {/* Tabs */}
-            <div className="flex items-center gap-0 rounded-full p-1 w-full mb-6" style={{ backgroundColor: '#2a2a2a' }}>
+            <div className="flex items-center gap-0 rounded-full p-1 w-full mb-6" style={{ backgroundColor: 'var(--ha-surface)' }}>
               {HOME_JOURNAL_TABS.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;
@@ -326,8 +326,8 @@ export default function Home() {
                     <Loader2 className="w-8 h-8 text-white animate-spin" />
                   </div>
                 ) : publications.length === 0 ? (
-                  <div className="p-8 text-center rounded-lg" style={{ backgroundColor: '#262626', border: '1px solid #404040' }}>
-                    <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3" style={{ backgroundColor: '#404040' }}>
+                  <div className="p-8 text-center rounded-lg" style={{ backgroundColor: 'var(--ha-surface)', border: '1px solid #404040' }}>
+                    <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3" style={{ backgroundColor: 'var(--ha-surface2)' }}>
                       <Newspaper className="w-7 h-7 text-gray-400" />
                     </div>
                     <p className="text-white text-base mb-1">Aucune publication pour le moment</p>
@@ -351,7 +351,7 @@ export default function Home() {
                 key={i}
                 onClick={() => f.page === 'ListeEtablissements' ? handleOpenAgenda() : navigate(createPageUrl(f.page))}
                 className="text-center p-6 rounded-lg cursor-pointer transition-all hover:scale-105 hover:shadow-lg"
-                style={{backgroundColor: '#262626', border: '1px solid #404040'}}
+                style={{backgroundColor: 'var(--ha-surface)', border: '1px solid #404040'}}
               >
                 <f.icon className="w-10 h-10 text-gray-300 mx-auto mb-3" />
                 <h4 className="text-sm font-semibold text-white mb-2">{f.title}</h4>
@@ -363,7 +363,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t py-8 px-4 sm:px-6 lg:px-8" style={{backgroundColor: '#262626', borderColor: '#404040'}}>
+      <footer className="border-t py-8 px-4 sm:px-6 lg:px-8" style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
         <div className="w-full text-center">
           <p className="text-gray-300">
             © 2025 Harchive. Tous droits réservés. Plateforme de gestion académique de la RDC.

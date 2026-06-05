@@ -8,7 +8,7 @@ import { DraggableDialog, DraggableDialogBody, DraggableDialogFooter } from "@/c
 import { Save, Loader2, Plus, Trash2, GripVertical } from "lucide-react";
 
 const CG = { fontFamily: '"Century Gothic", "AppleGothic", "Gill Sans", "Trebuchet MS", sans-serif' };
-const inputStyle = { backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG };
+const inputStyle = { backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG };
 
 export default function QuestionnaireDialog({
   open,
@@ -175,7 +175,7 @@ export default function QuestionnaireDialog({
             </div>
 
             {questions.length === 0 && (
-              <div className="text-center py-8 rounded-lg" style={{ backgroundColor: '#2d2d2d', border: '2px dashed #4d4d4d' }}>
+              <div className="text-center py-8 rounded-lg" style={{ backgroundColor: 'var(--ha-surface2)', border: '2px dashed #4d4d4d' }}>
                 <p className="text-gray-400 text-sm" style={CG}>Aucune question ajoutée.</p>
                 <p className="text-gray-500 text-xs mt-1" style={CG}>Cliquez sur "Question libre" ou "Question QCM" pour commencer.</p>
               </div>
@@ -183,7 +183,7 @@ export default function QuestionnaireDialog({
 
             <div className="space-y-3" style={{ maxHeight: '35vh', overflowY: 'auto', paddingRight: '4px' }}>
               {questions.map((q, i) => (
-                <div key={i} className="rounded-lg p-3" style={{ backgroundColor: '#2d2d2d', border: '1px solid #3d3d3d' }}>
+                <div key={i} className="rounded-lg p-3" style={{ backgroundColor: 'var(--ha-surface2)', border: '1px solid #3d3d3d' }}>
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <GripVertical className="w-4 h-4 text-gray-500" />
@@ -257,7 +257,7 @@ export default function QuestionnaireDialog({
 
       <DraggableDialogFooter>
         <Button variant="outline" onClick={() => onOpenChange(false)}
-          style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG }}>
+          style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG }}>
           Annuler
         </Button>
         <Button onClick={handleSaveQuestionnaire} disabled={isSaving}

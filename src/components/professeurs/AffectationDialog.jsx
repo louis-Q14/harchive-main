@@ -385,7 +385,7 @@ export default function AffectationDialog({
             {/* Professeur */}
             <div>
               <Label className="text-white">Professeur</Label>
-              <div className="mt-2 p-4 rounded-lg" style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d', border: '1px solid'}}>
+              <div className="mt-2 p-4 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)', border: '1px solid'}}>
                 <p className="font-semibold text-lg text-white">
                   {professeur.prenom} {professeur.post_nom || ''} {professeur.nom}
                 </p>
@@ -400,10 +400,10 @@ export default function AffectationDialog({
             <div>
               <Label className="text-white">Matière *</Label>
               <Select value={selectedMatiereId} onValueChange={setSelectedMatiereId}>
-                <SelectTrigger className="mt-2" style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d', color: '#ffffff'}}>
+                <SelectTrigger className="mt-2" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)', color: 'var(--ha-text)'}}>
                   <SelectValue placeholder="Sélectionnez une matière" />
                 </SelectTrigger>
-                <SelectContent style={{backgroundColor: '#3d3d3d', borderColor: '#4d4d4d'}}>
+                <SelectContent style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                   {loadingMatieres ? (
                     <div className="p-4 text-center">
                       <Loader2 className="w-4 h-4 animate-spin mx-auto text-white" />
@@ -414,7 +414,7 @@ export default function AffectationDialog({
                     </div>
                   ) : (
                     matieres.map(matiere => (
-                      <SelectItem key={matiere.id} value={matiere.id} style={{color: '#ffffff'}}>
+                      <SelectItem key={matiere.id} value={matiere.id} style={{color: 'var(--ha-text)'}}>
                         <div className="flex items-center gap-2">
                           <div 
                             className="w-3 h-3 rounded-full" 
@@ -436,7 +436,7 @@ export default function AffectationDialog({
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label className="text-white">Facultés (sélection multiple)</Label>
-                    <div className="border rounded-md p-2 max-h-40 overflow-y-auto" style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d'}}>
+                    <div className="border rounded-md p-2 max-h-40 overflow-y-auto" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}>
                       {facultes.length === 0 ? (
                         <p className="text-sm text-gray-400">Aucune faculté disponible</p>
                       ) : (
@@ -462,7 +462,7 @@ export default function AffectationDialog({
 
                   <div className="space-y-2">
                     <Label className="text-white">Départements (sélection multiple)</Label>
-                    <div className="border rounded-md p-2 max-h-40 overflow-y-auto" style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d'}}>
+                    <div className="border rounded-md p-2 max-h-40 overflow-y-auto" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}>
                       {selectedFacultes.length === 0 ? (
                         <p className="text-sm text-gray-400">Sélectionnez d'abord une faculté</p>
                       ) : departementsDisponibles.length === 0 ? (
@@ -490,7 +490,7 @@ export default function AffectationDialog({
 
                   <div className="space-y-2">
                     <Label className="text-white">Orientations (sélection multiple)</Label>
-                    <div className="border rounded-md p-2 max-h-40 overflow-y-auto" style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d'}}>
+                    <div className="border rounded-md p-2 max-h-40 overflow-y-auto" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}>
                       {orientationsDisponibles.length === 0 ? (
                         <p className="text-sm text-gray-400">Aucune orientation disponible</p>
                       ) : (
@@ -516,7 +516,7 @@ export default function AffectationDialog({
 
                   <div className="space-y-2">
                     <Label className="text-white">Options (sélection multiple)</Label>
-                    <div className="border rounded-md p-2 max-h-40 overflow-y-auto" style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d'}}>
+                    <div className="border rounded-md p-2 max-h-40 overflow-y-auto" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}>
                       {optionsDisponibles.length === 0 ? (
                         <p className="text-sm text-gray-400">Aucune option disponible</p>
                       ) : (
@@ -544,7 +544,7 @@ export default function AffectationDialog({
                 {/* Structure Académique - même style que Nouvelle matière */}
                 <div className="space-y-2">
                   <Label className="text-white">Structure Académique</Label>
-                  <div className="border rounded-md p-2 h-96 overflow-y-auto" style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d'}}>
+                  <div className="border rounded-md p-2 h-96 overflow-y-auto" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}>
                     {selectedFacultes.length === 0 ? (
                       <p className="text-sm text-gray-400 text-center py-8">
                         Sélectionnez d'abord une ou plusieurs facultés ci-dessus

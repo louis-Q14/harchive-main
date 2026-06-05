@@ -84,7 +84,7 @@ export default function MaPromotion() {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <div className="w-12 h-12 border-4 border-gray-600 border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -93,9 +93,9 @@ export default function MaPromotion() {
   // Afficher la page même sans classe_id si on a les infos de classe
   if (!user?.classe_id && !user?.classe) {
     return (
-      <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
         <div className="w-full px-4">
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="py-12 text-center">
               <BookOpen className="w-16 h-16 text-gray-500 mx-auto mb-4" />
               <p className="text-gray-400">Vous n'êtes pas assigné à une promotion</p>
@@ -107,7 +107,7 @@ export default function MaPromotion() {
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="w-full px-4">
         {/* En-tête */}
         <div className="mb-6">
@@ -116,7 +116,7 @@ export default function MaPromotion() {
         </div>
 
         {/* Info classe */}
-        <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="mb-6">
+        <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="mb-6">
           <CardContent className="pt-6">
             <div className="flex items-center justify-between flex-wrap gap-4">
               <div>
@@ -149,13 +149,13 @@ export default function MaPromotion() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
-              style={{backgroundColor: '#2d2d2d', borderColor: '#4d4d4d', color: '#ffffff'}}
+              style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)', color: 'var(--ha-text)'}}
             />
           </div>
         </div>
 
         {/* Liste des étudiants */}
-        <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+        <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
           <CardHeader>
             <CardTitle className="text-white flex items-center justify-between">
               <span>Liste des Étudiants</span>
@@ -173,7 +173,7 @@ export default function MaPromotion() {
             ) : (
               <div className="rounded-lg border border-[#2d2d2d] overflow-hidden">
                 <Table>
-                  <TableHeader style={{backgroundColor: '#2d2d2d'}}>
+                  <TableHeader style={{backgroundColor: 'var(--ha-surface2)'}}>
                     <TableRow className="border-[#2d2d2d] hover:bg-[#2d2d2d]">
                       <TableHead className="text-gray-300 font-semibold">Nom</TableHead>
                       <TableHead className="text-gray-300 font-semibold">Email</TableHead>

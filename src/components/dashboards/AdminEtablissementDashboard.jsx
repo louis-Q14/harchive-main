@@ -316,7 +316,7 @@ export default function AdminEtablissementDashboard({ user }) {
   ];
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="w-full px-4 space-y-8">
         {/* Header avec nom établissement */}
         <div>
@@ -337,7 +337,7 @@ export default function AdminEtablissementDashboard({ user }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {stats.map((stat, index) => (
             <Link key={index} to={stat.link}>
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between mb-4">
                     <div className={`p-3 ${stat.bgColor} rounded-xl shadow-lg`}>
@@ -370,7 +370,7 @@ export default function AdminEtablissementDashboard({ user }) {
         {(notesEnAttente.length > 0 || demandesInscription.length > 0 || rotationsBrouillon > 0) && (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {notesEnAttente.length > 0 && (
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="border-l-4 border-l-yellow-500">
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="border-l-4 border-l-yellow-500">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -395,7 +395,7 @@ export default function AdminEtablissementDashboard({ user }) {
             )}
 
             {demandesInscription.length > 0 && (
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="border-l-4 border-l-blue-500">
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="border-l-4 border-l-blue-500">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -420,7 +420,7 @@ export default function AdminEtablissementDashboard({ user }) {
             )}
 
             {rotationsBrouillon > 0 && (
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="border-l-4 border-l-purple-500">
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="border-l-4 border-l-purple-500">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -448,7 +448,7 @@ export default function AdminEtablissementDashboard({ user }) {
 
         {/* Accès rapide */}
         <div className="grid lg:grid-cols-4 gap-6">
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="hover:shadow-lg transition-shadow">
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2 text-sm">
                 <Users className="w-5 h-5 text-blue-500" />
@@ -468,7 +468,7 @@ export default function AdminEtablissementDashboard({ user }) {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="hover:shadow-lg transition-shadow">
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2 text-sm">
                 <BookOpen className="w-5 h-5 text-green-500" />
@@ -494,7 +494,7 @@ export default function AdminEtablissementDashboard({ user }) {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="hover:shadow-lg transition-shadow">
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2 text-sm">
                 <UserCheck className="w-5 h-5 text-purple-500" />
@@ -520,7 +520,7 @@ export default function AdminEtablissementDashboard({ user }) {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="hover:shadow-lg transition-shadow">
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2 text-sm">
                 <Calendar className="w-5 h-5 text-indigo-500" />
@@ -544,7 +544,7 @@ export default function AdminEtablissementDashboard({ user }) {
         {/* Vue d'ensemble détaillée */}
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Niveaux Académiques */}
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2 text-white">
@@ -560,7 +560,7 @@ export default function AdminEtablissementDashboard({ user }) {
                   {niveauxAcademiques.slice(0, 5).map((niveau, idx) => {
                     const etudiantsNiveau = etudiants.filter(e => e.classe === niveau.niveau);
                     return (
-                      <div key={idx} className="p-3 rounded-lg hover:bg-[#474747] transition-colors" style={{backgroundColor: '#2d2d2d'}}>
+                      <div key={idx} className="p-3 rounded-lg hover:bg-[#474747] transition-colors" style={{backgroundColor: 'var(--ha-surface2)'}}>
                         <div className="flex items-center justify-between">
                           <div className="flex-1">
                             <p className="font-semibold text-white">{niveau.niveau}</p>
@@ -596,7 +596,7 @@ export default function AdminEtablissementDashboard({ user }) {
           </Card>
 
           {/* Étudiants récents */}
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2 text-white">
@@ -611,7 +611,7 @@ export default function AdminEtablissementDashboard({ user }) {
                 <div className="space-y-3">
                   {etudiants.slice(0, 6).map((etudiant) => {
                     return (
-                      <div key={etudiant.id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#474747] transition-colors" style={{backgroundColor: '#2d2d2d'}}>
+                      <div key={etudiant.id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#474747] transition-colors" style={{backgroundColor: 'var(--ha-surface2)'}}>
                         {etudiant.photo_url ? (
                           <img
                             src={etudiant.photo_url}
@@ -671,7 +671,7 @@ export default function AdminEtablissementDashboard({ user }) {
 
         {/* Statistiques détaillées */}
         <div className="grid lg:grid-cols-4 gap-6">
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2 text-sm">
                 <BarChart3 className="w-5 h-5 text-blue-500" />
@@ -698,7 +698,7 @@ export default function AdminEtablissementDashboard({ user }) {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2 text-sm">
                 <FileText className="w-5 h-5 text-purple-500" />
@@ -723,7 +723,7 @@ export default function AdminEtablissementDashboard({ user }) {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2 text-sm">
                 <Users className="w-5 h-5 text-orange-500" />
@@ -748,7 +748,7 @@ export default function AdminEtablissementDashboard({ user }) {
             </CardContent>
           </Card>
 
-          <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+          <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2 text-sm">
                 <Network className="w-5 h-5 text-green-500" />

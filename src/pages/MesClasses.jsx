@@ -173,14 +173,14 @@ export default function MesClasses() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="w-full px-4">
         {/* Header */}
         <div className="mb-8">
@@ -208,7 +208,7 @@ export default function MesClasses() {
           <TabsContent value="vue-ensemble" className="space-y-6">
             {/* Statistiques principales */}
             <div className="grid md:grid-cols-4 gap-6">
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
@@ -220,7 +220,7 @@ export default function MesClasses() {
                 </CardContent>
               </Card>
 
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
@@ -232,7 +232,7 @@ export default function MesClasses() {
                 </CardContent>
               </Card>
 
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
@@ -244,7 +244,7 @@ export default function MesClasses() {
                 </CardContent>
               </Card>
 
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
@@ -258,7 +258,7 @@ export default function MesClasses() {
             </div>
 
             {/* Guide de démarrage */}
-            <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+            <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
                   <Lightbulb className="w-6 h-6 text-yellow-500" />
@@ -270,7 +270,7 @@ export default function MesClasses() {
               </CardHeader>
               <CardContent>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="p-4 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+                  <div className="p-4 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)'}}>
                     <div className="flex items-start gap-3">
                       <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
                         <span className="text-white font-bold">1</span>
@@ -282,7 +282,7 @@ export default function MesClasses() {
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+                  <div className="p-4 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)'}}>
                     <div className="flex items-start gap-3">
                       <div className="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
                         <span className="text-white font-bold">2</span>
@@ -294,7 +294,7 @@ export default function MesClasses() {
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+                  <div className="p-4 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)'}}>
                     <div className="flex items-start gap-3">
                       <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0">
                         <span className="text-white font-bold">3</span>
@@ -306,7 +306,7 @@ export default function MesClasses() {
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-lg" style={{backgroundColor: '#2d2d2d'}}>
+                  <div className="p-4 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)'}}>
                     <div className="flex items-start gap-3">
                       <div className="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center flex-shrink-0">
                         <span className="text-white font-bold">4</span>
@@ -328,7 +328,7 @@ export default function MesClasses() {
               {modules.map(module => {
                 const Icon = module.icon;
                 return (
-                  <Card key={module.id} style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}} className="hover:shadow-lg transition-shadow">
+                  <Card key={module.id} style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}} className="hover:shadow-lg transition-shadow">
                     <CardHeader>
                       <div className="flex items-start justify-between mb-4">
                         <div className={`w-12 h-12 ${module.color} rounded-lg flex items-center justify-center`}>
@@ -378,7 +378,7 @@ export default function MesClasses() {
           {/* TAB: Mes Classes */}
           <TabsContent value="classes" className="space-y-6">
             {classes.length === 0 ? (
-              <Card style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+              <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                 <CardContent className="py-12 text-center">
                   <BookOpen className="w-16 h-16 text-gray-500 mx-auto mb-4" />
                   <p className="text-gray-400 mb-2">Aucune classe assignée</p>
@@ -396,7 +396,7 @@ export default function MesClasses() {
                   const isOpen = !!openClasses[classe.id];
 
                   return (
-                    <Card key={classe.id} style={{backgroundColor: '#3d3d3d', borderColor: '#2d2d2d'}}>
+                    <Card key={classe.id} style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
                       <CardHeader>
                         <div className="flex items-center gap-3">
                           <div className="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center">

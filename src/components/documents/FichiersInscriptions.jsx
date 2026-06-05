@@ -18,11 +18,11 @@ const CG = { fontFamily: '"Century Gothic", "AppleGothic", "Gill Sans", "Trebuch
 function Section({ title, icon, children }) {
   return (
     <div className="rounded-lg overflow-hidden" style={{ border: '1px solid #4d4d4d' }}>
-      <div className="flex items-center gap-2 px-3 py-1.5" style={{ backgroundColor: '#1a1a1a' }}>
+      <div className="flex items-center gap-2 px-3 py-1.5" style={{ backgroundColor: 'var(--ha-surface2)' }}>
         {icon}
         <h3 className="text-white font-semibold text-xs" style={CG}>{title}</h3>
       </div>
-      <div className="p-2 space-y-0.5" style={{ backgroundColor: '#2d2d2d' }}>
+      <div className="p-2 space-y-0.5" style={{ backgroundColor: 'var(--ha-surface2)' }}>
         {children}
       </div>
     </div>
@@ -655,7 +655,7 @@ export default function FichiersInscriptions({ user, onBack, roleFilter = "etudi
       )}
 
       {items.length === 0 ? (
-        <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+        <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
           <CardContent className="py-12 text-center">
             <Folder className="w-16 h-16 text-gray-500 mx-auto mb-4" />
             <p className="text-gray-400">Dossier vide</p>
@@ -692,7 +692,7 @@ export default function FichiersInscriptions({ user, onBack, roleFilter = "etudi
                      )}
                    </div>
                    </ContextMenuTrigger>
-                  <ContextMenuContent style={{ backgroundColor: '#2d2d2d', borderColor: '#4d4d4d' }}>
+                  <ContextMenuContent style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}>
                   {!!item.is_fichier && (
                   <>
                     {item.fichier_type === 'formulaire_inscription' ? (
@@ -711,7 +711,7 @@ export default function FichiersInscriptions({ user, onBack, roleFilter = "etudi
                       <Folder className="w-3.5 h-3.5 mr-2 text-yellow-400" /> Ouvrir le dossier
                     </ContextMenuItem>
                   )}
-                  <ContextMenuSeparator style={{ backgroundColor: '#4d4d4d' }} />
+                  <ContextMenuSeparator style={{ backgroundColor: 'var(--ha-bg)' }} />
                   <ContextMenuItem onClick={() => { setRenameItem(item); setNewName(item.nom); }} className="text-white text-xs hover:bg-[#474747] cursor-pointer">
                     <Edit2 className="w-3.5 h-3.5 mr-2 text-blue-400" /> Renommer
                   </ContextMenuItem>
@@ -883,11 +883,11 @@ export default function FichiersInscriptions({ user, onBack, roleFilter = "etudi
                   displayData.statut_diplome === 'rejete' || displayData.statut_bulletin_1 === 'rejete' || displayData.statut_bulletin_2 === 'rejete' ||
                   displayData.statut_attestation_naissance === 'rejete' || displayData.statut_bonne_vie === 'rejete') && (
                   <div className="rounded-lg overflow-hidden" style={{ border: '1px solid #4d4d4d' }}>
-                    <div className="flex items-center gap-2 px-3 py-1.5" style={{ backgroundColor: '#1a1a1a' }}>
+                    <div className="flex items-center gap-2 px-3 py-1.5" style={{ backgroundColor: 'var(--ha-surface2)' }}>
                       <FileText className="w-3 h-3 text-orange-400" />
                       <h3 className="text-white font-semibold text-xs" style={CG}>Pièces Jointes — Vérification</h3>
                     </div>
-                    <div className="p-2 space-y-2" style={{ backgroundColor: '#2d2d2d' }}>
+                    <div className="p-2 space-y-2" style={{ backgroundColor: 'var(--ha-surface2)' }}>
                       <PiecesJointesReview
                         data={displayData}
                         adminUser={user}
@@ -898,7 +898,7 @@ export default function FichiersInscriptions({ user, onBack, roleFilter = "etudi
                 )}
 
                 {/* Statut */}
-                <div className="flex items-center justify-between p-2 rounded-lg" style={{ backgroundColor: '#1a1a1a' }}>
+                <div className="flex items-center justify-between p-2 rounded-lg" style={{ backgroundColor: 'var(--ha-surface2)' }}>
                   <span className="text-gray-400 text-xs" style={CG}>Statut de la demande</span>
                   <span className={`px-3 py-0.5 rounded-full text-xs font-bold ${
                     displayData.statut === 'approuvee' ? 'bg-green-600 text-white' :
@@ -929,7 +929,7 @@ export default function FichiersInscriptions({ user, onBack, roleFilter = "etudi
       {/* Dialog renommage */}
       {renameItem && (
         <Dialog open={!!renameItem} onOpenChange={() => setRenameItem(null)}>
-          <DialogContent style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+          <DialogContent style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
             <DialogHeader>
               <DialogTitle className="text-white">Renommer</DialogTitle>
             </DialogHeader>

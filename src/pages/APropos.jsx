@@ -3,14 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function APropos() {
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-white">À Propos</h1>
           <p className="text-white">Informations sur l'application</p>
         </div>
 
-        <Card style={{backgroundColor: '#3d3d3d', borderColor: '#4d4d4d'}}>
+        <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
           <CardHeader style={{backgroundColor:'#2d2d2d', borderColor:'#3d3d3d'}}>
             <CardTitle className="text-white flex items-center gap-2">
               <img 

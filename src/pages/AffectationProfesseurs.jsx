@@ -72,7 +72,7 @@ export default function AffectationProfesseurs() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
@@ -84,14 +84,14 @@ export default function AffectationProfesseurs() {
 
   if (loadingProfs) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: '#4d4d4d'}}>
+    <div className="min-h-screen p-4 md:p-8" style={{backgroundColor: 'var(--ha-bg)'}}>
       <div className="w-full px-4">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
@@ -105,7 +105,7 @@ export default function AffectationProfesseurs() {
           </p>
         </div>
 
-        <Card style={{backgroundColor: '#3d3d3d', borderColor: '#4d4d4d'}}>
+        <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
           <CardHeader>
             <CardTitle className="text-xl text-white flex items-center gap-3">
               <Users className="w-6 h-6 text-blue-400" />
@@ -123,7 +123,7 @@ export default function AffectationProfesseurs() {
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
-                    <TableRow style={{backgroundColor: '#2d2d2d'}}>
+                    <TableRow style={{backgroundColor: 'var(--ha-surface2)'}}>
                       <TableHead className="text-white">Nom</TableHead>
                       <TableHead className="text-white">Matricule</TableHead>
                       <TableHead className="text-white">Faculté</TableHead>
@@ -134,7 +134,7 @@ export default function AffectationProfesseurs() {
                   </TableHeader>
                   <TableBody>
                     {professeurs.map((prof) => (
-                      <TableRow key={prof.id} style={{borderColor: '#4d4d4d'}} className="hover:bg-[#474747]">
+                      <TableRow key={prof.id} style={{borderColor: 'var(--ha-border)'}} className="hover:bg-[#474747]">
                         <TableCell className="font-medium text-white">
                           {prof.prenom} {prof.post_nom || ''} {prof.nom}
                         </TableCell>

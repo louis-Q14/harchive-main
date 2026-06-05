@@ -328,7 +328,7 @@ export default function Documents() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#4d4d4d' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--ha-bg)' }}>
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-gray-600 border-t-transparent rounded-full animate-spin" />
           <p className="text-white font-medium">Chargement...</p>
@@ -338,11 +338,11 @@ export default function Documents() {
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-6" style={{ backgroundColor: '#4d4d4d' }}>
+    <div className="min-h-screen p-4 md:p-6" style={{ backgroundColor: 'var(--ha-bg)' }}>
       <div className="w-full">
         {/* Header */}
         <div className="mb-6 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#2d2d2d' }}>
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'var(--ha-surface2)' }}>
             <FileText className="w-5 h-5 text-blue-400" />
           </div>
           <div>
@@ -377,7 +377,7 @@ export default function Documents() {
               <ArrowLeft className="w-4 h-4 mr-2" />
               Retour aux dossiers
             </Button>
-            <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }} className="mb-6">
+            <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }} className="mb-6">
               <CardHeader>
                 <CardTitle className="text-white text-2xl">{selectedFolder.nom}</CardTitle>
               </CardHeader>
@@ -396,14 +396,14 @@ export default function Documents() {
               Retour aux dossiers
             </Button>
 
-            <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }} className="mb-6">
+            <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }} className="mb-6">
               <CardHeader>
                 <CardTitle className="text-white text-2xl">{selectedFolder.nom}</CardTitle>
               </CardHeader>
             </Card>
 
             {getFichesForFolder(selectedFolder.id).length === 0 ? (
-              <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+              <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
                 <CardContent className="py-12 text-center">
                   <FileText className="w-16 h-16 text-gray-500 mx-auto mb-4" />
                   <p className="text-gray-400 mb-2">Aucun document</p>
@@ -517,7 +517,7 @@ export default function Documents() {
                 {getFichesForFolder(selectedFolder.id).map((questionnaire) => (
                   <Card 
                     key={questionnaire.id} 
-                    style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }} 
+                    style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }} 
                     className="hover:shadow-lg transition-all cursor-pointer"
                     onClick={() => questionnaire.fichier_url && setViewingQuestionnairePDF(questionnaire)}
                   >
@@ -657,7 +657,7 @@ export default function Documents() {
       {/* Dialog détail fiche */}
       {viewingFiche && (
         <Dialog open={!!viewingFiche} onOpenChange={() => setViewingFiche(null)}>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto" style={{ backgroundColor: '#3d3d3d' }}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto" style={{ backgroundColor: 'var(--ha-surface)' }}>
             <DialogHeader>
               <DialogTitle className="text-white text-xl">
                 {viewingFiche.titre_seance}
@@ -684,12 +684,12 @@ export default function Documents() {
                 </div>
               </div>
 
-              <div className="border-t pt-4" style={{ borderColor: '#2d2d2d' }}>
+              <div className="border-t pt-4" style={{ borderColor: 'var(--ha-border)' }}>
                 <p className="text-gray-400 text-sm mb-2">Objectifs</p>
                 <p className="text-gray-300">{viewingFiche.objectifs_seance || '-'}</p>
               </div>
 
-              <div className="border-t pt-4" style={{ borderColor: '#2d2d2d' }}>
+              <div className="border-t pt-4" style={{ borderColor: 'var(--ha-border)' }}>
                 <p className="text-gray-400 text-sm mb-2">Remarques</p>
                 <p className="text-gray-300">{viewingFiche.remarques || '-'}</p>
               </div>

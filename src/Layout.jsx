@@ -234,7 +234,7 @@ export default function Layout({ children, currentPageName }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-gray-600 border-t-transparent rounded-full animate-spin" />
           <p className="text-white font-medium">Chargement...</p>
@@ -246,20 +246,20 @@ export default function Layout({ children, currentPageName }) {
   // Si l'utilisateur n'a pas de role_archive, il n'est pas enregistré
   if (!shouldHideSidebar && user && !user.role_archive) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#4d4d4d'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--ha-bg)'}}>
         <div className="max-w-md text-center bg-[#3d3d3d] p-8 rounded-lg border border-[#4d4d4d] shadow-xl">
           <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold mb-3" style={{color: '#ffffff'}}>
+          <h2 className="text-2xl font-bold mb-3" style={{color: 'var(--ha-text)'}}>
             Bienvenue sur Harchive
           </h2>
-          <p className="mb-6" style={{color: '#e0e0e0'}}>
+          <p className="mb-6" style={{color: 'var(--ha-text-muted)'}}>
             Utilisateur non enregistré. Veuillez contacter un admin pour votre accès à l'app.
           </p>
-          <div className="space-y-3 text-sm" style={{color: '#b0b0b0'}}>
+          <div className="space-y-3 text-sm" style={{color: 'var(--ha-text-muted)'}}>
             <p>Vous devez être inscrit via l'un des formulaires suivants :</p>
             <ul className="list-disc list-inside text-left space-y-2">
               <li>Étudiant / Professeur</li>
@@ -577,12 +577,12 @@ export default function Layout({ children, currentPageName }) {
                           )}
                           <span className="text-sm font-medium flex-1">{item.title}</span>
                           {item.title === "Messagerie" && unreadCount > 0 && (
-                            <Badge className="ml-auto text-xs flex-shrink-0" style={{backgroundColor: '#ff4444', color: '#ffffff'}}>
+                            <Badge className="ml-auto text-xs flex-shrink-0" style={{backgroundColor: '#ff4444', color: 'var(--ha-text)'}}>
                               {unreadCount}
                             </Badge>
                           )}
                           {item.title === "Amis" && friendRequestsCount > 0 && (
-                            <Badge className="ml-auto text-xs flex-shrink-0" style={{backgroundColor: '#2d2d2d', color: '#ffffff'}}>
+                            <Badge className="ml-auto text-xs flex-shrink-0" style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)'}}>
                               {friendRequestsCount}
                             </Badge>
                           )}
@@ -598,7 +598,7 @@ export default function Layout({ children, currentPageName }) {
               <Link 
                 to={createPageUrl("APropos")} 
                 className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 font-medium text-xs hover:opacity-80"
-                style={{backgroundColor: '#3d3d3d', color: '#ffffff', border: '1px solid #4d4d4d'}}
+                style={{backgroundColor: 'var(--ha-surface)', color: 'var(--ha-text)', border: '1px solid #4d4d4d'}}
               >
                 <Info className="w-3.5 h-3.5" />
                 À propos
@@ -616,15 +616,15 @@ export default function Layout({ children, currentPageName }) {
                     className="w-8 h-8 rounded-full object-cover shadow-sm"
                   />
                 ) : (
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center shadow-sm text-xs font-semibold" style={{backgroundColor: 'var(--ha-accent)', color: '#ffffff'}}>
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center shadow-sm text-xs font-semibold" style={{backgroundColor: 'var(--ha-accent)', color: 'var(--ha-text)'}}>
                     {(displayName || '').split(' ').map(n => n[0]).join('').toUpperCase() || 'U'}
                   </div>
                 )}
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-xs truncate" style={{color: '#ffffff'}}>
+                  <p className="font-semibold text-xs truncate" style={{color: 'var(--ha-text)'}}>
                     {displayName || "Utilisateur"}
                   </p>
-                  <p className="text-xs truncate" style={{color: '#b0b0b0'}}>{getRoleLabel(user.role_archive)}</p>
+                  <p className="text-xs truncate" style={{color: 'var(--ha-text-muted)'}}>{getRoleLabel(user.role_archive)}</p>
                 </div>
                 <NotificationCenter userId={user?.id} />
               </div>
@@ -643,9 +643,9 @@ export default function Layout({ children, currentPageName }) {
         <main className="flex-1 flex flex-col" style={{backgroundColor: 'var(--ha-bg)'}}>
           <header style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}} className="px-6 py-4 lg:hidden border-b">
             <div className="flex items-center gap-4">
-              <SidebarTrigger className="p-2 rounded-lg transition-colors" style={{color: '#ffffff'}} />
+              <SidebarTrigger className="p-2 rounded-lg transition-colors" style={{color: 'var(--ha-text)'}} />
               <Link to={createPageUrl("Journal")}>
-                <h1 className="text-xl font-bold hover:opacity-80 transition-opacity" style={{color: '#ffffff'}}>Harchive</h1>
+                <h1 className="text-xl font-bold hover:opacity-80 transition-opacity" style={{color: 'var(--ha-text)'}}>Harchive</h1>
               </Link>
               <div className="ml-auto">
                 <NotificationCenter userId={user?.id} />

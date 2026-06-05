@@ -421,7 +421,7 @@ export default function BibliothequeNumerique() {
                   <Button onClick={() => setShowAddBookDialog(true)} className="bg-cyan-600 hover:bg-cyan-700 text-white" style={CG}>
                     <Plus className="w-4 h-4 mr-2" /> Ajouter un livre
                   </Button>
-                  <Button onClick={() => setShowBulkImportDialog(true)} variant="outline" style={{ borderColor: '#444', color: '#ccc', ...CG }}>
+                  <Button onClick={() => setShowBulkImportDialog(true)} variant="outline" style={{ borderColor: '#444', color: 'var(--ha-text-muted)', ...CG }}>
                     <Upload className="w-4 h-4 mr-2" /> Importer
                   </Button>
                 </div>
@@ -706,7 +706,7 @@ export default function BibliothequeNumerique() {
                       <Eye className="w-3.5 h-3.5 mr-1.5" /> Consulter
                     </Button>
                     <Button size="sm" variant="outline" onClick={() => { setShowDetailsDialog(false); setShowCommentsDialog(true); }}
-                      style={{ borderColor: '#555', color: '#ccc', ...CG }} className="text-xs">
+                      style={{ borderColor: 'var(--ha-border)', color: 'var(--ha-text-muted)', ...CG }} className="text-xs">
                       <MessageSquare className="w-3.5 h-3.5 mr-1.5" /> Commentaires
                     </Button>
                   </div>
@@ -772,7 +772,7 @@ export default function BibliothequeNumerique() {
                       <Eye className="w-3.5 h-3.5 mr-1.5" /> Consulter
                     </Button>
                     <Button size="sm" variant="outline" onClick={() => { setShowTravailDetailsDialog(false); setShowTravailCommentsDialog(true); }}
-                      style={{ borderColor: '#555', color: '#ccc', ...CG }} className="text-xs">
+                      style={{ borderColor: 'var(--ha-border)', color: 'var(--ha-text-muted)', ...CG }} className="text-xs">
                       <MessageSquare className="w-3.5 h-3.5 mr-1.5" /> Commentaires
                     </Button>
                   </div>
@@ -958,13 +958,13 @@ export default function BibliothequeNumerique() {
             <div className="space-y-4">
               <Label className="text-white text-xs font-medium" style={CG}>Fichier CSV</Label>
               <Input type="file" accept=".csv" onChange={(e) => setBulkImportFile(e.target.files?.[0] || null)}
-                style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
               <p className="text-xs text-gray-500" style={CG}>Colonnes : titre, auteur, description, categorie, isbn, annee_publication, editeur, langue, nombre_pages</p>
             </div>
           </DraggableDialogBody>
           <DraggableDialogFooter>
             <Button variant="outline" onClick={() => { setShowBulkImportDialog(false); setBulkImportFile(null); }}
-              style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG }}>Annuler</Button>
+              style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG }}>Annuler</Button>
             <Button onClick={handleBulkImport} disabled={!bulkImportFile || bulkImportMutation.isPending}
               className="bg-cyan-600 hover:bg-cyan-700 text-white" style={CG}>
               {bulkImportMutation.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />} Importer
@@ -976,7 +976,7 @@ export default function BibliothequeNumerique() {
           onOpenChange={(open) => { if (!open) { setShowAddBookDialog(false); setShowEditBookDialog(false); setSelectedBook(null); resetBookForm(); } }}
           title={<div style={CG}>
             <div className="text-sm font-semibold text-white">{showEditBookDialog ? "Modifier le livre" : "Ajouter un livre"}</div>
-            <div className="text-[11px] mt-0.5" style={{ color: '#b0b0b0' }}>Remplissez les informations du livre</div>
+            <div className="text-[11px] mt-0.5" style={{ color: 'var(--ha-text-muted)' }}>Remplissez les informations du livre</div>
           </div>}
           maxWidth="max-w-2xl" resizable={false}>
           <DraggableDialogBody>
@@ -985,17 +985,17 @@ export default function BibliothequeNumerique() {
                 <div className="col-span-2 space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>Titre *</Label>
                   <Input value={bookFormData.titre} onChange={(e) => setBookFormData({ ...bookFormData, titre: e.target.value })}
-                    placeholder="Titre du livre" style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    placeholder="Titre du livre" style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>Auteur *</Label>
                   <Input value={bookFormData.auteur} onChange={(e) => setBookFormData({ ...bookFormData, auteur: e.target.value })}
-                    placeholder="Nom de l'auteur" style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    placeholder="Nom de l'auteur" style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>{"Cat\u00e9gorie *"}</Label>
                   <Select value={bookFormData.categorie} onValueChange={(val) => setBookFormData({ ...bookFormData, categorie: val })}>
-                    <SelectTrigger style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }}><SelectValue /></SelectTrigger>
+                    <SelectTrigger style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }}><SelectValue /></SelectTrigger>
                     <SelectContent>{BOOK_CATEGORIES.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}</SelectContent>
                   </Select>
                 </div>
@@ -1003,34 +1003,34 @@ export default function BibliothequeNumerique() {
                   <Label className="text-white text-xs font-medium" style={CG}>Description</Label>
                   <Textarea value={bookFormData.description} onChange={(e) => setBookFormData({ ...bookFormData, description: e.target.value })}
                     placeholder="Description du livre" rows={3} className="resize-none"
-                    style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>ISBN</Label>
                   <Input value={bookFormData.isbn} onChange={(e) => setBookFormData({ ...bookFormData, isbn: e.target.value })}
-                    placeholder="ISBN" style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    placeholder="ISBN" style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>{"\u00c9diteur"}</Label>
                   <Input value={bookFormData.editeur} onChange={(e) => setBookFormData({ ...bookFormData, editeur: e.target.value })}
-                    placeholder={"Maison d'\u00e9dition"} style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    placeholder={"Maison d'\u00e9dition"} style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>{"Ann\u00e9e"}</Label>
                   <Input type="number" value={bookFormData.annee_publication}
                     onChange={(e) => setBookFormData({ ...bookFormData, annee_publication: parseInt(e.target.value) })}
-                    style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>Pages</Label>
                   <Input type="number" value={bookFormData.nombre_pages}
                     onChange={(e) => setBookFormData({ ...bookFormData, nombre_pages: parseInt(e.target.value) })}
-                    placeholder="Pages" style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    placeholder="Pages" style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <div className="col-span-2 space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>Langue</Label>
                   <Select value={bookFormData.langue} onValueChange={(val) => setBookFormData({ ...bookFormData, langue: val })}>
-                    <SelectTrigger style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }}><SelectValue /></SelectTrigger>
+                    <SelectTrigger style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }}><SelectValue /></SelectTrigger>
                     <SelectContent>{["Fran\u00e7ais", "Anglais", "Espagnol", "Autre"].map(l => <SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent>
                   </Select>
                 </div>
@@ -1038,7 +1038,7 @@ export default function BibliothequeNumerique() {
                   <Label className="text-white text-xs font-medium" style={CG}>Image de couverture</Label>
                   <div className="flex gap-2 items-center">
                     <Input type="file" accept="image/*" onChange={(e) => e.target.files[0] && handleBookFileUpload(e.target.files[0], 'cover')}
-                      disabled={uploadingCover} style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                      disabled={uploadingCover} style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                     {uploadingCover && <Loader2 className="w-4 h-4 animate-spin text-cyan-400" />}
                   </div>
                   {bookFormData.couverture_url && <img src={bookFormData.couverture_url} alt="Apercu" className="mt-2 h-28 object-cover rounded" />}
@@ -1047,7 +1047,7 @@ export default function BibliothequeNumerique() {
                   <Label className="text-white text-xs font-medium" style={CG}>Fichier PDF *</Label>
                   <div className="flex gap-2 items-center">
                     <Input type="file" accept=".pdf" onChange={(e) => e.target.files[0] && handleBookFileUpload(e.target.files[0], 'pdf')}
-                      disabled={uploadingPdf} style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                      disabled={uploadingPdf} style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                     {uploadingPdf && <Loader2 className="w-4 h-4 animate-spin text-cyan-400" />}
                   </div>
                   {bookFormData.fichier_pdf_url && <p className="text-xs text-green-400 mt-1">{"\u2713 Fichier PDF upload\u00e9"}</p>}
@@ -1057,7 +1057,7 @@ export default function BibliothequeNumerique() {
           </DraggableDialogBody>
           <DraggableDialogFooter>
             <Button variant="outline" onClick={() => { setShowAddBookDialog(false); setShowEditBookDialog(false); setSelectedBook(null); resetBookForm(); }}
-              style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG }}>Annuler</Button>
+              style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG }}>Annuler</Button>
             <Button onClick={handleBookSubmit}
               disabled={!bookFormData.titre || !bookFormData.auteur || !bookFormData.categorie || createBookMutation.isPending || updateBookMutation.isPending}
               className="bg-cyan-600 hover:bg-cyan-700 text-white" style={CG}>
@@ -1071,7 +1071,7 @@ export default function BibliothequeNumerique() {
           onOpenChange={(open) => { if (!open) { setShowAddTravailDialog(false); setShowEditTravailDialog(false); setSelectedTravail(null); resetTravailForm(); } }}
           title={<div style={CG}>
             <div className="text-sm font-semibold text-white">{showEditTravailDialog ? "Modifier le travail" : "Publier un travail acad\u00e9mique"}</div>
-            <div className="text-[11px] mt-0.5" style={{ color: '#b0b0b0' }}>{"M\u00e9moire, th\u00e8se, recherche, article..."}</div>
+            <div className="text-[11px] mt-0.5" style={{ color: 'var(--ha-text-muted)' }}>{"M\u00e9moire, th\u00e8se, recherche, article..."}</div>
           </div>}
           maxWidth="max-w-2xl" resizable={false}>
           <DraggableDialogBody>
@@ -1080,29 +1080,29 @@ export default function BibliothequeNumerique() {
                 <div className="col-span-2 space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>Titre *</Label>
                   <Input value={travailFormData.titre} onChange={(e) => setTravailFormData({ ...travailFormData, titre: e.target.value })}
-                    placeholder="Titre du travail" style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    placeholder="Titre du travail" style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>Auteur *</Label>
                   <Input value={travailFormData.auteur} onChange={(e) => setTravailFormData({ ...travailFormData, auteur: e.target.value })}
-                    placeholder="Nom de l'auteur" style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    placeholder="Nom de l'auteur" style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>Type de travail *</Label>
                   <Select value={travailFormData.type_travail} onValueChange={(val) => setTravailFormData({ ...travailFormData, type_travail: val })}>
-                    <SelectTrigger style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }}><SelectValue /></SelectTrigger>
+                    <SelectTrigger style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }}><SelectValue /></SelectTrigger>
                     <SelectContent>{TRAVAIL_TYPES.map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>Discipline</Label>
                   <Input value={travailFormData.discipline} onChange={(e) => setTravailFormData({ ...travailFormData, discipline: e.target.value })}
-                    placeholder="ex: Informatique, Droit..." style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    placeholder="ex: Informatique, Droit..." style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>Niveau</Label>
                   <Select value={travailFormData.niveau} onValueChange={(val) => setTravailFormData({ ...travailFormData, niveau: val })}>
-                    <SelectTrigger style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }}><SelectValue /></SelectTrigger>
+                    <SelectTrigger style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }}><SelectValue /></SelectTrigger>
                     <SelectContent>{TRAVAIL_NIVEAUX.map(n => <SelectItem key={n} value={n}>{n}</SelectItem>)}</SelectContent>
                   </Select>
                 </div>
@@ -1110,40 +1110,40 @@ export default function BibliothequeNumerique() {
                   <Label className="text-white text-xs font-medium" style={CG}>{"R\u00e9sum\u00e9"}</Label>
                   <Textarea value={travailFormData.resume} onChange={(e) => setTravailFormData({ ...travailFormData, resume: e.target.value })}
                     placeholder={"R\u00e9sum\u00e9 du travail..."} rows={3} className="resize-none"
-                    style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>{"\u00c9tablissement"}</Label>
                   <Input value={travailFormData.etablissement} onChange={(e) => setTravailFormData({ ...travailFormData, etablissement: e.target.value })}
-                    placeholder={"Universit\u00e9 / \u00c9cole"} style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    placeholder={"Universit\u00e9 / \u00c9cole"} style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>Directeur de recherche</Label>
                   <Input value={travailFormData.directeur_recherche} onChange={(e) => setTravailFormData({ ...travailFormData, directeur_recherche: e.target.value })}
-                    placeholder="Nom du directeur" style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    placeholder="Nom du directeur" style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>{"Ann\u00e9e"}</Label>
                   <Input type="number" value={travailFormData.annee}
                     onChange={(e) => setTravailFormData({ ...travailFormData, annee: parseInt(e.target.value) })}
-                    style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>Pages</Label>
                   <Input type="number" value={travailFormData.nombre_pages}
                     onChange={(e) => setTravailFormData({ ...travailFormData, nombre_pages: parseInt(e.target.value) })}
-                    placeholder="Pages" style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    placeholder="Pages" style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <div className="col-span-2 space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>{"Mots-cl\u00e9s"}</Label>
                   <Input value={travailFormData.mots_cles} onChange={(e) => setTravailFormData({ ...travailFormData, mots_cles: e.target.value })}
-                    placeholder={"S\u00e9parez par des virgules"} style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                    placeholder={"S\u00e9parez par des virgules"} style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <div className="col-span-2 space-y-1">
                   <Label className="text-white text-xs font-medium" style={CG}>Image de couverture</Label>
                   <div className="flex gap-2 items-center">
                     <Input type="file" accept="image/*" onChange={(e) => e.target.files[0] && handleTravailFileUpload(e.target.files[0], 'cover')}
-                      disabled={uploadingCover} style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                      disabled={uploadingCover} style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                     {uploadingCover && <Loader2 className="w-4 h-4 animate-spin text-emerald-400" />}
                   </div>
                   {travailFormData.couverture_url && <img src={travailFormData.couverture_url} alt="Apercu" className="mt-2 h-28 object-cover rounded" />}
@@ -1152,7 +1152,7 @@ export default function BibliothequeNumerique() {
                   <Label className="text-white text-xs font-medium" style={CG}>Fichier PDF *</Label>
                   <div className="flex gap-2 items-center">
                     <Input type="file" accept=".pdf" onChange={(e) => e.target.files[0] && handleTravailFileUpload(e.target.files[0], 'pdf')}
-                      disabled={uploadingPdf} style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }} />
+                      disabled={uploadingPdf} style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                     {uploadingPdf && <Loader2 className="w-4 h-4 animate-spin text-emerald-400" />}
                   </div>
                   {travailFormData.fichier_pdf_url && <p className="text-xs text-green-400 mt-1">{"\u2713 Fichier PDF upload\u00e9"}</p>}
@@ -1162,7 +1162,7 @@ export default function BibliothequeNumerique() {
           </DraggableDialogBody>
           <DraggableDialogFooter>
             <Button variant="outline" onClick={() => { setShowAddTravailDialog(false); setShowEditTravailDialog(false); setSelectedTravail(null); resetTravailForm(); }}
-              style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG }}>Annuler</Button>
+              style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG }}>Annuler</Button>
             <Button onClick={handleTravailSubmit}
               disabled={!travailFormData.titre || !travailFormData.auteur || createTravailMutation.isPending || updateTravailMutation.isPending}
               className="bg-emerald-600 hover:bg-emerald-700 text-white" style={CG}>

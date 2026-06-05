@@ -926,14 +926,14 @@ export default function PlanificationPedagogique() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#4d4d4d' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--ha-bg)' }}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>);
 
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{ backgroundColor: '#4d4d4d' }}>
+    <div className="min-h-screen p-4 md:p-8" style={{ backgroundColor: 'var(--ha-bg)' }}>
       <div className="w-full px-4">
         {/* Header */}
         <div className="mb-8">
@@ -958,7 +958,7 @@ export default function PlanificationPedagogique() {
 
         {/* Statistiques */}
         <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+          <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -972,7 +972,7 @@ export default function PlanificationPedagogique() {
             </CardContent>
           </Card>
 
-          <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+          <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -986,7 +986,7 @@ export default function PlanificationPedagogique() {
             </CardContent>
           </Card>
 
-          <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+          <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -998,7 +998,7 @@ export default function PlanificationPedagogique() {
             </CardContent>
           </Card>
 
-          <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+          <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -1022,7 +1022,7 @@ export default function PlanificationPedagogique() {
 
           {/* TAB: Fiche de Préparation */}
           <TabsContent value="fiches" className="space-y-6">
-            <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+            <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardContent className="pt-6">
                 <div className="flex justify-between items-center">
                   <p className="text-gray-300">{fiches.length} fiche(s) de préparation</p>
@@ -1040,7 +1040,7 @@ export default function PlanificationPedagogique() {
             </Card>
 
             {fiches.length === 0 ? (
-              <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+              <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
                 <CardContent className="py-12 text-center">
                   <FileText className="w-16 h-16 text-gray-500 mx-auto mb-4" />
                   <p className="text-gray-400 mb-2">Aucune fiche de préparation</p>
@@ -1055,10 +1055,10 @@ export default function PlanificationPedagogique() {
 
                   const isExpanded = expandedFiches[fiche.id];
                   return (
-                    <Card key={fiche.id} style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+                    <Card key={fiche.id} style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
                       <CardHeader 
                         className="border-b cursor-pointer hover:opacity-80 transition-opacity" 
-                        style={{ borderColor: '#2d2d2d' }}
+                        style={{ borderColor: 'var(--ha-border)' }}
                         onClick={() => setViewingFiche(fiche)}
                       >
                         <div className="flex items-center justify-between">
@@ -1096,7 +1096,7 @@ export default function PlanificationPedagogique() {
 
           {/* TAB: Composition des Questionnaires */}
           <TabsContent value="questionnaires" className="space-y-6">
-            <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+            <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardContent className="pt-6">
                 <div className="flex justify-between items-center mb-6">
                   <p className="text-gray-300">Créer et gérer vos questionnaires d'examens et d'interrogations</p>
@@ -1107,7 +1107,7 @@ export default function PlanificationPedagogique() {
                   <div>
                     <Card 
                       className="cursor-pointer hover:shadow-lg transition-shadow mb-4" 
-                      style={{ backgroundColor: '#2d2d2d', borderColor: '#4d4d4d' }}
+                      style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}
                       onClick={() => {
                         setTypeQuestionnaire("examen");
                         setEditingQuestionnaire(null);
@@ -1128,7 +1128,7 @@ export default function PlanificationPedagogique() {
                     {questionnaires.filter(q => q.type_evaluation === 'examen').length > 0 && (
                       <div className="space-y-4">
                         {questionnaires.filter(q => q.type_evaluation === 'examen').map((q) => (
-                          <div key={q.id} className="p-4 rounded-lg cursor-pointer hover:bg-[#3d3d3d] transition-colors" style={{ backgroundColor: '#2d2d2d' }} onClick={() => setViewingQuestionnaire(q)}>
+                          <div key={q.id} className="p-4 rounded-lg cursor-pointer hover:bg-[#3d3d3d] transition-colors" style={{ backgroundColor: 'var(--ha-surface2)' }} onClick={() => setViewingQuestionnaire(q)}>
                             <div className="flex items-center justify-between">
                               <div className="flex-1">
                                 <div className="flex items-center gap-2">
@@ -1177,7 +1177,7 @@ export default function PlanificationPedagogique() {
                   <div>
                     <Card 
                       className="cursor-pointer hover:shadow-lg transition-shadow mb-4" 
-                      style={{ backgroundColor: '#2d2d2d', borderColor: '#4d4d4d' }}
+                      style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}
                       onClick={() => {
                         setTypeQuestionnaire("interrogation");
                         setEditingQuestionnaire(null);
@@ -1198,7 +1198,7 @@ export default function PlanificationPedagogique() {
                     {questionnaires.filter(q => q.type_evaluation === 'interrogation').length > 0 && (
                       <div className="space-y-4">
                         {questionnaires.filter(q => q.type_evaluation === 'interrogation').map((q) => (
-                          <div key={q.id} className="p-4 rounded-lg cursor-pointer hover:bg-[#3d3d3d] transition-colors" style={{ backgroundColor: '#2d2d2d' }} onClick={() => setViewingQuestionnaire(q)}>
+                          <div key={q.id} className="p-4 rounded-lg cursor-pointer hover:bg-[#3d3d3d] transition-colors" style={{ backgroundColor: 'var(--ha-surface2)' }} onClick={() => setViewingQuestionnaire(q)}>
                             <div className="flex items-center justify-between">
                               <div className="flex-1">
                                 <div className="flex items-center gap-2">
@@ -1250,7 +1250,7 @@ export default function PlanificationPedagogique() {
           {/* TAB: Séquences */}
           <TabsContent value="sequences" className="space-y-6">
             {/* Filtres et actions */}
-            <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+            <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardContent className="pt-6">
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="relative flex-1">
@@ -1290,7 +1290,7 @@ export default function PlanificationPedagogique() {
 
             {/* Liste des séquences */}
             {filteredSequences.length === 0 ?
-            <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+            <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
                 <CardContent className="py-12 text-center">
                   <Target className="w-16 h-16 text-gray-500 mx-auto mb-4" />
                   <p className="text-gray-400 mb-2">Aucune séquence trouvée</p>
@@ -1304,7 +1304,7 @@ export default function PlanificationPedagogique() {
                 const matiere = matieres.find((m) => m.id === sequence.matiere_id);
 
                 return (
-                  <Card key={sequence.id} style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+                  <Card key={sequence.id} style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
                       <CardHeader>
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
@@ -1405,7 +1405,7 @@ export default function PlanificationPedagogique() {
 
           {/* TAB: Ressources */}
           <TabsContent value="ressources" className="space-y-6">
-            <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+            <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardContent className="pt-6">
                 <div className="flex justify-between items-center">
                   <p className="text-gray-300">{ressources.length} ressource(s) disponible(s)</p>
@@ -1429,7 +1429,7 @@ export default function PlanificationPedagogique() {
                   const Icon = getTypeRessourceIcon(ressource.type);
                   const hasFile = ressource.fichier_url && ressource.fichier_url.length > 0;
                   return (
-                    <div key={ressource.id} className="p-4 rounded-lg cursor-pointer hover:bg-[#3d3d3d] transition-colors" style={{ backgroundColor: '#2d2d2d' }} onClick={() => hasFile && setViewingRessource(ressource)}>
+                    <div key={ressource.id} className="p-4 rounded-lg cursor-pointer hover:bg-[#3d3d3d] transition-colors" style={{ backgroundColor: 'var(--ha-surface2)' }} onClick={() => hasFile && setViewingRessource(ressource)}>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3 flex-1">
                           <Icon className="w-5 h-5 text-purple-400 flex-shrink-0" />
@@ -1477,7 +1477,7 @@ export default function PlanificationPedagogique() {
 
           {/* TAB: Calendrier */}
           <TabsContent value="calendrier">
-            <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+            <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardHeader>
                 <CardTitle className="text-white">Calendrier des Séquences</CardTitle>
                 <CardDescription className="text-gray-400">
@@ -1492,7 +1492,7 @@ export default function PlanificationPedagogique() {
                   map((sequence) => {
                     const classe = classes.find((c) => c.id === sequence.classe_id);
                     return (
-                      <div key={sequence.id} className="flex gap-4 p-4 rounded-lg" style={{ backgroundColor: '#2d2d2d' }}>
+                      <div key={sequence.id} className="flex gap-4 p-4 rounded-lg" style={{ backgroundColor: 'var(--ha-surface2)' }}>
                           <div className="text-center">
                             <p className="text-2xl font-bold text-white">
                               {format(new Date(sequence.date_debut), 'dd')}

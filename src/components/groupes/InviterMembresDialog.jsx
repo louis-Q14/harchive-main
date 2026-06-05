@@ -94,7 +94,7 @@ export default function InviterMembresDialog({ open, onOpenChange, group, curren
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10"
-            style={{ backgroundColor: '#2d2d2d', color: '#ffffff', borderColor: '#4d4d4d', ...CG }}
+            style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }}
           />
         </div>
 
@@ -159,7 +159,7 @@ export default function InviterMembresDialog({ open, onOpenChange, group, curren
         <Button
           variant="outline"
           onClick={() => { onOpenChange(false); setSearchQuery(""); setInvitedIds([]); }}
-          style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG }}
+          style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG }}
         >
           Fermer
         </Button>

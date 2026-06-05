@@ -1,4 +1,4 @@
-ï»¿import React, { useState } from "react";
+import React, { useState } from "react";
 import { dataService, socialService } from "@/api";
 import { useAuth } from "@/lib/AuthContext";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -15,9 +15,9 @@ import { toast } from "sonner";
 const CG = { fontFamily: "'Century Gothic', 'CenturyGothic', 'AppleGothic', sans-serif" };
 const iconBtn = "flex-1 p-2 rounded text-xs font-medium transition-colors";
 
-// Carte utilisateur rÃ©utilisable â€” dÃ©finie hors du composant pour Ã©viter les remontages
+// Carte utilisateur réutilisable — définie hors du composant pour éviter les remontages
 const UserCard = ({ u, height = 260, actions, navigate }) => (
-  <Card style={{ backgroundColor: '#262626', borderColor: '#404040' }} className="overflow-hidden shadow-lg hover:shadow-xl transition-all duration-200">
+  <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }} className="overflow-hidden shadow-lg hover:shadow-xl transition-all duration-200">
     <CardContent
       className="p-0 flex flex-col relative cursor-pointer"
       style={{ height }}
@@ -34,7 +34,7 @@ const UserCard = ({ u, height = 260, actions, navigate }) => (
       <div className="absolute bottom-0 left-0 right-0 p-3 z-10">
         <p className="font-semibold text-xs text-white truncate" style={CG}>{formatUserName(u)}</p>
         {getRoleLabel(u.role_archive) && (
-          <p className="text-[9px] mt-0.5" style={{ color: '#aaa' }}>{getRoleLabel(u.role_archive)}</p>
+          <p className="text-[9px] mt-0.5" style={{ color: 'var(--ha-text-muted)' }}>{getRoleLabel(u.role_archive)}</p>
         )}
         <div className="flex gap-1.5 mt-2" onClick={e => e.stopPropagation()}>
           {actions}
@@ -46,10 +46,10 @@ const UserCard = ({ u, height = 260, actions, navigate }) => (
 
 const getRoleLabel = (role) => {
   const labels = {
-    admin_systeme: "Administrateur SystÃ¨me",
-    admin_etablissement: "Admin Ã‰tablissement",
+    admin_systeme: "Administrateur Système",
+    admin_etablissement: "Admin Établissement",
     professeur: "Professeur",
-    etudiant: "Ã‰tudiant",
+    etudiant: "Étudiant",
     parent: "Parent"
   };
   return labels[role] || null;
@@ -61,7 +61,7 @@ export default function Amis() {
   const { user, refreshUser } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Tous les utilisateurs (sauf soi-mÃªme)
+  // Tous les utilisateurs (sauf soi-même)
   const { data: allUsers = [] } = useQuery({
     queryKey: ['all-users'],
     queryFn: () => dataService.query('User', { limit: 1000 }),
@@ -84,7 +84,7 @@ export default function Amis() {
     refetchInterval: 5000,
   });
 
-  // Utilisateurs bloquÃ©s par l'utilisateur courant
+  // Utilisateurs bloqués par l'utilisateur courant
   const { data: blockedUsers = [] } = useQuery({
     queryKey: ['blocked-users', user?.id],
     queryFn: () => socialService.getBlockedUsers(),
@@ -92,7 +92,7 @@ export default function Amis() {
     staleTime: 30000,
   });
 
-  // --- DÃ©river les listes ---
+  // --- Dériver les listes ---
   const myAmis = typeof user?.amis === 'string' ? JSON.parse(user.amis || '[]') : (user?.amis || []);
   const blockedIds = new Set(blockedUsers.map(b => b.id));
   const pendingReceived = friendRequests.filter(r => r.status === 'pending' && r.receiver_id === user?.id);
@@ -148,37 +148,37 @@ export default function Amis() {
         setSendingIds(prev => { const s = new Set(prev); s.delete(recipientId); return s; });
       }
     },
-    onSuccess: () => { toast.success("Demande d'ami envoyÃ©e !"); queryClient.invalidateQueries({ queryKey: ['friend-requests'] }); },
+    onSuccess: () => { toast.success("Demande d'ami envoyée !"); queryClient.invalidateQueries({ queryKey: ['friend-requests'] }); },
     onError: (e) => toast.error(e?.response?.data?.message || e.message || "Erreur lors de l'envoi"),
   });
 
   const acceptMutation = useMutation({
     mutationFn: (requestId) => socialService.acceptFriendRequest(requestId),
-    onSuccess: () => { toast.success("Demande acceptÃ©e !"); invalidate(); },
+    onSuccess: () => { toast.success("Demande acceptée !"); invalidate(); },
     onError: (e) => toast.error(e?.response?.data?.message || "Erreur"),
   });
 
   const rejectMutation = useMutation({
     mutationFn: (requestId) => socialService.rejectFriendRequest(requestId),
-    onSuccess: () => { toast.success("Demande refusÃ©e"); queryClient.invalidateQueries({ queryKey: ['friend-requests'] }); },
+    onSuccess: () => { toast.success("Demande refusée"); queryClient.invalidateQueries({ queryKey: ['friend-requests'] }); },
     onError: (e) => toast.error(e?.response?.data?.message || "Erreur"),
   });
 
   const removeFriendMutation = useMutation({
     mutationFn: (friendId) => socialService.removeFriend(friendId),
-    onSuccess: () => { toast.success("Ami retirÃ©"); invalidate(); },
+    onSuccess: () => { toast.success("Ami retiré"); invalidate(); },
     onError: (e) => toast.error(e?.response?.data?.message || "Erreur"),
   });
 
   const blockMutation = useMutation({
     mutationFn: (userId) => socialService.blockUser(userId),
-    onSuccess: () => { toast.success("Utilisateur bloquÃ©"); invalidate(); },
+    onSuccess: () => { toast.success("Utilisateur bloqué"); invalidate(); },
     onError: (e) => toast.error(e?.response?.data?.message || "Erreur"),
   });
 
   const unblockMutation = useMutation({
     mutationFn: (userId) => socialService.unblockUser(userId),
-    onSuccess: () => { toast.success("Utilisateur dÃ©bloquÃ©"); queryClient.invalidateQueries({ queryKey: ['blocked-users'] }); refreshUser(); },
+    onSuccess: () => { toast.success("Utilisateur débloqué"); queryClient.invalidateQueries({ queryKey: ['blocked-users'] }); refreshUser(); },
     onError: (e) => toast.error(e?.response?.data?.message || "Erreur"),
   });
 
@@ -206,13 +206,13 @@ export default function Amis() {
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: '#262626' }}>
-        <Loader2 className="w-12 h-12 animate-spin" style={{ color: '#b0b0b0' }} />
+        <Loader2 className="w-12 h-12 animate-spin" style={{ color: 'var(--ha-text-muted)' }} />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-6" style={{ backgroundColor: '#333333', ...CG }}>
+    <div className="min-h-screen p-4 md:p-6" style={{ backgroundColor: 'var(--ha-surface)', ...CG }}>
       <div className="w-full space-y-4">
 
         {/* Header */}
@@ -223,7 +223,7 @@ export default function Amis() {
             </div>
             <div>
               <h1 className="text-2xl font-bold text-white">Amis</h1>
-              <p className="text-xs" style={{ color: '#b0b0b0' }}>GÃ©rez vos connexions</p>
+              <p className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Gérez vos connexions</p>
             </div>
           </div>
           <Badge style={{ background: '#555', color: '#fff', fontSize: '0.8rem' }} className="px-3 py-1.5">
@@ -233,13 +233,13 @@ export default function Amis() {
 
         {/* Tabs */}
         <Tabs defaultValue="amis" className="w-full">
-          <TabsList className="flex w-full gap-1 p-1 rounded-lg" style={{ backgroundColor: '#262626' }}>
+          <TabsList className="flex w-full gap-1 p-1 rounded-lg" style={{ backgroundColor: 'var(--ha-surface)' }}>
             {[
               { value: 'amis', icon: UserCheck, label: `Mes Amis (${mesAmis.length})` },
               { value: 'demandes', icon: Mail, label: `Demandes (${demandesRecues.length})` },
               { value: 'suggestions', icon: Sparkles, label: `Suggestions (${suggestions.length})` },
               { value: 'recherche', icon: Search, label: 'Rechercher' },
-              { value: 'bloques', icon: Ban, label: `BloquÃ©s (${blockedUsers.length})` },
+              { value: 'bloques', icon: Ban, label: `Bloqués (${blockedUsers.length})` },
             ].map(tab => (
               <TabsTrigger
                 key={tab.value}
@@ -255,7 +255,7 @@ export default function Amis() {
 
           {/* Mes Amis */}
           <TabsContent value="amis" className="mt-4">
-            <Card style={{ backgroundColor: '#262626', borderColor: '#404040' }}>
+            <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid #404040' }}>
                 <CardTitle className="text-white text-sm">Mes Amis</CardTitle>
               </CardHeader>
@@ -286,11 +286,11 @@ export default function Amis() {
             </Card>
           </TabsContent>
 
-          {/* Demandes reÃ§ues */}
+          {/* Demandes reçues */}
           <TabsContent value="demandes" className="mt-4">
-            <Card style={{ backgroundColor: '#262626', borderColor: '#404040' }}>
+            <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid #404040' }}>
-                <CardTitle className="text-white text-sm">Demandes d'Amis ReÃ§ues</CardTitle>
+                <CardTitle className="text-white text-sm">Demandes d'Amis Reçues</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
                 {demandesRecues.length === 0 ? (
@@ -318,16 +318,16 @@ export default function Amis() {
 
           {/* Suggestions */}
           <TabsContent value="suggestions" className="mt-4">
-            <Card style={{ backgroundColor: '#262626', borderColor: '#404040' }}>
+            <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid #404040' }}>
-                <CardTitle className="text-white text-sm">Personnes que vous pourriez connaÃ®tre</CardTitle>
+                <CardTitle className="text-white text-sm">Personnes que vous pourriez connaître</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
                 {suggestions.length === 0 ? (
                   <div className="text-center py-12">
                     <Sparkles className="w-14 h-14 mx-auto mb-3" style={{ color: '#555' }} />
                     <p className="text-sm" style={{ color: '#888' }}>Aucune suggestion pour le moment</p>
-                    <p className="text-xs mt-1" style={{ color: '#666' }}>BasÃ©es sur votre Ã©tablissement, classe et centres d'intÃ©rÃªt</p>
+                    <p className="text-xs mt-1" style={{ color: '#666' }}>Basées sur votre établissement, classe et centres d'intérêt</p>
                   </div>
                 ) : (
                   <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))' }}>
@@ -346,7 +346,7 @@ export default function Amis() {
 
           {/* Rechercher */}
           <TabsContent value="recherche" className="mt-4 space-y-3">
-            <Card style={{ backgroundColor: '#262626', borderColor: '#404040' }}>
+            <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardContent className="p-3">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#888' }} />
@@ -360,15 +360,15 @@ export default function Amis() {
                 </div>
               </CardContent>
             </Card>
-            <Card style={{ backgroundColor: '#262626', borderColor: '#404040' }}>
+            <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid #404040' }}>
-                <CardTitle className="text-white text-sm">RÃ©sultats ({autresUtilisateurs.length})</CardTitle>
+                <CardTitle className="text-white text-sm">Résultats ({autresUtilisateurs.length})</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
                 {autresUtilisateurs.length === 0 ? (
                   <div className="text-center py-12">
                     <Users className="w-14 h-14 mx-auto mb-3" style={{ color: '#555' }} />
-                    <p className="text-sm" style={{ color: '#888' }}>{searchQuery ? 'Aucun utilisateur trouvÃ©' : 'Tapez un nom pour rechercher'}</p>
+                    <p className="text-sm" style={{ color: '#888' }}>{searchQuery ? 'Aucun utilisateur trouvé' : 'Tapez un nom pour rechercher'}</p>
                   </div>
                 ) : (
                   <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))' }}>
@@ -381,7 +381,7 @@ export default function Amis() {
                             disabled={alreadySent || sendingIds.has(u.id)}
                             className={`${iconBtn} flex-1`}
                             style={{ background: alreadySent ? '#374151' : '#1d4ed8', color: alreadySent ? '#9ca3af' : '#fff' }}
-                            title={alreadySent ? 'Demande envoyÃ©e' : 'Ajouter'}
+                            title={alreadySent ? 'Demande envoyée' : 'Ajouter'}
                           >
                             {alreadySent ? <UserCheck className="w-3.5 h-3.5 mx-auto" /> : <UserPlus className="w-3.5 h-3.5 mx-auto" />}
                           </button>
@@ -397,24 +397,24 @@ export default function Amis() {
             </Card>
           </TabsContent>
 
-          {/* Utilisateurs bloquÃ©s */}
+          {/* Utilisateurs bloqués */}
           <TabsContent value="bloques" className="mt-4">
-            <Card style={{ backgroundColor: '#262626', borderColor: '#404040' }}>
+            <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid #404040' }}>
-                <CardTitle className="text-white text-sm">Utilisateurs BloquÃ©s</CardTitle>
+                <CardTitle className="text-white text-sm">Utilisateurs Bloqués</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
                 {blockedUsers.length === 0 ? (
                   <div className="text-center py-12">
                     <Shield className="w-14 h-14 mx-auto mb-3" style={{ color: '#555' }} />
-                    <p className="text-sm" style={{ color: '#888' }}>Aucun utilisateur bloquÃ©</p>
+                    <p className="text-sm" style={{ color: '#888' }}>Aucun utilisateur bloqué</p>
                   </div>
                 ) : (
                   <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))' }}>
                     {blockedUsers.map(u => (
                       <UserCard key={u.id} u={u} navigate={navigate} actions={<>
                         <button onClick={() => unblockMutation.mutate(u.id)} disabled={unblockMutation.isPending} className={`${iconBtn} w-full`} style={{ background: '#14532d', color: '#86efac' }}>
-                          DÃ©bloquer
+                          Débloquer
                         </button>
                       </>} />
                     ))}

@@ -24,11 +24,11 @@ function Row({ label, value, highlight }) {
 function Section({ title, icon, children }) {
   return (
     <div className="rounded-lg overflow-hidden" style={{ border: '1px solid #4d4d4d' }}>
-      <div className="flex items-center gap-2 px-3 py-1.5" style={{ backgroundColor: '#1a1a1a' }}>
+      <div className="flex items-center gap-2 px-3 py-1.5" style={{ backgroundColor: 'var(--ha-surface2)' }}>
         {icon}
         <h3 className="text-white font-semibold text-xs" style={CG}>{title}</h3>
       </div>
-      <div className="p-2 space-y-0.5" style={{ backgroundColor: '#2d2d2d' }}>{children}</div>
+      <div className="p-2 space-y-0.5" style={{ backgroundColor: 'var(--ha-surface2)' }}>{children}</div>
     </div>
   );
 }
@@ -121,10 +121,10 @@ function DossierEnfant({ demande, etablissementId }) {
   const isLoading = loadingRacine || loadingDossiers;
 
   return (
-    <div className="rounded-xl p-4 mb-6" style={{ backgroundColor: '#3d3d3d', border: '1px solid #2d2d2d' }}>
+    <div className="rounded-xl p-4 mb-6" style={{ backgroundColor: 'var(--ha-surface)', border: '1px solid #2d2d2d' }}>
       {/* En-tête étudiant */}
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#2d2d2d' }}>
+        <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'var(--ha-surface2)' }}>
           <GraduationCap className="w-5 h-5 text-blue-400" />
         </div>
         <div>
@@ -214,7 +214,7 @@ function DossierEnfant({ demande, etablissementId }) {
                     )}
                   </div>
                 </ContextMenuTrigger>
-                <ContextMenuContent style={{ backgroundColor: '#2d2d2d', borderColor: '#4d4d4d' }}>
+                <ContextMenuContent style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}>
                   {!!item.is_fichier && item.fichier_type === 'formulaire_inscription' && (
                     <ContextMenuItem onClick={() => openFiche(item)} className="text-white text-xs hover:bg-[#474747] cursor-pointer">
                       <Eye className="w-3.5 h-3.5 mr-2 text-blue-400" /> Ouvrir
@@ -297,7 +297,7 @@ function DossierEnfant({ demande, etablissementId }) {
                     </div>
                   </div>
                 ) : (
-                  <div className="p-3 rounded-lg text-center" style={{ backgroundColor: '#1a1a1a', border: '1px solid #4d4d4d' }}>
+                  <div className="p-3 rounded-lg text-center" style={{ backgroundColor: 'var(--ha-surface2)', border: '1px solid #4d4d4d' }}>
                     <h2 className="text-sm font-bold text-white" style={CG}>{ficheData.etablissement_nom}</h2>
                     <p className="text-blue-400 font-semibold text-xs mt-0.5" style={CG}>FORMULAIRE D'INSCRIPTION</p>
                   </div>
@@ -425,17 +425,17 @@ export default function DocumentsEnfants() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#4d4d4d' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--ha-bg)' }}>
         <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-6" style={{ backgroundColor: '#4d4d4d' }}>
+    <div className="min-h-screen p-4 md:p-6" style={{ backgroundColor: 'var(--ha-bg)' }}>
       {/* Header */}
       <div className="mb-6 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#2d2d2d' }}>
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'var(--ha-surface2)' }}>
           <Users className="w-5 h-5 text-blue-400" />
         </div>
         <div>
@@ -445,7 +445,7 @@ export default function DocumentsEnfants() {
       </div>
 
       {demandesParent.length === 0 ? (
-        <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+        <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
           <CardContent className="py-16 text-center">
             <Users className="w-16 h-16 text-gray-500 mx-auto mb-4" />
             <p className="text-gray-300 font-medium" style={CG}>Aucune demande d'inscription parent trouvée</p>
@@ -454,14 +454,14 @@ export default function DocumentsEnfants() {
           </CardContent>
         </Card>
       ) : demandesEtudiants.length === 0 ? (
-        <Card style={{ backgroundColor: '#3d3d3d', borderColor: '#2d2d2d' }}>
+        <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
           <CardContent className="py-16 text-center">
             <GraduationCap className="w-16 h-16 text-gray-500 mx-auto mb-4" />
             <p className="text-gray-300 font-medium" style={CG}>Aucun dossier disponible</p>
             <p className="text-gray-500 text-sm mt-2" style={CG}>
               Les dossiers seront disponibles une fois que la demande d'inscription de votre enfant aura été approuvée et son dossier créé par l'établissement.
             </p>
-            <div className="mt-4 p-3 rounded-lg mx-auto max-w-sm" style={{ backgroundColor: '#2d2d2d', border: '1px solid #4d4d4d' }}>
+            <div className="mt-4 p-3 rounded-lg mx-auto max-w-sm" style={{ backgroundColor: 'var(--ha-surface2)', border: '1px solid #4d4d4d' }}>
               <p className="text-gray-400 text-xs" style={CG}>Matricules enregistrés :</p>
               {matriculesEnfants.length > 0 ? matriculesEnfants.map(m => (
                 <p key={m} className="text-white text-xs font-medium mt-1" style={CG}>{m}</p>

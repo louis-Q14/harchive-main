@@ -183,19 +183,19 @@ export default function PartagesFichiers() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#1a1a1a' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--ha-surface2)' }}>
         <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8" style={{ backgroundColor: '#1a1a1a' }}>
+    <div className="min-h-screen p-4 md:p-8" style={{ backgroundColor: 'var(--ha-surface2)' }}>
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-xl" style={{ backgroundColor: '#333333' }}>
+            <div className="p-3 rounded-xl" style={{ backgroundColor: 'var(--ha-surface)' }}>
               <img src="/assets/icons/fc25762eb_data-sharing.png" alt="Partage" className="w-8 h-8" />
             </div>
             <div>
@@ -213,7 +213,7 @@ export default function PartagesFichiers() {
         </div>
 
         {/* Lecteur de code */}
-        <Card style={{ backgroundColor: '#262626', borderColor: '#333333' }}>
+        <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: '#333333' }}>
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
               <Link2 className="w-5 h-5 text-blue-400" />
@@ -229,7 +229,7 @@ export default function PartagesFichiers() {
                   onChange={(e) => setSearchCode(e.target.value.toUpperCase())}
                   onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                   className="text-lg tracking-widest font-mono"
-                  style={{ backgroundColor: '#1a1a1a', borderColor: '#404040' }}
+                  style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}
                 />
               </div>
               <Button
@@ -249,10 +249,10 @@ export default function PartagesFichiers() {
             </div>
 
             {foundFile && (
-              <div className="mt-6 p-4 rounded-xl" style={{ backgroundColor: '#333333' }}>
+              <div className="mt-6 p-4 rounded-xl" style={{ backgroundColor: 'var(--ha-surface)' }}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="p-3 rounded-lg" style={{ backgroundColor: '#262626' }}>
+                    <div className="p-3 rounded-lg" style={{ backgroundColor: 'var(--ha-surface)' }}>
                       {getFileIcon(foundFile.type_fichier)}
                     </div>
                     <div>
@@ -283,14 +283,14 @@ export default function PartagesFichiers() {
         </Card>
 
         {/* Mes fichiers partagés */}
-        <Card style={{ backgroundColor: '#262626', borderColor: '#333333' }}>
+        <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: '#333333' }}>
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-white flex items-center gap-2">
                 <File className="w-5 h-5 text-purple-400" />
                 Mes fichiers partagés
               </CardTitle>
-              <Badge style={{ backgroundColor: '#333333' }} className="text-white">
+              <Badge style={{ backgroundColor: 'var(--ha-surface)' }} className="text-white">
                 {mesFichiers.length} fichier(s)
               </Badge>
             </div>
@@ -309,7 +309,7 @@ export default function PartagesFichiers() {
             ) : (
               <Table>
                 <TableHeader>
-                  <TableRow style={{ borderColor: '#404040' }}>
+                  <TableRow style={{ borderColor: 'var(--ha-border)' }}>
                     <TableHead className="text-gray-400">Fichier</TableHead>
                     <TableHead className="text-gray-400">Code de partage</TableHead>
                     <TableHead className="text-gray-400">Taille</TableHead>
@@ -320,7 +320,7 @@ export default function PartagesFichiers() {
                 </TableHeader>
                 <TableBody>
                   {mesFichiers.map((fichier) => (
-                    <TableRow key={fichier.id} style={{ borderColor: '#404040' }} className="hover:bg-[#333333]">
+                    <TableRow key={fichier.id} style={{ borderColor: 'var(--ha-border)' }} className="hover:bg-[#333333]">
                       <TableCell>
                         <div className="flex items-center gap-3">
                           {getFileIcon(fichier.type_fichier)}
@@ -334,7 +334,7 @@ export default function PartagesFichiers() {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
-                          <code className="px-3 py-1 rounded text-blue-400 font-mono text-sm" style={{ backgroundColor: '#1a1a1a' }}>
+                          <code className="px-3 py-1 rounded text-blue-400 font-mono text-sm" style={{ backgroundColor: 'var(--ha-surface2)' }}>
                             {fichier.code_partage}
                           </code>
                           <Button
@@ -395,7 +395,7 @@ export default function PartagesFichiers() {
               <Label className="text-white text-xs font-medium" style={CG}>Fichier</Label>
               <div
                 className="border-2 border-dashed rounded-xl p-8 text-center cursor-pointer hover:border-blue-500 transition-colors"
-                style={{ borderColor: '#404040', backgroundColor: '#1a1a1a' }}
+                style={{ borderColor: 'var(--ha-border)', backgroundColor: 'var(--ha-surface2)' }}
                 onClick={() => document.getElementById('file-input').click()}
               >
                 {selectedFile ? (
@@ -433,7 +433,7 @@ export default function PartagesFichiers() {
           </div>
         </DraggableDialogBody>
         <DraggableDialogFooter>
-            <Button variant="outline" onClick={() => setUploadDialogOpen(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>
+            <Button variant="outline" onClick={() => setUploadDialogOpen(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>
               Annuler
             </Button>
             <Button
