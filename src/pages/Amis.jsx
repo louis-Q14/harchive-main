@@ -68,7 +68,7 @@ export default function Amis() {
     enabled: !!user,
     staleTime: 30000,
     select: (rows) => rows
-      .filter(u => u.id !== user?.id && u.role_archive !== 'admin_systeme' && u.role_archive !== 'super_admin')
+      .filter(u => u.id !== user?.id && u.role_archive !== 'admin_systeme' && u.role_archive !== 'super_admin' && u.role_archive !== 'harchive_officiel')
       .map(u => ({
         ...u,
         amis: typeof u.amis === 'string' ? JSON.parse(u.amis || '[]') : (u.amis || []),
