@@ -85,6 +85,7 @@ const roleNavigation = {
   harchive_officiel: [
     { title: "Journal", url: "Journal", icon: "/assets/icons/eb36099c9_news-paper.png", isCustomIcon: true },
     { title: "Communiqués Harchive", url: "CommuniqueHarchive", icon: "/assets/icons/e5073e7f6_chat.png", isCustomIcon: true },
+    { title: "Messagerie", url: "Messagerie", icon: "/assets/icons/e5073e7f6_chat.png", isCustomIcon: true },
     { title: "Paramètres", url: "Parametres", icon: Settings },
   ],
   admin_etablissement: [

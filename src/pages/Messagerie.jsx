@@ -596,10 +596,11 @@ export default function Messagerie() {
   });
 
   const myAmis = typeof user?.amis === 'string' ? JSON.parse(user.amis || '[]') : (user?.amis || []);
-  const isAdmin = user?.role_archive === 'admin_systeme' || user?.role_archive === 'super_admin';
+  const isAdmin = user?.role_archive === 'admin_systeme' || user?.role_archive === 'super_admin' || user?.role_archive === 'harchive_officiel';
 
   const filteredUsers = allUsers.filter((u) => {
-    if (!isAdmin && !myAmis.includes(u.id)) return false;
+    const isHarchiveOfficielAccount = u.id === 'harchive-officiel-001';
+    if (!isAdmin && !isHarchiveOfficielAccount && !myAmis.includes(u.id)) return false;
     const search = searchQuery.toLowerCase();
     const fullName = (formatUserName(u) || '').toLowerCase();
     const email = (u.email || '').toLowerCase();
