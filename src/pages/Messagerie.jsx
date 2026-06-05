@@ -610,23 +610,23 @@ export default function Messagerie() {
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <Loader2 className="w-12 h-12 text-gray-400 animate-spin" />
+        <Loader2 className="w-12 h-12 text-[var(--ha-text-faint)] animate-spin" />
       </div>);
 
   }
 
   return (
-    <div className="h-screen bg-[#1a1a1a] flex flex-col">
+    <div className="h-screen bg-[var(--ha-bg)] flex flex-col">
       {/* Header moderne */}
-      <div className="bg-[#3f3f3f] px-6 py-4 border-b border-[#3d3d3d] shadow-lg">
+      <div className="bg-[var(--ha-surface2)] px-6 py-4 border-b border-[var(--ha-border)] shadow-lg">
         <div className="w-full min-w-[1100px] mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-              <Send className="w-5 h-5 text-white" />
+              <Send className="w-5 h-5 text-[var(--ha-text)]" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">Messagerie</h1>
-              <p className="text-xs text-gray-400">Restez connecté avec vos amis</p>
+              <h1 className="text-xl font-bold text-[var(--ha-text)]">Messagerie</h1>
+              <p className="text-xs text-[var(--ha-text-faint)]">Restez connecté avec vos amis</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -634,14 +634,14 @@ export default function Messagerie() {
               variant="ghost"
               size="sm"
               onClick={() => setShowArchived(!showArchived)}
-              className={showArchived ? "bg-blue-600/20 text-blue-400 hover:bg-blue-600/30" : "text-gray-300 hover:bg-[#3d3d3d] hover:text-white"}>
+              className={showArchived ? "bg-blue-600/20 text-blue-400 hover:bg-blue-600/30" : "text-[var(--ha-text-muted)] hover:bg-[var(--ha-surface2)] hover:text-[var(--ha-text)]"}>
               <Archive className="w-4 h-4 mr-2" />
               {showArchived ? "Actives" : "Archivées"}
             </Button>
             <Button
               onClick={() => setShowNewConversation(true)}
               size="sm"
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg">
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-[var(--ha-text)] shadow-lg">
               <Plus className="w-4 h-4 mr-2" />
               Nouvelle conversation
             </Button>
@@ -653,19 +653,19 @@ export default function Messagerie() {
       <div className="flex-1 overflow-hidden">
         <div className="w-full min-w-[1100px] mx-auto h-full flex">
           {/* Liste conversations - Design moderne */}
-          <div className="w-full md:w-96 bg-[#2d2d2d] border-r border-[#3d3d3d] flex flex-col">
-            <div className="bg-[#282828] p-4 border-b border-[#3d3d3d]">
+          <div className="w-full md:w-96 bg-[var(--ha-surface)] border-r border-[var(--ha-border)] flex flex-col">
+            <div className="bg-[var(--ha-surface)] p-4 border-b border-[var(--ha-border)]">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
                 <Input
                   placeholder="Rechercher une conversation..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 bg-[#1a1a1a] border-[#4d4d4d] text-white placeholder:text-gray-500 focus:border-blue-500" />
+                  className="pl-10 bg-[var(--ha-bg)] border-[var(--ha-border)] text-[var(--ha-text)] placeholder:text-[var(--ha-text-faint)] focus:border-blue-500" />
               </div>
             </div>
 
-            <div className="bg-[#3f3f3f] flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-[#4d4d4d] scrollbar-track-transparent">
+            <div className="bg-[var(--ha-surface2)] flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-[var(--ha-surface3)] scrollbar-track-transparent">
               {loadingConversations ?
               <div className="flex items-center justify-center py-12">
                   <Loader2 className="w-8 h-8 text-gray-500 animate-spin" />
@@ -687,7 +687,7 @@ export default function Messagerie() {
                   <div
                     key={conv.id}
                     className={`relative group transition-all duration-200 ${
-                    isActive ? 'bg-[#3d3d3d] border-l-4 border-blue-500' : 'hover:bg-[#3d3d3d]/50 border-l-4 border-transparent'}`
+                    isActive ? 'bg-[var(--ha-surface2)] border-l-4 border-blue-500' : 'hover:bg-[var(--ha-surface2)]/50 border-l-4 border-transparent'}`
                     }>
 
                       <button
@@ -696,13 +696,13 @@ export default function Messagerie() {
 
                         <div className="flex items-start gap-3">
                           <div className="relative">
-                            <Avatar className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 flex-shrink-0 ring-2 ring-[#4d4d4d]">
+                            <Avatar className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 flex-shrink-0 ring-2 ring-[var(--ha-border)]">
                               {(() => {
                               const otherUser = getOtherUser(conv);
                               return otherUser?.photo_url ?
                               <img src={otherUser.photo_url} alt={getConversationName(conv)} className="w-full h-full object-cover rounded-full" /> :
 
-                              <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold rounded-full flex h-full w-full items-center justify-center text-lg">
+                              <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-[var(--ha-text)] font-semibold rounded-full flex h-full w-full items-center justify-center text-lg">
                                     {getInitials(getConversationName(conv))}
                                   </AvatarFallback>;
 
@@ -710,13 +710,13 @@ export default function Messagerie() {
                             </Avatar>
                             {isPinned &&
                           <div className="absolute -top-1 -right-1 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
-                                <Pin className="w-3 h-3 text-white" />
+                                <Pin className="w-3 h-3 text-[var(--ha-text)]" />
                               </div>
                           }
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between mb-1">
-                              <p className="font-semibold text-white truncate text-base">
+                              <p className="font-semibold text-[var(--ha-text)] truncate text-base">
                                 {getConversationName(conv)}
                               </p>
                               <div className="flex items-center gap-1.5">
@@ -729,7 +729,7 @@ export default function Messagerie() {
                               </div>
                             </div>
                             <div className="flex items-center justify-between">
-                              <p className={`text-sm truncate flex-1 ${unreadCount > 0 ? 'text-gray-300 font-medium' : 'text-gray-500'}`}>
+                              <p className={`text-sm truncate flex-1 ${unreadCount > 0 ? 'text-[var(--ha-text-muted)] font-medium' : 'text-gray-500'}`}>
                                 {conv.dernier_message_type === 'image' && '📷 '}
                                 {conv.dernier_message_type === 'video' && '🎥 '}
                                 {conv.dernier_message_type === 'audio' && '🎤 '}
@@ -738,7 +738,7 @@ export default function Messagerie() {
                                 {conv.dernier_message || "Aucun message"}
                               </p>
                               {unreadCount > 0 &&
-                            <Badge className="bg-blue-500 text-white ml-2 rounded-full px-2 py-0.5 text-xs font-bold">
+                            <Badge className="bg-blue-500 text-[var(--ha-text)] ml-2 rounded-full px-2 py-0.5 text-xs font-bold">
                                   {unreadCount}
                                 </Badge>
                             }
@@ -750,24 +750,24 @@ export default function Messagerie() {
                       <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 bg-[#2d2d2d] hover:bg-[#4d4d4d] text-gray-300">
+                            <Button variant="ghost" size="icon" className="h-8 w-8 bg-[var(--ha-surface)] hover:bg-[var(--ha-surface2)] text-[var(--ha-text-muted)]">
                               <MoreVertical className="w-4 h-4" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="bg-[#2d2d2d] border-[#4d4d4d] text-white">
-                            <DropdownMenuItem onClick={() => togglePinMutation.mutate(conv)} className="hover:bg-[#3d3d3d] focus:bg-[#3d3d3d]">
+                          <DropdownMenuContent align="end" className="bg-[var(--ha-surface)] border-[var(--ha-border)] text-[var(--ha-text)]">
+                            <DropdownMenuItem onClick={() => togglePinMutation.mutate(conv)} className="hover:bg-[var(--ha-surface2)] focus:bg-[var(--ha-surface2)]">
                               <Pin className="w-4 h-4 mr-2" />
                               {isPinned ? 'Désépingler' : 'Épingler'}
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => toggleMuteMutation.mutate(conv)} className="hover:bg-[#3d3d3d] focus:bg-[#3d3d3d]">
+                            <DropdownMenuItem onClick={() => toggleMuteMutation.mutate(conv)} className="hover:bg-[var(--ha-surface2)] focus:bg-[var(--ha-surface2)]">
                               <VolumeX className="w-4 h-4 mr-2" />
                               {isMuted ? 'Réactiver les notifications' : 'Masquer les notifications'}
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => toggleArchiveMutation.mutate(conv)} className="hover:bg-[#3d3d3d] focus:bg-[#3d3d3d]">
+                            <DropdownMenuItem onClick={() => toggleArchiveMutation.mutate(conv)} className="hover:bg-[var(--ha-surface2)] focus:bg-[var(--ha-surface2)]">
                               <Archive className="w-4 h-4 mr-2" />
                               {conv.archive_par?.includes(user.id) ? 'Désarchiver' : 'Archiver'}
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator className="bg-[#4d4d4d]" />
+                            <DropdownMenuSeparator className="bg-[var(--ha-border)]" />
                             <DropdownMenuItem
                             onClick={() => {
                               if (confirm('Êtes-vous sûr de vouloir supprimer cette conversation ? Tous les messages seront supprimés.')) {
@@ -790,27 +790,27 @@ export default function Messagerie() {
           </div>
 
           {/* Zone messages - Design moderne */}
-          <div className="flex-1 bg-[#1a1a1a] flex flex-col">
+          <div className="flex-1 bg-[var(--ha-bg)] flex flex-col">
             {selectedConversation ?
             <>
                 {/* En-tête conversation moderne */}
-                <div className="p-4 border-b border-[#3d3d3d] bg-[#2d2d2d] shadow-lg">
+                <div className="p-4 border-b border-[var(--ha-border)] bg-[var(--ha-surface)] shadow-lg">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <Avatar className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 ring-2 ring-[#4d4d4d]">
+                      <Avatar className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 ring-2 ring-[var(--ha-border)]">
                         {(() => {
                         const otherUser = getOtherUser(selectedConversation);
                         return otherUser?.photo_url ?
                         <img src={otherUser.photo_url} alt={getConversationName(selectedConversation)} className="w-full h-full object-cover rounded-full" /> :
 
-                        <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold rounded-full flex h-full w-full items-center justify-center text-lg">
+                        <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-[var(--ha-text)] font-semibold rounded-full flex h-full w-full items-center justify-center text-lg">
                               {getInitials(getConversationName(selectedConversation))}
                             </AvatarFallback>;
 
                       })()}
                       </Avatar>
                       <div>
-                        <h3 className="font-semibold text-white text-lg">
+                        <h3 className="font-semibold text-[var(--ha-text)] text-lg">
                           {getConversationName(selectedConversation)}
                         </h3>
                         <p className="text-xs text-gray-500">En ligne</p>
@@ -818,24 +818,24 @@ export default function Messagerie() {
                     </div>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white hover:bg-[#3d3d3d]">
+                        <Button variant="ghost" size="icon" className="text-[var(--ha-text-faint)] hover:text-[var(--ha-text)] hover:bg-[var(--ha-surface2)]">
                           <MoreVertical className="w-5 h-5" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-[#2d2d2d] border-[#4d4d4d] text-white">
-                        <DropdownMenuItem onClick={() => togglePinMutation.mutate(selectedConversation)} className="hover:bg-[#3d3d3d]">
+                      <DropdownMenuContent align="end" className="bg-[var(--ha-surface)] border-[var(--ha-border)] text-[var(--ha-text)]">
+                        <DropdownMenuItem onClick={() => togglePinMutation.mutate(selectedConversation)} className="hover:bg-[var(--ha-surface2)]">
                           <Pin className="w-4 h-4 mr-2" />
                           {selectedConversation.epingle_par?.includes(user.id) ? 'Désépingler' : 'Épingler'}
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toggleMuteMutation.mutate(selectedConversation)} className="hover:bg-[#3d3d3d]">
+                        <DropdownMenuItem onClick={() => toggleMuteMutation.mutate(selectedConversation)} className="hover:bg-[var(--ha-surface2)]">
                           <VolumeX className="w-4 h-4 mr-2" />
                           {selectedConversation.muet_par?.includes(user.id) ? 'Réactiver' : 'Masquer'}
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => toggleArchiveMutation.mutate(selectedConversation)} className="hover:bg-[#3d3d3d]">
+                        <DropdownMenuItem onClick={() => toggleArchiveMutation.mutate(selectedConversation)} className="hover:bg-[var(--ha-surface2)]">
                           <Archive className="w-4 h-4 mr-2" />
                           Archiver
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator className="bg-[#4d4d4d]" />
+                        <DropdownMenuSeparator className="bg-[var(--ha-border)]" />
                         <DropdownMenuItem
                         onClick={() => {
                           if (confirm('Supprimer cette conversation ?')) {
@@ -853,10 +853,10 @@ export default function Messagerie() {
                 </div>
 
                 {/* Messages avec fond amélioré */}
-                <div className="bg-[#1a1a1a] p-6 flex-1 overflow-y-auto space-y-3 scrollbar-thin scrollbar-thumb-[#4d4d4d] scrollbar-track-transparent">
+                <div className="bg-[var(--ha-bg)] p-6 flex-1 overflow-y-auto space-y-3 scrollbar-thin scrollbar-thumb-[var(--ha-surface3)] scrollbar-track-transparent">
                   {loadingMessages ?
                 <div className="flex items-center justify-center py-12">
-                      <Loader2 className="w-8 h-8 text-gray-400 animate-spin" />
+                      <Loader2 className="w-8 h-8 text-[var(--ha-text-faint)] animate-spin" />
                     </div> :
                 messages.length === 0 ?
                 <div className="text-center py-12">
@@ -882,7 +882,7 @@ export default function Messagerie() {
                             return messageAuthor?.photo_url ?
                             <img src={messageAuthor.photo_url} alt={message.auteur_nom} className="w-full h-full object-cover rounded-full" /> :
 
-                            <AvatarFallback className="text-white text-xs">
+                            <AvatarFallback className="text-[var(--ha-text)] text-xs">
                                       {getInitials(formatUserName({ full_name: message.auteur_nom }))}
                                     </AvatarFallback>;
 
@@ -893,7 +893,7 @@ export default function Messagerie() {
                             
                             <div className="max-w-[70%]">
                               <div className={`relative rounded-2xl px-3 py-2 ${
-                          isOwn ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-800'}`
+                          isOwn ? 'bg-blue-600 text-[var(--ha-text)]' : 'bg-gray-100 text-gray-800'}`
                           }>
                                 {replyToMessage &&
                             <div className={`mb-2 p-2 rounded-lg border-l-2 text-xs ${
@@ -1060,16 +1060,16 @@ export default function Messagerie() {
                 </div>
 
                 {/* Zone saisie moderne */}
-                <div className="p-4 border-t border-[#3d3d3d] bg-[#2d2d2d]">
+                <div className="p-4 border-t border-[var(--ha-border)] bg-[var(--ha-surface)]">
                   {replyingTo &&
                 <div className="mb-3 flex items-center gap-2 bg-blue-600/20 border border-blue-500/30 rounded-lg p-3">
                       <Reply className="w-4 h-4 text-blue-400" />
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-semibold text-blue-300">{replyingTo.auteur_nom}</p>
-                        <p className="text-xs text-gray-400 truncate">{replyingTo.contenu?.substring(0, 50)}</p>
+                        <p className="text-xs text-[var(--ha-text-faint)] truncate">{replyingTo.contenu?.substring(0, 50)}</p>
                       </div>
-                      <button onClick={() => setReplyingTo(null)} className="hover:bg-[#3d3d3d] rounded p-1">
-                        <X className="w-4 h-4 text-gray-400" />
+                      <button onClick={() => setReplyingTo(null)} className="hover:bg-[var(--ha-surface2)] rounded p-1">
+                        <X className="w-4 h-4 text-[var(--ha-text-faint)]" />
                       </button>
                     </div>
                 }
@@ -1152,24 +1152,24 @@ export default function Messagerie() {
                     
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="outline" size="icon" className="bg-[#3d3d3d] border-[#4d4d4d] hover:bg-[#4d4d4d] text-gray-400">
+                        <Button variant="outline" size="icon" className="bg-[var(--ha-surface2)] border-[var(--ha-border)] hover:bg-[var(--ha-surface2)] text-[var(--ha-text-faint)]">
                           <Plus className="w-5 h-5" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent className="bg-[#2d2d2d] border-[#4d4d4d] text-white">
-                        <DropdownMenuItem onClick={() => imageInputRef.current?.click()} className="hover:bg-[#3d3d3d]">
+                      <DropdownMenuContent className="bg-[var(--ha-surface)] border-[var(--ha-border)] text-[var(--ha-text)]">
+                        <DropdownMenuItem onClick={() => imageInputRef.current?.click()} className="hover:bg-[var(--ha-surface2)]">
                           <ImageIcon className="w-4 h-4 mr-2" />
                           Image
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => videoInputRef.current?.click()} className="hover:bg-[#3d3d3d]">
+                        <DropdownMenuItem onClick={() => videoInputRef.current?.click()} className="hover:bg-[var(--ha-surface2)]">
                           <Video className="w-4 h-4 mr-2" />
                           Vidéo
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => fileInputRef.current?.click()} className="hover:bg-[#3d3d3d]">
+                        <DropdownMenuItem onClick={() => fileInputRef.current?.click()} className="hover:bg-[var(--ha-surface2)]">
                           <Paperclip className="w-4 h-4 mr-2" />
                           Fichier
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={sendLocation} className="hover:bg-[#3d3d3d]">
+                        <DropdownMenuItem onClick={sendLocation} className="hover:bg-[var(--ha-surface2)]">
                           <MapPin className="w-4 h-4 mr-2" />
                           Position
                         </DropdownMenuItem>
@@ -1193,7 +1193,7 @@ export default function Messagerie() {
                         }
                       }
                     }}
-                    className="flex-1 bg-[#3d3d3d] border-[#4d4d4d] text-white placeholder:text-gray-500 focus:border-blue-500"
+                    className="flex-1 bg-[var(--ha-surface2)] border-[var(--ha-border)] text-[var(--ha-text)] placeholder:text-[var(--ha-text-faint)] focus:border-blue-500"
                     disabled={uploading || recording} />
 
 
@@ -1203,7 +1203,7 @@ export default function Messagerie() {
                     size="icon"
                     onClick={startRecording}
                     disabled={uploading}
-                    className="bg-[#3d3d3d] border-[#4d4d4d] hover:bg-[#4d4d4d] text-gray-400">
+                    className="bg-[var(--ha-surface2)] border-[var(--ha-border)] hover:bg-[var(--ha-surface2)] text-[var(--ha-text-faint)]">
                         <Mic className="w-5 h-5" />
                       </Button>
                   }
@@ -1214,7 +1214,7 @@ export default function Messagerie() {
                       newContent: messageText
                     }) : handleSendMessage}
                     disabled={!messageText.trim() || uploading || recording}
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg">
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-[var(--ha-text)] shadow-lg">
 
                       <Send className="w-5 h-5" />
                     </Button>
@@ -1222,20 +1222,20 @@ export default function Messagerie() {
                 </div>
               </> :
 
-            <div className="flex-1 flex items-center justify-center bg-[#1a1a1a]">
+            <div className="flex-1 flex items-center justify-center bg-[var(--ha-bg)]">
                 <div className="text-center max-w-md">
                   <div className="w-24 h-24 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
                     <Send className="w-12 h-12 text-blue-400" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-3">
+                  <h3 className="text-2xl font-bold text-[var(--ha-text)] mb-3">
                     Aucune conversation sélectionnée
                   </h3>
-                  <p className="text-gray-400 mb-6">
+                  <p className="text-[var(--ha-text-faint)] mb-6">
                     Choisissez une conversation dans la liste ou créez-en une nouvelle pour commencer a discuter
                   </p>
                   <Button
                   onClick={() => setShowNewConversation(true)}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg">
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-[var(--ha-text)] shadow-lg">
 
                     <Plus className="w-5 h-5 mr-2" />
                     Nouvelle conversation
@@ -1258,13 +1258,13 @@ export default function Messagerie() {
         <DraggableDialogBody className="flex-1 flex flex-col min-h-0">
           <div className="flex flex-col flex-1 min-h-0 py-4">
             <div className="relative mb-4 flex-shrink-0">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[var(--ha-text-faint)]" />
               <Input
                 placeholder="Rechercher..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
-                style={{backgroundColor:'#2d2d2d',color:'#ffffff',borderColor:'#4d4d4d',...CG}} />
+                style={{backgroundColor:'var(--ha-surface)',color:'var(--ha-text)',borderColor:'var(--ha-border)',...CG}} />
             </div>
             <div className="flex-1 overflow-y-auto space-y-2 min-h-0">
               {filteredUsers.map((targetUser) =>
@@ -1275,7 +1275,7 @@ export default function Messagerie() {
                   <Avatar className="w-10 h-10 bg-blue-600">
                     {targetUser.photo_url ?
                   <img src={targetUser.photo_url} alt={formatUserName(targetUser)} className="w-full h-full object-cover rounded-full" /> :
-                  <AvatarFallback className="text-white">
+                  <AvatarFallback className="text-[var(--ha-text)]">
                         {getInitials(formatUserName(targetUser))}
                       </AvatarFallback>
                   }
@@ -1347,7 +1347,7 @@ export default function Messagerie() {
                   <Avatar className="w-10 h-10 bg-blue-600">
                     {targetUser.photo_url ?
                   <img src={targetUser.photo_url} alt={formatUserName(targetUser)} className="w-full h-full object-cover rounded-full" /> :
-                  <AvatarFallback className="text-white">
+                  <AvatarFallback className="text-[var(--ha-text)]">
                         {getInitials(formatUserName(targetUser))}
                       </AvatarFallback>
                   }
