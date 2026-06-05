@@ -151,7 +151,7 @@ export default function NotificationCenter({ userId }) {
         variant="ghost" 
         size="icon" 
         className="relative"
-        style={{color: '#ffffff'}}
+        style={{color: 'var(--ha-text)'}}
         onClick={() => setOpen(o => !o)}
       >
         <img 
@@ -162,7 +162,7 @@ export default function NotificationCenter({ userId }) {
         {unreadCount > 0 && (
           <Badge 
             className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
-            style={{backgroundColor: '#ff4444', color: '#ffffff'}}
+            style={{backgroundColor: '#ff4444', color: 'var(--ha-text)'}}
           >
             {unreadCount > 9 ? '9+' : unreadCount}
           </Badge>
@@ -190,7 +190,7 @@ export default function NotificationCenter({ userId }) {
                 <button
                   onClick={() => markAllAsReadMutation.mutate()}
                   className="flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors hover:bg-white/10"
-                  style={{ color: '#b0b0b0' }}
+                  style={{ color: 'var(--ha-text-muted)' }}
                 >
                   <CheckCheck className="w-3.5 h-3.5" />
                   Tout marquer lu
@@ -199,7 +199,7 @@ export default function NotificationCenter({ userId }) {
               <button
                 onClick={() => setOpen(false)}
                 className="p-1 rounded transition-colors hover:bg-white/10"
-                style={{ color: '#b0b0b0' }}
+                style={{ color: 'var(--ha-text-muted)' }}
               >
                 <X className="w-4 h-4" />
               </button>
@@ -211,7 +211,7 @@ export default function NotificationCenter({ userId }) {
             {notifications.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-10 px-4">
                 <Bell className="w-10 h-10 mb-2 opacity-30 text-gray-500" />
-                <p className="text-sm" style={{color: '#b0b0b0'}}>Aucune notification</p>
+                <p className="text-sm" style={{color: 'var(--ha-text-muted)'}}>Aucune notification</p>
               </div>
             ) : (
               <div className="divide-y" style={{borderColor: 'rgba(255,255,255,0.06)'}}>
@@ -233,7 +233,7 @@ export default function NotificationCenter({ userId }) {
                           <Icon className="w-4 h-4" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="font-semibold text-xs mb-0.5" style={{color: '#ffffff'}}>
+                          <p className="font-semibold text-xs mb-0.5" style={{color: 'var(--ha-text)'}}>
                             {notification.titre}
                           </p>
                           <p className="text-xs mb-1" style={{color: '#d0d0d0'}}>
@@ -289,7 +289,7 @@ export default function NotificationCenter({ userId }) {
                   queryClient.invalidateQueries({ queryKey: ['notifications'] });
                 }}
                 className="flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors hover:bg-white/10"
-                style={{ color: '#e0e0e0' }}
+                style={{ color: 'var(--ha-text-muted)' }}
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 Effacer tout
@@ -297,7 +297,7 @@ export default function NotificationCenter({ userId }) {
               <button
                 onClick={() => setOpen(false)}
                 className="px-3 py-1 rounded text-xs transition-colors hover:bg-white/10"
-                style={{ color: '#e0e0e0' }}
+                style={{ color: 'var(--ha-text-muted)' }}
               >
                 Fermer
               </button>

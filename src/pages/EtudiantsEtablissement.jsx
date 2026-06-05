@@ -64,7 +64,7 @@ export default function EtudiantsEtablissement() {
     }
   };
 
-  // Charger tous les étudiants approuvés depuis DemandeInscription
+  // Charger tous les Ã©tudiants approuvÃ©s depuis DemandeInscription
   const { data: etudiants = [], isLoading: loadingEtudiants } = useQuery({
     queryKey: ['etudiants-inscrits', user?.etablissement_nom],
     queryFn: async () => {
@@ -86,7 +86,7 @@ export default function EtudiantsEtablissement() {
     enabled: !!user?.etablissement_nom
   });
 
-  // Mutation pour modifier un étudiant
+  // Mutation pour modifier un Ã©tudiant
   const updateEtudiantMutation = useMutation({
     mutationFn: async ({ id, data }) => {
       return await dataService.update('DemandeInscription', id, data);
@@ -98,11 +98,11 @@ export default function EtudiantsEtablissement() {
     }
   });
 
-  // Extraire les facultés et classes uniques
+  // Extraire les facultÃ©s et classes uniques
   const facultes = [...new Set(etudiants.map(e => e.faculte).filter(Boolean))];
   const classes = [...new Set(etudiants.map(e => e.classe).filter(Boolean))];
 
-  // Filtrer les étudiants
+  // Filtrer les Ã©tudiants
   const etudiantsFiltres = etudiants.filter(e => {
     const matchSearch = 
       e.nom?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -152,9 +152,9 @@ export default function EtudiantsEtablissement() {
           <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
             <CardContent className="py-12 text-center">
               <GraduationCap className="w-16 h-16 text-gray-500 mx-auto mb-4" />
-              <p className="text-white text-lg font-semibold mb-2">Aucun établissement lié</p>
+              <p className="text-white text-lg font-semibold mb-2">Aucun Ã©tablissement liÃ©</p>
               <p className="text-gray-400 text-sm">
-                Votre compte n'est pas associé é  un établissement.
+                Votre compte n'est pas associÃ© Ã©Â  un Ã©tablissement.
               </p>
             </CardContent>
           </Card>
@@ -171,7 +171,7 @@ export default function EtudiantsEtablissement() {
           <div className="flex items-center gap-3 mb-4">
             <GraduationCap className="w-10 h-10 text-blue-500" />
             <div>
-              <h1 className="text-3xl font-bold text-white">Étudiants Inscrits</h1>
+              <h1 className="text-3xl font-bold text-white">Ã‰tudiants Inscrits</h1>
               <p className="text-gray-300">{user.etablissement_nom}</p>
             </div>
           </div>
@@ -183,7 +183,7 @@ export default function EtudiantsEtablissement() {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">Total Étudiants</p>
+                  <p className="text-sm text-gray-400 mb-1">Total Ã‰tudiants</p>
                   <p className="text-3xl font-bold text-white">{etudiants.length}</p>
                 </div>
                 <Users className="w-12 h-12 text-blue-500" />
@@ -195,7 +195,7 @@ export default function EtudiantsEtablissement() {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-400 mb-1">Facultés</p>
+                  <p className="text-sm text-gray-400 mb-1">FacultÃ©s</p>
                   <p className="text-3xl font-bold text-white">{facultes.length}</p>
                 </div>
                 <BookOpen className="w-12 h-12 text-purple-500" />
@@ -223,7 +223,7 @@ export default function EtudiantsEtablissement() {
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <Input
-                  placeholder="Rechercher par nom, prénom, matricule ou email..."
+                  placeholder="Rechercher par nom, prÃ©nom, matricule ou email..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
@@ -231,10 +231,10 @@ export default function EtudiantsEtablissement() {
               </div>
               <Select value={selectedFaculte} onValueChange={setSelectedFaculte}>
                 <SelectTrigger className="w-full md:w-56">
-                  <SelectValue placeholder="Toutes les facultés" />
+                  <SelectValue placeholder="Toutes les facultÃ©s" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="toutes">Toutes les facultés</SelectItem>
+                  <SelectItem value="toutes">Toutes les facultÃ©s</SelectItem>
                   {facultes.map(f => (
                     <SelectItem key={f} value={f}>{f}</SelectItem>
                   ))}
@@ -255,19 +255,19 @@ export default function EtudiantsEtablissement() {
           </CardContent>
         </Card>
 
-        {/* Liste des étudiants */}
+        {/* Liste des Ã©tudiants */}
         <Card style={{backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)'}}>
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
               <Users className="w-5 h-5 text-blue-500" />
-              Liste des étudiants ({etudiantsFiltres.length})
+              Liste des Ã©tudiants ({etudiantsFiltres.length})
             </CardTitle>
           </CardHeader>
           <CardContent>
             {etudiantsFiltres.length === 0 ? (
               <div className="text-center py-12">
                 <GraduationCap className="w-16 h-16 text-gray-500 mx-auto mb-4" />
-                <p className="text-gray-400">Aucun étudiant trouvé</p>
+                <p className="text-gray-400">Aucun Ã©tudiant trouvÃ©</p>
               </div>
             ) : (
               <div className="overflow-x-auto">
@@ -278,7 +278,7 @@ export default function EtudiantsEtablissement() {
                       <TableHead className="text-white whitespace-nowrap">Nom Complet</TableHead>
                       <TableHead className="text-white whitespace-nowrap">Matricule</TableHead>
                       <TableHead className="text-white whitespace-nowrap">Email</TableHead>
-                      <TableHead className="text-white whitespace-nowrap">Faculté</TableHead>
+                      <TableHead className="text-white whitespace-nowrap">FacultÃ©</TableHead>
                       <TableHead className="text-white whitespace-nowrap">Classe</TableHead>
                       <TableHead className="text-white whitespace-nowrap">Date Inscription</TableHead>
                       <TableHead className="text-white whitespace-nowrap">Actions</TableHead>
@@ -336,7 +336,7 @@ export default function EtudiantsEtablissement() {
         onOpenChange={setEditDialogOpen}
         title={
           <span style={{fontFamily: "'Century Gothic', CenturyGothic, AppleGothic, sans-serif", fontWeight: 600, color: 'var(--ha-text)'}}>
-            Modifier l'étudiant
+            Modifier l'Ã©tudiant
           </span>
         }
         maxWidth="max-w-2xl"
@@ -363,7 +363,7 @@ export default function EtudiantsEtablissement() {
                   />
                 </div>
                 <div>
-                  <Label className="text-white">Prénom</Label>
+                  <Label className="text-white">PrÃ©nom</Label>
                   <Input
                     value={editingEtudiant.prenom || ""}
                     disabled
@@ -403,7 +403,7 @@ export default function EtudiantsEtablissement() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-white">Faculté / Option</Label>
+                  <Label className="text-white">FacultÃ© / Option</Label>
                   <Input
                     value={editingEtudiant.faculte || ""}
                     onChange={(e) => setEditingEtudiant({...editingEtudiant, faculte: e.target.value})}

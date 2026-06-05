@@ -158,7 +158,7 @@ export default function QuestionnaireViewer({
         <div className="flex justify-between w-full">
           <div className="flex gap-2">
             <Button variant="outline" onClick={handlePrint}
-              style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG }}>
+              style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG }}>
               <Printer className="w-4 h-4 mr-2" /> Imprimer
             </Button>
           </div>
@@ -183,7 +183,7 @@ export default function QuestionnaireViewer({
               </>
             )}
             <Button variant="outline" onClick={onClose}
-              style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG }}>
+              style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG }}>
               Fermer
             </Button>
           </div>

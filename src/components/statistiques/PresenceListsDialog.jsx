@@ -162,7 +162,7 @@ export default function PresenceListsDialog({ open, onOpenChange, title, lists =
                           ) : (
                             allPresences.map((presence, rowIndex) => (
                               <TableRow key={`${group.id}-${presence.etudiant_id || rowIndex}-${rowIndex}`}>
-                                <TableCell style={{ ...CG, fontSize: 11, fontWeight: 600, color: '#ffffff' }}>{presence.etudiant_nom || "—"}</TableCell>
+                                <TableCell style={{ ...CG, fontSize: 11, fontWeight: 600, color: 'var(--ha-text)' }}>{presence.etudiant_nom || "—"}</TableCell>
                                  <TableCell style={{ ...CG, fontSize: 10, color: '#9ca3af' }}>{presence.etudiant_matricule || "—"}</TableCell>
                                 <TableCell>
                                   <Badge

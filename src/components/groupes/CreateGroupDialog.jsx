@@ -111,7 +111,7 @@ export default function CreateGroupDialog({ open, onOpenChange, onCreateGroup, c
                 variant="outline"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploading || creating}
-                style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>
+                style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>
                 Choisir une image
               </Button>
             </div>
@@ -188,7 +188,7 @@ export default function CreateGroupDialog({ open, onOpenChange, onCreateGroup, c
             variant="outline"
             onClick={() => onOpenChange(false)}
             disabled={uploading || creating}
-            style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>
+            style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>
             Annuler
           </Button>
           <Button

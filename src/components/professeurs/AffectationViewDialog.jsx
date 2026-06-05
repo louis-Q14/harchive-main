@@ -55,7 +55,7 @@ export default function AffectationViewDialog({ open, onClose, professeur, etabl
       <div className="text-base font-semibold text-white">
         Affectations de {professeur?.prenom} {professeur?.nom}
       </div>
-      <div className="text-xs mt-0.5" style={{ color: '#b0b0b0' }}>
+      <div className="text-xs mt-0.5" style={{ color: 'var(--ha-text-muted)' }}>
         {affectations.length} affectation(s)
       </div>
     </div>
@@ -76,7 +76,7 @@ export default function AffectationViewDialog({ open, onClose, professeur, etabl
             </div>
           ) : affectations.length === 0 ? (
             <div className="text-center py-8">
-              <p style={{ ...CG, color: '#b0b0b0' }}>Aucune affectation pour ce professeur</p>
+              <p style={{ ...CG, color: 'var(--ha-text-muted)' }}>Aucune affectation pour ce professeur</p>
             </div>
           ) : (
             <ScrollArea className="max-h-[55vh]">

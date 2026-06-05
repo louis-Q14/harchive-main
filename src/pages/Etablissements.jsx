@@ -844,7 +844,7 @@ export default function Etablissements() {
           </div>
         </DraggableDialogBody>
         <DraggableDialogFooter>
-            <Button variant="outline" onClick={() => setShowEditDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>Annuler</Button>
+            <Button variant="outline" onClick={() => setShowEditDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>Annuler</Button>
             <Button
               onClick={handleSubmitEdit}
               disabled={!formData.nom || !formData.code || updateEtablissementMutation.isPending}

@@ -443,7 +443,7 @@ function ProfilInner() {
             <div className="absolute top-3 right-3">
               <input type="file" accept="image/*" id="banniere-upload" className="hidden" onChange={handleBanniereUpload} disabled={uploadingBanniere} />
               <label htmlFor="banniere-upload" className="cursor-pointer">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium" style={{ background: 'rgba(0,0,0,0.6)', color: '#ffffff' }}>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium" style={{ background: 'rgba(0,0,0,0.6)', color: 'var(--ha-text)' }}>
                   {uploadingBanniere ? <Loader2 className="w-3 h-3 animate-spin" /> : <Camera className="w-3 h-3" />}
                   Banniere
                 </div>
@@ -460,7 +460,7 @@ function ProfilInner() {
               {user?.photo_url ? (
                 <img src={user.photo_url} alt="" className="w-20 h-20 rounded-full object-cover border-4 shadow-xl" style={{ borderColor: '#1a1a1a' }} />
               ) : (
-                <div className="w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold border-4 shadow-xl" style={{ background: '#555555', color: '#ffffff', borderColor: '#1a1a1a' }}>
+                <div className="w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold border-4 shadow-xl" style={{ background: '#555555', color: 'var(--ha-text)', borderColor: '#1a1a1a' }}>
                   {getInitials(displayName)}
                 </div>
               )}
@@ -478,10 +478,10 @@ function ProfilInner() {
 
             {/* Nom + role */}
             <div className="flex-1 text-center md:text-left">
-              <h1 className="text-xl md:text-2xl font-bold leading-tight" style={{ color: '#ffffff' }}>{displayName}</h1>
+              <h1 className="text-xl md:text-2xl font-bold leading-tight" style={{ color: 'var(--ha-text)' }}>{displayName}</h1>
               <div className="flex items-center gap-2 mt-0.5 justify-center md:justify-start flex-wrap">
-                <Badge style={{ background: '#555555', color: '#ffffff', fontSize: '0.68rem' }}>{getRoleLabel(user?.role_archive)}</Badge>
-                {user?.titre_professionnel && <span className="text-xs" style={{ color: '#b0b0b0' }}>{user.titre_professionnel}</span>}
+                <Badge style={{ background: '#555555', color: 'var(--ha-text)', fontSize: '0.68rem' }}>{getRoleLabel(user?.role_archive)}</Badge>
+                {user?.titre_professionnel && <span className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>{user.titre_professionnel}</span>}
               </div>
               {user?.headline && <p className="text-xs italic mt-0.5" style={{ color: '#999' }}>"{user.headline}"</p>}
             </div>
@@ -532,7 +532,7 @@ function ProfilInner() {
                 {(isOwnProfile || infoPrivacy.email) && (
                   <div className="flex items-center gap-3 text-sm">
                     <Mail className="w-4 h-4 flex-shrink-0" style={{ color: '#888' }} />
-                    <span className="break-all" style={{ color: '#e0e0e0' }}>{user?.email || 'Non renseigne'}</span>
+                    <span className="break-all" style={{ color: 'var(--ha-text-muted)' }}>{user?.email || 'Non renseigne'}</span>
                     {isOwnProfile && !infoPrivacy.email && <Lock className="w-3 h-3 ml-auto flex-shrink-0" style={{ color: '#888' }} title="Masque aux autres" />}
                   </div>
                 )}
@@ -540,7 +540,7 @@ function ProfilInner() {
                 {(isOwnProfile || infoPrivacy.telephone) && (
                   <div className="flex items-center gap-3 text-sm">
                     <Phone className="w-4 h-4 flex-shrink-0" style={{ color: '#888' }} />
-                    <span style={{ color: '#e0e0e0' }}>{user?.telephone || 'Non renseigne'}</span>
+                    <span style={{ color: 'var(--ha-text-muted)' }}>{user?.telephone || 'Non renseigne'}</span>
                     {isOwnProfile && !infoPrivacy.telephone && <Lock className="w-3 h-3 ml-auto flex-shrink-0" style={{ color: '#888' }} title="Masque aux autres" />}
                   </div>
                 )}
@@ -548,7 +548,7 @@ function ProfilInner() {
                 {(isOwnProfile || infoPrivacy.adresse) && (
                   <div className="flex items-start gap-3 text-sm">
                     <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: '#888' }} />
-                    <span style={{ color: '#e0e0e0' }}>
+                    <span style={{ color: 'var(--ha-text-muted)' }}>
                       {[user?.adresse, user?.ville, user?.province, user?.pays].filter(Boolean).join(', ') || 'Non renseigne'}
                     </span>
                     {isOwnProfile && !infoPrivacy.adresse && <Lock className="w-3 h-3 mt-0.5 ml-auto flex-shrink-0" style={{ color: '#888' }} title="Masque aux autres" />}
@@ -558,21 +558,21 @@ function ProfilInner() {
                 {user?.etablissement_nom && (isOwnProfile || infoPrivacy.etablissement) && (
                   <div className="flex items-center gap-3 text-sm">
                     <GraduationCap className="w-4 h-4 flex-shrink-0" style={{ color: '#888' }} />
-                    <span style={{ color: '#e0e0e0' }}>{user.etablissement_nom}</span>
+                    <span style={{ color: 'var(--ha-text-muted)' }}>{user.etablissement_nom}</span>
                     {isOwnProfile && !infoPrivacy.etablissement && <Lock className="w-3 h-3 ml-auto flex-shrink-0" style={{ color: '#888' }} title="Masque aux autres" />}
                   </div>
                 )}
                 {user?.liste_amis && parseJsonField(user.liste_amis).length > 0 && (
                   <div className="flex items-center gap-3 text-sm pt-2" style={{ borderTop: '1px solid #404040' }}>
                     <Users className="w-4 h-4" style={{ color: '#888' }} />
-                    <span style={{ color: '#e0e0e0' }}>{parseJsonField(user.liste_amis).length} ami(s)</span>
+                    <span style={{ color: 'var(--ha-text-muted)' }}>{parseJsonField(user.liste_amis).length} ami(s)</span>
                   </div>
                 )}
 
                 {/* Liens sociaux */}
                 {(isOwnProfile || infoPrivacy.reseaux) && (user?.site_web || user?.linkedin || user?.twitter || user?.github) && (
                   <div className="flex gap-2 pt-3" style={{ borderTop: '1px solid #404040' }}>
-                    {user?.site_web && <a href={user.site_web} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg" style={{ background: '#404040', color: '#e0e0e0' }}><Globe className="w-4 h-4" /></a>}
+                    {user?.site_web && <a href={user.site_web} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg" style={{ background: '#404040', color: 'var(--ha-text-muted)' }}><Globe className="w-4 h-4" /></a>}
                     {user?.linkedin && <a href={user.linkedin} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg" style={{ background: '#0077b5', color: '#fff' }}><Linkedin className="w-4 h-4" /></a>}
                     {user?.twitter && <a href={user.twitter} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg" style={{ background: '#1da1f2', color: '#fff' }}><Twitter className="w-4 h-4" /></a>}
                     {isOwnProfile && !infoPrivacy.reseaux && <Lock className="w-3 h-3 self-center ml-1" style={{ color: '#888' }} title="Masque aux autres" />}
@@ -590,7 +590,7 @@ function ProfilInner() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         {journalPublic ? <Unlock className="w-4 h-4" style={{ color: '#4ade80' }} /> : <Lock className="w-4 h-4" style={{ color: '#ef4444' }} />}
-                        <span className="text-sm font-medium" style={{ color: '#e0e0e0' }}>Journal {journalPublic ? 'public' : 'prive'}</span>
+                        <span className="text-sm font-medium" style={{ color: 'var(--ha-text-muted)' }}>Journal {journalPublic ? 'public' : 'prive'}</span>
                       </div>
                       <Switch checked={journalPublic} onCheckedChange={(v) => toggleJournalPublic.mutate(v)} disabled={toggleJournalPublic.isPending}
                         className={journalPublic ? "data-[state=checked]:bg-green-600" : "data-[state=unchecked]:bg-[#555]"}
@@ -605,7 +605,7 @@ function ProfilInner() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Users className="w-4 h-4" style={{ color: journalOuvert ? '#60a5fa' : '#888' }} />
-                        <span className="text-sm font-medium" style={{ color: '#e0e0e0' }}>Journal ouvert</span>
+                        <span className="text-sm font-medium" style={{ color: 'var(--ha-text-muted)' }}>Journal ouvert</span>
                       </div>
                       <Switch checked={journalOuvert} onCheckedChange={(v) => toggleJournalOuvert.mutate(v)} disabled={toggleJournalOuvert.isPending}
                         className={journalOuvert ? "data-[state=checked]:bg-blue-600" : "data-[state=unchecked]:bg-[#555]"}
@@ -624,7 +624,7 @@ function ProfilInner() {
                     >
                       <div className="flex items-center gap-2">
                         <Lock className="w-4 h-4" style={{ color: '#888' }} />
-                        <span className="text-sm font-medium" style={{ color: '#e0e0e0' }}>Infos personnelles</span>
+                        <span className="text-sm font-medium" style={{ color: 'var(--ha-text-muted)' }}>Infos personnelles</span>
                       </div>
                       <ChevronDown className="w-4 h-4" style={{ color: '#888', transform: showPrivacyDetails ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
                     </button>
@@ -664,12 +664,12 @@ function ProfilInner() {
                 <CardContent className="pt-5">
                   <div className="flex items-center justify-between mb-3">
                     <h3 className="font-semibold flex items-center gap-2 text-sm" style={{ color: '#fff' }}><Languages className="w-4 h-4" /> Langues</h3>
-                    {isOwnProfile && <Button size="sm" variant="ghost" onClick={() => setShowLangueDialog(true)} style={{ color: '#e0e0e0' }}><Plus className="w-4 h-4" /></Button>}
+                    {isOwnProfile && <Button size="sm" variant="ghost" onClick={() => setShowLangueDialog(true)} style={{ color: 'var(--ha-text-muted)' }}><Plus className="w-4 h-4" /></Button>}
                   </div>
                   <div className="space-y-2">
                     {formData.langues.map((l, i) => (
                       <div key={i} className="flex items-center justify-between text-sm">
-                        <div><p style={{ color: '#e0e0e0' }}>{l.langue}</p><p className="text-xs" style={{ color: '#888' }}>{l.niveau}</p></div>
+                        <div><p style={{ color: 'var(--ha-text-muted)' }}>{l.langue}</p><p className="text-xs" style={{ color: '#888' }}>{l.niveau}</p></div>
                         {isOwnProfile && <button onClick={() => handleDeleteLangue(i)}><Trash2 className="w-3 h-3" style={{ color: '#ef4444' }} /></button>}
                       </div>
                     ))}
@@ -685,7 +685,7 @@ function ProfilInner() {
                   <h3 className="font-semibold mb-3 flex items-center gap-2 text-sm" style={{ color: '#fff' }}><Heart className="w-4 h-4" /> Centres d'interet</h3>
                   <div className="flex flex-wrap gap-1.5">
                     {formData.centres_interet.map((c, i) => (
-                      <Badge key={i} variant="outline" className="text-xs" style={{ borderColor: '#555', color: '#e0e0e0' }}>
+                      <Badge key={i} variant="outline" className="text-xs" style={{ borderColor: 'var(--ha-border)', color: 'var(--ha-text-muted)' }}>
                         {c}
                         {isOwnProfile && <button onClick={() => handleDeleteInteret(i)} className="ml-1"><X className="w-3 h-3" style={{ color: '#ef4444' }} /></button>}
                       </Badge>
@@ -707,7 +707,7 @@ function ProfilInner() {
                     <CardContent className="py-16 text-center">
                       <Lock className="w-16 h-16 mx-auto mb-4" style={{ color: '#555' }} />
                       <h3 className="text-xl font-bold mb-2" style={{ color: '#fff' }}>Journal prive</h3>
-                      <p style={{ color: '#b0b0b0' }}>Ce journal est prive. Seuls les amis peuvent le consulter.</p>
+                      <p style={{ color: 'var(--ha-text-muted)' }}>Ce journal est prive. Seuls les amis peuvent le consulter.</p>
                     </CardContent>
                   </Card>
                 ) : (
@@ -736,9 +736,9 @@ function ProfilInner() {
                               <div className="flex items-center justify-between mt-2">
                                 <div className="flex gap-1">
                                   <input type="file" accept="image/*" ref={imageInputRef} className="hidden" onChange={(e) => handleFileChange(e, 'image')} />
-                                  <Button size="sm" variant="ghost" onClick={() => imageInputRef.current?.click()} style={{ color: '#b0b0b0', padding: '4px 8px' }}><ImageIcon className="w-4 h-4 mr-1" /> Photo</Button>
+                                  <Button size="sm" variant="ghost" onClick={() => imageInputRef.current?.click()} style={{ color: 'var(--ha-text-muted)', padding: '4px 8px' }}><ImageIcon className="w-4 h-4 mr-1" /> Photo</Button>
                                   <input type="file" accept="video/*" ref={videoInputRef} className="hidden" onChange={(e) => handleFileChange(e, 'video')} />
-                                  <Button size="sm" variant="ghost" onClick={() => videoInputRef.current?.click()} style={{ color: '#b0b0b0', padding: '4px 8px' }}><Video className="w-4 h-4 mr-1" /> Video</Button>
+                                  <Button size="sm" variant="ghost" onClick={() => videoInputRef.current?.click()} style={{ color: 'var(--ha-text-muted)', padding: '4px 8px' }}><Video className="w-4 h-4 mr-1" /> Video</Button>
                                 </div>
                                 <Button size="sm" onClick={handlePublish} disabled={(!contenu.trim() && !mediaFile) || publishing} style={{ background: '#555', color: '#fff' }}>
                                   {publishing ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Send className="w-4 h-4 mr-1" /> Publier</>}
@@ -757,7 +757,7 @@ function ProfilInner() {
                         <CardContent className="py-16 text-center">
                           <BookOpen className="w-16 h-16 mx-auto mb-4" style={{ color: '#555' }} />
                           <h3 className="text-lg font-bold mb-2" style={{ color: '#fff' }}>Aucune publication</h3>
-                          <p style={{ color: '#b0b0b0' }}>{isOwnProfile ? "Votre journal personnel est vide. Commencez a ecrire !" : "Ce journal ne contient aucune publication."}</p>
+                          <p style={{ color: 'var(--ha-text-muted)' }}>{isOwnProfile ? "Votre journal personnel est vide. Commencez a ecrire !" : "Ce journal ne contient aucune publication."}</p>
                         </CardContent>
                       </Card>
                     ) : (
@@ -788,41 +788,41 @@ function ProfilInner() {
                       <div className="grid md:grid-cols-3 gap-4">
                         {[["Nom","nom"],["Prenom","prenom"],["Post-nom","post_nom"]].map(([label,key]) => (
                           <div key={key} className="space-y-1">
-                            <Label className="text-xs" style={{ color: '#b0b0b0' }}>{label}</Label>
+                            <Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>{label}</Label>
                             <Input value={formData[key]} onChange={(e) => setFormData({ ...formData, [key]: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} />
                           </div>
                         ))}
                       </div>
                       <div className="grid md:grid-cols-2 gap-4">
                         <div className="space-y-1">
-                          <Label className="text-xs" style={{ color: '#b0b0b0' }}>Matricule (non modifiable)</Label>
+                          <Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Matricule (non modifiable)</Label>
                           <Input value={formData.matricule} disabled style={{ background: '#333', color: '#888', border: '1px solid #404040' }} />
                         </div>
                         <div className="space-y-1">
-                          <Label className="text-xs" style={{ color: '#b0b0b0' }}>Date de naissance</Label>
+                          <Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Date de naissance</Label>
                           <Input type="date" value={formData.date_naissance} onChange={(e) => setFormData({ ...formData, date_naissance: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} />
                         </div>
                       </div>
                       <div className="grid md:grid-cols-2 gap-4">
                         <div className="space-y-1">
-                          <Label className="text-xs" style={{ color: '#b0b0b0' }}>Sexe</Label>
+                          <Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Sexe</Label>
                           <Select value={formData.sexe} onValueChange={(v) => setFormData({ ...formData, sexe: v })}>
                             <SelectTrigger style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }}><SelectValue placeholder="Selectionner" /></SelectTrigger>
                             <SelectContent><SelectItem value="M">Masculin</SelectItem><SelectItem value="F">Feminin</SelectItem></SelectContent>
                           </Select>
                         </div>
                         <div className="space-y-1">
-                          <Label className="text-xs" style={{ color: '#b0b0b0' }}>Lieu de naissance</Label>
+                          <Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Lieu de naissance</Label>
                           <Input value={formData.lieu_naissance} onChange={(e) => setFormData({ ...formData, lieu_naissance: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} />
                         </div>
                       </div>
                       <div className="grid md:grid-cols-2 gap-4">
                         <div className="space-y-1">
-                          <Label className="text-xs" style={{ color: '#b0b0b0' }}>Nationalite</Label>
+                          <Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Nationalite</Label>
                           <Input value={formData.nationalite} onChange={(e) => setFormData({ ...formData, nationalite: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} />
                         </div>
                         <div className="space-y-1">
-                          <Label className="text-xs" style={{ color: '#b0b0b0' }}>Etat civil</Label>
+                          <Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Etat civil</Label>
                           <Select value={formData.etat_civil} onValueChange={(v) => setFormData({ ...formData, etat_civil: v })}>
                             <SelectTrigger style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }}><SelectValue placeholder="Selectionner" /></SelectTrigger>
                             <SelectContent><SelectItem value="Celibataire">Celibataire</SelectItem><SelectItem value="Marie(e)">Marie(e)</SelectItem><SelectItem value="Divorce(e)">Divorce(e)</SelectItem><SelectItem value="Veuf(ve)">Veuf(ve)</SelectItem></SelectContent>
@@ -830,13 +830,13 @@ function ProfilInner() {
                         </div>
                       </div>
                       <div className="space-y-1">
-                        <Label className="text-xs" style={{ color: '#b0b0b0' }}>Telephone</Label>
+                        <Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Telephone</Label>
                         <Input value={formData.telephone} onChange={(e) => setFormData({ ...formData, telephone: e.target.value })} placeholder="+243 XXX XXX XXX" style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} />
                       </div>
                       <div className="grid md:grid-cols-3 gap-4">
                         {[["Adresse","adresse"],["Ville","ville"],["Province","province"]].map(([label,key]) => (
                           <div key={key} className="space-y-1">
-                            <Label className="text-xs" style={{ color: '#b0b0b0' }}>{label}</Label>
+                            <Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>{label}</Label>
                             <Input value={formData[key]} onChange={(e) => setFormData({ ...formData, [key]: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} />
                           </div>
                         ))}
@@ -846,7 +846,7 @@ function ProfilInner() {
                         <div className="grid md:grid-cols-2 gap-4">
                           {[["Etablissement","etablissement_nom"],["Faculte","faculte"],["Departement","departement"],["Option","option_filiere"],["Orientation","orientation"],["Classe","classe"]].map(([label,key]) => (
                             <div key={key} className="space-y-1">
-                              <Label className="text-xs" style={{ color: '#b0b0b0' }}>{label}</Label>
+                              <Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>{label}</Label>
                               <Input value={formData[key]} onChange={(e) => setFormData({ ...formData, [key]: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} />
                             </div>
                           ))}
@@ -855,32 +855,32 @@ function ProfilInner() {
                       <div className="pt-3" style={{ borderTop: '1px solid #404040' }}>
                         <h4 className="font-semibold text-sm mb-3" style={{ color: '#fff' }}>A propos</h4>
                         <div className="space-y-3">
-                          <div className="space-y-1"><Label className="text-xs" style={{ color: '#b0b0b0' }}>Titre professionnel</Label><Input value={formData.titre_professionnel} onChange={(e) => setFormData({ ...formData, titre_professionnel: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
-                          <div className="space-y-1"><Label className="text-xs" style={{ color: '#b0b0b0' }}>Phrase d'accroche</Label><Input value={formData.headline} onChange={(e) => setFormData({ ...formData, headline: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
-                          <div className="space-y-1"><Label className="text-xs" style={{ color: '#b0b0b0' }}>Biographie</Label><Textarea value={formData.bio} onChange={(e) => setFormData({ ...formData, bio: e.target.value })} rows={4} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
+                          <div className="space-y-1"><Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Titre professionnel</Label><Input value={formData.titre_professionnel} onChange={(e) => setFormData({ ...formData, titre_professionnel: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
+                          <div className="space-y-1"><Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Phrase d'accroche</Label><Input value={formData.headline} onChange={(e) => setFormData({ ...formData, headline: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
+                          <div className="space-y-1"><Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Biographie</Label><Textarea value={formData.bio} onChange={(e) => setFormData({ ...formData, bio: e.target.value })} rows={4} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
                         </div>
                       </div>
                       <div className="pt-3" style={{ borderTop: '1px solid #404040' }}>
                         <h4 className="font-semibold text-sm mb-3" style={{ color: '#fff' }}>Liens sociaux</h4>
                         <div className="grid md:grid-cols-2 gap-3">
                           {[["Site web","site_web"],["LinkedIn","linkedin"],["Twitter","twitter"],["Facebook","facebook"],["Instagram","instagram"],["GitHub","github"]].map(([label,key]) => (
-                            <div key={key} className="space-y-1"><Label className="text-xs" style={{ color: '#b0b0b0' }}>{label}</Label><Input value={formData[key]} onChange={(e) => setFormData({ ...formData, [key]: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
+                            <div key={key} className="space-y-1"><Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>{label}</Label><Input value={formData[key]} onChange={(e) => setFormData({ ...formData, [key]: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
                           ))}
                         </div>
                       </div>
                       <div className="pt-3" style={{ borderTop: '1px solid #404040' }}>
                         <h4 className="font-semibold text-sm mb-3" style={{ color: '#fff' }}>Famille</h4>
                         <div className="grid md:grid-cols-2 gap-4">
-                          <div className="space-y-1"><Label className="text-xs" style={{ color: '#b0b0b0' }}>Nom du pere</Label><Input value={formData.nom_pere} onChange={(e) => setFormData({ ...formData, nom_pere: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
-                          <div className="space-y-1"><Label className="text-xs" style={{ color: '#b0b0b0' }}>Nom de la mere</Label><Input value={formData.nom_mere} onChange={(e) => setFormData({ ...formData, nom_mere: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
+                          <div className="space-y-1"><Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Nom du pere</Label><Input value={formData.nom_pere} onChange={(e) => setFormData({ ...formData, nom_pere: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
+                          <div className="space-y-1"><Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Nom de la mere</Label><Input value={formData.nom_mere} onChange={(e) => setFormData({ ...formData, nom_mere: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
                         </div>
                       </div>
                       <div className="pt-3" style={{ borderTop: '1px solid #404040' }}>
                         <h4 className="font-semibold text-sm mb-3" style={{ color: '#fff' }}>Urgence</h4>
                         <div className="grid md:grid-cols-3 gap-4">
-                          <div className="space-y-1"><Label className="text-xs" style={{ color: '#b0b0b0' }}>Nom</Label><Input value={formData.personne_urgence_nom} onChange={(e) => setFormData({ ...formData, personne_urgence_nom: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
-                          <div className="space-y-1"><Label className="text-xs" style={{ color: '#b0b0b0' }}>Telephone</Label><Input value={formData.personne_urgence_telephone} onChange={(e) => setFormData({ ...formData, personne_urgence_telephone: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
-                          <div className="space-y-1"><Label className="text-xs" style={{ color: '#b0b0b0' }}>Relation</Label><Input value={formData.personne_urgence_relation} onChange={(e) => setFormData({ ...formData, personne_urgence_relation: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
+                          <div className="space-y-1"><Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Nom</Label><Input value={formData.personne_urgence_nom} onChange={(e) => setFormData({ ...formData, personne_urgence_nom: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
+                          <div className="space-y-1"><Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Telephone</Label><Input value={formData.personne_urgence_telephone} onChange={(e) => setFormData({ ...formData, personne_urgence_telephone: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
+                          <div className="space-y-1"><Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Relation</Label><Input value={formData.personne_urgence_relation} onChange={(e) => setFormData({ ...formData, personne_urgence_relation: e.target.value })} style={{ background: '#1a1a1a', color: '#fff', border: '1px solid #404040' }} /></div>
                         </div>
                       </div>
                       <Button onClick={handleSave} disabled={updateProfileMutation.isPending || saveSuccess} className="w-full mt-4" style={{ background: saveSuccess ? '#16a34a' : updateProfileMutation.isPending ? '#3b82f6' : '#2563eb', color: '#fff', transition: 'background 0.3s ease' }}>
@@ -898,7 +898,7 @@ function ProfilInner() {
                           ["Nationalite", user?.nationalite || 'Non renseigne'],
                           ["Etat civil", user?.etat_civil || 'Non renseigne'],
                         ].map(([label, val]) => (
-                          <div key={label}><p className="text-xs mb-0.5" style={{ color: '#888' }}>{label}</p><p className="text-sm font-medium" style={{ color: '#e0e0e0' }}>{val}</p></div>
+                          <div key={label}><p className="text-xs mb-0.5" style={{ color: '#888' }}>{label}</p><p className="text-sm font-medium" style={{ color: 'var(--ha-text-muted)' }}>{val}</p></div>
                         ))}
                       </div>
                       {user?.etablissement_nom && (isOwnProfile || infoPrivacy.etablissement) && (
@@ -908,7 +908,7 @@ function ProfilInner() {
                             {[["Etablissement", user?.etablissement_nom],["Faculte", user?.faculte],["Departement", user?.departement],["Option", user?.option_filiere],["Orientation", user?.orientation],["Classe", user?.classe]]
                               .filter(([,v]) => v)
                               .map(([label, val]) => (
-                                <div key={label}><p className="text-xs mb-0.5" style={{ color: '#888' }}>{label}</p><p className="text-sm font-medium" style={{ color: '#e0e0e0' }}>{val}</p></div>
+                                <div key={label}><p className="text-xs mb-0.5" style={{ color: '#888' }}>{label}</p><p className="text-sm font-medium" style={{ color: 'var(--ha-text-muted)' }}>{val}</p></div>
                               ))}
                           </div>
                         </div>
@@ -916,15 +916,15 @@ function ProfilInner() {
                       {user?.bio && (isOwnProfile || infoPrivacy.bio) && (
                         <div className="pt-3" style={{ borderTop: '1px solid #404040' }}>
                           <h4 className="font-semibold text-sm mb-2" style={{ color: '#fff' }}>Biographie</h4>
-                          <p className="text-sm whitespace-pre-wrap leading-relaxed" style={{ color: '#e0e0e0' }}>{user.bio}</p>
+                          <p className="text-sm whitespace-pre-wrap leading-relaxed" style={{ color: 'var(--ha-text-muted)' }}>{user.bio}</p>
                         </div>
                       )}
                       {(user?.nom_pere || user?.nom_mere) && (isOwnProfile || infoPrivacy.famille) && (
                         <div className="pt-3" style={{ borderTop: '1px solid #404040' }}>
                           <h4 className="font-semibold text-sm mb-2" style={{ color: '#fff' }}>Famille</h4>
                           <div className="grid md:grid-cols-2 gap-x-8 gap-y-2">
-                            {user?.nom_pere && <div><p className="text-xs" style={{ color: '#888' }}>Pere</p><p className="text-sm" style={{ color: '#e0e0e0' }}>{user.nom_pere}</p></div>}
-                            {user?.nom_mere && <div><p className="text-xs" style={{ color: '#888' }}>Mere</p><p className="text-sm" style={{ color: '#e0e0e0' }}>{user.nom_mere}</p></div>}
+                            {user?.nom_pere && <div><p className="text-xs" style={{ color: '#888' }}>Pere</p><p className="text-sm" style={{ color: 'var(--ha-text-muted)' }}>{user.nom_pere}</p></div>}
+                            {user?.nom_mere && <div><p className="text-xs" style={{ color: '#888' }}>Mere</p><p className="text-sm" style={{ color: 'var(--ha-text-muted)' }}>{user.nom_mere}</p></div>}
                           </div>
                         </div>
                       )}
@@ -932,9 +932,9 @@ function ProfilInner() {
                         <div className="pt-3" style={{ borderTop: '1px solid #404040' }}>
                           <h4 className="font-semibold text-sm mb-2" style={{ color: '#fff' }}>Contact d'urgence</h4>
                           <div className="grid md:grid-cols-3 gap-x-6 gap-y-2">
-                            <div><p className="text-xs" style={{ color: '#888' }}>Nom</p><p className="text-sm" style={{ color: '#e0e0e0' }}>{user.personne_urgence_nom}</p></div>
-                            {user?.personne_urgence_telephone && <div><p className="text-xs" style={{ color: '#888' }}>Telephone</p><p className="text-sm" style={{ color: '#e0e0e0' }}>{user.personne_urgence_telephone}</p></div>}
-                            {user?.personne_urgence_relation && <div><p className="text-xs" style={{ color: '#888' }}>Relation</p><p className="text-sm" style={{ color: '#e0e0e0' }}>{user.personne_urgence_relation}</p></div>}
+                            <div><p className="text-xs" style={{ color: '#888' }}>Nom</p><p className="text-sm" style={{ color: 'var(--ha-text-muted)' }}>{user.personne_urgence_nom}</p></div>
+                            {user?.personne_urgence_telephone && <div><p className="text-xs" style={{ color: '#888' }}>Telephone</p><p className="text-sm" style={{ color: 'var(--ha-text-muted)' }}>{user.personne_urgence_telephone}</p></div>}
+                            {user?.personne_urgence_relation && <div><p className="text-xs" style={{ color: '#888' }}>Relation</p><p className="text-sm" style={{ color: 'var(--ha-text-muted)' }}>{user.personne_urgence_relation}</p></div>}
                           </div>
                         </div>
                       )}
@@ -958,13 +958,13 @@ function ProfilInner() {
                       <div className="space-y-4">
                         {formData.experiences.map((exp, i) => (
                           <div key={i} className="flex gap-3 pb-4" style={{ borderBottom: i < formData.experiences.length - 1 ? '1px solid #404040' : 'none' }}>
-                            <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#404040' }}><Briefcase className="w-5 h-5" style={{ color: '#b0b0b0' }} /></div>
+                            <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#404040' }}><Briefcase className="w-5 h-5" style={{ color: 'var(--ha-text-muted)' }} /></div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-start justify-between">
-                                <div><h4 className="font-semibold text-sm" style={{ color: '#fff' }}>{exp.poste}</h4><p className="text-sm" style={{ color: '#b0b0b0' }}>{exp.entreprise}</p><p className="text-xs mt-0.5" style={{ color: '#888' }}>{exp.date_debut} - {exp.en_cours ? "Present" : exp.date_fin}</p></div>
+                                <div><h4 className="font-semibold text-sm" style={{ color: '#fff' }}>{exp.poste}</h4><p className="text-sm" style={{ color: 'var(--ha-text-muted)' }}>{exp.entreprise}</p><p className="text-xs mt-0.5" style={{ color: '#888' }}>{exp.date_debut} - {exp.en_cours ? "Present" : exp.date_fin}</p></div>
                                 {isOwnProfile && <button onClick={() => handleDeleteExperience(i)}><Trash2 className="w-4 h-4" style={{ color: '#ef4444' }} /></button>}
                               </div>
-                              {exp.description && <p className="text-sm mt-2 whitespace-pre-wrap" style={{ color: '#e0e0e0' }}>{exp.description}</p>}
+                              {exp.description && <p className="text-sm mt-2 whitespace-pre-wrap" style={{ color: 'var(--ha-text-muted)' }}>{exp.description}</p>}
                             </div>
                           </div>
                         ))}
@@ -984,13 +984,13 @@ function ProfilInner() {
                       <div className="space-y-4">
                         {formData.formations.map((f, i) => (
                           <div key={i} className="flex gap-3 pb-4" style={{ borderBottom: i < formData.formations.length - 1 ? '1px solid #404040' : 'none' }}>
-                            <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#404040' }}><GraduationCap className="w-5 h-5" style={{ color: '#b0b0b0' }} /></div>
+                            <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#404040' }}><GraduationCap className="w-5 h-5" style={{ color: 'var(--ha-text-muted)' }} /></div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-start justify-between">
-                                <div><h4 className="font-semibold text-sm" style={{ color: '#fff' }}>{f.diplome}</h4><p className="text-sm" style={{ color: '#b0b0b0' }}>{f.etablissement}</p><p className="text-xs mt-0.5" style={{ color: '#888' }}>{f.date_debut} - {f.en_cours ? "En cours" : f.date_fin}</p></div>
+                                <div><h4 className="font-semibold text-sm" style={{ color: '#fff' }}>{f.diplome}</h4><p className="text-sm" style={{ color: 'var(--ha-text-muted)' }}>{f.etablissement}</p><p className="text-xs mt-0.5" style={{ color: '#888' }}>{f.date_debut} - {f.en_cours ? "En cours" : f.date_fin}</p></div>
                                 {isOwnProfile && <button onClick={() => handleDeleteFormation(i)}><Trash2 className="w-4 h-4" style={{ color: '#ef4444' }} /></button>}
                               </div>
-                              {f.description && <p className="text-sm mt-2 whitespace-pre-wrap" style={{ color: '#e0e0e0' }}>{f.description}</p>}
+                              {f.description && <p className="text-sm mt-2 whitespace-pre-wrap" style={{ color: 'var(--ha-text-muted)' }}>{f.description}</p>}
                             </div>
                           </div>
                         ))}
@@ -1035,7 +1035,7 @@ function ProfilInner() {
                     {formData.centres_interet.length > 0 ? (
                       <div className="flex flex-wrap gap-2">
                         {formData.centres_interet.map((c, i) => (
-                          <Badge key={i} variant="outline" style={{ borderColor: '#555', color: '#e0e0e0' }}>
+                          <Badge key={i} variant="outline" style={{ borderColor: 'var(--ha-border)', color: 'var(--ha-text-muted)' }}>
                             {c}
                             {isOwnProfile && <button onClick={() => handleDeleteInteret(i)} className="ml-1"><X className="w-3 h-3" style={{ color: '#ef4444' }} /></button>}
                           </Badge>
@@ -1058,7 +1058,7 @@ function ProfilInner() {
         title={
           <div style={CG}>
             <div className="text-base font-semibold text-white">Ajouter une experience</div>
-            <div className="text-xs mt-0.5" style={{color: '#b0b0b0'}}>Renseignez les détails de votre expérience professionnelle</div>
+            <div className="text-xs mt-0.5" style={{color: 'var(--ha-text-muted)'}}>Renseignez les détails de votre expérience professionnelle</div>
           </div>
         }
         maxWidth="max-w-2xl"
@@ -1099,7 +1099,7 @@ function ProfilInner() {
           </div>
         </DraggableDialogBody>
         <DraggableDialogFooter>
-          <Button variant="outline" onClick={() => setShowExpDialog(false)} style={{...CG, backgroundColor: 'rgba(255,255,255,0.08)', color: '#ffffff', borderColor: 'rgba(255,255,255,0.15)'}}>Annuler</Button>
+          <Button variant="outline" onClick={() => setShowExpDialog(false)} style={{...CG, backgroundColor: 'rgba(255,255,255,0.08)', color: 'var(--ha-text)', borderColor: 'rgba(255,255,255,0.15)'}}>Annuler</Button>
           <Button onClick={handleAddExperience} disabled={!newExperience.poste || !newExperience.entreprise || !newExperience.date_debut} className="bg-blue-600 hover:bg-blue-700 text-white" style={CG}>Ajouter</Button>
         </DraggableDialogFooter>
       </DraggableDialog>
@@ -1107,7 +1107,7 @@ function ProfilInner() {
       <DraggableDialog open={showFormDialog} onOpenChange={setShowFormDialog}
         title={<div style={CG}>
           <div className="text-base font-semibold text-white">Ajouter une formation</div>
-          <div className="text-xs mt-0.5" style={{color: '#b0b0b0'}}>Renseignez les détails de votre formation académique</div>
+          <div className="text-xs mt-0.5" style={{color: 'var(--ha-text-muted)'}}>Renseignez les détails de votre formation académique</div>
         </div>}
         maxWidth="max-w-2xl">
         <DraggableDialogBody>
@@ -1143,7 +1143,7 @@ function ProfilInner() {
           </div>
         </DraggableDialogBody>
         <DraggableDialogFooter>
-          <Button variant="outline" onClick={() => setShowFormDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>Annuler</Button>
+          <Button variant="outline" onClick={() => setShowFormDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>Annuler</Button>
           <Button onClick={handleAddFormation} disabled={!newFormation.diplome || !newFormation.etablissement || !newFormation.date_debut} className="bg-blue-600 hover:bg-blue-700 text-white" style={CG}>Ajouter</Button>
         </DraggableDialogFooter>
       </DraggableDialog>
@@ -1151,7 +1151,7 @@ function ProfilInner() {
       <DraggableDialog open={showCompDialog} onOpenChange={setShowCompDialog}
         title={<div style={CG}>
           <div className="text-base font-semibold text-white">Ajouter une compétence</div>
-          <div className="text-xs mt-0.5" style={{color: '#b0b0b0'}}>Ajoutez une compétence à votre profil</div>
+          <div className="text-xs mt-0.5" style={{color: 'var(--ha-text-muted)'}}>Ajoutez une compétence à votre profil</div>
         </div>}
         maxWidth="max-w-md">
         <DraggableDialogBody>
@@ -1163,7 +1163,7 @@ function ProfilInner() {
           </div>
         </DraggableDialogBody>
         <DraggableDialogFooter>
-          <Button variant="outline" onClick={() => setShowCompDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>Annuler</Button>
+          <Button variant="outline" onClick={() => setShowCompDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>Annuler</Button>
           <Button onClick={handleAddCompetence} disabled={!newCompetence.trim()} className="bg-blue-600 hover:bg-blue-700 text-white" style={CG}>Ajouter</Button>
         </DraggableDialogFooter>
       </DraggableDialog>
@@ -1192,7 +1192,7 @@ function ProfilInner() {
           </div>
         </DraggableDialogBody>
         <DraggableDialogFooter>
-          <Button variant="outline" onClick={() => setShowLangueDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}>Annuler</Button>
+          <Button variant="outline" onClick={() => setShowLangueDialog(false)} style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}>Annuler</Button>
           <Button onClick={handleAddLangue} disabled={!newLangue.langue.trim()} className="bg-blue-600 hover:bg-blue-700 text-white" style={CG}>Ajouter</Button>
         </DraggableDialogFooter>
       </DraggableDialog>

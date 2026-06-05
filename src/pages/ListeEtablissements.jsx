@@ -646,7 +646,7 @@ export default function ListeEtablissements() {
                 setEditDialogOpen(false);
                 resetForm();
               }}
-              style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: '#e0e0e0', ...CG}}
+              style={{backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.18)', color: 'var(--ha-text-muted)', ...CG}}
             >
               Annuler
             </Button>

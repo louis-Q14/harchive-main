@@ -948,17 +948,17 @@ const [expandedClasses, setExpandedClasses] = useState(new Set());
                   {/* En-tête style QuestionnaireViewer */}
                   <div style={{ textAlign: 'center', marginBottom: 20, borderBottom: '2px solid #4d4d4d', paddingBottom: 16, ...CG }}>
                     <h2 style={{ fontSize: 18, fontWeight: 'bold', margin: '0 0 4px 0', color: '#fff' }}>NOTES ENREGISTRÉES</h2>
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginTop: 8, fontSize: 13, color: 'var(--ha-text-muted)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginTop: 8, fontSize: 13, color: '#aaa' }}>
                       <span><strong>Type :</strong> {typeEvaluation}</span>
                       {titreEvaluation && <span><strong>Titre :</strong> {titreEvaluation}</span>}
                       <span><strong>Matière :</strong> {matieres.find(m => m.id === selectedMatiere)?.nom || ''}</span>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginTop: 4, fontSize: 13, color: 'var(--ha-text-muted)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginTop: 4, fontSize: 13, color: '#aaa' }}>
                       <span><strong>Classe :</strong> {classes.find(c => c.id === selectedClasse)?.nom || ''}</span>
                       <span><strong>Période :</strong> {selectedPeriode}</span>
                       <span><strong>Note sur :</strong> {notesExistantes[0]?.note_sur || noteSur} pts</span>
                     </div>
-                    <div style={{ fontSize: 13, color: 'var(--ha-text-muted)', marginTop: 4 }}>
+                    <div style={{ fontSize: 13, color: '#aaa', marginTop: 4 }}>
                       <strong>Professeur :</strong> {user?.full_name || ''}
                     </div>
                   </div>

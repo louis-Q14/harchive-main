@@ -85,7 +85,7 @@ function EmptyState({ onCreateClick = () => {} }) {
   // @ts-ignore
   return (
     <div className="flex flex-col items-center justify-center py-20">
-      <div className="w-20 h-20 rounded-full flex items-center justify-center mb-5" style={{ backgroundColor: '#333' }}>
+      <div className="w-20 h-20 rounded-full flex items-center justify-center mb-5" style={{ backgroundColor: 'var(--ha-surface)' }}>
         <Play className="w-9 h-9 text-gray-500" />
       </div>
       <p className="text-white text-lg font-semibold mb-1">Aucun short pour le moment</p>

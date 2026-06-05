@@ -19,7 +19,7 @@ export class ErrorBoundary extends React.Component {
       return (
         <div style={{
           minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: '#1a1a2e', color: '#e0e0e0', fontFamily: '"Century Gothic", sans-serif',
+          background: '#1a1a2e', color: 'var(--ha-text-muted)', fontFamily: '"Century Gothic", sans-serif',
         }}>
           <div style={{ textAlign: 'center', maxWidth: 500, padding: 32 }}>
             <h1 style={{ fontSize: 28, marginBottom: 12 }}>Une erreur est survenue</h1>

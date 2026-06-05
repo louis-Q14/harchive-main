@@ -421,7 +421,7 @@ export default function BibliothequeNumerique() {
                   <Button onClick={() => setShowAddBookDialog(true)} className="bg-cyan-600 hover:bg-cyan-700 text-white" style={CG}>
                     <Plus className="w-4 h-4 mr-2" /> Ajouter un livre
                   </Button>
-                  <Button onClick={() => setShowBulkImportDialog(true)} variant="outline" style={{ borderColor: '#444', color: 'var(--ha-text-muted)', ...CG }}>
+                  <Button onClick={() => setShowBulkImportDialog(true)} variant="outline" style={{ borderColor: '#444', color: '#ccc', ...CG }}>
                     <Upload className="w-4 h-4 mr-2" /> Importer
                   </Button>
                 </div>
@@ -706,7 +706,7 @@ export default function BibliothequeNumerique() {
                       <Eye className="w-3.5 h-3.5 mr-1.5" /> Consulter
                     </Button>
                     <Button size="sm" variant="outline" onClick={() => { setShowDetailsDialog(false); setShowCommentsDialog(true); }}
-                      style={{ borderColor: 'var(--ha-border)', color: 'var(--ha-text-muted)', ...CG }} className="text-xs">
+                      style={{ borderColor: 'var(--ha-border)', color: '#ccc', ...CG }} className="text-xs">
                       <MessageSquare className="w-3.5 h-3.5 mr-1.5" /> Commentaires
                     </Button>
                   </div>
@@ -772,7 +772,7 @@ export default function BibliothequeNumerique() {
                       <Eye className="w-3.5 h-3.5 mr-1.5" /> Consulter
                     </Button>
                     <Button size="sm" variant="outline" onClick={() => { setShowTravailDetailsDialog(false); setShowTravailCommentsDialog(true); }}
-                      style={{ borderColor: 'var(--ha-border)', color: 'var(--ha-text-muted)', ...CG }} className="text-xs">
+                      style={{ borderColor: 'var(--ha-border)', color: '#ccc', ...CG }} className="text-xs">
                       <MessageSquare className="w-3.5 h-3.5 mr-1.5" /> Commentaires
                     </Button>
                   </div>

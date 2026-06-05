@@ -225,7 +225,7 @@ export default function Journal() {
   if (isLoadingAuth) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-12 h-12 text-gray-500 animate-spin" />
+        <Loader2 className="w-12 h-12 text-white animate-spin" />
       </div>
     );
   }
@@ -252,7 +252,7 @@ export default function Journal() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-full text-sm font-medium transition-all ${
                     isActive
-                      ? 'bg-[var(--ha-surface2)] text-[var(--ha-text)] shadow-lg'
+                      ? 'bg-[#3d3d3d] text-white shadow-lg'
                       : 'text-gray-500 hover:text-gray-300'
                   }`}
                 >
@@ -288,7 +288,7 @@ export default function Journal() {
                   size="md"
                 />
                 <div>
-                  <p className="font-semibold text-ha">{displayName}</p>
+                  <p className="font-semibold text-white">{displayName}</p>
                   <p className="text-xs text-gray-400">{getRoleLabel(user?.role_archive)}</p>
                 </div>
               </div>
@@ -298,7 +298,7 @@ export default function Journal() {
                 placeholder="Partagez quelque chose avec la communauté..."
                 value={contenu}
                 onChange={(e) => setContenu(e.target.value)}
-                className="mb-3 min-h-[80px] text-[var(--ha-text)] placeholder-gray-500 border"
+                className="mb-3 min-h-[80px] text-white placeholder-gray-500 border"
                 style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}
                 disabled={uploading}
               />
@@ -328,8 +328,8 @@ export default function Journal() {
                 <button
                   type="button"
                   onClick={() => setShowVisMenu(!showVisMenu)}
-                  className="flex items-center gap-2 text-xs px-3 py-1.5 rounded-full border transition-colors hover:bg-[var(--ha-surface)]"
-                  style={{ borderColor: 'var(--ha-border)', color: 'var(--ha-text-muted)' }}
+                  className="flex items-center gap-2 text-xs px-3 py-1.5 rounded-full border transition-colors hover:bg-[#333]"
+                  style={{ borderColor: 'var(--ha-border)', color: '#ccc' }}
                   disabled={uploading}
                 >
                   <VisIcon className="w-3.5 h-3.5" />
@@ -353,11 +353,11 @@ export default function Journal() {
                           key={opt.value}
                           type="button"
                           onClick={() => handleVisibilitySelect(opt.value)}
-                          className={`w-full flex items-start gap-3 px-4 py-2.5 text-left transition-colors ${isActive ? 'bg-[var(--ha-surface2)]' : 'hover:bg-[var(--ha-surface)]'}`}
+                          className={`w-full flex items-start gap-3 px-4 py-2.5 text-left transition-colors ${isActive ? 'bg-[#444]' : 'hover:bg-[#3a3a3a]'}`}
                         >
                           <Icon className={`w-5 h-5 mt-0.5 flex-shrink-0 ${isActive ? 'text-blue-400' : 'text-gray-400'}`} />
                           <div>
-                            <p className={`text-sm font-medium ${isActive ? 'text-blue-400' : 'text-[var(--ha-text)]'}`}>{opt.label}</p>
+                            <p className={`text-sm font-medium ${isActive ? 'text-blue-400' : 'text-white'}`}>{opt.label}</p>
                             <p className="text-[11px] text-gray-500">{opt.description}</p>
                           </div>
                         </button>
@@ -379,7 +379,7 @@ export default function Journal() {
                     <Video className="w-4 h-4 mr-1" /> Vidéo
                   </Button>
                 </div>
-                <Button size="sm" onClick={handlePublish} disabled={(!contenu.trim() && !mediaFile) || uploading} style={{ background: 'var(--ha-surface2)', color: 'var(--ha-text)' }}>
+                <Button size="sm" onClick={handlePublish} disabled={(!contenu.trim() && !mediaFile) || uploading} style={{ background: '#555', color: '#fff' }}>
                   {uploading ? (
                     <><Loader2 className="w-4 h-4 animate-spin" /> {mediaFile ? 'Upload...' : 'Publication...'}</>
                   ) : (
@@ -400,14 +400,14 @@ export default function Journal() {
         {/* Publications */}
         {loadingPubs ? (
           <div className="flex justify-center py-12">
-            <Loader2 className="w-8 h-8 text-gray-500 animate-spin" />
+            <Loader2 className="w-8 h-8 text-white animate-spin" />
           </div>
         ) : publications.length === 0 ? (
           <div className="p-12 text-center border rounded-lg" style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
             <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: 'var(--ha-surface2)' }}>
               <Newspaper className="w-8 h-8 text-gray-400" />
             </div>
-            <p className="text-ha text-lg mb-2">Aucune publication pour le moment</p>
+            <p className="text-white text-lg mb-2">Aucune publication pour le moment</p>
             <p className="text-gray-400 text-sm">Soyez le premier à partager quelque chose avec la communauté !</p>
           </div>
         ) : (
@@ -425,7 +425,7 @@ export default function Journal() {
       <Dialog open={showPrivateDialog} onOpenChange={setShowPrivateDialog}>
         <DialogContent className="max-w-md border" style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
           <DialogHeader>
-            <DialogTitle className="text-ha flex items-center gap-2">
+            <DialogTitle className="text-white flex items-center gap-2">
               <Lock className="w-5 h-5" />
               Choisir les destinataires
             </DialogTitle>
@@ -438,7 +438,7 @@ export default function Journal() {
               placeholder="Rechercher un utilisateur..."
               value={searchPrivate}
               onChange={(e) => setSearchPrivate(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 rounded-lg text-sm text-[var(--ha-text)] placeholder-gray-500 border"
+              className="w-full pl-9 pr-3 py-2 rounded-lg text-sm text-white placeholder-gray-500 border"
               style={{ backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)' }}
             />
           </div>
@@ -461,12 +461,12 @@ export default function Journal() {
                     key={u.id}
                     type="button"
                     onClick={() => toggleUserSelection(u.id)}
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${isSelected ? 'bg-blue-900/30 border border-blue-600/50' : 'hover:bg-[var(--ha-surface)] border border-transparent'}`}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${isSelected ? 'bg-blue-900/30 border border-blue-600/50' : 'hover:bg-[#333] border border-transparent'}`}
                   >
                     <Checkbox checked={isSelected} className="border-gray-500" />
                     <UserAvatarPopover name={uName} role={u.role_archive} photoUrl={u.photo_url} size="sm" />
                     <div className="text-left flex-1 min-w-0">
-                      <p className="text-sm text-[var(--ha-text)] truncate">{uName}</p>
+                      <p className="text-sm text-white truncate">{uName}</p>
                       <p className="text-[11px] text-gray-500">{getRoleLabel(u.role_archive)}</p>
                     </div>
                   </button>
@@ -476,10 +476,10 @@ export default function Journal() {
           </div>
 
           <DialogFooter className="mt-3">
-            <Button variant="ghost" onClick={() => { setShowPrivateDialog(false); if (selectedUsers.length === 0) setVisibilite('publique'); }} style={{ color: 'var(--ha-text-muted)' }}>
+            <Button variant="ghost" onClick={() => { setShowPrivateDialog(false); if (selectedUsers.length === 0) setVisibilite('publique'); }} style={{ color: '#aaa' }}>
               Annuler
             </Button>
-            <Button onClick={() => setShowPrivateDialog(false)} disabled={selectedUsers.length === 0} style={{ background: '#3b82f6', color: 'var(--ha-text)' }}>
+            <Button onClick={() => setShowPrivateDialog(false)} disabled={selectedUsers.length === 0} style={{ background: '#3b82f6', color: '#fff' }}>
               Confirmer ({selectedUsers.length})
             </Button>
           </DialogFooter>

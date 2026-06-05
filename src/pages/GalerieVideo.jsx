@@ -156,7 +156,7 @@ export default function GalerieVideo() {
       setPublishTarget(null);
       setPublishDialogOpen(true);
       invalidateAll();
-      toast.success("Video ajoutee — choisissez ou la publier");
+      toast.success("Video ajoutee â€” choisissez ou la publier");
     } catch (err) {
       toast.error(err.message || "Erreur lors de l'upload");
     } finally {
@@ -249,13 +249,13 @@ export default function GalerieVideo() {
               <Film className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white leading-none" style={CG}>Galerie Vidéo</h1>
-              <p className="text-xs mt-0.5" style={{ color: '#888', ...CG }}>{filtered.length} vidéo{filtered.length !== 1 ? 's' : ''}</p>
+              <h1 className="text-xl font-bold text-white leading-none" style={CG}>Galerie VidÃ©o</h1>
+              <p className="text-xs mt-0.5" style={{ color: '#888', ...CG }}>{filtered.length} vidÃ©o{filtered.length !== 1 ? 's' : ''}</p>
             </div>
           </div>
           {user && (
             <Button onClick={() => setAddDialogOpen(true)} size="sm" style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)', color: '#fff', border: 'none', ...CG }}>
-              <Plus className="w-3.5 h-3.5 mr-1.5" /> Ajouter une vidéo
+              <Plus className="w-3.5 h-3.5 mr-1.5" /> Ajouter une vidÃ©o
             </Button>
           )}
         </div>
@@ -283,7 +283,7 @@ export default function GalerieVideo() {
         ) : filtered.length === 0 ? (
           <div className="text-center py-20">
             <Film className="w-14 h-14 mx-auto mb-3" style={{ color: '#333' }} />
-            <p className="text-sm" style={{ color: '#666', ...CG }}>Aucune vidéo ajoutée</p>
+            <p className="text-sm" style={{ color: '#666', ...CG }}>Aucune vidÃ©o ajoutÃ©e</p>
             {user && (
               <Button onClick={() => setAddDialogOpen(true)} size="sm" className="mt-4" style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)', color: '#fff', ...CG }}>
                 <Plus className="w-3.5 h-3.5 mr-1.5" /> Ajouter
@@ -314,9 +314,9 @@ export default function GalerieVideo() {
         title={
           <div style={CG}>
             <div className="text-base font-semibold text-white flex items-center gap-2">
-              <Upload className="w-5 h-5 text-purple-400" /> Ajouter une vidéo
+              <Upload className="w-5 h-5 text-purple-400" /> Ajouter une vidÃ©o
             </div>
-            <div className="text-xs mt-0.5" style={{ color: 'var(--ha-text-muted)' }}>Sélectionnez une vidéo et remplissez les détails</div>
+            <div className="text-xs mt-0.5" style={{ color: 'var(--ha-text-muted)' }}>SÃ©lectionnez une vidÃ©o et remplissez les dÃ©tails</div>
           </div>
         }
         maxWidth="max-w-lg"
@@ -341,8 +341,8 @@ export default function GalerieVideo() {
               ) : (
                 <>
                   <Video className="w-12 h-12 text-gray-500 mx-auto mb-2" />
-                  <p className="text-gray-400">Cliquez pour sélectionner une vidéo</p>
-                  <p className="text-gray-600 text-xs mt-1">MP4, WebM — max 150 MB</p>
+                  <p className="text-gray-400">Cliquez pour sÃ©lectionner une vidÃ©o</p>
+                  <p className="text-gray-600 text-xs mt-1">MP4, WebM â€” max 150 MB</p>
                 </>
               )}
             </div>
@@ -350,7 +350,7 @@ export default function GalerieVideo() {
             <div className="space-y-1.5">
               <Label className="text-white text-xs font-medium" style={CG}>Titre</Label>
               <Input
-                placeholder="Titre de la vidéo"
+                placeholder="Titre de la vidÃ©o"
                 value={formData.titre}
                 onChange={(e) => setFormData(fd => ({ ...fd, titre: e.target.value }))}
                 style={{ backgroundColor: 'var(--ha-surface2)', color: '#fff', borderColor: 'var(--ha-border)', ...CG }}
@@ -391,7 +391,7 @@ export default function GalerieVideo() {
             <div className="text-base font-semibold text-white flex items-center gap-2">
               <Globe className="w-5 h-5 text-purple-400" /> Gestionnaire de publication
             </div>
-            <div className="text-xs mt-0.5" style={{ color: 'var(--ha-text-muted)' }}>{pendingVideo?.titre || 'Vidéo'}</div>
+            <div className="text-xs mt-0.5" style={{ color: 'var(--ha-text-muted)' }}>{pendingVideo?.titre || 'VidÃ©o'}</div>
           </div>
         }
         maxWidth="max-w-2xl"
@@ -409,7 +409,7 @@ export default function GalerieVideo() {
                 />
               </div>
             )}
-            <p className="text-gray-500 text-xs font-semibold uppercase tracking-widest" style={CG}>Où publier ?</p>
+            <p className="text-gray-500 text-xs font-semibold uppercase tracking-widest" style={CG}>OÃ¹ publier ?</p>
             <div className="flex gap-2">
               {PUBLISH_OPTIONS.map((opt) => {
                 const Icon = opt.icon;
@@ -539,7 +539,7 @@ function VideoCard({ video, currentUserId, onPlay, onDelete, onLike, onPublish }
           onClick={!isDraft ? onPlay : undefined}
         />
 
-        {/* play button — caché pendant la lecture en miniature */}
+        {/* play button â€” cachÃ© pendant la lecture en miniature */}
         {!isDraft && !isHovered && (
           <div
             className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
@@ -555,7 +555,7 @@ function VideoCard({ video, currentUserId, onPlay, onDelete, onLike, onPublish }
         {isHovered && !isDraft && (
           <div className="absolute top-1.5 left-1.5 flex items-center gap-1 px-1.5 py-0.5 rounded-full" style={{ backgroundColor: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(4px)' }}>
             <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-            <span style={{ fontSize: 8, color: '#fff', fontFamily: '"Century Gothic", sans-serif' }}>Aperçu</span>
+            <span style={{ fontSize: 8, color: '#fff', fontFamily: '"Century Gothic", sans-serif' }}>AperÃ§u</span>
           </div>
         )}
 
