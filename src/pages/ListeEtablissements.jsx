@@ -185,6 +185,14 @@ export default function ListeEtablissements() {
           dataService.query('Promotion', { filters: [{ etablissement_id: match.id }], limit: 500 }),
         ]);
         setStructureData({ facultes, departements, orientations, options, promotions });
+      } else {
+        // Fallback: use public structure endpoint (same as Home.jsx) to get structure by official ID
+        try {
+          const structure = await dataService.queryPublicStructure(etab.id, etab.denomination);
+          if (structure?.facultes?.length > 0) {
+            setStructureData(structure);
+          }
+        } catch (_) { /* pas de structure publique disponible */ }
       }
     } catch (err) {
       console.error('Erreur chargement détails:', err);
