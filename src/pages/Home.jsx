@@ -330,7 +330,7 @@ export default function Home() {
             </p>
 
             {/* Tabs */}
-            <div className="flex items-center gap-0 rounded-full p-1 w-full mb-6" style={{ backgroundColor: 'var(--ha-surface)' }}>
+            <div className="flex items-center gap-0 rounded-full p-1 w-full mb-6" style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
               {HOME_JOURNAL_TABS.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;
@@ -338,11 +338,11 @@ export default function Home() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-full text-sm font-medium transition-all ${
-                      isActive
-                        ? 'bg-[#3d3d3d] text-white shadow-lg'
-                        : 'text-gray-500 hover:text-gray-300'
-                    }`}
+                    className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-medium transition-all"
+                    style={isActive
+                      ? { backgroundColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.75)' }
+                      : { color: 'rgba(255,255,255,0.28)' }
+                    }
                   >
                     <Icon className="w-4 h-4" />
                     {tab.label}
@@ -370,7 +370,7 @@ export default function Home() {
                     <p className="text-gray-400 text-sm">Inscrivez-vous pour partager avec la communauté !</p>
                   </div>
                 ) : (
-                  <div className="space-y-3 overflow-y-auto pr-1" style={{ maxHeight: '70vh' }}>
+                  <div className="space-y-3 overflow-y-auto pr-1 home-scroll" style={{ maxHeight: '70vh' }}>
                     {publications.map((pub) => (
                       <PublicationItem key={pub.id} publication={pub} currentUser={user} />
                     ))}
