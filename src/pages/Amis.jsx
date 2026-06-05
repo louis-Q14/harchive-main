@@ -32,7 +32,7 @@ const UserCard = ({ u, height = 260, actions, navigate }) => (
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-3 z-10">
-        <p className="font-semibold text-xs text-white truncate" style={CG}>{formatUserName(u)}</p>
+        <p className="font-semibold text-xs truncate" style={{ color: 'var(--ha-text)', ...CG }}>{formatUserName(u)}</p>
         {getRoleLabel(u.role_archive) && (
           <p className="text-[9px] mt-0.5" style={{ color: 'var(--ha-text-faint)' }}>{getRoleLabel(u.role_archive)}</p>
         )}
@@ -212,28 +212,28 @@ export default function Amis() {
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-6" style={{ backgroundColor: 'var(--ha-surface)', ...CG }}>
+    <div className="min-h-screen p-4 md:p-6" style={{ backgroundColor: 'var(--ha-bg)', ...CG }}>
       <div className="w-full space-y-4">
 
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: 'var(--ha-surface3)' }}>
-              <Users className="w-5 h-5 text-white" />
+              <Users className="w-5 h-5" style={{ color: 'var(--ha-text)' }} />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-white">Amis</h1>
+              <h1 className="text-2xl font-bold" style={{ color: 'var(--ha-text)' }}>Amis</h1>
               <p className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Gérez vos connexions</p>
             </div>
           </div>
-          <Badge style={{ background: 'var(--ha-surface3)', color: '#fff', fontSize: '0.8rem' }} className="px-3 py-1.5">
+          <Badge style={{ background: 'var(--ha-surface3)', color: 'var(--ha-text)', fontSize: '0.8rem' }} className="px-3 py-1.5">
             {mesAmis.length} ami{mesAmis.length !== 1 ? 's' : ''}
           </Badge>
         </div>
 
         {/* Tabs */}
         <Tabs defaultValue="amis" className="w-full">
-          <TabsList className="flex w-full gap-1 p-1 rounded-lg" style={{ backgroundColor: 'var(--ha-surface)' }}>
+          <TabsList className="flex w-full gap-1 p-1 rounded-lg" style={{ backgroundColor: 'var(--ha-surface2)' }}>
             {[
               { value: 'amis', icon: UserCheck, label: `Mes Amis (${mesAmis.length})` },
               { value: 'demandes', icon: Mail, label: `Demandes (${demandesRecues.length})` },
@@ -244,7 +244,7 @@ export default function Amis() {
               <TabsTrigger
                 key={tab.value}
                 value={tab.value}
-                className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-medium rounded transition-all data-[state=active]:text-white data-[state=inactive]:text-gray-400"
+                className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-medium rounded transition-all data-[state=active]:text-[var(--ha-text)] data-[state=inactive]:text-[var(--ha-text-muted)]"
               >
                 <tab.icon className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">{tab.label}</span>
@@ -257,7 +257,7 @@ export default function Amis() {
           <TabsContent value="amis" className="mt-4">
             <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid var(--ha-border)' }}>
-                <CardTitle className="text-white text-sm">Mes Amis</CardTitle>
+                <CardTitle className="text-sm" style={{ color: 'var(--ha-text)' }}>Mes Amis</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
                 {mesAmis.length === 0 ? (
@@ -290,7 +290,7 @@ export default function Amis() {
           <TabsContent value="demandes" className="mt-4">
             <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid var(--ha-border)' }}>
-                <CardTitle className="text-white text-sm">Demandes d'Amis Reçues</CardTitle>
+                <CardTitle className="text-sm" style={{ color: 'var(--ha-text)' }}>Demandes d'Amis Reçues</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
                 {demandesRecues.length === 0 ? (
@@ -320,7 +320,7 @@ export default function Amis() {
           <TabsContent value="suggestions" className="mt-4">
             <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid var(--ha-border)' }}>
-                <CardTitle className="text-white text-sm">Personnes que vous pourriez connaître</CardTitle>
+                <CardTitle className="text-sm" style={{ color: 'var(--ha-text)' }}>Personnes que vous pourriez connaître</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
                 {suggestions.length === 0 ? (
@@ -362,7 +362,7 @@ export default function Amis() {
             </Card>
             <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid var(--ha-border)' }}>
-                <CardTitle className="text-white text-sm">Résultats ({autresUtilisateurs.length})</CardTitle>
+                <CardTitle className="text-sm" style={{ color: 'var(--ha-text)' }}>Résultats ({autresUtilisateurs.length})</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
                 {autresUtilisateurs.length === 0 ? (
@@ -401,7 +401,7 @@ export default function Amis() {
           <TabsContent value="bloques" className="mt-4">
             <Card style={{ backgroundColor: 'var(--ha-surface)', borderColor: 'var(--ha-border)' }}>
               <CardHeader className="py-3 px-4" style={{ borderBottom: '1px solid var(--ha-border)' }}>
-                <CardTitle className="text-white text-sm">Utilisateurs Bloqués</CardTitle>
+                <CardTitle className="text-sm" style={{ color: 'var(--ha-text)' }}>Utilisateurs Bloqués</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
                 {blockedUsers.length === 0 ? (
