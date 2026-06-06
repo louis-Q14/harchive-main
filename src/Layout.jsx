@@ -404,6 +404,22 @@ export default function Layout({ children, currentPageName }) {
         [data-theme*="light"] tbody tr { border-color: rgba(0,0,0,0.08) !important; }
         [data-theme*="light"] tbody tr:hover { background-color: #f3f4f6 !important; }
 
+        /* Remplacer bleu par gris en mode clair */
+        [data-theme*="light"] { --primary: 220 9% 46%; --primary-foreground: 0 0% 98%; --ring: 220 9% 46%; }
+        [data-theme*="light"] .bg-blue-600,
+        [data-theme*="light"] .bg-blue-500,
+        [data-theme*="light"] .bg-blue-400 { background-color: #6b7280 !important; }
+        [data-theme*="light"] .hover\\:bg-blue-700:hover,
+        [data-theme*="light"] .hover\\:bg-blue-600:hover,
+        [data-theme*="light"] .hover\\:bg-blue-500:hover { background-color: #4b5563 !important; }
+        [data-theme*="light"] .text-blue-400,
+        [data-theme*="light"] .text-blue-500,
+        [data-theme*="light"] .text-blue-600 { color: #6b7280 !important; }
+        [data-theme*="light"] .border-blue-400,
+        [data-theme*="light"] .border-blue-500,
+        [data-theme*="light"] .border-blue-600 { border-color: #6b7280 !important; }
+        [data-theme*="light"] [data-state=checked] { background-color: #6b7280 !important; }
+
         /* Scrollbar */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--ha-surface); }
