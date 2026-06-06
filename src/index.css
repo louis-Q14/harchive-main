@@ -199,7 +199,7 @@ button:focus-visible {
   --ha-text-faint:#6b7280;
   --ha-sidebar-bg:#f9fafb;
   --ha-sidebar-border: rgba(0,0,0,0.06);
-  --ha-accent:    #7c3aed;
+  --ha-accent:    #6b7280;
   --ha-hover:     rgba(0,0,0,0.05);
 }
 
@@ -215,7 +215,7 @@ button:focus-visible {
   --ha-text-faint:#6b7280;
   --ha-sidebar-bg:#f9fafb;
   --ha-sidebar-border: rgba(0,0,0,0.05);
-  --ha-accent:    #6d28d9;
+  --ha-accent:    #6b7280;
   --ha-hover:     rgba(0,0,0,0.05);
 }
 
