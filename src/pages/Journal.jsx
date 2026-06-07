@@ -379,7 +379,7 @@ export default function Journal() {
                     <Video className="w-4 h-4 mr-1" /> Vidéo
                   </Button>
                 </div>
-                <Button size="sm" onClick={handlePublish} disabled={(!contenu.trim() && !mediaFile) || uploading} style={{ background: '#555', color: '#fff' }}>
+                <Button size="sm" onClick={handlePublish} disabled={(!contenu.trim() && !mediaFile) || uploading} style={{ background: 'var(--ha-surface2)', color: 'var(--ha-text)', border: '1px solid var(--ha-border)' }}>
                   {uploading ? (
                     <><Loader2 className="w-4 h-4 animate-spin" /> {mediaFile ? 'Upload...' : 'Publication...'}</>
                   ) : (
