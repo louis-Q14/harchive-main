@@ -367,13 +367,13 @@ export default function BibliothequeNumerique() {
 
   const isAdmin = user?.role_archive === 'admin_systeme' || user?.role_archive === 'super_admin';
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center" style={{ background: '#1a1a2e' }}><Loader2 className="w-12 h-12 text-gray-400 animate-spin" /></div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--ha-bg)' }}><Loader2 className="w-12 h-12 text-gray-400 animate-spin" /></div>;
 
   const tabCls = (active) => "flex items-center gap-2 px-5 py-3 text-sm font-semibold transition-all relative " + (active ? 'text-cyan-400' : 'text-gray-400 hover:text-gray-200');
   const coverFallbackCls = (hasCover) => "w-full h-full flex-col items-center justify-center absolute inset-0 " + (hasCover ? 'hidden' : 'flex');
 
   return (
-    <div className="min-h-screen p-4 md:p-6" style={{ background: '#1a1a2e', ...CG }}>
+    <div className="min-h-screen p-4 md:p-6" style={{ background: 'var(--ha-bg)', ...CG }}>
       <div className="max-w-[1400px] mx-auto">
 
         <div className="mb-5">
@@ -407,10 +407,10 @@ export default function BibliothequeNumerique() {
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                   <Input placeholder="Rechercher par titre, auteur, ISBN..." value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)} className="pl-10 h-10"
-                    style={{ backgroundColor: '#252540', color: '#fff', borderColor: '#3a3a5c', ...CG }} />
+                    style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger className="w-44 h-10" style={{ backgroundColor: '#252540', color: '#fff', borderColor: '#3a3a5c', ...CG }}>
+                  <SelectTrigger className="w-44 h-10" style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }}>
                     <Filter className="w-3.5 h-3.5 mr-1.5 text-gray-400" /><SelectValue />
                   </SelectTrigger>
                   <SelectContent>{categories.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
@@ -478,10 +478,10 @@ export default function BibliothequeNumerique() {
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                   <Input placeholder={"Rechercher un m\u00e9moire, th\u00e8se, article..."} value={travailSearchQuery}
                     onChange={(e) => setTravailSearchQuery(e.target.value)} className="pl-10 h-10"
-                    style={{ backgroundColor: '#252540', color: '#fff', borderColor: '#3a3a5c', ...CG }} />
+                    style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }} />
                 </div>
                 <Select value={selectedType} onValueChange={setSelectedType}>
-                  <SelectTrigger className="w-52 h-10" style={{ backgroundColor: '#252540', color: '#fff', borderColor: '#3a3a5c', ...CG }}>
+                  <SelectTrigger className="w-52 h-10" style={{ backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)', ...CG }}>
                     <Filter className="w-3.5 h-3.5 mr-1.5 text-gray-400" /><SelectValue />
                   </SelectTrigger>
                   <SelectContent>{travailTypes.map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
@@ -508,7 +508,7 @@ export default function BibliothequeNumerique() {
               <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
                 {filteredTravaux.map(travail => (
                   <div key={travail.id} className="group rounded-lg overflow-hidden cursor-pointer transition-all hover:ring-1 hover:ring-emerald-500/40"
-                    style={{ background: '#252540', border: '1px solid rgba(255,255,255,0.06)' }}
+                    style={{ background: 'var(--ha-surface)', border: '1px solid var(--ha-border)' }}
                     onContextMenu={(e) => handleContextMenu(e, travail, 'travail')}
                     onClick={() => { setSelectedTravail(travail); setShowTravailDetailsDialog(true); }}>
                     <div className="flex">
@@ -608,7 +608,7 @@ export default function BibliothequeNumerique() {
                     {allDocuments.map(doc => (
                       <div key={doc._type + '-' + doc.id}
                         className="flex items-center gap-4 p-3 rounded-lg cursor-pointer transition-all hover:ring-1 hover:ring-cyan-500/30"
-                        style={{ background: '#252540', border: '1px solid rgba(255,255,255,0.06)' }}
+                        style={{ background: 'var(--ha-surface)', border: '1px solid var(--ha-border)' }}
                         onClick={() => { incrementViewsMutation.mutate({ id: doc.id, currentViews: doc.nombre_consultations || 0, entity: doc._type === 'livre' ? 'Livre' : 'TravailAcademique' }); openInReader(doc.fichier_pdf_url, doc.titre); }}>
                         <div className="w-10 h-14 rounded overflow-hidden flex-shrink-0">
                           {doc.couverture_url ? (
@@ -1176,3 +1176,4 @@ export default function BibliothequeNumerique() {
     </div>
   );
 }
+
