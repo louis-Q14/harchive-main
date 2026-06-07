@@ -174,41 +174,42 @@ function ThemeSection() {
 
   return (
     <Section icon={Palette} title="Personnalisation de l'affichage" subtitle="Choisissez le thème visuel de l'application">
-      <div className="space-y-5">
+      <div className="space-y-4">
         {groups.map(group => (
           <div key={group.key}>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
               <span>{group.icon}</span> {group.label}
             </p>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2">
               {group.themes.map(([key, def]) => {
                 const selected = theme === key;
                 return (
                   <button
                     key={key}
                     onClick={() => setTheme(key)}
-                    className="relative rounded-xl p-3 text-left transition-all"
+                    className="relative rounded-lg p-2.5 text-left transition-all flex items-center gap-2.5"
                     style={{
-                      background: selected ? 'rgba(124,58,237,0.15)' : 'rgba(255,255,255,0.04)',
+                      background: selected ? 'rgba(124,58,237,0.12)' : 'rgba(255,255,255,0.04)',
                       border: `1.5px solid ${selected ? '#7c3aed' : 'rgba(255,255,255,0.08)'}`,
-                      transform: selected ? 'scale(1.02)' : 'scale(1)',
                     }}
                   >
-                    {/* Preview swatches */}
-                    <div className="flex gap-1 mb-2.5">
+                    {/* Preview swatches — petites pastilles */}
+                    <div className="flex gap-0.5 shrink-0">
                       {def.preview.map((color, i) => (
                         <div
                           key={i}
-                          className="rounded-md flex-1 h-6"
-                          style={{ backgroundColor: color, border: '1px solid rgba(0,0,0,0.1)' }}
+                          className="rounded w-4 h-8"
+                          style={{ backgroundColor: color, border: '1px solid rgba(0,0,0,0.12)' }}
                         />
                       ))}
                     </div>
-                    <p className="text-sm font-semibold" style={{ color: selected ? '#a78bfa' : '#e5e7eb' }}>{def.label}</p>
-                    <p className="text-xs mt-0.5" style={{ color: '#9ca3af' }}>{def.description}</p>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-semibold truncate" style={{ color: selected ? '#a78bfa' : '#e5e7eb' }}>{def.label}</p>
+                      <p className="text-xs mt-0.5 truncate" style={{ color: '#9ca3af' }}>{def.description}</p>
+                    </div>
                     {selected && (
-                      <div className="absolute top-2.5 right-2.5 w-5 h-5 rounded-full bg-purple-600 flex items-center justify-center">
-                        <Check className="w-3 h-3 text-white" />
+                      <div className="shrink-0 w-4 h-4 rounded-full bg-purple-600 flex items-center justify-center">
+                        <Check className="w-2.5 h-2.5 text-white" />
                       </div>
                     )}
                   </button>
