@@ -328,7 +328,7 @@ export default function MesDossiersAcademiques() {
       </div>
 
       {path.length > 0 && (
-        <Button variant="outline" onClick={() => setPath(prev => prev.slice(0, -1))} className="mb-4 bg-[#333333] text-white border-[#4d4d4d]" size="sm">
+        <Button variant="outline" onClick={() => setPath(prev => prev.slice(0, -1))} className="mb-4" style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)'}} size="sm">
           <ArrowLeft className="w-4 h-4 mr-2" /> Retour
         </Button>
       )}

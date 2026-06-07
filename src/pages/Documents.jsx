@@ -372,7 +372,8 @@ export default function Documents() {
             <Button
               variant="outline"
               onClick={() => setSelectedFolder(null)}
-              className="bg-[#333333] mb-6 px-4 py-2 text-sm font-medium rounded-md"
+              className="mb-6 px-4 py-2 text-sm font-medium rounded-md"
+              style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)'}}
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Retour aux dossiers
@@ -390,7 +391,8 @@ export default function Documents() {
             <Button
               variant="outline"
               onClick={() => setSelectedFolder(null)}
-              className="bg-[#333333] mb-6 px-4 py-2 text-sm font-medium rounded-md"
+              className="mb-6 px-4 py-2 text-sm font-medium rounded-md"
+              style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)'}}
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Retour aux dossiers
