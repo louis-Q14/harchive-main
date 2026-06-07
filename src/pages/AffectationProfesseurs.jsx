@@ -156,7 +156,7 @@ export default function AffectationProfesseurs() {
                             <Button 
                               size="sm" 
                               variant="outline" 
-                              className="bg-[#2d2d2d] text-white border-[#4d4d4d] hover:bg-[#474747]"
+                              style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)'}}
                               onClick={() => setViewDialog({ open: true, professeur: prof })}
                             >
                               Voir l'affectation
