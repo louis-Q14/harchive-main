@@ -404,6 +404,10 @@ export default function Layout({ children, currentPageName }) {
         [data-theme*="light"] tbody tr { border-color: rgba(0,0,0,0.08) !important; }
         [data-theme*="light"] tbody tr:hover { background-color: #f3f4f6 !important; }
 
+        /* Remplacer fonds sombres hardcodés (#333, #4d4d) par surface en mode clair */
+        [data-theme*="light"] .bg-\\[\\#333333\\] { background-color: var(--ha-surface2) !important; color: var(--ha-text) !important; }
+        [data-theme*="light"] .border-\\[\\#4d4d4d\\] { border-color: var(--ha-border) !important; }
+
         /* Remplacer bleu par gris en mode clair */
         [data-theme*="light"] { --primary: 220 9% 46%; --primary-foreground: 0 0% 98%; --ring: 220 9% 46%; }
         [data-theme*="light"] .bg-blue-600,
