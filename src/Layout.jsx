@@ -388,7 +388,7 @@ export default function Layout({ children, currentPageName }) {
         [data-theme*="light"] [style*="background-color: rgb(85, 85, 85)"] {
           background-color: #ffffff !important; border-color: rgba(0,0,0,0.10) !important; color: #000000 !important;
         }
-        [data-theme*="light"] [style*="color: rgb(255, 255, 255)"],
+        [data-theme*="light"] [style*="color: rgb(255, 255, 255)"]:not(.card-overlay-text),
         [data-theme*="light"] [style*="color: rgb(176, 176, 176)"],
         [data-theme*="light"] [style*="color: rgb(224, 224, 224)"] { color: #374151 !important; }
 

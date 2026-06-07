@@ -32,9 +32,9 @@ const UserCard = ({ u, height = 260, actions, navigate }) => (
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-3 z-10">
-        <p className="font-semibold text-xs truncate" style={{ color: '#ffffff', ...CG }}>{formatUserName(u)}</p>
+        <p className="card-overlay-text font-semibold text-xs truncate" style={{ color: '#ffffff', ...CG }}>{formatUserName(u)}</p>
         {getRoleLabel(u.role_archive) && (
-          <p className="text-[9px] mt-0.5" style={{ color: 'rgba(255,255,255,0.75)' }}>{getRoleLabel(u.role_archive)}</p>
+          <p className="card-overlay-text text-[9px] mt-0.5" style={{ color: 'rgba(255,255,255,0.75)' }}>{getRoleLabel(u.role_archive)}</p>
         )}
         <div className="flex gap-1.5 mt-2" onClick={e => e.stopPropagation()}>
           {actions}
