@@ -233,9 +233,9 @@ export default function PublicationItem({ publication, currentUser }) {
               <div>
                 <div className="flex items-center gap-2">
                   <p
-                    className="font-semibold cursor-pointer hover:underline"
+                    className={isHarchiveOfficiel ? "font-semibold" : "font-semibold cursor-pointer hover:underline"}
                     style={{ color: 'var(--ha-text)' }}
-                    onClick={() => setShowProfilModal(true)}
+                    onClick={() => !isHarchiveOfficiel && setShowProfilModal(true)}
                   >{authorDisplayName}</p>
                   {isHarchiveOfficiel ? (
                     <span className="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: 'linear-gradient(135deg, #6d28d9, #7c3aed)', color: '#ffffff' }}>
