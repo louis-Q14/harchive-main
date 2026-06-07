@@ -649,7 +649,7 @@ export default function FichiersInscriptions({ user, onBack, roleFilter = "etudi
       </div>
 
       {path.length > 0 && (
-        <Button variant="outline" onClick={navigateBack} className="mb-4 bg-[#333333] text-white border-[#4d4d4d]" size="sm">
+        <Button variant="outline" onClick={navigateBack} className="mb-4" style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', borderColor: 'var(--ha-border)'}} size="sm">
           <ArrowLeft className="w-4 h-4 mr-2" /> Retour
         </Button>
       )}
@@ -789,7 +789,7 @@ export default function FichiersInscriptions({ user, onBack, roleFilter = "etudi
                         <Button size="sm" onClick={handleSendToStudent}
                           disabled={sending || sendSuccess || !!pjEnAttente}
                           className={`text-white text-xs h-7 px-2 ${sendSuccess ? 'bg-green-700' : pjEnAttente ? 'bg-gray-600 opacity-50 cursor-not-allowed' : pjRejeteesCount > 0 ? 'bg-orange-700 hover:bg-orange-800' : 'bg-purple-700 hover:bg-purple-800'}`}>
-                          <Send className="w-3 h-3 mr-1" /> {sending ? 'Envoi...' : sendSuccess ? '✓ Envoyé' : pjRejeteesCount > 0 ? `Envoyer (pré-certification)` : "Envoyer à l'étudiant"}
+                          <Send className="w-3 h-3 mr-1" /> {sending ? 'Envoi...' : sendSuccess ? '✓ Envoyé' : pjRejeteesCount > 0 ? `Envoyer (pré-certification)` : displayData.type_utilisateur === 'professeur' ? "Envoyer au professeur" : "Envoyer à l'étudiant"}
                         </Button>
                         {pjEnAttente && (
                           <div className="absolute bottom-full left-0 mb-1 px-2 py-1 bg-black text-yellow-300 text-xs rounded whitespace-nowrap hidden group-hover/send:block z-50" style={CG}>
