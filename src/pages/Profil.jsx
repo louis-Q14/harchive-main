@@ -408,7 +408,232 @@ function ProfilInner() {
     return <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--ha-bg)' }}><Loader2 className="w-12 h-12 text-gray-400 animate-spin" /></div>;
   }
 
-  const displayName = (() => {
+  // ============================================================
+  // VUE DÉDIÉE HARCHIVE OFFICIEL
+  // ============================================================
+  if (user?.role_archive === 'harchive_officiel' && isOwnProfile) {
+    const [hoEdit, setHoEdit] = React.useState(false);
+    const [hoForm, setHoForm] = React.useState({
+      nom_org: user?.prenom || 'HARCHIVE',
+      description: user?.bio || '',
+      slogan: user?.titre_professionnel || '',
+      email_contact: user?.email || '',
+      telephone: user?.telephone || '',
+      site_web: user?.site_web || '',
+      linkedin: user?.linkedin || '',
+      twitter: user?.twitter || '',
+      facebook: user?.facebook || '',
+      instagram: user?.instagram || '',
+    });
+    const [hoSaving, setHoSaving] = React.useState(false);
+    const [hoSuccess, setHoSuccess] = React.useState(false);
+
+    const handleHoSave = async () => {
+      setHoSaving(true);
+      try {
+        await authService.updateProfile({
+          prenom: hoForm.nom_org,
+          bio: hoForm.description,
+          titre_professionnel: hoForm.slogan,
+          telephone: hoForm.telephone,
+          site_web: hoForm.site_web,
+          linkedin: hoForm.linkedin,
+          twitter: hoForm.twitter,
+          facebook: hoForm.facebook,
+          instagram: hoForm.instagram,
+        });
+        queryClient.invalidateQueries({ queryKey: ['currentUser', null] });
+        setHoSuccess(true);
+        setTimeout(() => { setHoSuccess(false); setHoEdit(false); }, 1500);
+      } catch (e) {
+        alert('Erreur lors de la sauvegarde');
+      } finally {
+        setHoSaving(false);
+      }
+    };
+
+    return (
+      <div className="min-h-screen pb-12" style={{ background: 'var(--ha-bg)' }}>
+        {/* Bannière */}
+        <div className="relative overflow-hidden" style={{ height: 200 }}>
+          {user?.banner_url
+            ? <img src={user.banner_url} alt="" className="w-full h-full object-cover" />
+            : <div className="w-full h-full" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f3460 100%)' }} />
+          }
+          <div className="absolute top-3 right-3">
+            <input type="file" accept="image/*" id="ho-banniere-upload" className="hidden" onChange={handleBanniereUpload} disabled={uploadingBanniere} />
+            <label htmlFor="ho-banniere-upload" className="cursor-pointer">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium" style={{ background: 'rgba(0,0,0,0.6)', color: '#fff' }}>
+                {uploadingBanniere ? <Loader2 className="w-3 h-3 animate-spin" /> : <Camera className="w-3 h-3" />}
+                Changer la bannière
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div className="max-w-3xl mx-auto px-4 md:px-6">
+          {/* En-tête organisation */}
+          <div className="flex flex-col md:flex-row items-center md:items-end gap-4" style={{ marginTop: -48 }}>
+            <div className="relative flex-shrink-0">
+              {user?.photo_url
+                ? <img src={user.photo_url} alt="" className="w-24 h-24 rounded-2xl object-cover border-4 shadow-xl" style={{ borderColor: 'var(--ha-bg)' }} />
+                : <div className="w-24 h-24 rounded-2xl flex items-center justify-center text-3xl font-bold border-4 shadow-xl" style={{ background: '#1e3a5f', color: '#fff', borderColor: 'var(--ha-bg)' }}>H</div>
+              }
+              <input type="file" accept="image/*" id="ho-logo-upload" className="hidden" onChange={handlePhotoUpload} disabled={uploadingPhoto} />
+              <label htmlFor="ho-logo-upload" className="absolute bottom-1 right-1 cursor-pointer">
+                <div className="w-7 h-7 rounded-full flex items-center justify-center shadow-md" style={{ background: 'var(--ha-surface3)', color: 'var(--ha-text)' }}>
+                  {uploadingPhoto ? <Loader2 className="w-3 h-3 animate-spin" /> : <Camera className="w-3 h-3" />}
+                </div>
+              </label>
+            </div>
+            <div className="flex-1 pb-2 text-center md:text-left">
+              <div className="flex items-center gap-2 justify-center md:justify-start flex-wrap">
+                <h1 className="text-2xl font-bold" style={{ color: 'var(--ha-text)' }}>{user?.prenom || 'HARCHIVE'} {user?.nom || 'Officiel'}</h1>
+                <Badge style={{ background: '#1e3a5f', color: '#60a5fa', fontSize: '0.65rem', letterSpacing: '0.05em' }}>✦ OFFICIEL</Badge>
+              </div>
+              {user?.titre_professionnel && <p className="text-sm italic mt-0.5" style={{ color: 'var(--ha-text-muted)' }}>{user.titre_professionnel}</p>}
+              {user?.bio && <p className="text-sm mt-1 leading-relaxed max-w-lg" style={{ color: 'var(--ha-text-muted)' }}>{user.bio}</p>}
+            </div>
+            <div className="flex-shrink-0">
+              <Button size="sm" onClick={() => setHoEdit(!hoEdit)} style={{ background: hoEdit ? '#ef4444' : 'var(--ha-surface3)', color: 'var(--ha-text)' }}>
+                {hoEdit ? <><X className="w-4 h-4 mr-1" /> Annuler</> : <><Pencil className="w-4 h-4 mr-1" /> Modifier</>}
+              </Button>
+            </div>
+          </div>
+
+          <div className="mt-6 grid md:grid-cols-2 gap-6">
+            {/* Formulaire d'édition */}
+            {hoEdit ? (
+              <div className="md:col-span-2">
+                <Card style={{ background: 'var(--ha-surface)', border: '1px solid var(--ha-border)' }}>
+                  <CardHeader>
+                    <CardTitle style={{ color: 'var(--ha-text)', fontSize: '1rem' }}>Modifier le profil officiel</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Nom de l'organisation</Label>
+                        <Input value={hoForm.nom_org} onChange={(e) => setHoForm({ ...hoForm, nom_org: e.target.value })} style={{ background: 'var(--ha-bg)', color: 'var(--ha-text)', border: '1px solid var(--ha-border)' }} />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Slogan / accroche</Label>
+                        <Input value={hoForm.slogan} onChange={(e) => setHoForm({ ...hoForm, slogan: e.target.value })} placeholder="Ex: L'éducation pour tous" style={{ background: 'var(--ha-bg)', color: 'var(--ha-text)', border: '1px solid var(--ha-border)' }} />
+                      </div>
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Description / à propos</Label>
+                      <Textarea value={hoForm.description} onChange={(e) => setHoForm({ ...hoForm, description: e.target.value })} rows={4} placeholder="Décrivez la mission et les valeurs de HARCHIVE..." style={{ background: 'var(--ha-bg)', color: 'var(--ha-text)', border: '1px solid var(--ha-border)' }} />
+                    </div>
+                    <div className="pt-3" style={{ borderTop: '1px solid var(--ha-border)' }}>
+                      <h4 className="text-sm font-semibold mb-3" style={{ color: 'var(--ha-text)' }}>Contact</h4>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div className="space-y-1">
+                          <Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Téléphone / WhatsApp</Label>
+                          <Input value={hoForm.telephone} onChange={(e) => setHoForm({ ...hoForm, telephone: e.target.value })} placeholder="+243 XXX XXX XXX" style={{ background: 'var(--ha-bg)', color: 'var(--ha-text)', border: '1px solid var(--ha-border)' }} />
+                        </div>
+                        <div className="space-y-1">
+                          <Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>Site web</Label>
+                          <Input value={hoForm.site_web} onChange={(e) => setHoForm({ ...hoForm, site_web: e.target.value })} placeholder="https://harchive.net" style={{ background: 'var(--ha-bg)', color: 'var(--ha-text)', border: '1px solid var(--ha-border)' }} />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="pt-3" style={{ borderTop: '1px solid var(--ha-border)' }}>
+                      <h4 className="text-sm font-semibold mb-3" style={{ color: 'var(--ha-text)' }}>Réseaux sociaux</h4>
+                      <div className="grid md:grid-cols-2 gap-3">
+                        {[['LinkedIn', 'linkedin', 'https://linkedin.com/company/...'],['Twitter / X', 'twitter', 'https://twitter.com/...'],['Facebook', 'facebook', 'https://facebook.com/...'],['Instagram', 'instagram', 'https://instagram.com/...']].map(([label, key, ph]) => (
+                          <div key={key} className="space-y-1">
+                            <Label className="text-xs" style={{ color: 'var(--ha-text-muted)' }}>{label}</Label>
+                            <Input value={hoForm[key]} onChange={(e) => setHoForm({ ...hoForm, [key]: e.target.value })} placeholder={ph} style={{ background: 'var(--ha-bg)', color: 'var(--ha-text)', border: '1px solid var(--ha-border)' }} />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <Button onClick={handleHoSave} disabled={hoSaving || hoSuccess} className="w-full mt-2" style={{ background: hoSuccess ? '#16a34a' : 'var(--ha-surface3)', color: 'var(--ha-text)' }}>
+                      {hoSuccess ? <><Check className="w-4 h-4 mr-2" /> Enregistré !</> : hoSaving ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Enregistrement...</> : <><Save className="w-4 h-4 mr-2" /> Enregistrer</>}
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            ) : (
+              <>
+                {/* Carte À propos */}
+                <Card style={{ background: 'var(--ha-surface)', border: '1px solid var(--ha-border)' }}>
+                  <CardHeader>
+                    <CardTitle className="text-sm" style={{ color: 'var(--ha-text)' }}>À propos</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    {user?.bio ? (
+                      <p className="text-sm leading-relaxed" style={{ color: 'var(--ha-text-muted)' }}>{user.bio}</p>
+                    ) : (
+                      <p className="text-sm italic" style={{ color: 'var(--ha-text-faint)' }}>Aucune description renseignée.</p>
+                    )}
+                    {user?.email && (
+                      <div className="flex items-center gap-2 text-sm pt-2" style={{ borderTop: '1px solid var(--ha-border)' }}>
+                        <Mail className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--ha-text-faint)' }} />
+                        <span style={{ color: 'var(--ha-text-muted)' }}>{user.email}</span>
+                      </div>
+                    )}
+                    {user?.telephone && (
+                      <div className="flex items-center gap-2 text-sm">
+                        <Phone className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--ha-text-faint)' }} />
+                        <span style={{ color: 'var(--ha-text-muted)' }}>{user.telephone}</span>
+                      </div>
+                    )}
+                    {user?.site_web && (
+                      <div className="flex items-center gap-2 text-sm">
+                        <Globe className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--ha-text-faint)' }} />
+                        <a href={user.site_web} target="_blank" rel="noopener noreferrer" className="hover:underline" style={{ color: 'var(--ha-accent)' }}>{user.site_web}</a>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+
+                {/* Carte Réseaux sociaux */}
+                <Card style={{ background: 'var(--ha-surface)', border: '1px solid var(--ha-border)' }}>
+                  <CardHeader>
+                    <CardTitle className="text-sm" style={{ color: 'var(--ha-text)' }}>Réseaux sociaux</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {(user?.linkedin || user?.twitter || user?.facebook || user?.instagram) ? (
+                      <div className="space-y-3">
+                        {user?.linkedin && (
+                          <a href={user.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm hover:underline" style={{ color: 'var(--ha-text-muted)' }}>
+                            <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#0077b5' }}><Linkedin className="w-4 h-4 text-white" /></div>
+                            LinkedIn
+                          </a>
+                        )}
+                        {user?.twitter && (
+                          <a href={user.twitter} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm hover:underline" style={{ color: 'var(--ha-text-muted)' }}>
+                            <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#000' }}><Twitter className="w-4 h-4 text-white" /></div>
+                            Twitter / X
+                          </a>
+                        )}
+                        {user?.facebook && (
+                          <a href={user.facebook} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm hover:underline" style={{ color: 'var(--ha-text-muted)' }}>
+                            <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#1877f2' }}><Globe className="w-4 h-4 text-white" /></div>
+                            Facebook
+                          </a>
+                        )}
+                        {user?.instagram && (
+                          <a href={user.instagram} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm hover:underline" style={{ color: 'var(--ha-text-muted)' }}>
+                            <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)' }}><Globe className="w-4 h-4 text-white" /></div>
+                            Instagram
+                          </a>
+                        )}
+                      </div>
+                    ) : (
+                      <p className="text-sm italic" style={{ color: 'var(--ha-text-faint)' }}>Aucun réseau social renseigné.</p>
+                    )}
+                  </CardContent>
+                </Card>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+  // ============================================================
     const parts = [user?.prenom, user?.nom, user?.post_nom].filter(Boolean).join(' ').trim();
     if (parts && parts !== 'null') return parts;
     const fn = user?.full_name;
