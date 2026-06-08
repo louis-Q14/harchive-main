@@ -92,6 +92,15 @@ function ProfilInner() {
   const [newLangue, setNewLangue] = useState({ langue: "", niveau: "Intermediaire" });
   const [newInteret, setNewInteret] = useState("");
 
+  // État pour la vue dédiée harchive_officiel (déclarés ici pour respecter les règles des hooks)
+  const [hoEdit, setHoEdit] = useState(false);
+  const [hoSaving, setHoSaving] = useState(false);
+  const [hoSuccess, setHoSuccess] = useState(false);
+  const [hoForm, setHoForm] = useState({
+    nom_org: '', description: '', slogan: '', email_contact: '',
+    telephone: '', site_web: '', linkedin: '', twitter: '', facebook: '', instagram: ''
+  });
+
   const [contenu, setContenu] = useState("");
   const [mediaFile, setMediaFile] = useState(null);
   const [mediaPreview, setMediaPreview] = useState(null);
@@ -104,6 +113,23 @@ function ProfilInner() {
     if (typeof val === 'string') { try { return JSON.parse(val); } catch { return []; } }
     return [];
   };
+
+  useEffect(() => {
+    if (user?.role_archive === 'harchive_officiel') {
+      setHoForm({
+        nom_org: user.prenom || 'HARCHIVE',
+        description: user.bio || '',
+        slogan: user.titre_professionnel || '',
+        email_contact: user.email || '',
+        telephone: user.telephone || '',
+        site_web: user.site_web || '',
+        linkedin: user.linkedin || '',
+        twitter: user.twitter || '',
+        facebook: user.facebook || '',
+        instagram: user.instagram || '',
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     if (user) {
@@ -404,6 +430,30 @@ function ProfilInner() {
   const getVisibiliteLabel = (v) => v === 'publique' ? 'Journal Commun' : v === 'etablissement' ? 'Journal Officiel' : 'Personnel';
   const formatDate = (d) => { if (!d) return ''; return new Date(d).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }); };
 
+  const handleHoSave = async () => {
+    setHoSaving(true);
+    try {
+      await authService.updateProfile({
+        prenom: hoForm.nom_org,
+        bio: hoForm.description,
+        titre_professionnel: hoForm.slogan,
+        telephone: hoForm.telephone,
+        site_web: hoForm.site_web,
+        linkedin: hoForm.linkedin,
+        twitter: hoForm.twitter,
+        facebook: hoForm.facebook,
+        instagram: hoForm.instagram,
+      });
+      queryClient.invalidateQueries({ queryKey: ['currentUser', null] });
+      setHoSuccess(true);
+      setTimeout(() => { setHoSuccess(false); setHoEdit(false); }, 1500);
+    } catch (e) {
+      alert('Erreur lors de la sauvegarde');
+    } finally {
+      setHoSaving(false);
+    }
+  };
+
   if (loading || isLoadingAuth) {
     return <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--ha-bg)' }}><Loader2 className="w-12 h-12 text-gray-400 animate-spin" /></div>;
   }
@@ -412,46 +462,6 @@ function ProfilInner() {
   // VUE DÉDIÉE HARCHIVE OFFICIEL
   // ============================================================
   if (user?.role_archive === 'harchive_officiel' && isOwnProfile) {
-    const [hoEdit, setHoEdit] = React.useState(false);
-    const [hoForm, setHoForm] = React.useState({
-      nom_org: user?.prenom || 'HARCHIVE',
-      description: user?.bio || '',
-      slogan: user?.titre_professionnel || '',
-      email_contact: user?.email || '',
-      telephone: user?.telephone || '',
-      site_web: user?.site_web || '',
-      linkedin: user?.linkedin || '',
-      twitter: user?.twitter || '',
-      facebook: user?.facebook || '',
-      instagram: user?.instagram || '',
-    });
-    const [hoSaving, setHoSaving] = React.useState(false);
-    const [hoSuccess, setHoSuccess] = React.useState(false);
-
-    const handleHoSave = async () => {
-      setHoSaving(true);
-      try {
-        await authService.updateProfile({
-          prenom: hoForm.nom_org,
-          bio: hoForm.description,
-          titre_professionnel: hoForm.slogan,
-          telephone: hoForm.telephone,
-          site_web: hoForm.site_web,
-          linkedin: hoForm.linkedin,
-          twitter: hoForm.twitter,
-          facebook: hoForm.facebook,
-          instagram: hoForm.instagram,
-        });
-        queryClient.invalidateQueries({ queryKey: ['currentUser', null] });
-        setHoSuccess(true);
-        setTimeout(() => { setHoSuccess(false); setHoEdit(false); }, 1500);
-      } catch (e) {
-        alert('Erreur lors de la sauvegarde');
-      } finally {
-        setHoSaving(false);
-      }
-    };
-
     return (
       <div className="min-h-screen pb-12" style={{ background: 'var(--ha-bg)' }}>
         {/* Bannière */}
