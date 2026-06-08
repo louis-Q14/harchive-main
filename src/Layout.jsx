@@ -423,7 +423,7 @@ export default function Layout({ children, currentPageName }) {
         [data-theme*="light"] .border-blue-400,
         [data-theme*="light"] .border-blue-500,
         [data-theme*="light"] .border-blue-600 { border-color: #6b7280 !important; }
-        [data-theme*="light"] [data-state=checked] { background-color: #6b7280 !important; }
+        [data-theme*="light"] [data-state=checked]:not([class*="bg-green"]):not([class*="bg-blue"]):not([class*="bg-emerald"]):not([class*="bg-teal"]) { background-color: #6b7280 !important; }
 
         /* Scrollbar */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
