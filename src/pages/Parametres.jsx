@@ -71,14 +71,14 @@ const Btn = ({ onClick, loading, disabled, variant = "primary", children, type =
 const Toggle = ({ checked, onChange, label, description }) => (
   <div className="flex items-center justify-between py-1">
     <div>
-      <div className="text-sm text-white">{label}</div>
+      <div className="text-sm" style={{ color: 'var(--ha-text)' }}>{label}</div>
       {description && <div className="text-xs text-gray-500 mt-0.5">{description}</div>}
     </div>
     <button
       type="button"
       onClick={() => onChange(!checked)}
       className="relative w-11 h-6 rounded-full transition-colors flex-shrink-0"
-      style={{ background: checked ? '#3b82f6' : 'rgba(255,255,255,0.12)' }}
+      style={{ background: checked ? 'var(--ha-accent)' : 'rgba(128,128,128,0.25)' }}
     >
       <span
         className="absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all"
