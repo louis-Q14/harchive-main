@@ -644,6 +644,8 @@ function ProfilInner() {
     );
   }
   // ============================================================
+
+  const displayName = (() => {
     const parts = [user?.prenom, user?.nom, user?.post_nom].filter(Boolean).join(' ').trim();
     if (parts && parts !== 'null') return parts;
     const fn = user?.full_name;
