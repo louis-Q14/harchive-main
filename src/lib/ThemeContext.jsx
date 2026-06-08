@@ -19,6 +19,8 @@ export const THEMES = {
       '--ha-sidebar-bg': '#0e0e14',
       '--ha-accent': '#7c3aed',
       '--ha-hover': 'rgba(255,255,255,0.06)',
+      '--ha-nav-active-bg': '#2d2d2d',
+      '--ha-nav-active-text': '#ffffff',
     },
   },
   'dark-anthracite': {
@@ -39,6 +41,8 @@ export const THEMES = {
       '--ha-sidebar-bg': '#111113',
       '--ha-accent': '#a855f7',
       '--ha-hover': 'rgba(255,255,255,0.07)',
+      '--ha-nav-active-bg': '#3f3f46',
+      '--ha-nav-active-text': '#fafafa',
     },
   },
   'light-cream': {
@@ -59,6 +63,8 @@ export const THEMES = {
       '--ha-sidebar-bg': '#f9fafb',
       '--ha-accent': '#6b7280',
       '--ha-hover': 'rgba(0,0,0,0.05)',
+      '--ha-nav-active-bg': '#374151',
+      '--ha-nav-active-text': '#ffffff',
     },
   },
   'light-offwhite': {
@@ -79,6 +85,8 @@ export const THEMES = {
       '--ha-sidebar-bg': '#f9fafb',
       '--ha-accent': '#6b7280',
       '--ha-hover': 'rgba(0,0,0,0.05)',
+      '--ha-nav-active-bg': '#374151',
+      '--ha-nav-active-text': '#ffffff',
     },
   },
 };

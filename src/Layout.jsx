@@ -468,11 +468,11 @@ export default function Layout({ children, currentPageName }) {
                         asChild 
                         className={`transition-all duration-200 rounded-lg mb-0.5 ${
                           location.pathname === createPageUrl(item.url)
-                            ? 'shadow-sm' 
+                            ? 'shadow-sm nav-item-active' 
                             : ''
                         }`}
                         style={location.pathname === createPageUrl(item.url) 
-                          ? {backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)'} 
+                          ? {backgroundColor: 'var(--ha-nav-active-bg)', color: 'var(--ha-nav-active-text)', fontWeight: 600} 
                           : {color: 'var(--ha-text-muted)'}}
                       >
                         <Link to={createPageUrl(item.url)} className="flex items-center gap-2.5 px-3 py-2 hover:opacity-80 w-full">

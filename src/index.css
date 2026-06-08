@@ -172,6 +172,8 @@ button:focus-visible {
   --ha-sidebar-bg:#0e0e14;
   --ha-sidebar-border: rgba(255,255,255,0.06);
   --ha-accent:    #7c3aed;
+  --ha-nav-active-bg:  #242430;
+  --ha-nav-active-text:#ffffff;
 }
 
 /* Sombre Anthracite */
@@ -185,6 +187,8 @@ button:focus-visible {
   --ha-sidebar-bg:#111113;
   --ha-sidebar-border: rgba(255,255,255,0.07);
   --ha-accent:    #a855f7;
+  --ha-nav-active-bg:  #3f3f46;
+  --ha-nav-active-text:#fafafa;
 }
 
 /* Clair Crème */
@@ -201,6 +205,8 @@ button:focus-visible {
   --ha-sidebar-border: rgba(0,0,0,0.06);
   --ha-accent:    #6b7280;
   --ha-hover:     rgba(0,0,0,0.05);
+  --ha-nav-active-bg:  #374151;
+  --ha-nav-active-text:#ffffff;
 }
 
 /* Clair Blanc Cassé */
@@ -217,6 +223,8 @@ button:focus-visible {
   --ha-sidebar-border: rgba(0,0,0,0.05);
   --ha-accent:    #6b7280;
   --ha-hover:     rgba(0,0,0,0.05);
+  --ha-nav-active-bg:  #374151;
+  --ha-nav-active-text:#ffffff;
 }
 
 /* Apply theme vars to key elements */
