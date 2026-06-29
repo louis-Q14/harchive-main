@@ -10,7 +10,8 @@ import {
   sendEmailVerification, verifyEmailCode,
   sendSettingsCode, changePassword, changeEmail,
   getNotifPrefs, updateNotifPrefs, updatePrivacy,
-  getWsTicket
+  getWsTicket,
+  forgotPassword, resetPassword
 } from '../controllers/authController.js';
 import { verifyToken, requireRole, clearTokenCookie } from '../middleware/auth.js';
 
@@ -30,6 +31,8 @@ router.post('/logout', (req, res) => {
   res.json({ status: 200, message: 'Déconnexion réussie' });
 });
 router.post('/refresh', refreshAccessToken);
+router.post('/forgot-password', forgotPassword);
+router.post('/reset-password', resetPassword);
 
 /**
  * Protected routes (authentication required)

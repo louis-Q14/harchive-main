@@ -16,11 +16,13 @@ export async function sendVerificationCode(email, code, purpose = 'default') {
   const subjectMap = {
     password_change: `${code} — Confirmation changement de mot de passe`,
     email_change: `${code} — Confirmation changement d'adresse email`,
+    password_reset: `${code} — Réinitialisation de votre mot de passe`,
     default: `${code} — Code de vérification HARCHIVE`,
   };
   const bodyMap = {
     password_change: `Voici votre code pour confirmer le changement de mot de passe de votre compte HARCHIVE :`,
     email_change: `Voici votre code pour confirmer l'ajout de cette adresse email à votre compte HARCHIVE :`,
+    password_reset: `Voici votre code pour réinitialiser le mot de passe de votre compte HARCHIVE :`,
     default: `Voici votre code de vérification pour compléter votre inscription :`,
   };
   const subject = subjectMap[purpose] || subjectMap.default;

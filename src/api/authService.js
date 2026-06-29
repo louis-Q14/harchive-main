@@ -261,6 +261,16 @@ export const authService = {
     const client = createHttpClient({ baseURL: backendConfig.localBackendUrl });
     return await client.post('/api/auth/admin/update-user', { userId, data });
   },
+
+  async forgotPassword(email) {
+    const client = createHttpClient({ baseURL: backendConfig.localBackendUrl });
+    return await client.post('/api/auth/forgot-password', { email });
+  },
+
+  async resetPassword(email, code, newPassword) {
+    const client = createHttpClient({ baseURL: backendConfig.localBackendUrl });
+    return await client.post('/api/auth/reset-password', { email, code, newPassword });
+  },
 };
 
 export default authService;

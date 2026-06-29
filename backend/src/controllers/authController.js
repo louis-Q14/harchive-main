@@ -1610,6 +1610,101 @@ export const updatePrivacy = async (req, res) => {
  * Issues a short-lived JWT (30s) usable as ?token= in WebSocket URLs.
  * Needed because cross-origin WebSocket connections don't send SameSite=Lax cookies.
  */
+/**
+ * Forgot Password — send reset code to email
+ * POST /api/auth/forgot-password
+ */
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ status: 400, message: 'Email requis' });
+    }
+
+    // Always respond success to avoid user enumeration
+    const user = await dbUtils.get('SELECT id FROM users WHERE email = ?', [email]);
+    if (!user) {
+      return res.json({ status: 200, message: 'Si un compte existe avec cet email, un code a été envoyé.' });
+    }
+
+    // Rate limit: max 3 reset codes per email per hour
+    const recentCodes = await dbUtils.all(
+      `SELECT id FROM email_verifications WHERE email = ? AND createdAt > DATE_SUB(NOW(), INTERVAL 1 HOUR)`,
+      [email]
+    );
+    if (recentCodes.length >= 3) {
+      return res.status(429).json({ status: 429, message: 'Trop de demandes. Réessayez dans une heure.' });
+    }
+
+    const code = generateCode();
+    const id = uuidv4();
+    await dbUtils.run(
+      `INSERT INTO email_verifications (id, email, code, expires_at) VALUES (?, ?, ?, DATE_ADD(NOW(), INTERVAL 10 MINUTE))`,
+      [id, email, code]
+    );
+
+    const sent = await sendVerificationCode(email, code, 'password_reset');
+    if (!sent) {
+      return res.status(500).json({ status: 500, message: "Erreur lors de l'envoi de l'email" });
+    }
+
+    res.json({ status: 200, message: 'Si un compte existe avec cet email, un code a été envoyé.' });
+  } catch (error) {
+    logger.error('forgotPassword error:', error);
+    res.status(500).json({ status: 500, message: 'Erreur serveur' });
+  }
+};
+
+/**
+ * Reset Password — validate code and set new password
+ * POST /api/auth/reset-password
+ */
+export const resetPassword = async (req, res) => {
+  try {
+    const { email, code, newPassword } = req.body;
+    if (!email || !code || !newPassword) {
+      return res.status(400).json({ status: 400, message: 'Email, code et nouveau mot de passe requis' });
+    }
+
+    const pwdError = validatePassword(newPassword);
+    if (pwdError) {
+      return res.status(400).json({ status: 400, message: pwdError });
+    }
+
+    const record = await dbUtils.get(
+      `SELECT * FROM email_verifications WHERE email = ? AND verified = 0 AND expires_at > NOW() ORDER BY createdAt DESC LIMIT 1`,
+      [email]
+    );
+    if (!record) {
+      return res.status(400).json({ status: 400, message: 'Code expiré ou invalide. Demandez un nouveau code.' });
+    }
+
+    if (record.attempts >= 5) {
+      return res.status(429).json({ status: 429, message: 'Trop de tentatives. Demandez un nouveau code.' });
+    }
+
+    await dbUtils.run(`UPDATE email_verifications SET attempts = attempts + 1 WHERE id = ?`, [record.id]);
+
+    if (record.code !== code) {
+      return res.status(400).json({ status: 400, message: 'Code incorrect' });
+    }
+
+    const user = await dbUtils.get('SELECT id FROM users WHERE email = ?', [email]);
+    if (!user) {
+      return res.status(404).json({ status: 404, message: 'Compte introuvable' });
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, SALT_ROUNDS);
+    await dbUtils.run(`UPDATE users SET password_hash = ? WHERE id = ?`, [passwordHash, user.id]);
+    await dbUtils.run(`UPDATE email_verifications SET verified = 1 WHERE id = ?`, [record.id]);
+
+    res.json({ status: 200, message: 'Mot de passe réinitialisé avec succès' });
+  } catch (error) {
+    logger.error('resetPassword error:', error);
+    res.status(500).json({ status: 500, message: 'Erreur serveur' });
+  }
+};
+
 export const getWsTicket = async (req, res) => {
   try {
     const ticket = generateToken(req.user.id, {

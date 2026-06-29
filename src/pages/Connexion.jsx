@@ -6,10 +6,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { DraggableDialog, DraggableDialogBody } from "@/components/ui/DraggableDialog";
+import authService from "@/api/authService";
 import {
   ArrowLeft, Loader2, Mail, Lock, Archive, AlertCircle,
   GraduationCap, UserCheck, Building2, School, Heart, LogIn,
-  Eye, EyeOff
+  Eye, EyeOff, CheckCircle2, KeyRound
 } from "lucide-react";
 
 export default function Connexion() {
@@ -20,6 +22,62 @@ export default function Connexion() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  // Forgot password dialog state
+  const [fpOpen, setFpOpen] = useState(false);
+  const [fpStep, setFpStep] = useState(1); // 1=email, 2=code+new password
+  const [fpEmail, setFpEmail] = useState("");
+  const [fpCode, setFpCode] = useState("");
+  const [fpNewPassword, setFpNewPassword] = useState("");
+  const [fpConfirmPassword, setFpConfirmPassword] = useState("");
+  const [fpShowNew, setFpShowNew] = useState(false);
+  const [fpShowConfirm, setFpShowConfirm] = useState(false);
+  const [fpLoading, setFpLoading] = useState(false);
+  const [fpError, setFpError] = useState("");
+  const [fpSuccess, setFpSuccess] = useState(false);
+
+  const openForgotPassword = () => {
+    setFpOpen(true);
+    setFpStep(1);
+    setFpEmail("");
+    setFpCode("");
+    setFpNewPassword("");
+    setFpConfirmPassword("");
+    setFpError("");
+    setFpSuccess(false);
+  };
+
+  const handleFpSendCode = async (e) => {
+    e.preventDefault();
+    setFpError("");
+    if (!fpEmail) { setFpError("Email requis"); return; }
+    setFpLoading(true);
+    try {
+      await authService.forgotPassword(fpEmail);
+      setFpStep(2);
+    } catch (err) {
+      setFpError(err?.response?.data?.message || err.message || "Erreur lors de l'envoi");
+    } finally {
+      setFpLoading(false);
+    }
+  };
+
+  const handleFpReset = async (e) => {
+    e.preventDefault();
+    setFpError("");
+    if (!fpCode) { setFpError("Code requis"); return; }
+    if (!fpNewPassword) { setFpError("Nouveau mot de passe requis"); return; }
+    if (fpNewPassword !== fpConfirmPassword) { setFpError("Les mots de passe ne correspondent pas"); return; }
+    setFpLoading(true);
+    try {
+      await authService.resetPassword(fpEmail, fpCode, fpNewPassword);
+      setFpSuccess(true);
+    } catch (err) {
+      setFpError(err?.response?.data?.message || err.message || "Erreur lors de la réinitialisation");
+    } finally {
+      setFpLoading(false);
+    }
+  };
 
   // Force dark mode on this page
   useEffect(() => {
@@ -184,6 +242,16 @@ export default function Connexion() {
                     </>
                   )}
                 </Button>
+
+                <div className="text-center pt-1">
+                  <button
+                    type="button"
+                    onClick={openForgotPassword}
+                    className="text-sm text-gray-400 hover:text-gray-200 underline underline-offset-2 transition-colors"
+                  >
+                    Mot de passe oublié ?
+                  </button>
+                </div>
               </form>
             </CardContent>
           </Card>
@@ -254,6 +322,158 @@ export default function Connexion() {
           </p>
         </div>
       </footer>
+
+      {/* Forgot Password Dialog */}
+      <DraggableDialog
+        open={fpOpen}
+        onOpenChange={(v) => { if (!fpLoading) setFpOpen(v); }}
+        title={
+          <div className="flex items-center gap-3">
+            <KeyRound className="w-5 h-5 text-purple-400" />
+            <div>
+              <div className="text-white font-bold text-base">Mot de passe oublié</div>
+              <div className="text-gray-400 text-xs">
+                {fpStep === 1 ? "Réinitialisation par email" : `Code envoyé à ${fpEmail}`}
+              </div>
+            </div>
+          </div>
+        }
+        maxWidth="max-w-md"
+      >
+        <DraggableDialogBody>
+          {fpSuccess ? (
+            <div className="py-6 text-center space-y-4">
+              <CheckCircle2 className="w-14 h-14 text-green-400 mx-auto" />
+              <p className="text-gray-200 font-medium">Mot de passe réinitialisé !</p>
+              <p className="text-gray-400 text-sm">Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.</p>
+              <Button
+                onClick={() => setFpOpen(false)}
+                className="w-full text-white"
+                style={{backgroundColor: '#555555'}}
+              >
+                Fermer
+              </Button>
+            </div>
+          ) : fpStep === 1 ? (
+            <form onSubmit={handleFpSendCode} className="space-y-4">
+              <p className="text-gray-400 text-sm">
+                Entrez votre adresse email. Nous vous enverrons un code de vérification.
+              </p>
+              {fpError && (
+                <div className="flex items-start gap-2 p-3 rounded-lg text-sm" style={{backgroundColor: '#4a1c1c', border: '1px solid #7f2222'}}>
+                  <AlertCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  <span className="text-red-300">{fpError}</span>
+                </div>
+              )}
+              <div className="space-y-2">
+                <Label className="text-gray-300 text-sm">Email</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                  <Input
+                    type="email"
+                    placeholder="votre@email.com"
+                    value={fpEmail}
+                    onChange={(e) => setFpEmail(e.target.value)}
+                    className="pl-10 text-white placeholder:text-gray-500"
+                    style={{backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)'}}
+                    required
+                  />
+                </div>
+              </div>
+              <Button
+                type="submit"
+                className="w-full text-white"
+                style={{backgroundColor: '#555555'}}
+                disabled={fpLoading}
+              >
+                {fpLoading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Envoi en cours...</> : <>Envoyer le code</>}
+              </Button>
+            </form>
+          ) : (
+            <form onSubmit={handleFpReset} className="space-y-4">
+              <p className="text-gray-400 text-sm">
+                Un code a été envoyé à <strong className="text-gray-200">{fpEmail}</strong>. Entrez-le ci-dessous avec votre nouveau mot de passe.
+              </p>
+              {fpError && (
+                <div className="flex items-start gap-2 p-3 rounded-lg text-sm" style={{backgroundColor: '#4a1c1c', border: '1px solid #7f2222'}}>
+                  <AlertCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  <span className="text-red-300">{fpError}</span>
+                </div>
+              )}
+              <div className="space-y-2">
+                <Label className="text-gray-300 text-sm">Code de vérification</Label>
+                <Input
+                  type="text"
+                  placeholder="000000"
+                  value={fpCode}
+                  onChange={(e) => setFpCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                  className="text-white placeholder:text-gray-500 tracking-widest text-center text-lg font-mono"
+                  style={{backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)'}}
+                  maxLength={6}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-gray-300 text-sm">Nouveau mot de passe</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                  <Input
+                    type={fpShowNew ? "text" : "password"}
+                    placeholder="••••••••"
+                    value={fpNewPassword}
+                    onChange={(e) => setFpNewPassword(e.target.value)}
+                    className="pl-10 pr-10 text-white placeholder:text-gray-500"
+                    style={{backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)'}}
+                    required
+                  />
+                  <button type="button" onClick={() => setFpShowNew(!fpShowNew)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300">
+                    {fpShowNew ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+                <p className="text-xs text-gray-500">Min. 8 caractères, 1 majuscule, 1 minuscule, 1 chiffre</p>
+              </div>
+              <div className="space-y-2">
+                <Label className="text-gray-300 text-sm">Confirmer le mot de passe</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                  <Input
+                    type={fpShowConfirm ? "text" : "password"}
+                    placeholder="••••••••"
+                    value={fpConfirmPassword}
+                    onChange={(e) => setFpConfirmPassword(e.target.value)}
+                    className="pl-10 pr-10 text-white placeholder:text-gray-500"
+                    style={{backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)'}}
+                    required
+                  />
+                  <button type="button" onClick={() => setFpShowConfirm(!fpShowConfirm)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300">
+                    {fpShowConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="flex-1"
+                  style={{borderColor: 'rgba(255,255,255,0.12)', color: 'white', backgroundColor: 'rgba(255,255,255,0.06)'}}
+                  onClick={() => { setFpStep(1); setFpError(""); }}
+                  disabled={fpLoading}
+                >
+                  Retour
+                </Button>
+                <Button
+                  type="submit"
+                  className="flex-1 text-white"
+                  style={{backgroundColor: '#555555'}}
+                  disabled={fpLoading}
+                >
+                  {fpLoading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />En cours...</> : <>Réinitialiser</>}
+                </Button>
+              </div>
+            </form>
+          )}
+        </DraggableDialogBody>
+      </DraggableDialog>
     </div>
   );
 }
