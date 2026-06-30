@@ -159,16 +159,47 @@ export default function ShortCreator({ onClose, onCreated }) {
       // Upload video
       const uploaded = await uploadService.uploadFile(videoFile, 'posts');
 
-      // Create short
+      // Generate thumbnail from video first frame
+      let thumbnailUrl = '';
+      try {
+        thumbnailUrl = await new Promise((resolve) => {
+          const vid = document.createElement('video');
+          vid.src = URL.createObjectURL(videoFile);
+          vid.muted = true;
+          vid.playsInline = true;
+          vid.currentTime = 0.5;
+          vid.onloadeddata = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = vid.videoWidth || 540;
+            canvas.height = vid.videoHeight || 960;
+            canvas.getContext('2d').drawImage(vid, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob(async (blob) => {
+              if (blob) {
+                const thumbFile = new File([blob], `thumb_${Date.now()}.jpg`, { type: 'image/jpeg' });
+                try {
+                  const thumbUploaded = await uploadService.uploadFile(thumbFile, 'posts');
+                  resolve(thumbUploaded.url);
+                } catch { resolve(''); }
+              } else { resolve(''); }
+              URL.revokeObjectURL(vid.src);
+            }, 'image/jpeg', 0.8);
+          };
+          vid.onerror = () => resolve('');
+        });
+      } catch { /* thumbnail optional */ }
+
+      // Create and publish short immediately
       await shortsService.create({
         titre: titre.trim(),
         description: description.trim(),
         video_url: uploaded.url,
+        thumbnail_url: thumbnailUrl,
         duration: Math.min(trimEnd - trimStart, 60),
         width: 1080,
         height: 1920,
         music_name: musicName.trim() || undefined,
         tags: [],
+        status: 'published',
       });
 
       onCreated();
