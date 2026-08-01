@@ -20,6 +20,7 @@ export default function Inscription() {
   const [openEtab, setOpenEtab] = useState(false);
   const [openEtatCivil, setOpenEtatCivil] = useState(false);
   const [openSexe, setOpenSexe] = useState(false);
+  const [openTypeCompte, setOpenTypeCompte] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
   // ── Styles communs ──────────────────────────────────────────────────────────
@@ -259,10 +260,29 @@ export default function Inscription() {
                 {/* Type de compte */}
                 <div style={{ marginBottom: 16 }}>
                   <div style={labelStyle}>Type de Compte <span style={{ color: "#dc2626" }}>*</span></div>
-                  <select value={formData.type_utilisateur} onChange={(e) => handleChange("type_utilisateur", e.target.value)} style={nativeSelectStyle} required>
-                    <option value="etudiant">Étudiant</option>
-                    <option value="professeur">Professeur</option>
-                  </select>
+                  <Popover open={openTypeCompte} onOpenChange={setOpenTypeCompte}>
+                    <PopoverTrigger asChild>
+                      <button type="button" style={selectBtnStyle} aria-expanded={openTypeCompte}>
+                        <span style={{ color: "#f3f4f6" }}>
+                          {formData.type_utilisateur === "etudiant" ? "Étudiant" : "Professeur"}
+                        </span>
+                        <ChevronsUpDown style={{ width: 18, height: 18, color: "#9ca3af" }} />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent data-combobox-popover style={{ width: "var(--radix-popover-trigger-width)", minWidth: 200, padding: 0, background: "#2d2d2d", borderRadius: 10, boxShadow: "0 8px 32px rgba(0,0,0,0.6)", border: "1px solid #5a5a5a", overflow: "hidden", "--accent": "rgba(59,130,246,0.15)", "--accent-foreground": "#e5e7eb" }}>
+                      {[{ value: "etudiant", label: "Étudiant" }, { value: "professeur", label: "Professeur" }].map((opt) => (
+                        <button
+                          key={opt.value}
+                          type="button"
+                          onClick={() => { handleChange("type_utilisateur", opt.value); setOpenTypeCompte(false); }}
+                          style={{ width: "100%", textAlign: "left", padding: "12px 16px", background: formData.type_utilisateur === opt.value ? "rgba(59,130,246,0.15)" : "transparent", color: "#e5e7eb", border: "none", borderBottom: "1px solid #5a5a5a", cursor: "pointer", fontSize: 14, display: "flex", alignItems: "center", gap: 10 }}
+                        >
+                          <Check style={{ width: 16, height: 16, color: "#3b82f6", opacity: formData.type_utilisateur === opt.value ? 1 : 0, flexShrink: 0 }} />
+                          {opt.label}
+                        </button>
+                      ))}
+                    </PopoverContent>
+                  </Popover>
                 </div>
 
                 {/* Nom / Post-nom */}
