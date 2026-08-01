@@ -19,6 +19,7 @@ export default function Inscription() {
   const [emailVerified, setEmailVerified] = useState(false);
   const [openEtab, setOpenEtab] = useState(false);
   const [openEtatCivil, setOpenEtatCivil] = useState(false);
+  const [openSexe, setOpenSexe] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
   // ── Styles communs ──────────────────────────────────────────────────────────
@@ -298,11 +299,29 @@ export default function Inscription() {
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 16 }}>
                   <div>
                     <div style={labelStyle}>Sexe <span style={{ color: "#dc2626" }}>*</span></div>
-                    <select value={formData.sexe} onChange={(e) => handleChange("sexe", e.target.value)} style={nativeSelectStyle} required>
-                      <option value="">Sélectionnez</option>
-                      <option value="M">Masculin</option>
-                      <option value="F">Féminin</option>
-                    </select>
+                    <Popover open={openSexe} onOpenChange={setOpenSexe}>
+                      <PopoverTrigger asChild>
+                        <button type="button" style={selectBtnStyle} aria-expanded={openSexe}>
+                          <span style={{ color: formData.sexe ? "#f3f4f6" : "#6b7280" }}>
+                            {formData.sexe === "M" ? "Masculin" : formData.sexe === "F" ? "Féminin" : "Sélectionnez"}
+                          </span>
+                          <ChevronsUpDown style={{ width: 18, height: 18, color: "#9ca3af" }} />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent data-combobox-popover style={{ width: "var(--radix-popover-trigger-width)", minWidth: 200, padding: 0, background: "#2d2d2d", borderRadius: 10, boxShadow: "0 8px 32px rgba(0,0,0,0.6)", border: "1px solid #5a5a5a", overflow: "hidden", "--accent": "rgba(59,130,246,0.15)", "--accent-foreground": "#e5e7eb" }}>
+                        {[{ value: "M", label: "Masculin" }, { value: "F", label: "Féminin" }].map((opt) => (
+                          <button
+                            key={opt.value}
+                            type="button"
+                            onClick={() => { handleChange("sexe", opt.value); setOpenSexe(false); }}
+                            style={{ width: "100%", textAlign: "left", padding: "12px 16px", background: formData.sexe === opt.value ? "rgba(59,130,246,0.15)" : "transparent", color: "#e5e7eb", border: "none", borderBottom: "1px solid #5a5a5a", cursor: "pointer", fontSize: 14, display: "flex", alignItems: "center", gap: 10 }}
+                          >
+                            <Check style={{ width: 16, height: 16, color: "#3b82f6", opacity: formData.sexe === opt.value ? 1 : 0, flexShrink: 0 }} />
+                            {opt.label}
+                          </button>
+                        ))}
+                      </PopoverContent>
+                    </Popover>
                   </div>
                   <div>
                     <div style={labelStyle}>Nationalité <span style={{ color: "#dc2626" }}>*</span></div>
