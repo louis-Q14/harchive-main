@@ -77,6 +77,9 @@ export default function Home() {
   const [detailLoading, setDetailLoading] = useState(false);
   const [detailExtra, setDetailExtra] = useState(null); // inscription + structure data
 
+  // Espace Parents modal state
+  const [espaceparentsOpen, setEspaceparentsOpen] = useState(false);
+
   const handleOpenAgenda = async () => {
     setAgendaOpen(true);
     if (agendaData.length === 0) {
@@ -385,7 +388,7 @@ export default function Home() {
             {features.map((f, i) => (
               <div
                 key={i}
-                onClick={() => f.page === 'ListeEtablissements' ? handleOpenAgenda() : navigate(createPageUrl(f.page))}
+                onClick={() => f.page === 'ListeEtablissements' ? handleOpenAgenda() : f.page === 'NotesEnfants' ? setEspaceparentsOpen(true) : navigate(createPageUrl(f.page))}
                 className="text-center p-6 rounded-lg cursor-pointer transition-all hover:scale-105 hover:shadow-lg"
                 style={{backgroundColor: 'var(--ha-surface)', border: '1px solid #404040'}}
               >
@@ -406,6 +409,114 @@ export default function Home() {
           </p>
         </div>
       </footer>
+
+      {/* ===== Espace Parents Modal ===== */}
+      <DraggableDialog
+        open={espaceparentsOpen}
+        onOpenChange={setEspaceparentsOpen}
+        title={
+          <div className="flex items-center gap-3">
+            <Users className="w-5 h-5 text-blue-400" />
+            <div>
+              <div className="text-white font-bold text-base" style={CG}>Espace Parents</div>
+              <div className="text-gray-400 text-xs" style={CG}>Suivi académique en temps réel — vision complète</div>
+            </div>
+          </div>
+        }
+        maxWidth="max-w-4xl"
+      >
+        <DraggableDialogBody>
+          <div className="space-y-6 text-sm" style={{ color: '#d1d5db', lineHeight: 1.75 }}>
+
+            {/* Introduction */}
+            <div className="rounded-xl p-5" style={{ background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.2)' }}>
+              <h2 className="text-white font-bold text-base mb-2" style={CG}>Introduction : vers une université transparente et connectée</h2>
+              <p style={CG}>L'idée d'un « espace parent » dédié au suivi académique en temps réel dépasse la simple numérisation du relevé de notes. Elle répond à un besoin profond : <strong className="text-white">réduire l'asymétrie d'information</strong> entre l'établissement et la famille, pour faire des parents de véritables <em>copilotes</em> du parcours universitaire de leur enfant. Enrichir ce concept, c'est le transformer en un <strong className="text-white">écosystème intelligent, proactif et humain</strong>, centré sur le bien-être et la réussite de l'étudiant.</p>
+            </div>
+
+            {[
+              {
+                num: '1', color: '#3b82f6', bg: 'rgba(59,130,246,0.06)', border: 'rgba(59,130,246,0.15)',
+                title: 'Les fondamentaux : un tableau de bord vivant et exhaustif',
+                items: [
+                  { bold: 'Notes, crédits ECTS et compétences en direct', text: ' : Dès qu'un résultat d'examen est saisi, il apparaît avec la note, le barème, l'appréciation détaillée et les crédits ECTS. L'affichage privilégie les courbes de progression et les radars de compétences.' },
+                  { bold: 'Assiduité et vie universitaire', text: ' : Notification instantanée en cas d'absence non justifiée, retard ou absence à un examen. Indicateur « taux de présence » visible en continu.' },
+                  { bold: 'Espace de cours et travaux à rendre', text: ' : L'emploi du temps synchronisé avec les contenus déposés par les professeurs, les travaux à rendre et les ressources complémentaires.' },
+                  { bold: 'Messagerie unifiée et intelligente', text: ' : Canal de communication direct avec chaque enseignant et l'administration, avec traduction automatique pour les familles allophones.' },
+                ]
+              },
+              {
+                num: '2', color: '#8b5cf6', bg: 'rgba(139,92,246,0.06)', border: 'rgba(139,92,246,0.15)',
+                title: 'L\'intelligence artificielle au service de la détection précoce',
+                items: [
+                  { bold: 'Alerte de décrochage académique', text: ' : L'IA analyse les signaux faibles (baisse des résultats, travaux non rendus, isolement). Notification bienveillante dès qu'un schéma à risque est détecté.' },
+                  { bold: 'Recommandations personnalisées', text: ' : Sur la base des lacunes identifiées, l'espace suggère des ressources ciblées : tutoriels, exercices adaptatifs, ateliers de soutien.' },
+                  { bold: 'Jumeau numérique de progression', text: ' : Projection prédictive simulant l'obtention du semestre, couplée à un plan d'action concret.' },
+                ]
+              },
+              {
+                num: '3', color: '#10b981', bg: 'rgba(16,185,129,0.06)', border: 'rgba(16,185,129,0.15)',
+                title: 'L\'étudiant au centre, co-acteur de son suivi',
+                items: [
+                  { bold: 'Espace « Mon parcours » partagé', text: ' : L'étudiant fixe ses objectifs et peut partager certaines réussites. Le parent devient un soutien qui encourage, non un inspecteur.' },
+                  { bold: 'Portfolio de travaux universitaires', text: ' : Projets, rapports de stage, travaux de recherche déposés par l'étudiant, visibles des parents. Les réalisations concrètes dépassent la simple note.' },
+                  { bold: 'Contrat d'objectifs tripartite', text: ' : Tuteur pédagogique, étudiant et parents formalisent des objectifs à court terme avec des points d'étape automatiques.' },
+                ]
+              },
+              {
+                num: '4', color: '#f59e0b', bg: 'rgba(245,158,11,0.06)', border: 'rgba(245,158,11,0.15)',
+                title: 'Intégration de la vie étudiante et du bien-être',
+                items: [
+                  { bold: 'Vie étudiante en un clin d'œil', text: ' : Menu du restaurant universitaire, accès à la bibliothèque, activités culturelles et sportives, alertes d'annulation de TD.' },
+                  { bold: 'Indicateur de bien-être', text: ' : Basé sur des micro-sondages anonymes, affiche un indicateur global sans trahir de détails personnels.' },
+                  { bold: 'Santé et événements', text: ' : Agenda des sorties de terrain, périodes de stage et possibilité de valider en ligne les autorisations.' },
+                ]
+              },
+              {
+                num: '5', color: '#ec4899', bg: 'rgba(236,72,153,0.06)', border: 'rgba(236,72,153,0.15)',
+                title: 'Un écosystème familial et collectif',
+                items: [
+                  { bold: 'Vue multi-étudiants intelligente', text: ' : Tableau de bord consolidé qui met en évidence les urgences pour tous les étudiants de la fratrie, quel que soit leur établissement.' },
+                  { bold: 'Espace co-parental', text: ' : Droits d'accès égaux ou paramétrables pour les parents séparés, avec zone de commentaires partagés.' },
+                  { bold: 'Modules d'auto-formation', text: ' : Comprendre le LMD/ECTS, soutenir son enfant en période de partiels, prévenir le burn-out étudiant.' },
+                ]
+              },
+              {
+                num: '6', color: '#14b8a6', bg: 'rgba(20,184,166,0.06)', border: 'rgba(20,184,166,0.15)',
+                title: 'Architecture, sécurité et éthique : les conditions de la confiance',
+                items: [
+                  { bold: 'RGPD et souveraineté des données', text: ' : Consentement éclairé et granulaire de l'étudiant qui décide précisément ce qu'il partage. L'étudiant majeur garde la maîtrise.' },
+                  { bold: 'Droit à la déconnexion', text: ' : Le parent définit les plages horaires et le type d'alertes souhaités. L'outil aide, il ne stresse pas.' },
+                  { bold: 'Accessibilité universelle', text: ' : Interface WCAG, compatible lecteurs d'écran, versions FALC et multilingues.' },
+                  { bold: 'Interopérabilité', text: ' : Connexion aux systèmes existants (ENT, Moodle, Apogée) via API standardisées, sans double saisie.' },
+                ]
+              },
+            ].map((section) => (
+              <div key={section.num} className="rounded-xl p-5" style={{ background: section.bg, border: `1px solid ${section.border}` }}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style={{ background: section.color }}>{section.num}</div>
+                  <h3 className="font-bold text-white text-sm" style={CG}>{section.title}</h3>
+                </div>
+                <ul className="space-y-2 pl-10">
+                  {section.items.map((item, j) => (
+                    <li key={j} className="flex items-start gap-2" style={CG}>
+                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: section.color }} />
+                      <span><strong className="text-white">{item.bold}</strong>{item.text}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+
+            {/* Conclusion */}
+            <div className="rounded-xl p-5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <h3 className="text-white font-bold text-sm mb-2" style={CG}>Conclusion : une alliance éducative augmentée pour la réussite étudiante</h3>
+              <p style={CG}>Développer un « espace parent » pour l'enseignement supérieur dépasse la technologie. C'est <strong className="text-white">bâtir un pont de confiance</strong> entre l'université et la famille, où l'information ne sert pas à contrôler un jeune adulte mais à comprendre, prévenir et <strong className="text-white">célébrer ses réussites</strong>. L'université devient ainsi un écosystème transparent, bienveillant et résolument tourné vers l'avenir de chaque étudiant.</p>
+            </div>
+
+          </div>
+        </DraggableDialogBody>
+      </DraggableDialog>
 
       {/* ===== Agenda Universitaire Modal ===== */}
       <DraggableDialog
