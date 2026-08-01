@@ -72,6 +72,8 @@ export default function Home() {
   const [agendaStatut, setAgendaStatut] = useState('tous');
   // Statistiques Avancées modal state
   const [statistiquesOpen, setStatistiquesOpen] = useState(false);
+  // Gestion des Classes modal state
+  const [gestionClassesOpen, setGestionClassesOpen] = useState(false);
   const [agendaProvince, setAgendaProvince] = useState('tous');
   // Detail sub-modal
   const [detailOpen, setDetailOpen] = useState(false);
@@ -390,7 +392,7 @@ export default function Home() {
             {features.map((f, i) => (
               <div
                 key={i}
-                onClick={() => f.page === 'ListeEtablissements' ? handleOpenAgenda() : f.page === 'NotesEnfants' ? setEspaceparentsOpen(true) : f.page === 'Statistiques' ? setStatistiquesOpen(true) : navigate(createPageUrl(f.page))}
+                onClick={() => f.page === 'ListeEtablissements' ? handleOpenAgenda() : f.page === 'NotesEnfants' ? setEspaceparentsOpen(true) : f.page === 'Statistiques' ? setStatistiquesOpen(true) : f.page === 'GestionClasse' ? setGestionClassesOpen(true) : navigate(createPageUrl(f.page))}
                 className="text-center p-6 rounded-lg cursor-pointer transition-all hover:scale-105 hover:shadow-lg"
                 style={{backgroundColor: 'var(--ha-surface)', border: '1px solid #404040'}}
               >
@@ -411,6 +413,124 @@ export default function Home() {
           </p>
         </div>
       </footer>
+
+      {/* ===== Gestion des Classes Modal ===== */}
+      <DraggableDialog
+        open={gestionClassesOpen}
+        onOpenChange={setGestionClassesOpen}
+        title={
+          <div className="flex items-center gap-3">
+            <BookOpen className="w-5 h-5 text-emerald-400" />
+            <div>
+              <div className="text-white font-bold text-base" style={CG}>Gestion des Classes</div>
+              <div className="text-gray-400 text-xs" style={CG}>Organisation intelligente & traçabilité institutionnelle — HARCHIVE</div>
+            </div>
+          </div>
+        }
+        maxWidth="max-w-4xl"
+      >
+        <DraggableDialogBody>
+          <div className="space-y-5 text-sm" style={{ color: '#d1d5db', lineHeight: 1.75 }}>
+
+            {/* Intro */}
+            <div className="rounded-xl p-5" style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.1), rgba(59,130,246,0.08))', border: '1px solid rgba(16,185,129,0.2)' }}>
+              <p style={CG}>HARCHIVE n'est pas un simple LMS classique. Notre valeur ajoutée réside dans la capacité à transformer des données passives (archives) en un actif pédagogique vivant — en passant d'une logique de <strong className="text-white">stockage</strong> à une logique de <strong className="text-emerald-300">traçabilité intelligente et de curation</strong>.</p>
+            </div>
+
+            {[
+              {
+                num: '1', color: '#3b82f6', bg: 'rgba(59,130,246,0.05)', border: 'rgba(59,130,246,0.2)',
+                headerBg: 'rgba(59,130,246,0.12)',
+                title: "Taxonomie Granulaire : Du Silo à l'Architecture Connectée",
+                intro: "Sur HARCHIVE, on ne crée pas une classe — on crée une empreinte numérique de l'organisation.",
+                items: [
+                  { label: "L'Institution (Macro)", text: "Le cadre suprême (Ministère, Université, Réseau d'écoles)." },
+                  { label: "Le Programme/Cursus (Méso)", text: 'Le conteneur logique (ex : "Licence Informatique - Parcours Data 2023-2026"). Archive la maquette pédagogique en vigueur.' },
+                  { label: "La Matière/UE (Micro-Évolutive)", text: "Objet doté d'un historique. Si le coefficient change en cours d'année, la version précédente est horodatée — garantissant la validité juridique des relevés passés." },
+                  { label: "Le Groupe/Classe (Transversale)", text: "La classe dynamique hérite des données de la classe mère sans dupliquer les archives (groupes de TD, projet, remédiation)." },
+                ]
+              },
+              {
+                num: '2', color: '#8b5cf6', bg: 'rgba(139,92,246,0.05)', border: 'rgba(139,92,246,0.2)',
+                headerBg: 'rgba(139,92,246,0.12)',
+                title: "Le Lien Archivistique : La Matière 'Clonée' mais Distincte",
+                intro: "Comment gérer une matière dispensée dans 5 classes par 3 professeurs différents ? Le système de Session HARCHIVE.",
+                items: [
+                  { label: "Plan de Cours Maître (L'Original)", text: "Archivé une fois au niveau de la matière fondamentale. Contient les objectifs institutionnels et le référentiel légal." },
+                  { label: "Instance de Session (L'Exécution)", text: "Nœud enfant créé pour chaque classe × professeur × année. Hérite du plan maître et enregistre ses propres données : journal, présences, copies corrigées, écarts par rapport au plan initial." },
+                  { label: "Valeur archivistique", text: "Dans 10 ans, on peut comparer pourquoi la Classe A a mieux réussi que la Classe B sur la même matière grâce aux archives de session." },
+                ]
+              },
+              {
+                num: '3', color: '#f59e0b', bg: 'rgba(245,158,11,0.05)', border: 'rgba(245,158,11,0.2)',
+                headerBg: 'rgba(245,158,11,0.12)',
+                title: "Glissement Temporel : La Photographie de la Classe",
+                intro: "La classe est un organisme vivant. Une simple liste d'étudiants est une faute archivistique.",
+                items: [
+                  { label: "Vue Chronologique horodatée", text: "L'état de la classe est horodaté. Un PV de conseil du 1er trimestre affiche la liste des étudiants présents à cette date précise." },
+                  { label: "Dossier d'Adhésion", text: "On lie l'adhésion de l'étudiant (date d'entrée/sortie), pas l'étudiant à la classe. Un transfert en février conserve ses bulletins du 1er trimestre dans l'archive de la classe d'origine." },
+                  { label: "Matières Optionnelles", text: 'Groupes temporaires (ex : "Latinistes 2026") siphonnant des étudiants de plusieurs classes, avec archivage centralisé des notes hors livret principal.' },
+                ]
+              },
+              {
+                num: '4', color: '#10b981', bg: 'rgba(16,185,129,0.05)', border: 'rgba(16,185,129,0.2)',
+                headerBg: 'rgba(16,185,129,0.12)',
+                title: "Automatisation par Rétro-Archivage",
+                intro: "HARCHIVE ne reçoit pas seulement des PDF finaux — il génère l'archive depuis le quotidien.",
+                items: [
+                  { label: "Cachet Numérique dans l'EDT", text: "L'emploi du temps de la semaine 14 est sauvegardé comme pièce justificative. En cas de contestation, on consulte l'EDT archivé de la semaine concernée." },
+                  { label: "Purge Automatisée (Record Management)", text: "1 an après la fin d'un cours : suppression des brouillons non validés, conservation des PV définitifs, isolation des copies légales (examens), suggestion de destruction des copies intermédiaires." },
+                ]
+              },
+              {
+                num: '5', color: '#ec4899', bg: 'rgba(236,72,153,0.05)', border: 'rgba(236,72,153,0.2)',
+                headerBg: 'rgba(236,72,153,0.12)',
+                title: "Gouvernance des Accès : Le Coffre-Fort à Tiroirs",
+                intro: "La ségrégation des archives par temporalité garantit sécurité et conformité.",
+                items: [
+                  { label: "Tiroir Vivant (Année en cours)", text: "Accès lecture/écriture pour le professeur et le directeur des études." },
+                  { label: "Tiroir Froid (N-1 à N-5)", text: "Lecture seule pour les professeurs. Accès direction pour inspections et dossiers de bourse." },
+                  { label: "Tiroir Pérenne (N-5 à N-30)", text: "Accès strictement régulé. Matières vitrifiées en format de conservation PDF/A-3." },
+                  { label: "Droit au Portfolio", text: "L'étudiant peut extraire un dossier de matière : Plan de Cours Maître + tampon d'accréditation de l'époque, utile pour une Validation d'Acquis (VAE)." },
+                ]
+              },
+              {
+                num: '6', color: '#14b8a6', bg: 'rgba(20,184,166,0.05)', border: 'rgba(20,184,166,0.2)',
+                headerBg: 'rgba(20,184,166,0.12)',
+                title: "Enrichissement par les Métadonnées de Traçabilité",
+                intro: "Pour qu'une archive soit retrouvable dans 30 ans, elle s'appuie sur un Dublin Core étendu au monde éducatif.",
+                items: [
+                  { label: "Qui ?", text: "Le matricule statutaire de l'enseignant (pas seulement son nom) pour attester qu'il était titulaire au moment de l'évaluation." },
+                  { label: "Quel standard ?", text: "Rattachement à un code RNCP ou ROME. Dans 15 ans, un recruteur peut vérifier la correspondance de la formation." },
+                  { label: "Outil pédagogique", text: '"Thème : Équations du second degré – Compétence : Résolution de problèmes". HARCHIVE devient une banque de ressources pédagogiques historiques.' },
+                ]
+              },
+            ].map((section) => (
+              <div key={section.num} className="rounded-xl overflow-hidden" style={{ border: `1px solid ${section.border}` }}>
+                <div className="px-5 py-3 flex items-center gap-3" style={{ background: section.headerBg }}>
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style={{ background: section.color }}>{section.num}</div>
+                  <h3 className="font-bold text-white text-sm" style={CG}>{section.title}</h3>
+                </div>
+                <div className="p-5 space-y-3" style={{ background: section.bg }}>
+                  {section.intro && <p className="text-gray-400 italic text-xs mb-3" style={CG}>{section.intro}</p>}
+                  {section.items.map((item, j) => (
+                    <div key={j} className="flex gap-3 items-start">
+                      <span className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ background: section.color }} />
+                      <span style={CG}><strong className="text-white">{item.label} :</strong> {item.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+
+            {/* Résumé */}
+            <div className="rounded-xl p-5 text-center" style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.1), rgba(20,184,166,0.08))', border: '1px solid rgba(16,185,129,0.2)' }}>
+              <p className="text-white font-medium" style={CG}>HARCHIVE n'organise pas des classes comme des dossiers Windows, mais comme des <strong className="text-emerald-300">générateurs de collections patrimoniales</strong>.<br /><span className="text-gray-400 text-xs">Chaque matière dispensée est un Journal de Bord Institutionnel qui, une fois figé, devient une archive juridiquement opposable et pédagogiquement exploitable pour les générations futures.</span></p>
+            </div>
+
+          </div>
+        </DraggableDialogBody>
+      </DraggableDialog>
 
       {/* ===== Statistiques Avancées Modal ===== */}
       <DraggableDialog
