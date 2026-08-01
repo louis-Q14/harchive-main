@@ -86,6 +86,26 @@ html[data-theme*="dark"] body [data-combobox-popover] [role="option"]:hover {
   background-color: var(--ha-surface3) !important;
 }
 
+/* Fix fond blanc des items sélectionnés dans le combobox (pages publiques sans data-theme) */
+[data-combobox-popover] [role="option"],
+[data-combobox-popover] [cmdk-item] {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #e5e7eb !important;
+}
+[data-combobox-popover] [role="option"][data-selected="true"],
+[data-combobox-popover] [role="option"][aria-selected="true"],
+[data-combobox-popover] [cmdk-item][data-selected="true"] {
+  background: rgba(59, 130, 246, 0.15) !important;
+  background-color: rgba(59, 130, 246, 0.15) !important;
+  color: #e5e7eb !important;
+}
+[data-combobox-popover] [role="option"]:hover,
+[data-combobox-popover] [cmdk-item]:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
 /* Dialogues glassmorphism en mode sombre */
 [data-theme*="dark"] [role="dialog"],
 [data-theme*="dark"] [role="menu"],
