@@ -317,7 +317,7 @@ export default function InscriptionParent() {
                           <ChevronsUpDown style={{ width: 18, height: 18, color: "#9ca3af" }} />
                         </button>
                       </PopoverTrigger>
-                      <PopoverContent data-combobox-popover style={{ width: "var(--radix-popover-trigger-width)", minWidth: 350, padding: 0, background: "#2d2d2d", borderRadius: 10, boxShadow: "0 8px 32px rgba(0,0,0,0.6)", border: "1px solid #5a5a5a", overflow: "hidden" }}>
+                      <PopoverContent data-combobox-popover style={{ width: "var(--radix-popover-trigger-width)", minWidth: 350, padding: 0, background: "#2d2d2d", borderRadius: 10, boxShadow: "0 8px 32px rgba(0,0,0,0.6)", border: "1px solid #5a5a5a", overflow: "hidden", "--accent": "rgba(59,130,246,0.15)", "--accent-foreground": "#e5e7eb" }}>
                         <Command className="!rounded-none !bg-transparent">
                           <CommandInput placeholder="Rechercher un établissement..." style={{ background: "#3a3a3a", border: "none", borderBottom: "1px solid #5a5a5a", borderRadius: 0, color: "#e5e7eb", padding: "10px 14px", fontSize: 14, outline: "none" }} />
                           <CommandList style={{ maxHeight: 360, overflowY: "auto" }}>
