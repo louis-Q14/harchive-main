@@ -317,9 +317,9 @@ export default function InscriptionParent() {
                           <ChevronsUpDown style={{ width: 18, height: 18, color: "#9ca3af" }} />
                         </button>
                       </PopoverTrigger>
-                      <PopoverContent data-combobox-popover style={{ width: "var(--radix-popover-trigger-width)", minWidth: 350, padding: "8px 0", boxShadow: "0 8px 24px rgba(0,0,0,0.4)", border: "1px solid #7d7d7d" }}>
+                      <PopoverContent data-combobox-popover style={{ width: "var(--radix-popover-trigger-width)", minWidth: 350, padding: 0, background: "#2d2d2d", borderRadius: 10, boxShadow: "0 8px 32px rgba(0,0,0,0.6)", border: "1px solid #5a5a5a", overflow: "hidden" }}>
                         <Command className="!rounded-none !bg-transparent">
-                          <CommandInput placeholder="Rechercher un établissement..." style={{ background: "#5a5a5a", border: "1px solid #6b6b6b", borderRadius: "6px 6px 0 0", color: "#e5e7eb", padding: "10px 12px", margin: "8px", fontSize: 14 }} />
+                          <CommandInput placeholder="Rechercher un établissement..." style={{ background: "#3a3a3a", border: "none", borderBottom: "1px solid #5a5a5a", borderRadius: 0, color: "#e5e7eb", padding: "10px 14px", fontSize: 14, outline: "none" }} />
                           <CommandList style={{ maxHeight: 360, overflowY: "auto" }}>
                             <CommandEmpty style={{ padding: "20px", textAlign: "center", color: "#a0a0a0", fontSize: 14 }}>Aucun établissement trouvé.</CommandEmpty>
                             <CommandGroup>
