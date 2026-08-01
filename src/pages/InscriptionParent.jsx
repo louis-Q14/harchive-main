@@ -219,27 +219,26 @@ export default function InscriptionParent() {
             </div>
 
             {/* Mot de passe */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-              <div>
-                <div style={labelStyle}>Mot de passe <span style={{ color: "#dc2626" }}>*</span></div>
-                <div style={{ position: "relative" }}>
-                  <Lock style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", width: 16, height: 16, color: "#9ca3af", pointerEvents: "none" }} />
-                  <Input required type="password" minLength={6} value={formData.password} onChange={(e) => setFormData(p => ({ ...p, password: e.target.value }))} style={{ ...inputStyle, paddingLeft: 38 }} placeholder="Minimum 6 caractères" />
-                </div>
-              </div>
-              <div>
-                <div style={labelStyle}>Confirmer le mot de passe <span style={{ color: "#dc2626" }}>*</span></div>
-                <div style={{ position: "relative" }}>
-                  <Lock style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", width: 16, height: 16, color: "#9ca3af", pointerEvents: "none" }} />
-                  <Input required type="password" minLength={6} value={formData.password_confirm} onChange={(e) => setFormData(p => ({ ...p, password_confirm: e.target.value }))} style={{ ...inputStyle, paddingLeft: 38 }} placeholder="Répétez le mot de passe" />
-                </div>
-                {formData.password && formData.password_confirm && formData.password !== formData.password_confirm && (
-                  <div style={{ color: "#f87171", fontSize: 12, marginTop: 4 }}>Les mots de passe ne correspondent pas</div>
-                )}
-              </div>
-            </div>
-
             <div style={{ marginBottom: 16 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 12 }}>
+                <div>
+                  <div style={labelStyle}>Mot de passe <span style={{ color: "#dc2626" }}>*</span></div>
+                  <div style={{ position: "relative" }}>
+                    <Lock style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", width: 16, height: 16, color: "#9ca3af", pointerEvents: "none" }} />
+                    <Input required type="password" minLength={6} value={formData.password} onChange={(e) => setFormData(p => ({ ...p, password: e.target.value }))} style={{ ...inputStyle, paddingLeft: 38 }} placeholder="Minimum 6 caractères" />
+                  </div>
+                </div>
+                <div>
+                  <div style={labelStyle}>Confirmer le mot de passe <span style={{ color: "#dc2626" }}>*</span></div>
+                  <div style={{ position: "relative" }}>
+                    <Lock style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", width: 16, height: 16, color: "#9ca3af", pointerEvents: "none" }} />
+                    <Input required type="password" minLength={6} value={formData.password_confirm} onChange={(e) => setFormData(p => ({ ...p, password_confirm: e.target.value }))} style={{ ...inputStyle, paddingLeft: 38 }} placeholder="Répétez le mot de passe" />
+                  </div>
+                  {formData.password && formData.password_confirm && formData.password !== formData.password_confirm && (
+                    <div style={{ color: "#f87171", fontSize: 12, marginTop: 4 }}>Les mots de passe ne correspondent pas</div>
+                  )}
+                </div>
+              </div>
               <EmailVerification
                 email={formData.email}
                 onVerified={() => setEmailVerified(true)}
