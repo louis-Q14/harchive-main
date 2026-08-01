@@ -110,6 +110,7 @@ export default function InscriptionEtablissement() {
     password_confirm: "",
   });
   const [openEtab, setOpenEtab] = useState(false);
+  const [openType, setOpenType] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
@@ -260,10 +261,32 @@ export default function InscriptionEtablissement() {
               </div>
               <div>
                 <div style={labelStyle}>Type d&rsquo;Établissement <span style={{ color: "#dc2626" }}>*</span></div>
-                <select value={formData.type} onChange={(e) => handleChange("type", e.target.value)} style={{ ...inputStyle, height: 42 }} required>
-                  <option value="universite">Université</option>
-                  <option value="institut_superieur">Institut Supérieur</option>
-                </select>
+                <Popover open={openType} onOpenChange={setOpenType}>
+                  <PopoverTrigger asChild>
+                    <button type="button" style={{ ...selectBtnStyle, height: 42 }} aria-expanded={openType}>
+                      <span style={{ color: "#f3f4f6" }}>
+                        {formData.type === "universite" ? "Université" : "Institut Supérieur"}
+                      </span>
+                      <ChevronsUpDown style={{ width: 18, height: 18, color: "#9ca3af" }} />
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent data-combobox-popover style={{ width: "var(--radix-popover-trigger-width)", minWidth: 200, padding: 0, background: "#2d2d2d", borderRadius: 10, boxShadow: "0 8px 32px rgba(0,0,0,0.6)", border: "1px solid #5a5a5a", overflow: "hidden", "--accent": "rgba(59,130,246,0.15)", "--accent-foreground": "#e5e7eb" }}>
+                    {[
+                      { value: "universite", label: "Université" },
+                      { value: "institut_superieur", label: "Institut Supérieur" },
+                    ].map((opt) => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => { handleChange("type", opt.value); setOpenType(false); }}
+                        style={{ width: "100%", textAlign: "left", padding: "12px 16px", background: formData.type === opt.value ? "rgba(59,130,246,0.15)" : "transparent", color: "#e5e7eb", border: "none", borderBottom: "1px solid #5a5a5a", cursor: "pointer", fontSize: 14, display: "flex", alignItems: "center", gap: 10 }}
+                      >
+                        <Check style={{ width: 16, height: 16, color: "#3b82f6", opacity: formData.type === opt.value ? 1 : 0, flexShrink: 0 }} />
+                        {opt.label}
+                      </button>
+                    ))}
+                  </PopoverContent>
+                </Popover>
               </div>
             </div>
 
