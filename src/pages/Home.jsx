@@ -502,7 +502,7 @@ export default function Home() {
                   <div className="space-y-2">
                     {[
                       { label: "Modélisation de Cohorte", text: "Comparaison en temps réel de la promotion actuelle vs les 3 précédentes sur le rythme d'acquisition des compétences clés." },
-                      { label: "Simulation d'Impact (Digital Twin)", text: "Si on ajoute 1h de soutien en petits groupes, quel % d'élèves basculerait au-dessus du seuil de réussite ? Le modèle se base sur l'historique." },
+                      { label: "Simulation d'Impact (Digital Twin)", text: "Si on ajoute 1h de soutien en petits groupes, quel % d'étudiants basculerait au-dessus du seuil de réussite ? Le modèle se base sur l'historique." },
                     ].map((item, i) => (
                       <div key={i} className="flex gap-3 items-start">
                         <span className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ background: '#3b82f6' }} />
@@ -558,7 +558,7 @@ export default function Home() {
               <div className="p-5 space-y-2" style={{ background: 'rgba(245,158,11,0.04)' }}>
                 {[
                   { emoji: '🎯', label: 'Prédicteur de Réussite', text: "Un modèle ML prend en entrée toutes les interactions (notes, temps, participation, absences, sentiment) et prédit la probabilité de succès. Parents et professeurs sont alertés si elle chute." },
-                  { emoji: '🎬', label: 'Moteur de Recommandation', text: "Comme un Netflix de la pédagogie. En fonction des micro-lacunes détectées, le système recommande exercices, jeux ou vidéos adaptés au style d'apprentissage de l'élève." },
+                  { emoji: '🎬', label: 'Moteur de Recommandation', text: "Comme un Netflix de la pédagogie. En fonction des micro-lacunes détectées, le système recommande exercices, jeux ou vidéos adaptés au style d'apprentissage de l'étudiant." },
                   { emoji: '💬', label: 'Analyse Sémantique des Échanges', text: "Une IA analyse le ton des messages parent-prof. Alerte discrète pour l'enseignant si un parent semble anxieux et propose des formulations apaisantes." },
                 ].map((item, i) => (
                   <div key={i} className="flex gap-3 items-start p-3 rounded-lg" style={{ background: 'rgba(0,0,0,0.15)' }}>
@@ -571,7 +571,7 @@ export default function Home() {
 
             {/* Conclusion */}
             <div className="rounded-xl p-5 text-center" style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.1), rgba(59,130,246,0.1))', border: '1px solid rgba(139,92,246,0.2)' }}>
-              <p className="text-white font-medium" style={CG}>Ce système crée un <strong className="text-purple-300">triangle vertueux Élève – Enseignant – Parent</strong> où chaque acteur reçoit la bonne information, au bon moment, pour la bonne action. <br /><span className="text-gray-400">L'archivage se met au service de l'humain.</span></p>
+              <p className="text-white font-medium" style={CG}>Ce système crée un <strong className="text-purple-300">triangle vertueux Étudiant – Enseignant – Parent</strong> où chaque acteur reçoit la bonne information, au bon moment, pour la bonne action. <br /><span className="text-gray-400">L'archivage se met au service de l'humain.</span></p>
             </div>
 
           </div>
