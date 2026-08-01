@@ -18,6 +18,7 @@ export default function Inscription() {
   const [submitted, setSubmitted] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
   const [openEtab, setOpenEtab] = useState(false);
+  const [openEtatCivil, setOpenEtatCivil] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
   // ── Styles communs ──────────────────────────────────────────────────────────
@@ -312,13 +313,29 @@ export default function Inscription() {
                 {/* État civil */}
                 <div style={{ marginBottom: 16 }}>
                   <div style={labelStyle}>État Civil <span style={{ color: "#dc2626" }}>*</span></div>
-                  <select value={formData.etat_civil} onChange={(e) => handleChange("etat_civil", e.target.value)} style={nativeSelectStyle} required>
-                    <option value="">Sélectionnez</option>
-                    <option value="Célibataire">Célibataire</option>
-                    <option value="Marié(e)">Marié(e)</option>
-                    <option value="Divorcé(e)">Divorcé(e)</option>
-                    <option value="Veuf(ve)">Veuf(ve)</option>
-                  </select>
+                  <Popover open={openEtatCivil} onOpenChange={setOpenEtatCivil}>
+                    <PopoverTrigger asChild>
+                      <button type="button" style={selectBtnStyle} aria-expanded={openEtatCivil}>
+                        <span style={{ color: formData.etat_civil ? "#f3f4f6" : "#6b7280" }}>
+                          {formData.etat_civil || "Sélectionnez"}
+                        </span>
+                        <ChevronsUpDown style={{ width: 18, height: 18, color: "#9ca3af" }} />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent data-combobox-popover style={{ width: "var(--radix-popover-trigger-width)", minWidth: 220, padding: 0, background: "#2d2d2d", borderRadius: 10, boxShadow: "0 8px 32px rgba(0,0,0,0.6)", border: "1px solid #5a5a5a", overflow: "hidden", "--accent": "rgba(59,130,246,0.15)", "--accent-foreground": "#e5e7eb" }}>
+                      {["Célibataire", "Marié(e)", "Divorcé(e)", "Veuf(ve)"].map((opt) => (
+                        <button
+                          key={opt}
+                          type="button"
+                          onClick={() => { handleChange("etat_civil", opt); setOpenEtatCivil(false); }}
+                          style={{ width: "100%", textAlign: "left", padding: "12px 16px", background: formData.etat_civil === opt ? "rgba(59,130,246,0.15)" : "transparent", color: "#e5e7eb", border: "none", borderBottom: "1px solid #5a5a5a", cursor: "pointer", fontSize: 14, display: "flex", alignItems: "center", gap: 10 }}
+                        >
+                          <Check style={{ width: 16, height: 16, color: "#3b82f6", opacity: formData.etat_civil === opt ? 1 : 0, flexShrink: 0 }} />
+                          {opt}
+                        </button>
+                      ))}
+                    </PopoverContent>
+                  </Popover>
                 </div>
 
                 {/* Père + Mère (étudiants uniquement) */}
