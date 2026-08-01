@@ -118,6 +118,18 @@ html[data-theme*="dark"] body [data-combobox-popover] [role="option"]:hover {
   color: #ffffff !important;
 }
 
+/* Exception: combobox popover doit avoir fond solide, sans transparence */
+[data-combobox-popover][role="dialog"],
+[data-combobox-popover] {
+  background: #2d2d2d !important;
+  background-color: #2d2d2d !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid #5a5a5a !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6) !important;
+  border-radius: 10px !important;
+}
+
 [data-radix-popper-content-wrapper] {
   background: transparent !important;
   background-color: transparent !important;
