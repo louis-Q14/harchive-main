@@ -70,6 +70,8 @@ export default function Home() {
   const [agendaLoading, setAgendaLoading] = useState(false);
   const [agendaSearch, setAgendaSearch] = useState('');
   const [agendaStatut, setAgendaStatut] = useState('tous');
+  // Statistiques Avancées modal state
+  const [statistiquesOpen, setStatistiquesOpen] = useState(false);
   const [agendaProvince, setAgendaProvince] = useState('tous');
   // Detail sub-modal
   const [detailOpen, setDetailOpen] = useState(false);
@@ -388,7 +390,7 @@ export default function Home() {
             {features.map((f, i) => (
               <div
                 key={i}
-                onClick={() => f.page === 'ListeEtablissements' ? handleOpenAgenda() : f.page === 'NotesEnfants' ? setEspaceparentsOpen(true) : navigate(createPageUrl(f.page))}
+                onClick={() => f.page === 'ListeEtablissements' ? handleOpenAgenda() : f.page === 'NotesEnfants' ? setEspaceparentsOpen(true) : f.page === 'Statistiques' ? setStatistiquesOpen(true) : navigate(createPageUrl(f.page))}
                 className="text-center p-6 rounded-lg cursor-pointer transition-all hover:scale-105 hover:shadow-lg"
                 style={{backgroundColor: 'var(--ha-surface)', border: '1px solid #404040'}}
               >
@@ -409,6 +411,172 @@ export default function Home() {
           </p>
         </div>
       </footer>
+
+      {/* ===== Statistiques Avancées Modal ===== */}
+      <DraggableDialog
+        open={statistiquesOpen}
+        onOpenChange={setStatistiquesOpen}
+        title={
+          <div className="flex items-center gap-3">
+            <BarChart3 className="w-5 h-5 text-purple-400" />
+            <div>
+              <div className="text-white font-bold text-base" style={CG}>Statistiques Avancées</div>
+              <div className="text-gray-400 text-xs" style={CG}>Analyses détaillées &amp; reporting en temps réel</div>
+            </div>
+          </div>
+        }
+        maxWidth="max-w-4xl"
+      >
+        <DraggableDialogBody>
+          <div className="space-y-5 text-sm" style={{ color: '#d1d5db', lineHeight: 1.75 }}>
+
+            {/* Section 1 */}
+            <div className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(139,92,246,0.25)' }}>
+              <div className="px-5 py-3 flex items-center gap-3" style={{ background: 'rgba(139,92,246,0.15)' }}>
+                <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style={{ background: '#8b5cf6' }}>1</div>
+                <h3 className="font-bold text-white text-sm" style={CG}>Le Cœur : Un Système d'Archivage Sémantique et Vivant</h3>
+              </div>
+              <div className="p-5 space-y-4" style={{ background: 'rgba(139,92,246,0.04)' }}>
+                <p style={CG}>Un simple bulletin PDF stocké est une donnée morte. Nous le transformons en un <strong className="text-white">objet de connaissance structuré</strong> — un graphe de compétences.</p>
+                <div className="rounded-lg p-4 space-y-3" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(139,92,246,0.15)' }}>
+                  <p className="text-purple-300 font-semibold text-xs uppercase tracking-wider" style={CG}>Modèle de Données Avancé</p>
+                  <div className="space-y-2">
+                    {[
+                      { label: "Entité Événement Académique", text: "L'atome de base. Chaque évaluation, remarque ou absence devient un événement avec des métadonnées riches : type, taxonomie de compétence, vecteur de difficulté." },
+                      { label: "Taxonomie de Compétence", text: 'L\'événement est lié à une micro-compétence. Ex : "Français > Lecture > Inférence de cause à effet".' },
+                      { label: "Vecteur de Difficulté", text: "Tagué sur la compétence cognitive transversale mobilisée : Mémorisation, Logique séquentielle, Créativité, Gestion du stress." },
+                    ].map((item, i) => (
+                      <div key={i} className="flex gap-3 items-start">
+                        <span className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ background: '#8b5cf6' }} />
+                        <span style={CG}><strong className="text-white">{item.label} :</strong> {item.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="rounded-lg p-4 space-y-3" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(139,92,246,0.15)' }}>
+                  <p className="text-purple-300 font-semibold text-xs uppercase tracking-wider" style={CG}>Moteur d'Archivage Intelligent</p>
+                  <div className="space-y-2">
+                    {[
+                      { label: "OCR / IA pour le Papier", text: "Un enseignant photographie une copie. L'IA lit le nom, la note et les annotations manuscrites (\"Confusion sur les unités\", \"Excellent raisonnement\")." },
+                      { label: "Transformation en Données Structurées", text: 'Les commentaires sont analysés par un modèle NLP pour extraire des tags et un score de sentiment. "Confusion..." → Tag: Lacune conceptuelle, Sentiment: -0.5.' },
+                    ].map((item, i) => (
+                      <div key={i} className="flex gap-3 items-start">
+                        <span className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ background: '#8b5cf6' }} />
+                        <span style={CG}><strong className="text-white">{item.label} :</strong> {item.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 2 */}
+            <div className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(59,130,246,0.25)' }}>
+              <div className="px-5 py-3 flex items-center gap-3" style={{ background: 'rgba(59,130,246,0.15)' }}>
+                <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style={{ background: '#3b82f6' }}>2</div>
+                <h3 className="font-bold text-white text-sm" style={CG}>Analyses Détaillées : La Vision du Corps Académique</h3>
+              </div>
+              <div className="p-5 space-y-4" style={{ background: 'rgba(59,130,246,0.04)' }}>
+                <div className="rounded-lg p-4 space-y-3" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(59,130,246,0.15)' }}>
+                  <p className="text-blue-300 font-semibold text-xs uppercase tracking-wider" style={CG}>A. Pour l'Enseignant — Analyse Psycho-Cognitive</p>
+                  <div className="space-y-3">
+                    <div className="flex gap-3 items-start">
+                      <span className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ background: '#3b82f6' }} />
+                      <span style={CG}><strong className="text-white">Cartographie Dynamique :</strong> Carte thermique en temps réel des zones de fragilité. Ex : "60% de la classe échoue sur l'inférence mais réussit la restitution simple."</span>
+                    </div>
+                    <div className="flex gap-3 items-start">
+                      <span className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ background: '#3b82f6' }} />
+                      <div style={CG}><strong className="text-white">Détection Précoce de Décrochage (CEP) :</strong> Un pattern en 30 jours déclenche une alerte silencieuse :
+                        <ol className="mt-2 space-y-1 pl-4 list-decimal text-gray-400">
+                          <li style={CG}>Baisse de participation orale</li>
+                          <li style={CG}>Glissement d'un quartile en mathématiques</li>
+                          <li style={CG}>2 absences non justifiées le lundi matin</li>
+                          <li style={CG}>Aucune interaction parentale sur 2 semaines</li>
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="rounded-lg p-4 space-y-3" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(59,130,246,0.15)' }}>
+                  <p className="text-blue-300 font-semibold text-xs uppercase tracking-wider" style={CG}>B. Pour la Direction — Statistiques Prédictives</p>
+                  <div className="space-y-2">
+                    {[
+                      { label: "Modélisation de Cohorte", text: "Comparaison en temps réel de la promotion actuelle vs les 3 précédentes sur le rythme d'acquisition des compétences clés." },
+                      { label: "Simulation d'Impact (Digital Twin)", text: "Si on ajoute 1h de soutien en petits groupes, quel % d'élèves basculerait au-dessus du seuil de réussite ? Le modèle se base sur l'historique." },
+                    ].map((item, i) => (
+                      <div key={i} className="flex gap-3 items-start">
+                        <span className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ background: '#3b82f6' }} />
+                        <span style={CG}><strong className="text-white">{item.label} :</strong> {item.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 3 */}
+            <div className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(16,185,129,0.25)' }}>
+              <div className="px-5 py-3 flex items-center gap-3" style={{ background: 'rgba(16,185,129,0.15)' }}>
+                <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style={{ background: '#10b981' }}>3</div>
+                <h3 className="font-bold text-white text-sm" style={CG}>Mise en Relation avec les Parents : Le Reporting Vivant</h3>
+              </div>
+              <div className="p-5 space-y-4" style={{ background: 'rgba(16,185,129,0.04)' }}>
+                <p style={CG}>On remplace le bulletin trimestriel anxiogène par un <strong className="text-white">flux d'information continu, traduit pour les non-experts</strong>.</p>
+                <div className="rounded-lg p-4 space-y-3" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(16,185,129,0.15)' }}>
+                  <p className="text-emerald-300 font-semibold text-xs uppercase tracking-wider" style={CG}>A. Histoires de Progrès (Jumeau Numérique)</p>
+                  <div className="rounded-lg p-3" style={{ background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)' }}>
+                    <p className="text-gray-500 text-xs mb-1" style={CG}>❌ Avant :</p>
+                    <p className="text-gray-400 italic text-xs" style={CG}>"Votre enfant a 12/20 en Histoire."</p>
+                    <p className="text-gray-500 text-xs mt-2 mb-1" style={CG}>✅ Après :</p>
+                    <p className="text-emerald-300 text-xs" style={CG}>"Cet exercice demandait d'analyser des textes pour en tirer une conclusion. C'est une compétence sur laquelle votre enfant a <strong>progressé de 20% ce mois-ci</strong>. Cela l'aidera aussi en Physique."</p>
+                  </div>
+                </div>
+                <div className="rounded-lg p-4 space-y-3" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(16,185,129,0.15)' }}>
+                  <p className="text-emerald-300 font-semibold text-xs uppercase tracking-wider" style={CG}>B. Alertes Positives &amp; Nudges Comportementaux</p>
+                  <div className="space-y-2">
+                    {[
+                      { emoji: '🏆', label: 'Fierté Partagée', text: '"Super ! [Prénom] a réussi un exercice jugé difficile par la classe aujourd\'hui. Félicitez-le ce soir !"' },
+                      { emoji: '💡', label: 'Coup de Pouce Contextuel', text: '"Cette semaine, la classe travaille les accords du participe passé. Voici une courte vidéo (3 min) pour l\'aider à la maison."' },
+                      { emoji: '🔍', label: 'Détection de Curiosité', text: '"[Prénom] a posé une question très intéressante en SVT sur les volcans. Voici un documentaire adapté pour aller plus loin."' },
+                    ].map((item, i) => (
+                      <div key={i} className="flex gap-3 items-start">
+                        <span className="text-base flex-shrink-0">{item.emoji}</span>
+                        <span style={CG}><strong className="text-white">{item.label} :</strong> <em className="text-emerald-300">{item.text}</em></span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 4 */}
+            <div className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(245,158,11,0.25)' }}>
+              <div className="px-5 py-3 flex items-center gap-3" style={{ background: 'rgba(245,158,11,0.15)' }}>
+                <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style={{ background: '#f59e0b' }}>4</div>
+                <h3 className="font-bold text-white text-sm" style={CG}>Enrichissements : Le Saut vers l'Intelligence Artificielle</h3>
+              </div>
+              <div className="p-5 space-y-2" style={{ background: 'rgba(245,158,11,0.04)' }}>
+                {[
+                  { emoji: '🎯', label: 'Prédicteur de Réussite', text: "Un modèle ML prend en entrée toutes les interactions (notes, temps, participation, absences, sentiment) et prédit la probabilité de succès. Parents et professeurs sont alertés si elle chute." },
+                  { emoji: '🎬', label: 'Moteur de Recommandation', text: "Comme un Netflix de la pédagogie. En fonction des micro-lacunes détectées, le système recommande exercices, jeux ou vidéos adaptés au style d'apprentissage de l'élève." },
+                  { emoji: '💬', label: 'Analyse Sémantique des Échanges', text: "Une IA analyse le ton des messages parent-prof. Alerte discrète pour l'enseignant si un parent semble anxieux et propose des formulations apaisantes." },
+                ].map((item, i) => (
+                  <div key={i} className="flex gap-3 items-start p-3 rounded-lg" style={{ background: 'rgba(0,0,0,0.15)' }}>
+                    <span className="text-lg flex-shrink-0">{item.emoji}</span>
+                    <span style={CG}><strong className="text-white">{item.label} :</strong> {item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Conclusion */}
+            <div className="rounded-xl p-5 text-center" style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.1), rgba(59,130,246,0.1))', border: '1px solid rgba(139,92,246,0.2)' }}>
+              <p className="text-white font-medium" style={CG}>Ce système crée un <strong className="text-purple-300">triangle vertueux Élève – Enseignant – Parent</strong> où chaque acteur reçoit la bonne information, au bon moment, pour la bonne action. <br /><span className="text-gray-400">L'archivage se met au service de l'humain.</span></p>
+            </div>
+
+          </div>
+        </DraggableDialogBody>
+      </DraggableDialog>
 
       {/* ===== Espace Parents Modal ===== */}
       <DraggableDialog
