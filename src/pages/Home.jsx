@@ -74,6 +74,8 @@ export default function Home() {
   const [statistiquesOpen, setStatistiquesOpen] = useState(false);
   // Gestion des Classes modal state
   const [gestionClassesOpen, setGestionClassesOpen] = useState(false);
+  // Gestion des Étudiants modal state
+  const [gestionEtudiantsOpen, setGestionEtudiantsOpen] = useState(false);
   const [agendaProvince, setAgendaProvince] = useState('tous');
   // Detail sub-modal
   const [detailOpen, setDetailOpen] = useState(false);
@@ -392,7 +394,7 @@ export default function Home() {
             {features.map((f, i) => (
               <div
                 key={i}
-                onClick={() => f.page === 'ListeEtablissements' ? handleOpenAgenda() : f.page === 'NotesEnfants' ? setEspaceparentsOpen(true) : f.page === 'Statistiques' ? setStatistiquesOpen(true) : f.page === 'GestionClasse' ? setGestionClassesOpen(true) : navigate(createPageUrl(f.page))}
+                onClick={() => f.page === 'ListeEtablissements' ? handleOpenAgenda() : f.page === 'NotesEnfants' ? setEspaceparentsOpen(true) : f.page === 'Statistiques' ? setStatistiquesOpen(true) : f.page === 'GestionClasse' ? setGestionClassesOpen(true) : f.page === 'MesDossiersAcademiques' ? setGestionEtudiantsOpen(true) : navigate(createPageUrl(f.page))}
                 className="text-center p-6 rounded-lg cursor-pointer transition-all hover:scale-105 hover:shadow-lg"
                 style={{backgroundColor: 'var(--ha-surface)', border: '1px solid #404040'}}
               >
@@ -413,6 +415,117 @@ export default function Home() {
           </p>
         </div>
       </footer>
+
+      {/* ===== Gestion des Étudiants Modal ===== */}
+      <DraggableDialog
+        open={gestionEtudiantsOpen}
+        onOpenChange={setGestionEtudiantsOpen}
+        title={
+          <div className="flex items-center gap-3">
+            <GraduationCap className="w-5 h-5 text-blue-400" />
+            <div>
+              <div className="text-white font-bold text-base" style={CG}>Gestion des Étudiants</div>
+              <div className="text-gray-400 text-xs" style={CG}>Parcours & Performance — La Notice d'Autorité Vivante</div>
+            </div>
+          </div>
+        }
+        maxWidth="max-w-4xl"
+      >
+        <DraggableDialogBody>
+          <div className="space-y-5 text-sm" style={{ color: '#d1d5db', lineHeight: 1.75 }}>
+
+            {/* Intro */}
+            <div className="rounded-xl p-5" style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.08))', border: '1px solid rgba(59,130,246,0.2)' }}>
+              <p style={CG}>Sur HARCHIVE, l'étudiant est traité comme une <strong className="text-blue-300">notice d'autorité vivante</strong> au sens archivistique du terme. Il est le point d'intersection de toutes les classes, matières et sessions structurées par la plateforme. Son dossier n'est pas un profil — c'est un <strong className="text-white">dossier de carrière</strong>.</p>
+            </div>
+
+            {[
+              {
+                num: '1', color: '#3b82f6', bg: 'rgba(59,130,246,0.05)', border: 'rgba(59,130,246,0.2)', headerBg: 'rgba(59,130,246,0.12)',
+                title: "Le Dossier Global de l'Apprenant : Le Registre Matricule Augmenté",
+                intro: "Un identifiant unique et pérenne (Matricule Archivistique) jamais supprimé, même 50 ans après le départ.",
+                items: [
+                  { label: "La Notice d'Autorité", text: "Identité, état civil, historique des changements (nom marital/jeune fille). Les justificatifs sont liés sous forme de documents horodatés, prouvant l'éligibilité à l'inscription." },
+                  { label: "Le Passeport de Compétences", text: "Chaque résultat est associé à un bloc de compétences du référentiel RNCP. HARCHIVE stocke le lien entre la note et la compétence attestée." },
+                  { label: "Le Dossier de Preuves (Evidence Bag)", text: "Diplômes, certificats, attestations et suppléments au diplôme générés et scellés depuis ce dossier, avec QR Code de vérification pointant vers l'archive originale." },
+                ]
+              },
+              {
+                num: '2', color: '#8b5cf6', bg: 'rgba(139,92,246,0.05)', border: 'rgba(139,92,246,0.2)', headerBg: 'rgba(139,92,246,0.12)',
+                title: "Chronologie du Parcours : La Frise Académique",
+                intro: "L'étudiant n'est pas 'dans' une classe — il adhère à une session pour une période donnée.",
+                items: [
+                  { label: "État civil académique à date", text: "HARCHIVE reconstitue l'état de la classe au jour de l'examen. Redoublants, réorientations et ruptures de parcours deviennent des objets distincts archivés." },
+                  { label: "Vue Ligne de Vie", text: "Axe temporel interactif où les briques académiques s'empilent (année de 3ème B, Seconde GT...). Une zone grise matérialise les périodes d'absence justifiées par des documents archivés." },
+                  { label: "Nœuds de Bifurcation", text: "En cliquant sur une transition (3ème → 2nde), on consulte les vœux d'orientation, la décision du conseil de classe et le document d'affectation signé." },
+                ]
+              },
+              {
+                num: '3', color: '#f59e0b', bg: 'rgba(245,158,11,0.05)', border: 'rgba(245,158,11,0.2)', headerBg: 'rgba(245,158,11,0.12)',
+                title: "Gestion des Performances : Au-delà de la Note",
+                intro: "La performance ne se résume pas à une moyenne. HARCHIVE enrichit la note brute par les métadonnées de session.",
+                items: [
+                  { label: "La Note Brute", text: "15/20 — la donnée.", sub: true },
+                  { label: "Le Poids Archivistique", text: "Le contexte : session de rattrapage ? La métadonnée 'Session 2' est attachée. Absence justifiée ? La note est neutralisée dans le calcul mais la trace de neutralisation est conservée." },
+                  { label: "L'Indice de Potentiel", text: "Rang percentile par rapport à la cohorte et à la performance historique de la matière sur 10 ans. Ex : 'Top 5% en Physique depuis 2015'." },
+                  { label: "Radar de Compétences Transverse", text: "Une compétence évaluée en Histoire, Français et Philosophie est consolidée en un seul radar, alimenté par toutes les matières, même celles archivées il y a 3 ans." },
+                ]
+              },
+              {
+                num: '4', color: '#10b981', bg: 'rgba(16,185,129,0.05)', border: 'rgba(16,185,129,0.2)', headerBg: 'rgba(16,185,129,0.12)',
+                title: "Le Portfolio Dynamique & le Droit à la Portabilité",
+                intro: "L'étudiant est copropriétaire de ses données.",
+                items: [
+                  { label: "Export Certifié 'SOCLE'", text: "Export numérique horodaté et signé électroniquement (Verifiable Credentials ou PDF/A-3). Un extrait certifié opposable à un employeur ou une université étrangère." },
+                  { label: "La Valise de Transfert", text: "En cas de déménagement scolaire, fichier structuré (norme Europass) contenant les notes ET les détails des programmes officiels (Plans de Cours Maîtres). L'établissement d'accueil sait exactement ce qui a été appris." },
+                ]
+              },
+              {
+                num: '5', color: '#ec4899', bg: 'rgba(236,72,153,0.05)', border: 'rgba(236,72,153,0.2)', headerBg: 'rgba(236,72,153,0.12)',
+                title: "Confidentialité, Conservation & Droit à l'Oubli Structuré",
+                intro: "Une politique de conservation précise adaptée à chaque étape de la vie académique.",
+                items: [
+                  { label: "Pendant le cursus", text: "Brouillons et échanges non finals purgés automatiquement." },
+                  { label: "Après la sortie", text: "Dossier transféré au 'tiroir froid'. Notes détaillées inaccessibles aux nouveaux professeurs (lutte contre les préjugés)." },
+                  { label: "Archive Définitive (50 ans)", text: "Anonymisation pour les statistiques, conservation du lien nominatif pour le diplôme." },
+                  { label: "Gel de Performance", text: "En cas de contentieux judiciaire, le dossier est immédiatement gelé. Un hash cryptographique prouve l'intégrité des données." },
+                ]
+              },
+              {
+                num: '6', color: '#14b8a6', bg: 'rgba(20,184,166,0.05)', border: 'rgba(20,184,166,0.2)', headerBg: 'rgba(20,184,166,0.12)',
+                title: "Tableau de Bord Archivistique pour le Directeur des Études",
+                intro: "HARCHIVE permet de scruter la valeur réelle des formations dans le temps long.",
+                items: [
+                  { label: "Suivi de Cohortes Fantômes", text: "Un étudiant de Master a fait sa Licence chez vous ? Le système joint automatiquement les deux archives pour calculer la valeur ajoutée réelle de la formation." },
+                  { label: "Détection des Passagers Clandestins", text: "Étudiants inscrits dans une matière sans activité de performance détectés avant la fin de l'année. Intervention préventive avant le décrochage officiel." },
+                ]
+              },
+            ].map((section) => (
+              <div key={section.num} className="rounded-xl overflow-hidden" style={{ border: `1px solid ${section.border}` }}>
+                <div className="px-5 py-3 flex items-center gap-3" style={{ background: section.headerBg }}>
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style={{ background: section.color }}>{section.num}</div>
+                  <h3 className="font-bold text-white text-sm" style={CG}>{section.title}</h3>
+                </div>
+                <div className="p-5 space-y-3" style={{ background: section.bg }}>
+                  {section.intro && <p className="text-gray-400 italic text-xs mb-3" style={CG}>{section.intro}</p>}
+                  {section.items.map((item, j) => (
+                    <div key={j} className="flex gap-3 items-start">
+                      <span className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ background: section.color }} />
+                      <span style={CG}><strong className="text-white">{item.label} :</strong> {item.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+
+            {/* Résumé */}
+            <div className="rounded-xl p-5 text-center" style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.08))', border: '1px solid rgba(59,130,246,0.2)' }}>
+              <p className="text-white font-medium" style={CG}>Vous ne gérez pas des étudiants — vous gérez des <strong className="text-blue-300">fonds personnels d'archives</strong>.<br /><span className="text-gray-400 text-xs">L'enjeu est de transformer cette masse de données en un livret universel de compétences, interopérable et certifié.</span></p>
+            </div>
+
+          </div>
+        </DraggableDialogBody>
+      </DraggableDialog>
 
       {/* ===== Gestion des Classes Modal ===== */}
       <DraggableDialog
