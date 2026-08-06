@@ -563,11 +563,11 @@ export default function Layout({ children, currentPageName }) {
               </SidebarGroupContent>
             </SidebarGroup>
             
-            <div className="px-2 mt-auto mb-2">
+            <div className="px-2 mt-auto mb-2 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
               <Link 
                 to={createPageUrl("APropos")} 
                 title="À propos"
-                className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 font-medium text-xs hover:opacity-80"
+                className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 font-medium text-xs hover:opacity-80 group-data-[collapsible=icon]:w-9 group-data-[collapsible=icon]:h-9 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:gap-0"
                 style={{backgroundColor: 'var(--ha-surface)', color: 'var(--ha-text)', border: '1px solid #4d4d4d'}}
               >
                 <Info className="w-3.5 h-3.5 flex-shrink-0" />
