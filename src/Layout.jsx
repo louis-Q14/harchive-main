@@ -24,7 +24,9 @@ import {
   Zap,
   Info,
   Settings,
-  Video
+  Video,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -43,7 +45,43 @@ import {
   SidebarFooter,
   SidebarProvider,
   SidebarTrigger,
+  useSidebar,
 } from "@/components/ui/sidebar";
+
+function SidebarCollapseButton() {
+  const { toggleSidebar, state } = useSidebar();
+  const [hovered, setHovered] = React.useState(false);
+  return (
+    <button
+      onClick={toggleSidebar}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      title={state === 'expanded' ? 'Réduire la barre' : 'Agrandir la barre'}
+      style={{
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '6px',
+        padding: '6px',
+        borderRadius: '8px',
+        cursor: 'pointer',
+        border: '1px solid var(--ha-border)',
+        backgroundColor: hovered ? 'var(--ha-surface3)' : 'transparent',
+        color: hovered ? 'var(--ha-text)' : 'var(--ha-text-muted)',
+        opacity: hovered ? 1 : 0.3,
+        transition: 'opacity 0.2s, background-color 0.2s, color 0.2s',
+        fontSize: '11px',
+        fontWeight: 500,
+      }}
+    >
+      {state === 'expanded'
+        ? <><ChevronLeft size={13} strokeWidth={2.5} /><span className="group-data-[collapsible=icon]:hidden">Réduire</span></>
+        : <ChevronRight size={13} strokeWidth={2.5} />
+      }
+    </button>
+  );
+}
 
 const roleNavigation = {
   super_admin: [
@@ -430,15 +468,41 @@ export default function Layout({ children, currentPageName }) {
         ::-webkit-scrollbar-track { background: var(--ha-surface); }
         ::-webkit-scrollbar-thumb { background: var(--ha-surface3); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--ha-surface2); }
+
+        /* Sidebar icon mode: fixed-size link centered via margin auto */
+        [data-collapsible=icon] [data-sidebar="menu-item"] {
+          display: flex !important;
+          justify-content: center !important;
+          width: 100% !important;
+        }
+        [data-collapsible=icon] [data-sidebar="menu-item"] a {
+          display: flex !important;
+          width: 36px !important;
+          height: 36px !important;
+          padding: 0 !important;
+          margin: 0 auto !important;
+          align-items: center !important;
+          justify-content: center !important;
+          border-radius: 8px !important;
+          flex-shrink: 0 !important;
+        }
       `}</style>
       <div className="min-h-screen flex w-full" style={{backgroundColor: 'var(--ha-bg)'}}>
-        <Sidebar style={{backgroundColor: 'var(--ha-sidebar-bg)', borderColor: 'var(--ha-border)'}}>
+        <Sidebar collapsible="icon" style={{backgroundColor: 'var(--ha-sidebar-bg)', borderColor: 'var(--ha-border)'}}>
             <SidebarHeader style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}} className="p-3">
               <Link to={createPageUrl("Journal")} className="flex flex-col items-center justify-center hover:opacity-80 transition-opacity">
+                {/* Full logo — hidden in icon-only mode */}
                 <img 
                   src="/assets/icons/6153a57fe_logoHARCHIVEF2.png"
                   alt="Harchive Logo"
-                  className="w-full h-auto max-h-20 object-contain"
+                  className="w-full h-auto max-h-20 object-contain group-data-[collapsible=icon]:hidden"
+                  style={themeDef?.group === 'light' ? {filter: 'brightness(0)'} : {}}
+                />
+                {/* Icon-only logo — shown only in collapsed mode */}
+                <img
+                  src="/assets/icons/logo%20HARCHIVE%20FA.png"
+                  alt="Harchive"
+                  className="hidden group-data-[collapsible=icon]:block w-8 h-8 object-contain"
                   style={themeDef?.group === 'light' ? {filter: 'brightness(0)'} : {}}
                 />
               </Link>
@@ -446,7 +510,7 @@ export default function Layout({ children, currentPageName }) {
           
           <SidebarContent className="px-2 py-2" style={{backgroundColor: 'var(--ha-sidebar-bg)'}}>
             {user && (
-              <div className="mb-3 p-2 rounded-lg" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}>
+              <div className="mb-3 p-2 rounded-lg group-data-[collapsible=icon]:hidden" style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}}>
                 <p className="text-xs font-medium uppercase tracking-wide mb-1" style={{color: 'var(--ha-text-muted)'}}>
                   Connecté en tant que
                 </p>
@@ -462,40 +526,39 @@ export default function Layout({ children, currentPageName }) {
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {navigationItems.map((item) => (
+                  {navigationItems.map((item) => {
+                    const isActive = location.pathname === createPageUrl(item.url);
+                    return (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton 
-                        asChild 
-                        className={`transition-all duration-200 rounded-lg mb-0.5 ${
-                          location.pathname === createPageUrl(item.url)
-                            ? 'shadow-sm nav-item-active' 
-                            : ''
+                      <Link
+                        to={createPageUrl(item.url)}
+                        title={item.title}
+                        className={`flex items-center gap-2.5 px-3 py-2 rounded-lg mb-0.5 w-full transition-all duration-200 hover:opacity-80 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:gap-0 ${
+                          isActive ? 'shadow-sm' : ''
                         }`}
-                        style={location.pathname === createPageUrl(item.url) 
-                          ? {backgroundColor: 'var(--ha-nav-active-bg)', color: 'var(--ha-nav-active-text)', fontWeight: 600} 
+                        style={isActive
+                          ? {backgroundColor: 'var(--ha-nav-active-bg)', color: 'var(--ha-nav-active-text)', fontWeight: 600}
                           : {color: 'var(--ha-text-muted)'}}
                       >
-                        <Link to={createPageUrl(item.url)} className="flex items-center gap-2.5 px-3 py-2 hover:opacity-80 w-full">
-                          {item.isCustomIcon ? (
-                            <img src={item.icon} alt={item.title} className="w-4 h-4 flex-shrink-0" />
-                          ) : (
-                            <item.icon className="w-4 h-4 flex-shrink-0" />
-                          )}
-                          <span className="text-sm font-medium flex-1">{item.title}</span>
-                          {item.title === "Messagerie" && unreadCount > 0 && (
-                            <Badge className="ml-auto text-xs flex-shrink-0" style={{backgroundColor: '#ff4444', color: 'var(--ha-text)'}}>
-                              {unreadCount}
-                            </Badge>
-                          )}
-                          {item.title === "Amis" && friendRequestsCount > 0 && (
-                            <Badge className="ml-auto text-xs flex-shrink-0" style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)'}}>
-                              {friendRequestsCount}
-                            </Badge>
-                          )}
-                        </Link>
-                      </SidebarMenuButton>
+                        {item.isCustomIcon
+                          ? <img src={item.icon} alt={item.title} className="w-[18px] h-[18px] flex-shrink-0" />
+                          : <item.icon className="w-[18px] h-[18px] flex-shrink-0" />
+                        }
+                        <span className="text-sm font-medium flex-1 group-data-[collapsible=icon]:hidden">{item.title}</span>
+                        {item.title === "Messagerie" && unreadCount > 0 && (
+                          <Badge className="ml-auto text-xs flex-shrink-0 group-data-[collapsible=icon]:hidden" style={{backgroundColor: '#ff4444', color: 'var(--ha-text)'}}>
+                            {unreadCount}
+                          </Badge>
+                        )}
+                        {item.title === "Amis" && friendRequestsCount > 0 && (
+                          <Badge className="ml-auto text-xs flex-shrink-0 group-data-[collapsible=icon]:hidden" style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)'}}>
+                            {friendRequestsCount}
+                          </Badge>
+                        )}
+                      </Link>
                     </SidebarMenuItem>
-                  ))}
+                    );
+                  })}
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
@@ -503,26 +566,28 @@ export default function Layout({ children, currentPageName }) {
             <div className="px-2 mt-auto mb-2">
               <Link 
                 to={createPageUrl("APropos")} 
+                title="À propos"
                 className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 font-medium text-xs hover:opacity-80"
                 style={{backgroundColor: 'var(--ha-surface)', color: 'var(--ha-text)', border: '1px solid #4d4d4d'}}
               >
-                <Info className="w-3.5 h-3.5" />
-                À propos
+                <Info className="w-3.5 h-3.5 flex-shrink-0" />
+                <span className="group-data-[collapsible=icon]:hidden">À propos</span>
               </Link>
             </div>
           </SidebarContent>
 
           <SidebarFooter style={{backgroundColor: 'var(--ha-surface2)', borderColor: 'var(--ha-border)'}} className="p-3">
             <div className="space-y-2">
-              <div className="flex items-center gap-2 p-2 rounded-lg" style={{backgroundColor: 'var(--ha-surface3)'}}>
+              {/* Expanded: avatar + name + notification */}
+              <div className="flex items-center gap-2 p-2 rounded-lg group-data-[collapsible=icon]:hidden" style={{backgroundColor: 'var(--ha-surface3)'}}>
                 {user?.photo_url ? (
                   <img 
                     src={user.photo_url} 
                     alt={user.full_name} 
-                    className="w-8 h-8 rounded-full object-cover shadow-sm"
+                    className="w-8 h-8 rounded-full object-cover shadow-sm flex-shrink-0"
                   />
                 ) : (
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center shadow-sm text-xs font-semibold" style={{backgroundColor: 'var(--ha-accent)', color: 'var(--ha-text)'}}>
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center shadow-sm text-xs font-semibold flex-shrink-0" style={{backgroundColor: 'var(--ha-accent)', color: 'var(--ha-text)'}}>
                     {(displayName || '').split(' ').map(n => n[0]).join('').toUpperCase() || 'U'}
                   </div>
                 )}
@@ -534,14 +599,26 @@ export default function Layout({ children, currentPageName }) {
                 </div>
                 <NotificationCenter userId={user?.id} />
               </div>
+              {/* Collapsed: centered avatar only */}
+              <div className="hidden group-data-[collapsible=icon]:flex justify-center py-1">
+                {user?.photo_url ? (
+                  <img src={user.photo_url} alt={user.full_name} className="w-8 h-8 rounded-full object-cover shadow-sm" />
+                ) : (
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center shadow-sm text-xs font-semibold" style={{backgroundColor: 'var(--ha-accent)', color: 'var(--ha-text)'}}>
+                    {(displayName || '').split(' ').map(n => n[0]).join('').toUpperCase() || 'U'}
+                  </div>
+                )}
+              </div>
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 font-medium text-xs"
+                title="Déconnexion"
+                className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 font-medium text-xs group-data-[collapsible=icon]:px-0"
                 style={{backgroundColor: 'var(--ha-surface2)', color: 'var(--ha-text)', border: '1px solid var(--ha-border)'}}
               >
-                <LogOut className="w-3.5 h-3.5" />
-                Déconnexion
+                <LogOut className="w-3.5 h-3.5 flex-shrink-0" />
+                <span className="group-data-[collapsible=icon]:hidden">Déconnexion</span>
               </button>
+              <SidebarCollapseButton />
             </div>
           </SidebarFooter>
         </Sidebar>
