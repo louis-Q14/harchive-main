@@ -437,27 +437,21 @@ export default function UsersPage() {
         </div>
 
         {activeTab === 'users' && <>
-        <div className="grid md:grid-cols-6 gap-4">
-          {Object.entries(roleConfig).map(([roleKey, config]) => {
-            const Icon = config.icon;
-            const count = usersByRole[roleKey].length;
-            return (
-              <Card key={roleKey} className="border border-gray-200">
-                <CardContent className="bg-[#333333] pt-6 p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-2xl font-bold text-gray-800">{count}</p>
-                      <p className="text-xs font-medium text-gray-600 mt-1">{config.label}</p>
-                    </div>
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white ${config.badgeColor}`}>
-                      <Icon className="w-6 h-6" />
-                    </div>
+        <Card className="border border-gray-200 rounded-2xl overflow-hidden">
+          <CardContent className="bg-[#333333] p-5">
+            <div className="flex flex-wrap gap-6 justify-between">
+              {Object.entries(roleConfig).map(([roleKey, config]) => {
+                const count = usersByRole[roleKey].length;
+                return (
+                  <div key={roleKey} className="flex flex-col items-center gap-1 flex-1 min-w-[80px]">
+                    <p className="text-xs text-gray-400 text-center leading-tight">{config.label}</p>
+                    <p className="text-3xl font-bold" style={{color: 'var(--ha-text)'}}>{count}</p>
                   </div>
-                </CardContent>
-              </Card>);
-
-          })}
-        </div>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
 
         <Card className="bg-white border-gray-200">
           <CardHeader className="border-b border-gray-200">
