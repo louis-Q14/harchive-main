@@ -73,6 +73,15 @@ const entityTableMap = {
   CommentaireLivre: 'commentaires_livres',
   TravailAcademique: 'travaux_academiques',
   CommentaireTravail: 'commentaires_travaux',
+  Note: 'notes',
+  EvenementPersonnel: 'evenements_personnels',
+  PressePapier: 'presse_papier',
+  ObservationEleve: 'observations_eleves',
+  RegleClasse: 'regles_classe',
+  GroupeClasse: 'groupes_classe',
+  ParcoursPersonnalise: 'parcours_personnalises',
+  FichierPartage: 'fichiers_partages',
+  StatistiquePresence: 'statistiques_presence',
 };
 
 /**
