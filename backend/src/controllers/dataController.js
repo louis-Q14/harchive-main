@@ -144,6 +144,36 @@ const strictReadOwnership = new Set([
 ]);
 
 /**
+ * Tables where the owner column identifies the CREATOR of the record.
+ * On create, a non-admin user cannot set this column to someone else
+ * (prevents posting/grading/messaging in another user's name).
+ * Excludes tables where the column is a recipient (notifications) or
+ * where records are legitimately created on behalf of others (presence lists).
+ */
+const creatorOwnedTables = new Set([
+  'publications', 'commentaires', 'messages', 'group_messages', 'groups', 'photos',
+  'notes_etudiants', 'notes_archive', 'fiches_preparation', 'questionnaires_examen',
+  'ressources_pedagogiques', 'sequences_pedagogiques',
+]);
+
+/** Roles allowed to publish as the official HARCHIVE account */
+const HARCHIVE_OFFICIAL_ID = 'harchive-officiel-001';
+const HARCHIVE_OFFICIAL_ROLES = ['harchive_officiel', 'super_admin', 'admin_systeme'];
+
+/**
+ * Value stored in the owner column for a given user.
+ * photos.created_by historically stores the user's email instead of the id.
+ */
+const ownerValueFor = (tableName, user) => (tableName === 'photos' ? user.email : user.id);
+
+/**
+ * The users table must never be written through the generic entity API:
+ * profile edits go through PUT /api/auth/me and admin edits through the
+ * dedicated /api/auth/admin/* routes, which enforce field whitelists.
+ */
+const NO_GENERIC_WRITE_TABLES = new Set(['users']);
+
+/**
  * Check if user has admin role
  */
 const isAdmin = (user) => {
@@ -397,12 +427,33 @@ export const createEntity = async (req, res) => {
       });
     }
 
+    if (NO_GENERIC_WRITE_TABLES.has(tableName)) {
+      return res.status(403).json({ status: 403, message: 'Accès refusé. Utilisez les routes dédiées.' });
+    }
+
     // Admin-only write tables
     if (adminWriteOnly.has(tableName) && !isAdmin(req.user)) {
       return res.status(403).json({ status: 403, message: 'Accès refusé. Écriture réservée aux administrateurs.' });
     }
 
-    const id = data.id || uuidv4();
+    if (!data || typeof data !== 'object' || Array.isArray(data)) {
+      return res.status(400).json({ status: 400, message: 'Corps de requête invalide' });
+    }
+
+    // Creator ownership: non-admins always create records in their own name
+    if (creatorOwnedTables.has(tableName) && !isAdmin(req.user)) {
+      const ownerCol = ownershipColumn[tableName];
+      const userRole = req.user?.role_archive || req.user?.role;
+      const isOfficialPost = tableName === 'publications'
+        && data[ownerCol] === HARCHIVE_OFFICIAL_ID
+        && HARCHIVE_OFFICIAL_ROLES.includes(userRole);
+      if (!isOfficialPost) {
+        data[ownerCol] = ownerValueFor(tableName, req.user);
+      }
+    }
+
+    // Client-supplied ids are ignored: always generate server-side
+    const id = uuidv4();
     const { id: _ignoreId, ...rest } = data;
     
     // Validate all field names to prevent SQL injection
@@ -422,7 +473,7 @@ export const createEntity = async (req, res) => {
     res.status(201).json({
       status: 201,
       message: `${entityName} created successfully`,
-      data: parseJsonFields({ id, ...data })
+      data: parseJsonFields({ ...data, id })
     });
   } catch (error) {
     logger.error('Create entity error:', error);
@@ -449,26 +500,41 @@ export const updateEntity = async (req, res) => {
       });
     }
 
+    if (NO_GENERIC_WRITE_TABLES.has(tableName)) {
+      return res.status(403).json({ status: 403, message: 'Accès refusé. Utilisez les routes dédiées.' });
+    }
+
     // Admin-only write tables
     if (adminWriteOnly.has(tableName) && !isAdmin(req.user)) {
       return res.status(403).json({ status: 403, message: 'Accès refusé. Écriture réservée aux administrateurs.' });
     }
 
+    if (!data || typeof data !== 'object' || Array.isArray(data)) {
+      return res.status(400).json({ status: 400, message: 'Corps de requête invalide' });
+    }
+    // The primary key is never updatable
+    delete data.id;
+
     // Ownership check: non-admin can only update their own records
     if (!isAdmin(req.user)) {
-      if (tableName === 'users' && entityId !== req.user.id) {
-        return res.status(403).json({ status: 403, message: 'Accès refusé' });
-      }
       const ownerCol = ownershipColumn[tableName];
       if (ownerCol) {
+        const ownerValue = ownerValueFor(tableName, req.user);
         const existing = await dbUtils.get(`SELECT \`${ownerCol}\` FROM ${tableName} WHERE id = ?`, [entityId]);
-        if (existing && existing[ownerCol] !== req.user.id) {
+        if (existing && existing[ownerCol] !== ownerValue) {
+          return res.status(403).json({ status: 403, message: 'Accès refusé' });
+        }
+        // Cannot transfer ownership of a record to someone else
+        if (data[ownerCol] !== undefined && data[ownerCol] !== ownerValue) {
           return res.status(403).json({ status: 403, message: 'Accès refusé' });
         }
       }
     }
 
     const fields = Object.keys(data);
+    if (fields.length === 0) {
+      return res.status(400).json({ status: 400, message: 'Aucune donnée à mettre à jour' });
+    }
     
     // Validate all field names to prevent SQL injection
     const unsafeFields = fields.filter(f => !isSafeColumnName(f));
@@ -530,6 +596,10 @@ export const deleteEntity = async (req, res) => {
       });
     }
 
+    if (NO_GENERIC_WRITE_TABLES.has(tableName)) {
+      return res.status(403).json({ status: 403, message: 'Accès refusé. Utilisez les routes dédiées.' });
+    }
+
     // Only admins can delete from protected tables; regular users can only delete their own records from allowed tables
     if ((adminWriteOnly.has(tableName) || adminReadOnly.has(tableName)) && !isAdmin(req.user)) {
       return res.status(403).json({ status: 403, message: 'Accès refusé. Suppression réservée aux administrateurs.' });
@@ -537,13 +607,10 @@ export const deleteEntity = async (req, res) => {
 
     // Ownership check: non-admin can only delete their own records
     if (!isAdmin(req.user)) {
-      if (tableName === 'users') {
-        return res.status(403).json({ status: 403, message: 'Accès refusé' });
-      }
       const ownerCol = ownershipColumn[tableName];
       if (ownerCol) {
         const existing = await dbUtils.get(`SELECT * FROM ${tableName} WHERE id = ?`, [entityId]);
-        if (existing && existing[ownerCol] !== req.user.id) {
+        if (existing && existing[ownerCol] !== ownerValueFor(tableName, req.user)) {
           // Allow profile owner to delete wall posts on their profile
           if (tableName === 'publications' && existing.cible_profil_id === req.user.id) {
             // Profile owner can delete posts on their wall — allowed

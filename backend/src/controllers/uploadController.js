@@ -2,8 +2,9 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import { exec } from 'child_process';
+import { execFile } from 'child_process';
 import { promisify } from 'util';
+import { randomBytes } from 'crypto';
 
 import logger from '../utils/logger.js';
 import { checkFile, recordViolation } from '../services/nsfwService.js';
@@ -24,20 +25,53 @@ const ALLOWED_TYPES = {
   travaux: ['application/pdf', 'image/jpeg', 'image/png', 'image/webp']
 };
 
+// Allowed extensions per mime type. The extension decides the Content-Type when
+// files are served statically, so it must match the declared type (prevents
+// uploading e.g. an .html file disguised as image/png \u2192 stored XSS).
+const MIME_EXTENSIONS = {
+  'image/jpeg': ['.jpg', '.jpeg'],
+  'image/png': ['.png'],
+  'image/webp': ['.webp'],
+  'image/gif': ['.gif'],
+  'video/mp4': ['.mp4'],
+  'video/webm': ['.webm'],
+  'application/pdf': ['.pdf'],
+  'application/msword': ['.doc'],
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+};
+
 const MAX_FILE_SIZE = 150 * 1024 * 1024; // 150MB
+
+/** Only known categories are accepted (prevents path traversal through :category) */
+export const isValidCategory = (category) =>
+  typeof category === 'string' && Object.prototype.hasOwnProperty.call(ALLOWED_TYPES, category);
+
+/** Keep a path segment to a strict safe charset */
+const safeSegment = (value, fallback) => {
+  const s = String(value || '').replace(/[^a-zA-Z0-9_\-]/g, '');
+  return s.length > 0 ? s : fallback;
+};
 
 /**
  * Build the user's folder path:
  * uploads/{role}/{etablissement_nom}/{user_id}/{category}/
  */
 function getUserUploadPath(user, category) {
-  const role = user.role_archive || user.role || 'utilisateur';
+  if (!isValidCategory(category)) {
+    throw new Error('Cat\u00E9gorie invalide');
+  }
+  const role = safeSegment(user.role_archive || user.role, 'utilisateur');
   const etabName = (user.etablissement_nom || 'sans_etablissement')
     .replace(/[^a-zA-Z0-9_\-\u00C0-\u024F ]/g, '')
-    .replace(/\s+/g, '_');
-  const userId = user.id;
+    .replace(/\s+/g, '_') || 'sans_etablissement';
+  const userId = safeSegment(user.id, 'inconnu');
 
-  return path.join(UPLOADS_ROOT, role, etabName, userId, category);
+  const dir = path.join(UPLOADS_ROOT, role, etabName, userId, category);
+  // Defense in depth: never leave the uploads root
+  if (!path.resolve(dir).startsWith(path.resolve(UPLOADS_ROOT) + path.sep)) {
+    throw new Error('Chemin invalide');
+  }
+  return dir;
 }
 
 /**
@@ -56,18 +90,20 @@ function ensureUserFolders(user) {
  */
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const category = req.params.category || 'documents';
-    const dir = getUserUploadPath(req.user, category);
-    fs.mkdirSync(dir, { recursive: true });
-    cb(null, dir);
+    try {
+      const dir = getUserUploadPath(req.user, req.params.category);
+      fs.mkdirSync(dir, { recursive: true });
+      cb(null, dir);
+    } catch (err) {
+      cb(err);
+    }
   },
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
-    const safeName = file.originalname
-      .replace(ext, '')
+    const safeName = path.basename(file.originalname, path.extname(file.originalname))
       .replace(/[^a-zA-Z0-9_\-]/g, '_')
       .substring(0, 50);
-    const uniqueSuffix = Date.now() + '_' + Math.round(Math.random() * 1e4);
+    const uniqueSuffix = Date.now() + '_' + randomBytes(8).toString('hex');
     cb(null, `${safeName}_${uniqueSuffix}${ext}`);
   }
 });
@@ -76,11 +112,18 @@ const storage = multer.diskStorage({
  * File filter — validate mime type per category
  */
 const fileFilter = (req, file, cb) => {
-  const category = req.params.category || 'documents';
-  const allowed = ALLOWED_TYPES[category] || ALLOWED_TYPES.documents;
+  const category = req.params.category;
+  if (!isValidCategory(category)) {
+    return cb(new Error('Type de fichier non autorisé : catégorie invalide'));
+  }
+  const allowed = ALLOWED_TYPES[category];
+  const ext = path.extname(file.originalname || '').toLowerCase();
+  const extOk = (MIME_EXTENSIONS[file.mimetype] || []).includes(ext);
 
-  if (allowed.includes(file.mimetype)) {
+  if (allowed.includes(file.mimetype) && extOk) {
     cb(null, true);
+  } else if (allowed.includes(file.mimetype)) {
+    cb(new Error(`Type de fichier non autorisé : l'extension "${ext}" ne correspond pas au type ${file.mimetype}`));
   } else {
     cb(new Error(`Type de fichier non autorisé pour la catégorie "${category}". Types acceptés: ${allowed.join(', ')}`));
   }
@@ -94,15 +137,17 @@ export const upload = multer({
 
 /**
  * Generate a thumbnail image from the first page of a PDF using pdftoppm (poppler-utils).
-const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
 async function generatePdfThumbnail(pdfPath, uploadsRoot) {
   const dir = path.dirname(pdfPath);
   const base = path.basename(pdfPath, path.extname(pdfPath));
   const outPrefix = path.join(dir, `${base}_thumb`);
 
-  // pdftoppm: convert first page (-f 1 -l 1) to JPEG, scale to 400px wide
-  await execAsync(
-    `pdftoppm -f 1 -l 1 -jpeg -scale-to 400 "${pdfPath}" "${outPrefix}"`,
+  // pdftoppm: convert first page (-f 1 -l 1) to JPEG, scale to 400px wide.
+  // execFile (no shell) → paths are passed as plain arguments, never interpreted.
+  await execFileAsync(
+    'pdftoppm',
+    ['-f', '1', '-l', '1', '-jpeg', '-scale-to', '400', pdfPath, outPrefix],
     { timeout: 30000 }
   );
 

@@ -9,10 +9,20 @@ import {
   uploadMultipleFiles,
   listFiles,
   deleteFile,
-  initUserFolders
+  initUserFolders,
+  isValidCategory
 } from '../controllers/uploadController.js';
 
 const router = express.Router();
+
+// Reject unknown categories before anything touches the filesystem
+// (Express decodes %2F in params, so ":category" could otherwise contain "../")
+router.param('category', (req, res, next, category) => {
+  if (!isValidCategory(category)) {
+    return res.status(400).json({ error: 'Catégorie invalide' });
+  }
+  next();
+});
 
 // Middleware to enrich req.user with full DB data (needed for folder paths)
 const enrichUser = async (req, res, next) => {

@@ -65,7 +65,14 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Serve uploaded files statically with auth check and inline disposition for PDFs
+const SERVABLE_UPLOAD_EXT = /\.(jpe?g|png|gif|webp|mp4|webm|pdf|docx?)$/i;
 app.use('/api/uploads', (req, res, next) => {
+  // Never serve anything that is not a known media/document type
+  // (blocks .html/.svg/.js files that could run scripts on our origin)
+  if (!SERVABLE_UPLOAD_EXT.test(req.path)) {
+    return res.status(404).json({ status: 404, message: 'Fichier introuvable' });
+  }
+  res.setHeader('X-Content-Type-Options', 'nosniff');
   // Allow public access to post images/videos and profile photos (needed for journal avatars)
   const isPostMedia = /\/posts\/[^/]+\.(jpg|jpeg|png|gif|webp|mp4|webm)$/i.test(req.path);
   const isProfilePhoto = /\/profil\/[^/]+\.(jpg|jpeg|png|gif|webp)$/i.test(req.path);

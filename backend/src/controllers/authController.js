@@ -49,6 +49,12 @@ const clearFailedLogins = (email) => {
 };
 
 /**
+ * The only roles a self-service inscription (étudiant/professeur) may request.
+ * Admin roles are only granted through createAdminSysteme / adminUpdateUser.
+ */
+const INSCRIPTION_ROLES = ['etudiant', 'professeur'];
+
+/**
  * Validate password strength: min 8 chars, at least one uppercase, one lowercase, one digit
  */
 const validatePassword = (password) => {
@@ -69,6 +75,10 @@ export const register = async (req, res) => {
 
     if (!email || !password) {
       return res.status(400).json({ status: 400, message: 'Email et mot de passe requis' });
+    }
+
+    if (formData.type_utilisateur && !INSCRIPTION_ROLES.includes(formData.type_utilisateur)) {
+      return res.status(400).json({ status: 400, message: "Type d'utilisateur invalide" });
     }
 
     // Check email was verified
@@ -503,7 +513,8 @@ export const approveInscription = async (req, res) => {
       if (request.statut !== 'en_attente') return res.status(400).json({ status: 400, message: 'Demande déjà traitée' });
       email = request.email;
       passwordHash = request.password_hash;
-      role = request.type_utilisateur || 'etudiant';
+      // Never trust the stored value blindly (requests created before validation existed)
+      role = INSCRIPTION_ROLES.includes(request.type_utilisateur) ? request.type_utilisateur : 'etudiant';
       nom = request.nom;
       prenom = request.prenom;
       etablissementNom = request.etablissement_nom;
@@ -829,6 +840,9 @@ export const updateInscription = async (req, res) => {
                 : 'inscription_requests';
 
     if (requestType === 'etudiant' || requestType === 'professeur') {
+      if (data.type_utilisateur !== undefined && !INSCRIPTION_ROLES.includes(data.type_utilisateur)) {
+        return res.status(400).json({ status: 400, message: "Type d'utilisateur invalide" });
+      }
       const editableFields = [
         'type_utilisateur', 'nom', 'post_nom', 'prenom', 'email', 'telephone',
         'sexe', 'nationalite', 'etat_civil', 'date_naissance', 'lieu_naissance', 'matricule',
@@ -926,7 +940,13 @@ export const updateProfile = async (req, res) => {
     const data = req.body;
 
     // Fields that should never be updated via this endpoint
-    const protectedFields = ['id', 'password_hash', 'password', 'role', 'role_archive', 'username'];
+    // (email → /settings/change-email, password → /settings/change-password,
+    //  friends → /api/social/*, blocked/role → admin routes only)
+    const protectedFields = [
+      'id', 'password_hash', 'password', 'role', 'role_archive', 'username',
+      'email', 'blocked', 'isRegistered', 'amis', 'etablissement_id',
+      'province_affectation', 'createdAt', 'updatedAt',
+    ];
     
     // Validate column name safety
     const safeColRegex = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
